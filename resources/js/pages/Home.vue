@@ -1,36 +1,107 @@
 <script setup>
-import { ref } from 'vue';
-import { Head } from '@inertiajs/vue3';
-import Button from 'primevue/button';
-import Card from 'primevue/card';
-import InputText from 'primevue/inputtext';
-import Panel from 'primevue/panel';
+import Button from "primevue/button";
+import Card from "primevue/card";
+import Slider from 'primevue/slider';
 
-const name = ref('');
-const greet = () => {
-  alert(`Hello, ${name.value || 'Guest'}!`);
-};
+function toggleDarkMode() {
+    document.documentElement.classList.toggle('my-app-dark');
+}
 </script>
 
 <template>
-  <Head title="Home" />
-  <div class="p-6 space-y-6">
-    <Panel header="Welcome">
-      <p>Home page powered by Vue + PrimeVue in Laravel.</p>
-    </Panel>
-
-    <Card>
-      <template #title>Try PrimeVue</template>
-      <template #content>
-        <div class="flex items-center gap-3 mb-4">
-          <i class="pi pi-user text-xl" />
-          <InputText v-model="name" placeholder="Your name" />
+  <Button label="Toggle Dark Mode" @click="toggleDarkMode()" />
+  <div class="grid grid-cols-3 gap-8">
+    <Card class="">
+      <template #header>
+        <div class="flex justify-center pt-3">
+          <i class="fa-solid fa-bowl-food text-6xl text-brand"></i>
         </div>
-        <Button label="Greet" icon="pi pi-check" @click="greet" />
+      </template>
+
+      <template #title>
+        <div class="text-center font-semibold">Ételnapló</div>
+      </template>
+
+      <template #subtitle>
+        <div class="text-center">Card subtitle</div>
+      </template>
+
+      <template #content>
+        <p class="m-0">
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed
+          consequuntur error repudiandae numquam deserunt quisquam repellat libero
+          asperiores earum nam nobis, culpa ratione quam perferendis esse,
+          cupiditate neque quas!
+        </p>
+      </template>
+
+      <template #footer>
+        <div class="flex gap-4 mt-1">
+          <Button label="Cancel" severity="secondary" variant="outlined" class="w-full" />
+        </div>
+      </template>
+    </Card>
+    <Card class="">
+      <template #header>
+        <div class="flex justify-center pt-3">
+          <i class="fa-solid fa-bowl-food text-6xl text-brand"></i>
+        </div>
+      </template>
+
+      <template #title>
+        <div class="text-center font-semibold">Edzésnapló</div>
+      </template>
+
+      <template #subtitle>
+        <div class="text-center">Card subtitle</div>
+      </template>
+
+      <template #content>
+        <p class="m-0">
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed
+          consequuntur error repudiandae numquam deserunt quisquam repellat libero
+          asperiores earum nam nobis, culpa ratione quam perferendis esse,
+          cupiditate neque quas!
+        </p>
+      </template>
+
+      <template #footer>
+        <div class="flex gap-4 mt-1">
+          <Button label="Cancel" severity="secondary" variant="outlined" class="w-full" />
+        </div>
+      </template>
+    </Card>
+    <Card class="">
+      <template #header>
+        <div class="flex justify-center pt-3">
+          <i class="fa-solid fa-bowl-food text-6xl text-brand"></i>
+        </div>
+      </template>
+
+      <template #title>
+        <div class="text-center font-semibold">Statisztika</div>
+      </template>
+
+      <template #subtitle>
+        <div class="text-center">Card subtitle</div>
+      </template>
+
+      <template #content>
+        <p class="m-0">
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed
+          consequuntur error repudiandae numquam deserunt quisquam repellat libero
+          asperiores earum nam nobis, culpa ratione quam perferendis esse,
+          cupiditate neque quas!
+        </p>
+      </template>
+
+      <template #footer>
+        <div class="flex gap-4 mt-1">
+          <Button label="Cancel" severity="secondary" variant="outlined" class="w-full" />
+        </div>
       </template>
     </Card>
   </div>
 </template>
 
-<style scoped>
-</style>
+<style scoped></style>

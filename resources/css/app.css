@@ -1,11 +1,36 @@
-@import 'tailwindcss';
+@import "tailwindcss";
+@import "@fortawesome/fontawesome-free/css/all.min.css";
 
-@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
-@source '../../storage/framework/views/*.php';
-@source '../**/*.blade.php';
-@source '../**/*.js';
+@source "../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php";
+@source "../../storage/framework/views/*.php";
+@source "../**/*.blade.php";
+@source "../**/*.js";
+@source "../**/*.vue";
 
+/*
 @theme {
-    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-        'Segoe UI Symbol', 'Noto Color Emoji';
+  --font-sans: "Instrument Sans", ui-sans-serif, system-ui, sans-serif,
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+
+
+  --color-mint-glow: #8ef166;
+  --color-pearl-aqua: #a8e6cf;
+  --color-medium-jungle: #4caf50;
+  --color-malachite: #3dd652;
+  --color-blue-spruce: #00695c;
+
+
+  --color-brand: var(--color-blue-spruce);
+  --color-brand-2: var(--color-malachite);
+  --color-brand-soft: var(--color-pearl-aqua);
+
+  --color-surface: #0b0f0e;
+  --color-surface-2: #111816;
+
+  --color-text: #e7f7f1;
+  --color-muted: #b7d7d0;
+
+  --color-border: color-mix(in oklab, var(--color-brand), transparent 70%);
+  --color-ring: color-mix(in oklab, var(--color-brand-2), white 20%);
 }
+*/
