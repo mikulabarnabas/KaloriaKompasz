@@ -1,20 +1,25 @@
 <script setup>
 import Button from "primevue/button";
 import Card from "primevue/card";
-import Slider from 'primevue/slider';
 
 import Accordion from 'primevue/accordion';
 import AccordionPanel from 'primevue/accordionpanel';
 import AccordionHeader from 'primevue/accordionheader';
 import AccordionContent from 'primevue/accordioncontent';
 
+import Header from "../components/header.vue";
+
 
 function toggleDarkMode() {
     document.documentElement.classList.toggle('my-app-dark');
 }
-</script>
 
+
+</script>
 <template>
+
+  <Header></Header>
+
   <Button label="Toggle Dark Mode" @click="toggleDarkMode()" />
   <div class="grid grid-cols-3 gap-8">
     <Card class="">
@@ -28,22 +33,16 @@ function toggleDarkMode() {
         <div class="text-center font-semibold">Ételnapló</div>
       </template>
 
-      <template #subtitle>
-        <div class="text-center">Card subtitle</div>
-      </template>
-
       <template #content>
         <p class="m-0">
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed
-          consequuntur error repudiandae numquam deserunt quisquam repellat libero
-          asperiores earum nam nobis, culpa ratione quam perferendis esse,
-          cupiditate neque quas!
+          Jegyezd fel napi étkezéseidet és kalóriabeviteledet! Az ételnapló segít átlátni a makrotápanyagokat, 
+          kontrollálni az adagokat, és tudatosabb döntéseket hozni a céljaid eléréséhez.
         </p>
       </template>
 
       <template #footer>
         <div class="flex gap-4 mt-1">
-          <Button label="Cancel" severity="secondary" variant="outlined" class="w-full" />
+          <Button label="Vágjunk bele!" severity="secondary" variant="outlined" class="w-full" />
         </div>
       </template>
     </Card>
@@ -58,22 +57,17 @@ function toggleDarkMode() {
         <div class="text-center font-semibold">Edzésnapló</div>
       </template>
 
-      <template #subtitle>
-        <div class="text-center">Card subtitle</div>
-      </template>
-
       <template #content>
         <p class="m-0">
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed
-          consequuntur error repudiandae numquam deserunt quisquam repellat libero
-          asperiores earum nam nobis, culpa ratione quam perferendis esse,
-          cupiditate neque quas!
+          Kövesd nyomon az edzéseidet egyszerűen! Rögzítheted a gyakorlatokat, súlyokat, 
+          ismétléseket és az edzés időtartamát, így pontos képet kapsz a fejlődésedről és könnyen 
+          tervezheted a következő edzéseidet.
         </p>
       </template>
 
       <template #footer>
         <div class="flex gap-4 mt-1">
-          <Button label="Cancel" severity="secondary" variant="outlined" class="w-full" />
+          <Button label="Vágjunk bele!" severity="secondary" variant="outlined" class="w-full" />
         </div>
       </template>
     </Card>
@@ -88,51 +82,45 @@ function toggleDarkMode() {
         <div class="text-center font-semibold">Statisztika</div>
       </template>
 
-      <template #subtitle>
-        <div class="text-center">Card subtitle</div>
-      </template>
-
       <template #content>
-        <p class="m-0">
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed
-          consequuntur error repudiandae numquam deserunt quisquam repellat libero
-          asperiores earum nam nobis, culpa ratione quam perferendis esse,
-          cupiditate neque quas!
+        <p class="m-0"> 
+          Vizualizált adatokkal követheted a haladásodat. Grafikonokon láthatod a súlyváltozást, kalóriabevitelt, 
+          edzésmennyiséget és egyéb fontos mutatókat, hogy könnyebb legyen értékelni az eredményeidet.
         </p>
       </template>
 
       <template #footer>
         <div class="flex gap-4 mt-1">
-          <Button label="Cancel" severity="secondary" variant="outlined" class="w-full" />
+          <Button label="Vágjunk bele!" severity="secondary" variant="outlined" class="w-full" />
         </div>
       </template>
     </Card>
   </div>
   <Accordion value="0">
     <AccordionPanel value="0">
-        <AccordionHeader>Header I</AccordionHeader>
+        <AccordionHeader>Hogyan működik az edzésnapló?</AccordionHeader>
         <AccordionContent>
             <p class="m-0">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                Az edzésnapló lehetővé teszi, hogy minden edzésedet részletesen rögzítsd. Felviheted az egyes gyakorlatokat, az alkalmazott súlyokat, az ismétlések számát, az edzés időtartamát és akár a pihenőidőt is. Minden adat automatikusan elmentésre kerül,
+                 így bármikor visszanézheted a korábbi edzéseidet, elemezheted a fejlődésedet, és könnyebben tervezheted a következő edzéseidet. A napló segítségé  vel nyomon követheted a hosszú távú trendeket, például az erőnlét és állóképesség javulását.
             </p>
         </AccordionContent>
     </AccordionPanel>
     <AccordionPanel value="1">
-        <AccordionHeader>Header II</AccordionHeader>
+        <AccordionHeader>Milyen adatokat mutat a statisztika oldal?</AccordionHeader>
         <AccordionContent>
             <p class="m-0">
-                Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim
-                ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Consectetur, adipisci velit, sed quia non numquam eius modi.
+                A statisztika oldal vizuálisan jeleníti meg a haladásodat. Grafikonokon követheted a testsúlyváltozásodat, a napi kalóriabeviteledet, az edzés mennyiségét és más fontos mutatókat, 
+                például a makrotápanyagok arányát. Ez lehetővé teszi, hogy gyorsan átlásd, mely területeken kell változtatnod a céljaid eléréséhez.
             </p>
         </AccordionContent>
     </AccordionPanel>
     <AccordionPanel value="2">
-        <AccordionHeader>Header III</AccordionHeader>
+        <AccordionHeader>Mit rögzíthetek az ételnaplóban?</AccordionHeader>
         <AccordionContent>
             <p class="m-0">
-                At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa
-                qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus.
+                Az ételnapló segítségével részletesen nyomon követheted a napi étkezéseidet. Rögzítheted az elfogyasztott ételeket, azok mennyiségét, kalóriatartalmát, valamint a makrotápanyagokat (fehérje, szénhidrát, zsír). 
+                Ez segít abban, hogy tudatosan étkezz, és könnyebben tartsd a napi kalóriakeretedet a céljaid eléréséhez.
             </p>
         </AccordionContent>
     </AccordionPanel>
