@@ -21,8 +21,7 @@ const people = [
     name: "Név 2",
     role: "rövid leírás",
     photo: "",
-  },
-  // add more...
+  }
 ];
 </script>
 <template>
