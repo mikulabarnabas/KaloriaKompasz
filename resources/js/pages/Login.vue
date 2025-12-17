@@ -1,4 +1,4 @@
-<!-- LoginForm.vue (JavaScript, not TypeScript) -->
+
 <script setup>
 import { reactive, ref } from "vue";
 
