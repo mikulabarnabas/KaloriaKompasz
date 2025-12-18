@@ -6,30 +6,55 @@ use Inertia\Inertia;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
-use App\Http\Requests\StorePostRequest;
+use App\Http\Requests\RegisterUserRequest;
+use App\Http\Requests\LoginUserRequest;
 
 class AuthController extends Controller
 {
-    public function showRegister() {
+    public function showRegister()
+    {
         return Inertia::render('register');
     }
 
-    public function showLogin() {
+    public function showLogin()
+    {
         return Inertia::render('login');
     }
 
-    public function store(StorePostRequest $request)
+    public function registerUser(RegisterUserRequest $request)
     {
         $validated = $request->validated();
 
-        $user = User::create([
+        User::create([
             'name' => $validated['name'],
             'email' => $validated['email'],
             'password' => Hash::make($validated['password']),
         ]);
 
-        Auth::login($user);
-
         return redirect()->route('home');
+    }
+
+    /**
+     * Handle an authentication attempt.
+     */
+    public function loginUser(LoginUserRequest $request)
+    {
+        $credentials = $request->validated();
+
+        if (
+            Auth::attempt([
+                'email' => $credentials['email'],
+                'password' => $credentials['password']
+
+            ], $credentials['rememberme'])
+        ) {
+            $request->session()->regenerate();
+            return redirect()->route('home');
+        }
+
+
+        return back()->withErrors([
+            'email' => 'The provided credentials do not match our records.',
+        ])->onlyInput('email');
     }
 }

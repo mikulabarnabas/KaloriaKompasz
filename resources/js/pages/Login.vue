@@ -1,83 +1,36 @@
-
 <script setup>
-import { reactive, ref } from "vue";
+import { ref } from "vue";
 
 import FloatLabel from "primevue/floatlabel";
 import InputText from "primevue/inputtext";
 import Password from "primevue/password";
 import Checkbox from "primevue/checkbox";
 import Button from "primevue/button";
+import Dialog from "primevue/dialog";
 
-const form = reactive({
+import { useForm } from "laravel-precognition-vue"
+
+const showSuccessDialog = ref(false);
+
+const form = useForm('post', '/login', {
   email: "",
   password: "",
-  remember: true,
+  rememberme: true,
 });
 
-const submitted = ref(false);
-const loading = ref(false);
+const onSubmit = () => form.submit()
+  .then(response => {
+    form.reset();
+    showSuccessDialog.value = true;
+  })
+  .catch(error => {
 
-const errors = reactive({
-  email: "",
-  password: "",
-});
+  });
 
-const PASSWORD_REGEX =
-    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&()[\]])[A-Za-z\d@$!%*?&()[\]]{8,}$/;
-
-const EMAIL_REGEX = 
-    /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-function clearErrors() {
-  errors.email = "";
-  errors.password = "";
-}
-
-function validate() {
-  clearErrors();
-
-  // email validation
-  if (!form.email) {
-    errors.email = "Email is required.";
-  } else if (form.email.length > 254) {
-    errors.email = "Email is too long.";
-  } else if (!EMAIL_REGEX.test(form.email)) {
-    errors.email = "Please enter a valid email address.";
-  }
-
-  // password validation
-  if (!form.password) {
-    errors.password = "Password is required.";
-  } else if (form.password.length < 8) {
-    errors.password = "Password must be at least 8 characters long.";
-  } else if (!/[a-z]/.test(form.password)) {
-    errors.password = "Password must contain at least one lowercase letter.";
-  } else if (!/[A-Z]/.test(form.password)) {
-    errors.password = "Password must contain at least one uppercase letter.";
-  } else if (!/\d/.test(form.password)) {
-    errors.password = "Password must contain at least one number.";
-  } else if (!/[@$!%*?&\[\]\(\)]/.test(form.password)) {
-    errors.password =
-      "Password must contain at least one special character: @$!%*?&.";
-  } else if (!PASSWORD_REGEX.test(form.password)) {
-    errors.password =
-      "Password contains invalid characters. Allowed: letters, numbers, @$!%*?&.";
-  }
-
-  return !errors.email && !errors.password;
-}
-
-async function onSubmit() {
-  submitted.value = true;
-
-  if (!validate()) return;
-
-  loading.value = true;
-  try {
-    await new Promise((r) => setTimeout(r, 800));
-  } finally {
-    loading.value = false;
-  }
+function closeSuccessDialog() {
+  showSuccessDialog.value = false;
+  form.reset();
+  window.location.href = "/";
 }
 </script>
 
@@ -95,64 +48,36 @@ async function onSubmit() {
             <!-- Email -->
             <div class="space-y-1">
               <FloatLabel variant="on">
-                <InputText
-                  id="email"
-                  v-model.trim="form.email"
-                  type="email"
-                  autocomplete="email"
-                  inputmode="email"
-                  class="w-full"
-                  :invalid="submitted && !!errors.email"
-                  aria-describedby="email-help"
-                />
+                <InputText id="email" v-model="form.email" type="email" inputmode="email" class="w-full"
+                  @change="form.validate('email')" autocomplete="email" />
                 <label for="email">Email</label>
               </FloatLabel>
 
-              <small
-                id="email-help"
-                class="block text-xs"
-                :class="submitted && errors.email ? 'text-red-600' : 'text-transparent'"
-              >
-                {{ submitted && errors.email ? errors.email : "." }}
+              <small v-if="form.invalid('email')" class="block text-xs text-red-600">
+                {{ form.errors.email }}
               </small>
             </div>
 
             <!-- Password -->
             <div class="space-y-1">
               <FloatLabel variant="on">
-                <Password
-                  id="password"
-                  v-model="form.password"
-                  autocomplete="current-password"
-                  class="w-full"
-                  input-class="w-full"
-                  toggle-mask
-                  :feedback="false"
-                  :invalid="submitted && !!errors.password"
-                  aria-describedby="password-help"
-                />
+                <Password id="password" :feedback="false" v-model="form.password" class="w-full" input-class="w-full" toggle-mask
+                  @change="form.validate('password')" autocomplete="new-password" />
                 <label for="password">Password</label>
               </FloatLabel>
 
-              <small
-                id="password-help"
-                class="block text-xs"
-                :class="submitted && errors.password ? 'text-red-600' : 'text-transparent'"
-              >
-                {{ submitted && errors.password ? errors.password : "." }}
+              <small v-if="form.invalid('password')" class="block text-xs text-red-600" ">
+                {{ form.errors.password }}
               </small>
             </div>
 
             <div class="flex items-center justify-between gap-3">
               <div class="flex items-center gap-2">
-                <Checkbox input-id="remember" v-model="form.remember" :binary="true" />
-                <label for="remember" class="text-sm text-slate-700">Remember me</label>
+                <Checkbox input-id="remember" v-model="form.rememberme" :binary="true" />
+                <label for="rememberme" class="text-sm text-slate-700">Remember me</label>
               </div>
 
-              <a
-                href="#"
-                class="text-sm font-medium text-indigo-600 hover:text-indigo-700"
-              >
+              <a href="#" class="text-sm font-medium text-indigo-600 hover:text-indigo-700">
                 Forgot password?
               </a>
             </div>
@@ -173,6 +98,19 @@ async function onSubmit() {
         By continuing you agree to our Terms & Privacy Policy.
       </p>
     </div>
+
+    <Dialog v-model:visible="showSuccessDialog" modal :closable="true" :draggable="false"
+      header="Registration successful" class="w-[92vw] max-w-md" @hide="closeSuccessDialog">
+      <p class="text-slate-700">
+        Your account has been created successfully. You can now sign in.
+      </p>
+
+      <template #footer>
+        <div class="flex w-full justify-end gap-2">
+          <Button label="Close" severity="secondary" @click="closeSuccessDialog" />
+        </div>
+      </template>
+    </Dialog>
   </div>
 </template>
 

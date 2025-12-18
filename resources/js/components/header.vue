@@ -1,7 +1,6 @@
 <script setup>
 import { ref } from "vue";
 import Menubar from "primevue/menubar";
-import Badge from "primevue/badge";
 import Ripple from "primevue/ripple";
 import Button from "primevue/button"
 
