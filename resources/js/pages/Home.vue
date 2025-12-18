@@ -23,10 +23,21 @@ const people = [
     photo: "",
   }
 ];
+
+const props = defineProps({
+  name: {
+    type: String,
+    default: "",
+  },
+});
 </script>
 <template>
 
   <Header></Header>
+
+  <h2 class="text-center text-xl py-2">
+    Szia, {{ props.name }}!
+  </h2>
 
   <h1 class="text-center text-4xl font-semibold tracking-tight py-12">
     Kalória Kompasz
