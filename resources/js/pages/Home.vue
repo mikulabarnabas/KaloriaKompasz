@@ -7,7 +7,7 @@ import AccordionPanel from 'primevue/accordionpanel';
 import AccordionHeader from 'primevue/accordionheader';
 import AccordionContent from 'primevue/accordioncontent';
 
-import Header from "../components/header.vue";
+import Navbar from "../components/navbar.vue";
 
 const people = [
   {
@@ -33,12 +33,7 @@ const props = defineProps({
 </script>
 <template>
 
-  <Header></Header>
-
-  <h2 class="text-center text-xl py-2">
-    Szia, {{ props.name }}!
-  </h2>
-
+<Navbar></Navbar>
   <h1 class="text-center text-4xl font-semibold tracking-tight py-12">
     Kalória Kompasz
   </h1>
