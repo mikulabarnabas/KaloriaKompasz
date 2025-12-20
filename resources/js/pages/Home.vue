@@ -8,6 +8,7 @@ import AccordionHeader from 'primevue/accordionheader';
 import AccordionContent from 'primevue/accordioncontent';
 
 import Header from "../components/header.vue";
+import Footer from "../components/footer.vue";
 
 const people = [
   {
@@ -182,6 +183,9 @@ const people = [
       </div>
     </div>
   </section>
+
+  <Footer></Footer>
+  
 </template>
 
 <style scoped></style>
