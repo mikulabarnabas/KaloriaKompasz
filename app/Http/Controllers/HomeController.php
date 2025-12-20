@@ -4,11 +4,15 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Log;
 
 class HomeController extends Controller
 {
-    public function show()
+    public function show(Request $request)
     {
-        return Inertia::render('home');
+        return Inertia::render('home', [
+            'user' => $request->user(),
+            'name' => optional($request->user())->name,
+        ]);
     }
 }

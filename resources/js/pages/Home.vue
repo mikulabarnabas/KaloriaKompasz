@@ -7,7 +7,7 @@ import AccordionPanel from 'primevue/accordionpanel';
 import AccordionHeader from 'primevue/accordionheader';
 import AccordionContent from 'primevue/accordioncontent';
 
-import Header from "../components/header.vue";
+import Navbar from "../components/navbar.vue";
 import Footer from "../components/footer.vue";
 
 const people = [
@@ -24,11 +24,17 @@ const people = [
     photo: "",
   }
 ];
+
+const props = defineProps({
+  name: {
+    type: String,
+    default: "",
+  },
+});
 </script>
 <template>
 
-  <Header></Header>
-
+<Navbar></Navbar>
   <h1 class="text-center text-4xl font-semibold tracking-tight py-12">
     Kalória Kompasz
   </h1>

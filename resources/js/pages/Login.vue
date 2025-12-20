@@ -7,7 +7,6 @@ import Password from "primevue/password";
 import Checkbox from "primevue/checkbox";
 import Button from "primevue/button";
 import Dialog from "primevue/dialog";
-
 import { useForm } from "laravel-precognition-vue"
 
 const showSuccessDialog = ref(false);
