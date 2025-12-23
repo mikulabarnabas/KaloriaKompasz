@@ -7,6 +7,9 @@ import AccordionPanel from 'primevue/accordionpanel';
 import AccordionHeader from 'primevue/accordionheader';
 import AccordionContent from 'primevue/accordioncontent';
 
+import Divider from 'primevue/divider';
+
+
 import Navbar from "../components/navbar.vue";
 import Footer from "../components/footer.vue";
 
@@ -189,6 +192,8 @@ const props = defineProps({
       </div>
     </div>
   </section>
+
+  <Divider />
 
   <Footer></Footer>
   
