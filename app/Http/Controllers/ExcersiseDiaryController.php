@@ -9,6 +9,9 @@ class ExcersiseDiaryController extends Controller
 {
     public function show()
     {
+        if (!auth()->check()) {
+            return redirect()->route('login');
+        }
         return Inertia::render('workout_diary');
     }
 }

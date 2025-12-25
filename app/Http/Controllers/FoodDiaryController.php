@@ -10,6 +10,9 @@ class FoodDiaryController extends Controller
 {
     public function show()
     {
+        if (!auth()->check()) {
+            return redirect()->route('login');
+        }
         return Inertia::render('food_diary');
     }
 }
