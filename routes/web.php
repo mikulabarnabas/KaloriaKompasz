@@ -12,6 +12,7 @@ Route::get('/', [HomeController::class, 'show'])->name('home');
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
 Route::get('/register', [AuthController::class, 'showRegister']);
 Route::get('/fdiary', [FoodDiaryController::class, 'show']);
+Route::get('/wdiary', [ExcersiseDiaryController::class, 'show']);
 Route::get('/profile', [ProfileController::class, 'show']);
 
 Route::post('/register', [AuthController::class, 'registerUser'])->middleware([HandlePrecognitiveRequests::class]);
