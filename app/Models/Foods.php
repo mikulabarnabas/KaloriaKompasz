@@ -14,6 +14,7 @@ class Foods extends Model
         'protein_g',
         'calories',
         'notes',
+        'image_path',
     ];
 
     protected $casts = [

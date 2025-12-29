@@ -1,91 +1,68 @@
 <script setup>
-import { computed } from 'vue'
+const year = new Date().getFullYear();
 
-const year = new Date().getFullYear()
-
-const version = 'v0.1.0'
+const version = "v0.1.0";
 </script>
 
 <template>
-  <footer class="footer">
-    <!-- BAL OSZLOP -->
-    <div class="column">
-      <h3 class="title">KalóriaKompasz</h3>
-      <p class="description">
-        Egyszerű ételnapló és kalóriaszámláló alkalmazás
-        a tudatosabb mindennapokhoz.
-      </p>
-      <small class="muted">
-        © {{ year }} • {{ version }}
-      </small>
+  <footer class="mx-auto w-full px-4 pb-8 pt-10">
+    <div
+      class="grid grid-cols-1 gap-8 rounded-2xl border p-6 sm:grid-cols-2 sm:p-8"
+    >
+      <!-- LEFT -->
+      <div class="space-y-3">
+        <div class="text-xl font-semibold">KalóriaKompasz</div>
+
+        <p class="text-sm leading-relaxed">
+          Egyszerű ételnapló és kalóriaszámláló alkalmazás a tudatosabb
+          mindennapokhoz.
+        </p>
+
+        <div class="flex flex-wrap items-center gap-x-3 gap-y-2 text-xs">
+          <span>© {{ year }}</span>
+          <span class="opacity-60">•</span>
+          <span>{{ version }}</span>
+        </div>
+      </div>
+
+      <!-- RIGHT -->
+      <div class="space-y-3">
+        <div class="text-sm font-semibold">Információ</div>
+
+        <ul class="space-y-2 text-sm">
+          <li class="flex items-center gap-2">
+            <i class="pi pi-info-circle"></i>
+            <span>Verzió: {{ version }}</span>
+          </li>
+
+          <li class="flex items-center gap-2">
+            <i class="pi pi-shield"></i>
+            <span>Adatvédelem</span>
+          </li>
+
+          <li class="flex items-center gap-2">
+            <i class="pi pi-envelope"></i>
+            <span>Kapcsolat:</span>
+            <a
+              href="mailto:support@kaloriakompasz.hu"
+              class="underline underline-offset-4"
+            >
+              support@kaloriakompasz.hu
+            </a>
+          </li>
+
+          <li class="flex items-center gap-2">
+            <i class="pi pi-check-circle"></i>
+            <span>Rendszer: aktív</span>
+          </li>
+        </ul>
+      </div>
     </div>
 
-    <!-- JOBB OSZLOP -->
-    <div class="column">
-      <h4 class="subtitle">Információ</h4>
-      <ul class="list">
-        <li><i class="pi pi-info-circle" /> Verzió: {{ version }}</li>
-        <li><i class="pi pi-shield" /> Adatvédelem</li>
-        <li>
-          <i class="pi pi-envelope" />
-          Kapcsolat:
-          <a
-            href="mailto:support@kaloriakompasz.hu"
-            class="link"
-          >
-            support@kaloriakompasz.hu
-          </a>
-        </li>
-        <li><i class="pi pi-check-circle" /> Rendszer: aktív</li>
-      </ul>
+    <div class="mt-6 text-center text-xs opacity-70">
+      Készítette: Mikula Barnabás és Bóta Gergely
     </div>
   </footer>
 </template>
 
-<style scoped>
-.footer {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 2rem;
-  padding: 2rem;
-  border-top: 1px solid var(--surface-border);
-  background: var(--surface-0);
-}
-
-.column {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-
-.title {
-  font-weight: 600;
-  font-size: 1.1rem;
-}
-
-.subtitle {
-  font-weight: 500;
-}
-
-.description {
-  font-size: 0.9rem;
-  color: var(--text-color-secondary);
-}
-
-.list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.list li {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-size: 0.9rem;
-}
-
-.muted {
-  color: var(--text-color-secondary);
-}
-</style>
+<style scoped></style>

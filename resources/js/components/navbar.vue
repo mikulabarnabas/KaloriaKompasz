@@ -10,11 +10,31 @@ const page = usePage();
 const user = computed(() => page.props.user ?? null);
 const isLoggedIn = computed(() => Boolean(user.value));
 
+function goHome() {
+  router.visit("/");
+}
+
 const items = ref([
-  { label: "Ételnapló", icon: "fa-solid fa-bowl-food" },
-  { label: "Edzésnapló", icon: "fa-solid fa-heart" },
-  { label: "Statisztika", icon: "fa-solid fa-chart-column" },
-  { label: "Segítség", icon: "pi pi-info-circle" },
+  {
+    label: "Ételnapló",
+    icon: "fa-solid fa-bowl-food",
+    command: () => router.visit("/fdiary"),
+  },
+  {
+    label: "Edzésnapló",
+    icon: "fa-solid fa-heart",
+    command: () => router.visit("/wdiary"),
+  },
+  {
+    label: "Statisztika",
+    icon: "fa-solid fa-chart-column",
+    command: () => router.visit("/stats"),
+  },
+  {
+    label: "Segítség",
+    icon: "pi pi-info-circle",
+    command: () => router.visit("/help"),
+  },
 ]);
 
 function logout() {
@@ -33,12 +53,7 @@ const accountItems = computed(() => [
   {
     label: "Profile",
     icon: "pi pi-user",
-    command: () => console.log("Profile"),
-  },
-  {
-    label: "Settings",
-    icon: "pi pi-cog",
-    command: () => console.log("Settings"),
+    command: () => router.visit("/profile"),
   },
   { separator: true },
   { label: "Logout", icon: "pi pi-sign-out", command: logout },
@@ -66,7 +81,7 @@ onMounted(() => {
 
 const themeIcon = computed(() => (isDark.value ? "pi pi-sun" : "pi pi-moon"));
 const themeAriaLabel = computed(() =>
-  isDark.value ? "Switch to light mode" : "Switch to dark mode",
+  isDark.value ? "Switch to light mode" : "Switch to dark mode"
 );
 
 function toggleDarkMode() {
@@ -80,32 +95,22 @@ function toggleDarkMode() {
   <Menubar
     :model="items"
     :breakpoint="'768px'"
-    class="w-full border-0 shadow-md bg-white rounded-none px-2 sm:px-4"
+    class="w-full border-0 shadow-md rounded-none px-2 sm:px-4"
   >
     <template #start>
-      <div class="flex items-center gap-2">
-        <span
-          class="text-lg sm:text-2xl font-bold text-primary whitespace-nowrap"
-        >
-          Kalória Kompasz
-        </span>
-      </div>
+      <button
+        type="button"
+        class="flex items-center gap-2 text-lg sm:text-2xl font-bold whitespace-nowrap"
+        @click="goHome"
+      >
+        Kalória Kompasz
+      </button>
     </template>
 
     <template #item="{ item, props }">
-      <a
-        v-bind="props.action"
-        class="flex items-center gap-2 rounded-md px-3 py-2 text-gray-700 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-primary/30"
-      >
+      <a v-bind="props.action" class="flex items-center gap-2 rounded-md px-3 py-2">
         <i v-if="item.icon" :class="item.icon"></i>
         <span class="min-w-0 truncate">{{ item.label }}</span>
-
-        <span
-          v-if="item.shortcut"
-          class="ml-auto border border-gray-300 rounded bg-gray-100 text-xs px-1"
-        >
-          {{ item.shortcut }}
-        </span>
       </a>
     </template>
 
@@ -113,7 +118,6 @@ function toggleDarkMode() {
       <div class="flex items-center gap-2">
         <template v-if="isLoggedIn">
           <Menu ref="accountMenuRef" :model="accountItems" popup />
-
           <Button
             :label="user?.name ?? 'Account'"
             icon="pi pi-user"

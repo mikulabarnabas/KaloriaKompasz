@@ -22,7 +22,13 @@ class WorkoutDiaryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name' => ['required', 'string', 'min:1', 'max:255'],
+
+            'quantity' => ['required', 'string', 'min:1', 'max:255'],
+
+            'burned_calories' => ['required', 'integer', 'min:0'],
+
+            'note' => ['nullable', 'string', 'max:5000'],
         ];
     }
 }
