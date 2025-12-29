@@ -18,13 +18,10 @@ return new class extends Migration {
 
             $table->date('date');
 
-            // "Edzés név"
             $table->string('workout_name')->nullable();
 
-            // "Kalória égetve"
             $table->unsignedInteger('burned_calories')->default(0);
 
-            // "Hossz" (duration)
             $table->unsignedInteger('duration_minutes')->nullable();
 
             $table->timestamps();

@@ -1,63 +1,81 @@
 <script setup>
-import { ref, computed, watch } from 'vue'
+import { ref, computed, watch } from "vue";
 
-import Navbar from "../components/navbar.vue"
-import Footer from "../components/footer.vue"
+import { usePage } from "@inertiajs/vue3";
 
-import Paginator from 'primevue/paginator'
-import Divider from 'primevue/divider'
+import Navbar from "../components/navbar.vue";
+import Footer from "../components/footer.vue";
 
-const search = ref('')
-const first = ref(0)
-const rows = ref(3)
+import Paginator from "primevue/paginator";
+import Divider from "primevue/divider";
 
-const selectedFood = ref(null)
+import FloatLabel from "primevue/floatlabel";
+import InputText from "primevue/inputtext";
+import Button from "primevue/button";
+import Dialog from "primevue/dialog";
 
-const foods = ref([
-  { name: 'Csirkemell (sült)', calories: 165, fat: 3.6, protein: 31 },
-  { name: 'Pulykamell', calories: 135, fat: 1.2, protein: 30 },
-  { name: 'Marhahús (sovány)', calories: 250, fat: 15, protein: 26 },
-  { name: 'Sertéskaraj', calories: 242, fat: 14, protein: 27 },
-  { name: 'Lazac', calories: 208, fat: 13, protein: 20 },
-  { name: 'Tonhal (konzerv, víz)', calories: 116, fat: 1, protein: 26 },
+import { useForm } from "laravel-precognition-vue";
 
-  { name: 'Tojás', calories: 155, fat: 11, protein: 13 },
-  { name: 'Tojásfehérje', calories: 52, fat: 0.2, protein: 11 },
-  { name: 'Tehéntúró', calories: 98, fat: 4.3, protein: 11 },
-  { name: 'Görög joghurt', calories: 59, fat: 0.4, protein: 10 },
-  { name: 'Sajt (trappista)', calories: 356, fat: 28, protein: 25 },
+const search = ref("");
+const first = ref(0);
+const rows = ref(3);
 
-  { name: 'Rizs (főtt)', calories: 130, fat: 0.3, protein: 2.7 },
-  { name: 'Barna rizs (főtt)', calories: 123, fat: 1, protein: 2.6 },
-  { name: 'Bulgur (főtt)', calories: 83, fat: 0.2, protein: 3.1 },
-  { name: 'Zabpehely', calories: 389, fat: 6.9, protein: 16.9 },
-  { name: 'Teljes kiőrlésű kenyér', calories: 247, fat: 4.2, protein: 13 },
+const selectedFood = ref(null);
 
-  { name: 'Alma', calories: 52, fat: 0.2, protein: 0.3 },
-  { name: 'Banán', calories: 89, fat: 0.3, protein: 1.1 },
-  { name: 'Narancs', calories: 47, fat: 0.1, protein: 0.9 },
-  { name: 'Eper', calories: 32, fat: 0.3, protein: 0.7 },
-  { name: 'Szőlő', calories: 69, fat: 0.2, protein: 0.7 }
-])
+const page = usePage();
+const foods = ref(page.props.foods ?? []);
 
+// ---- Search / list ----
 const filteredFoods = computed(() => {
-  if (!search.value) return []
-  return foods.value.filter(food =>
+  if (!search.value) return [];
+  return foods.value.filter((food) =>
     food.name.toLowerCase().includes(search.value.toLowerCase())
-  )
-})
+  );
+});
 
 const paginatedFoods = computed(() =>
   filteredFoods.value.slice(first.value, first.value + rows.value)
-)
+);
 
 watch(search, () => {
-  first.value = 0
-  selectedFood.value = null
-})
+  first.value = 0;
+  selectedFood.value = null;
+});
 
 const selectFood = (food) => {
-  selectedFood.value = food
+  selectedFood.value = food;
+};
+
+// ---- Create food form ----
+// Adjust endpoint to your backend route, e.g. POST /foods
+const showSuccessDialog = ref(false);
+
+const createFoodForm = useForm("post", "/fdiary/create", {
+  name: "",
+  fat_g: 0,
+  carbs_g: 0,
+  protein_g: 0,
+  calories: 0,
+  notes: "",
+});
+
+const onCreateFood = () =>
+  createFoodForm
+    .submit()
+    .then((response) => {
+      // If your API returns the created food, you can push it into the list:
+      // Example: const created = response?.data?.data ?? response?.data;
+      // if (created) foods.value.unshift(created);
+
+      createFoodForm.reset();
+      showSuccessDialog.value = true;
+    })
+    .catch(() => {
+      // errors are available in createFoodForm.errors
+    });
+
+function closeSuccessDialog() {
+  showSuccessDialog.value = false;
 }
 </script>
 
@@ -67,9 +85,7 @@ const selectFood = (food) => {
 
     <main class="content">
       <div class="food-search">
-
         <div class="search-layout">
-
           <!-- ⬅️ Bal oldal -->
           <div class="left-panel">
             <div class="search-wrapper">
@@ -85,15 +101,15 @@ const selectFood = (food) => {
             <ul v-if="paginatedFoods.length" class="results">
               <li
                 v-for="food in paginatedFoods"
-                :key="food.name"
+                :key="food.id ?? food.name"
                 @click="selectFood(food)"
                 class="result-item"
               >
                 <strong>{{ food.name }}</strong>
                 <div class="values">
-                  🔥 {{ food.calories }} kcal |
-                  🧈 {{ food.fat }} g |
-                  💪 {{ food.protein }} g
+                  {{ food.calories }} kcal |
+                  {{ food.fat_g }} g |
+                  {{ food.protein_g }} g
                 </div>
               </li>
             </ul>
@@ -104,7 +120,7 @@ const selectFood = (food) => {
               :rows="rows"
               :totalRecords="filteredFoods.length"
               :pageLinkSize="4"
-              @page="e => first = e.first"
+              @page="(e) => (first = e.first)"
               class="paginator"
             />
           </div>
@@ -115,26 +131,195 @@ const selectFood = (food) => {
               <h3>{{ selectedFood.name }}</h3>
 
               <div class="macro">
-                <span>🔥</span>
                 <strong>{{ selectedFood.calories }}</strong>
                 <small>kcal</small>
               </div>
 
               <div class="macro">
-                <span>🧈</span>
-                <strong>{{ selectedFood.fat }}</strong>
+                <strong>{{ selectedFood.fat_g }}</strong>
                 <small>g zsír</small>
               </div>
 
               <div class="macro">
-                <span>💪</span>
-                <strong>{{ selectedFood.protein }}</strong>
+                <strong>{{ selectedFood.carbs_g }}</strong>
+                <small>g szénhidrát</small>
+              </div>
+
+              <div class="macro">
+                <strong>{{ selectedFood.protein_g }}</strong>
                 <small>g fehérje</small>
               </div>
             </div>
           </div>
-
         </div>
+
+        <!-- ➕ Create new food form -->
+        <Divider />
+
+        <section class="create-food">
+          <h2 class="text-xl font-semibold">Új étel hozzáadása</h2>
+
+          <form class="mt-4 space-y-4" @submit.prevent="onCreateFood" novalidate>
+            <!-- Name -->
+            <div class="space-y-1">
+              <FloatLabel variant="on">
+                <InputText
+                  id="food_name"
+                  v-model="createFoodForm.name"
+                  class="w-full"
+                  @change="createFoodForm.validate('name')"
+                />
+                <label for="food_name">Név</label>
+              </FloatLabel>
+
+              <small
+                v-if="createFoodForm.invalid('name')"
+                class="block text-xs text-red-600"
+              >
+                {{ createFoodForm.errors.name }}
+              </small>
+            </div>
+
+            <!-- Calories -->
+            <div class="space-y-1">
+              <FloatLabel variant="on">
+                <InputText
+                  id="calories"
+                  v-model="createFoodForm.calories"
+                  type="number"
+                  inputmode="numeric"
+                  class="w-full"
+                  @change="createFoodForm.validate('calories')"
+                />
+                <label for="calories">Kalória (kcal)</label>
+              </FloatLabel>
+
+              <small
+                v-if="createFoodForm.invalid('calories')"
+                class="block text-xs text-red-600"
+              >
+                {{ createFoodForm.errors.calories }}
+              </small>
+            </div>
+
+            <div class="grid grid-cols-1 gap-4 sm:grid-cols-3">
+              <!-- Fat -->
+              <div class="space-y-1">
+                <FloatLabel variant="on">
+                  <InputText
+                    id="fat_g"
+                    v-model="createFoodForm.fat_g"
+                    type="number"
+                    inputmode="numeric"
+                    class="w-full"
+                    @change="createFoodForm.validate('fat_g')"
+                  />
+                  <label for="fat_g">Zsír (g)</label>
+                </FloatLabel>
+
+                <small
+                  v-if="createFoodForm.invalid('fat_g')"
+                  class="block text-xs text-red-600"
+                >
+                  {{ createFoodForm.errors.fat_g }}
+                </small>
+              </div>
+
+              <!-- Carbs -->
+              <div class="space-y-1">
+                <FloatLabel variant="on">
+                  <InputText
+                    id="carbs_g"
+                    v-model="createFoodForm.carbs_g"
+                    type="number"
+                    inputmode="numeric"
+                    class="w-full"
+                    @change="createFoodForm.validate('carbs_g')"
+                  />
+                  <label for="carbs_g">Szénhidrát (g)</label>
+                </FloatLabel>
+
+                <small
+                  v-if="createFoodForm.invalid('carbs_g')"
+                  class="block text-xs text-red-600"
+                >
+                  {{ createFoodForm.errors.carbs_g }}
+                </small>
+              </div>
+
+              <!-- Protein -->
+              <div class="space-y-1">
+                <FloatLabel variant="on">
+                  <InputText
+                    id="protein_g"
+                    v-model="createFoodForm.protein_g"
+                    type="number"
+                    inputmode="numeric"
+                    class="w-full"
+                    @change="createFoodForm.validate('protein_g')"
+                  />
+                  <label for="protein_g">Fehérje (g)</label>
+                </FloatLabel>
+
+                <small
+                  v-if="createFoodForm.invalid('protein_g')"
+                  class="block text-xs text-red-600"
+                >
+                  {{ createFoodForm.errors.protein_g }}
+                </small>
+              </div>
+            </div>
+
+            <!-- Image path (optional) -->
+            <div class="space-y-1">
+              <FloatLabel variant="on">
+                <InputText
+                  id="notes"
+                  v-model="createFoodForm.notes"
+                  class="w-full"
+                  @change="createFoodForm.validate('notes')"
+                />
+                <label for="notes">Megjegyzés (opcionális)</label>
+              </FloatLabel>
+
+              <small
+                v-if="createFoodForm.invalid('notes')"
+                class="block text-xs text-red-600"
+              >
+                {{ createFoodForm.errors.notes }}
+              </small>
+            </div>
+
+            <Button
+              type="submit"
+              label="Étel mentése"
+              class="w-full sm:w-auto"
+              :disabled="createFoodForm.processing"
+            />
+          </form>
+        </section>
+
+        <Dialog
+          v-model:visible="showSuccessDialog"
+          modal
+          :closable="true"
+          :draggable="false"
+          header="Siker"
+          class="w-[92vw] max-w-md"
+          @hide="closeSuccessDialog"
+        >
+          <p class="text-slate-700">Az étel sikeresen mentve lett.</p>
+
+          <template #footer>
+            <div class="flex w-full justify-end gap-2">
+              <Button
+                label="Close"
+                severity="secondary"
+                @click="closeSuccessDialog"
+              />
+            </div>
+          </template>
+        </Dialog>
       </div>
     </main>
 
@@ -143,108 +328,4 @@ const selectFood = (food) => {
   </div>
 </template>
 
-<style scoped>
-.page {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-}
-
-.content {
-  flex: 1;
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-}
-
-/* Layout */
-.search-layout {
-  display: flex;
-  gap: 1.5rem;
-  align-items: flex-start;
-}
-
-.left-panel {
-  width: 420px;
-}
-
-.right-panel {
-  min-width: 240px;
-}
-
-/* Search card */
-.food-search {
-  margin: 2rem auto;
-}
-
-/* Kereső */
-.search-wrapper {
-  display: flex;
-  gap: 0.5rem;
-}
-
-.search-input {
-  flex: 1;
-  padding: 0.65rem;
-  border-radius: 10px;
-  border: none;
-  background-color: rgba(25, 212, 118, 0.75);
-}
-
-.search-button {
-  padding: 0 1rem;
-  border-radius: 10px;
-  border: none;
-  background-color: rgba(25, 212, 118, 0.9);
-  cursor: pointer;
-}
-
-/* Lista */
-.results {
-  list-style: none;
-  padding: 0;
-  margin-top: 0.75rem;
-}
-
-.result-item {
-  padding: 0.6rem;
-  cursor: pointer;
-  border-bottom: 1px solid var(--surface-border);
-}
-
-.result-item:hover {
-  background: var(--surface-hover);
-}
-
-.values {
-  font-size: 0.85rem;
-  color: var(--text-color-secondary);
-}
-
-/* Jobb oldali kártya */
-.food-card {
-  padding: 1rem;
-  border-radius: 14px;
-  background: var(--surface-0);
-  border: 1px solid color-mix(
-    in srgb,
-    var(--surface-border) 60%,
-    var(--primary-color) 40%
-  );
-  box-shadow:
-    0 6px 18px rgba(0, 0, 0, 0.35),
-    0 0 0 1px rgba(255, 255, 255, 0.05);
-}
-
-.food-card h3 {
-  margin-bottom: 0.75rem;
-}
-
-.macro {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  margin-bottom: 0.4rem;
-}
-
-</style>
+<style scoped></style>

@@ -20,6 +20,7 @@ return new class extends Migration {
             $table->unsignedInteger('protein_g')->default(0);
 
             $table->unsignedInteger('calories')->default(0);
+            $table->text('note')->nullable();
 
             $table->string('image_path')->nullable();
 

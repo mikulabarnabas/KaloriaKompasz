@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\UserProfile;
-use Illuminate\Http\Request;
 use App\Http\Requests\ProfileRequest;
 use Inertia\Inertia;
 
