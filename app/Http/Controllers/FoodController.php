@@ -19,6 +19,15 @@ class FoodController extends Controller
             return redirect()->route('login');
         }
 
+        $userId = (int) auth()->id();
+        $today = now()->toDateString();
+
+        $todayDiary = FoodDiary::query()
+            ->where('user_id', $userId)
+            ->whereDate('date', $today)
+            ->with(['foods'])
+            ->first();
+
         return Inertia::render('food_diary', [
             'foods' => Foods::query()
                 ->orderBy('name')
@@ -31,6 +40,7 @@ class FoodController extends Controller
                     'protein_g',
                     'image_path',
                 ]),
+            'todayDiary' => $todayDiary,
         ]);
     }
 
@@ -69,10 +79,10 @@ class FoodController extends Controller
 
     public function storeDiary(Request $request)
     {
-
         $data = $request->validate([
             'food_id' => ['required', 'integer', 'exists:foods,id'],
             'meal_type' => ['nullable', 'in:breakfast,lunch,dinner,snack,other'],
+            'quantity' => ['nullable', 'integer', 'min:1', 'max:100'],
             'date' => ['nullable', 'date'],
         ]);
 
@@ -83,25 +93,22 @@ class FoodController extends Controller
             : now()->toDateString();
 
         $mealType = $data['meal_type'] ?? 'other';
+        $quantity = (int) ($data['quantity'] ?? 1);
 
-        return DB::transaction(function () use ($userId, $date, $mealType, $data) {
-            // Create today's diary header for THIS user (user_id = users.id)
-            $diary = FoodDiary::query()->firstOrCreate(
-                [
-                    'user_id' => $userId,
-                    'date' => $date,
-                ],
-                [
+        return DB::transaction(function () use ($userId, $date, $mealType, $quantity, $data) {
+            // One diary header per user per day
+            $diary = FoodDiary::query()->firstOrCreate([
+                'user_id' => $userId,
+                'date' => $date,
+            ]);
+
+            // Allow duplicates: always create a new pivot row
+            $diary->foods()->attach([
+                (int) $data['food_id'] => [
                     'meal_type' => $mealType,
-                    'calories' => 0,
-                    'fat_g' => 0,
-                    'carbs_g' => 0,
-                    'protein_g' => 0,
+                    'quantity' => $quantity,
                 ]
-            );
-
-            // Attach food in pivot (requires foods() relationship on FoodDiary)
-            $diary->foods()->syncWithoutDetaching([(int) $data['food_id']]);
+            ]);
 
             return back()->with('success', 'Food added to today.');
         });
