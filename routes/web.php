@@ -19,5 +19,7 @@ Route::post('/register', [AuthController::class, 'registerUser'])->middleware([H
 Route::post('/login', [AuthController::class, 'loginUser'])->middleware([HandlePrecognitiveRequests::class]);
 Route::post('/logout', [AuthController::class, 'logoutUser']);
 Route::post('/profile-save', [ProfileController::class, 'save'])->middleware([HandlePrecognitiveRequests::class]);
-Route::post('/fdiary/create', [FoodController::class, 'store'])->middleware([HandlePrecognitiveRequests::class]);
+Route::post('/fdiary/create', [FoodController::class, 'storeFood'])->middleware([HandlePrecognitiveRequests::class]);
 Route::post('/wdiary/create', [ExercisesController::class, 'store'])->middleware([HandlePrecognitiveRequests::class]);
+Route::post('/fdiary/today/add', [FoodController::class, 'storeDiary']);
+

@@ -27,13 +27,6 @@ const people = [
     photo: "",
   }
 ];
-
-const props = defineProps({
-  name: {
-    type: String,
-    default: "",
-  },
-});
 </script>
 <template>
 

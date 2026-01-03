@@ -35,9 +35,6 @@ class AuthController extends Controller
         return redirect()->route('home');
     }
 
-    /**
-     * Handle an authentication attempt.
-     */
     public function loginUser(LoginUserRequest $request)
     {
         $credentials = $request->validated();
@@ -52,6 +49,7 @@ class AuthController extends Controller
             $request->session()->regenerate();
             return redirect()->route('home');
         }
+        
 
 
         return back()->withErrors([

@@ -7,7 +7,7 @@ import { router, usePage } from "@inertiajs/vue3";
 
 const page = usePage();
 
-const user = computed(() => page.props.user ?? null);
+const user = computed(() => page.props.auth?.user ?? null);
 const isLoggedIn = computed(() => Boolean(user.value));
 
 function goHome() {
@@ -62,7 +62,7 @@ const accountItems = computed(() => [
 const accountMenuRef = ref(null);
 
 function toggleAccountMenu(event) {
-  accountMenuRef.value.toggle(event);
+  accountMenuRef.value?.toggle(event);
 }
 
 const isDark = ref(false);
@@ -108,7 +108,10 @@ function toggleDarkMode() {
     </template>
 
     <template #item="{ item, props }">
-      <a v-bind="props.action" class="flex items-center gap-2 rounded-md px-3 py-2">
+      <a
+        v-bind="props.action"
+        class="flex items-center gap-2 rounded-md px-3 py-2"
+      >
         <i v-if="item.icon" :class="item.icon"></i>
         <span class="min-w-0 truncate">{{ item.label }}</span>
       </a>

@@ -3,7 +3,9 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Foods;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class FoodDiary extends Model
 {
@@ -30,5 +32,15 @@ class FoodDiary extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function foods()
+    {
+        return $this->belongsToMany(
+            Foods::class,
+            'food_to_food_diary',
+            'food_diary_id', // THIS table's FK on pivot
+            'food_id'        // Food FK on pivot
+        );
     }
 }

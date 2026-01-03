@@ -25,7 +25,6 @@ const selectedFood = ref(null);
 const page = usePage();
 const foods = ref(page.props.foods ?? []);
 
-// ---- Search / list ----
 const filteredFoods = computed(() => {
   const q = search.value.trim().toLowerCase();
   if (!q) return [];
@@ -45,6 +44,29 @@ watch(search, () => {
 
 const selectFood = (food) => {
   selectedFood.value = food;
+
+  // Optional: automatically set food_id when selecting
+  addToDiaryForm.food_id = food?.id ?? null;
+};
+
+// ---- Add selected food to today's diary ----
+const addToDiaryForm = useForm("post", "/fdiary/today/add", {
+  food_id: null,
+  meal_type: "other",
+});
+
+const addSelectedFoodToToday = () => {
+  if (!selectedFood.value?.id) return;
+
+  addToDiaryForm.food_id = selectedFood.value.id;
+
+  return addToDiaryForm
+    .submit()
+    .then(() => {
+      // if your backend returns updated diary props, reload them:
+      // router.reload({ only: ["todayDiary"] });
+    })
+    .catch(() => { });
 };
 
 // ---- Create food form ----
@@ -189,6 +211,28 @@ const imageSrc = (food) => {
               <div class="mt-1 whitespace-pre-wrap text-sm">
                 {{ selectedFood.notes }}
               </div>
+            </div>
+
+            <div class="mt-4 space-y-3">
+              <div class="space-y-1">
+                <label class="text-xs font-medium">Meal type</label>
+                <select v-model="addToDiaryForm.meal_type" class="w-full rounded-lg border px-3 py-2 text-sm">
+                  <option value="breakfast">breakfast</option>
+                  <option value="lunch">lunch</option>
+                  <option value="dinner">dinner</option>
+                  <option value="snack">snack</option>
+                  <option value="other">other</option>
+                </select>
+              </div>
+
+              <button type="button" class="w-full rounded-lg border px-3 py-2 text-sm font-medium"
+                :disabled="addToDiaryForm.processing" @click="addSelectedFoodToToday">
+                Add to today's diary
+              </button>
+
+              <small v-if="addToDiaryForm.invalid('food_id')" class="block text-xs">
+                {{ addToDiaryForm.errors.food_id }}
+              </small>
             </div>
           </div>
 

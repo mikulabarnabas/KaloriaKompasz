@@ -2,9 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\FoodDiaryRequest;
+use App\Http\Requests\FoodRequest;
+use Illuminate\Http\Request;
 use App\Models\Foods;
+use App\Models\FoodDiary;
 use Inertia\Inertia;
+
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class FoodController extends Controller
 {
@@ -29,7 +34,7 @@ class FoodController extends Controller
         ]);
     }
 
-    public function store(FoodDiaryRequest $request)
+    public function storeFood(FoodRequest $request)
     {
         $data = $request->validated();
 
@@ -60,5 +65,45 @@ class FoodController extends Controller
         }
 
         return redirect()->back()->with('success', 'Food created.');
+    }
+
+    public function storeDiary(Request $request)
+    {
+
+        $data = $request->validate([
+            'food_id' => ['required', 'integer', 'exists:foods,id'],
+            'meal_type' => ['nullable', 'in:breakfast,lunch,dinner,snack,other'],
+            'date' => ['nullable', 'date'],
+        ]);
+
+        $userId = (int) $request->user()->id;
+
+        $date = isset($data['date'])
+            ? Carbon::parse($data['date'])->toDateString()
+            : now()->toDateString();
+
+        $mealType = $data['meal_type'] ?? 'other';
+
+        return DB::transaction(function () use ($userId, $date, $mealType, $data) {
+            // Create today's diary header for THIS user (user_id = users.id)
+            $diary = FoodDiary::query()->firstOrCreate(
+                [
+                    'user_id' => $userId,
+                    'date' => $date,
+                ],
+                [
+                    'meal_type' => $mealType,
+                    'calories' => 0,
+                    'fat_g' => 0,
+                    'carbs_g' => 0,
+                    'protein_g' => 0,
+                ]
+            );
+
+            // Attach food in pivot (requires foods() relationship on FoodDiary)
+            $diary->foods()->syncWithoutDetaching([(int) $data['food_id']]);
+
+            return back()->with('success', 'Food added to today.');
+        });
     }
 }
