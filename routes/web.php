@@ -11,7 +11,6 @@ use Illuminate\Foundation\Http\Middleware\HandlePrecognitiveRequests;
 Route::get('/', [HomeController::class, 'show'])->name('home');
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
 Route::get('/register', [AuthController::class, 'showRegister']);
-Route::get('/fdiary', [FoodController::class, 'show']);
 Route::get('/wdiary', [ExercisesController::class, 'show']);
 Route::get('/profile', [ProfileController::class, 'show']);
 
@@ -22,4 +21,20 @@ Route::post('/profile-save', [ProfileController::class, 'save'])->middleware([Ha
 Route::post('/fdiary/create', [FoodController::class, 'storeFood'])->middleware([HandlePrecognitiveRequests::class]);
 Route::post('/wdiary/create', [ExercisesController::class, 'store'])->middleware([HandlePrecognitiveRequests::class]);
 Route::post('/fdiary/today/add', [FoodController::class, 'storeDiary']);
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/fdiary', [FoodController::class, 'show'])->name('fdiary.show');
+
+    // get diary by date (query string)
+    Route::get('/fdiary/diary', [FoodController::class, 'getDiaryByDate'])
+        ->name('fdiary.diary.by-date');
+
+    // add food entry to a diary (query string)
+    Route::post('/fdiary/entry', [FoodController::class, 'addEntry'])
+        ->name('fdiary.entry.add');
+
+    // delete one entry by pivot id (query string)
+    Route::delete('/fdiary/entry', [FoodController::class, 'deleteEntry'])
+        ->name('fdiary.entry.delete');
+});
 

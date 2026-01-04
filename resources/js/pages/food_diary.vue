@@ -16,22 +16,25 @@ import FileUpload from "primevue/fileupload";
 
 import { useForm } from "laravel-precognition-vue";
 
+const page = usePage();
+
+const foods = ref(page.props.foods ?? []);
+const selectedDate = ref(page.props.selectedDate ?? new Date().toISOString().slice(0, 10));
+const selectedDiary = ref(page.props.selectedDiary ?? null);
+
 const search = ref("");
 const first = ref(0);
 const rows = ref(3);
-
 const selectedFood = ref(null);
 
-const page = usePage();
-const foods = ref(page.props.foods ?? []);
+// feedback dialog
+const showResponseDialog = ref(false);
+const responseMessage = ref("");
 
-// TODAY DIARY from backend prop: todayDiary
-const todayDiary = computed(() => page.props.todayDiary ?? null);
-const todayEntries = computed(() => todayDiary.value?.foods ?? []);
-
-// --- UI feedback after adding to diary ---
-const showAddResponseDialog = ref(false);
-const addResponseMessage = ref("");
+const imageSrc = (food) => {
+  if (!food?.image_path) return null;
+  return `/storage/${food.image_path}`;
+};
 
 const filteredFoods = computed(() => {
   const q = search.value.trim().toLowerCase();
@@ -52,35 +55,142 @@ watch(search, () => {
 
 const selectFood = (food) => {
   selectedFood.value = food;
-  addToDiaryForm.food_id = food?.id ?? null;
+  addEntryForm.food_id = food?.id ?? null;
 };
 
-// ---- Add selected food to today's diary ----
-// Make sure your backend accepts quantity too (recommended)
-const addToDiaryForm = useForm("post", "/fdiary/today/add", {
+const entries = computed(() => selectedDiary.value?.foods ?? []);
+
+const totals = computed(() => {
+  const list = entries.value;
+
+  return {
+    calories: list.reduce(
+      (s, f) => s + Number(f.calories ?? 0) * Number(f.pivot?.quantity ?? 1),
+      0
+    ),
+    fat_g: list.reduce(
+      (s, f) => s + Number(f.fat_g ?? 0) * Number(f.pivot?.quantity ?? 1),
+      0
+    ),
+    carbs_g: list.reduce(
+      (s, f) => s + Number(f.carbs_g ?? 0) * Number(f.pivot?.quantity ?? 1),
+      0
+    ),
+    protein_g: list.reduce(
+      (s, f) => s + Number(f.protein_g ?? 0) * Number(f.pivot?.quantity ?? 1),
+      0
+    ),
+  };
+});
+
+// ---- Load diary for a date (API) ----
+const loadingDiary = ref(false);
+
+const loadDiary = async (date) => {
+  loadingDiary.value = true;
+
+  try {
+    const url = `/fdiary/diary?date=${encodeURIComponent(date)}`;
+    const res = await fetch(url, {
+      headers: {
+        Accept: "application/json",
+      },
+      credentials: "same-origin",
+    });
+
+    if (!res.ok) throw new Error("Failed to load diary.");
+
+    const data = await res.json();
+    selectedDiary.value = data.diary ?? null;
+  } catch (e) {
+    selectedDiary.value = null;
+    responseMessage.value = e?.message ?? "Failed to load diary.";
+    showResponseDialog.value = true;
+  } finally {
+    loadingDiary.value = false;
+  }
+};
+
+watch(selectedDate, (d) => {
+  // keep URL in sync so refresh works
+  router.get(
+    "/fdiary",
+    { date: d },
+    { preserveState: true, replace: true, only: ["selectedDate", "selectedDiary"] }
+  );
+
+  // also load immediately (so UI updates without relying on inertia partial reload)
+  loadDiary(d);
+});
+
+// arrows
+const shiftDate = (days) => {
+  const dt = new Date(selectedDate.value);
+  dt.setDate(dt.getDate() + days);
+  selectedDate.value = dt.toISOString().slice(0, 10);
+};
+
+// ---- Add entry to selected date (API) ----
+const addEntryForm = useForm("post", "/fdiary/entry", {
+  date: selectedDate.value,
   food_id: null,
   meal_type: "other",
   quantity: 1,
 });
 
-const addSelectedFoodToToday = () => {
+watch(selectedDate, (d) => {
+  addEntryForm.date = d;
+});
+
+const addSelectedFoodToSelectedDate = async () => {
   if (!selectedFood.value?.id) return;
 
-  addToDiaryForm.food_id = selectedFood.value.id;
+  addEntryForm.food_id = selectedFood.value.id;
+  addEntryForm.date = selectedDate.value;
 
-  return addToDiaryForm
-    .submit()
-    .then(() => {
-      addResponseMessage.value = `Added: ${selectedFood.value.name} (${addToDiaryForm.meal_type}) x${addToDiaryForm.quantity}`;
-      showAddResponseDialog.value = true;
-
-      // reload today's diary list so the new row appears
-      router.reload({ only: ["todayDiary"] });
-    })
-    .catch(() => {
-      addResponseMessage.value = "Could not add food to today's diary.";
-      showAddResponseDialog.value = true;
+  try {
+    await addEntryForm.submit({
+      // Precognition form submits via inertia/axios internally; keep as-is.
+      // But endpoint returns JSON. That's OK; still works for submit, but
+      // easiest is to use fetch for pure JSON. If submit causes issues,
+      // tell me and we switch this to fetch with CSRF.
     });
+
+    responseMessage.value = `Added: ${selectedFood.value.name} (${addEntryForm.meal_type}) x${addEntryForm.quantity} on ${selectedDate.value}`;
+    showResponseDialog.value = true;
+
+    await loadDiary(selectedDate.value);
+  } catch (e) {
+    responseMessage.value = "Could not add entry.";
+    showResponseDialog.value = true;
+  }
+};
+
+// ---- Delete entry by pivot id (API) ----
+const deleteEntry = async (entryId) => {
+  if (!entryId) return;
+
+  try {
+    const url = `/fdiary/entry?entry_id=${encodeURIComponent(entryId)}`;
+    const res = await fetch(url, {
+      method: "DELETE",
+      headers: {
+        Accept: "application/json",
+        "X-CSRF-TOKEN": page.props.csrf_token,
+      },
+      credentials: "same-origin",
+    });
+
+    if (!res.ok) throw new Error("Failed to delete entry.");
+
+    responseMessage.value = "Entry deleted.";
+    showResponseDialog.value = true;
+
+    await loadDiary(selectedDate.value);
+  } catch (e) {
+    responseMessage.value = e?.message ?? "Failed to delete entry.";
+    showResponseDialog.value = true;
+  }
 };
 
 // ---- Create food form ----
@@ -106,45 +216,14 @@ const onRemoveImage = () => {
 
 const onCreateFood = () =>
   createFoodForm
-    .submit({
-      forceFormData: true,
-    })
+    .submit({ forceFormData: true })
     .then(() => {
       createFoodForm.reset();
       onRemoveImage();
       showSuccessDialog.value = true;
-
       router.reload({ only: ["foods"] });
     })
     .catch(() => {});
-
-const imageSrc = (food) => {
-  if (!food?.image_path) return null;
-  return `/storage/${food.image_path}`;
-};
-
-const totals = computed(() => {
-  const list = todayEntries.value;
-
-  return {
-    calories: list.reduce(
-      (s, f) => s + Number(f.calories ?? 0) * Number(f.pivot?.quantity ?? 1),
-      0
-    ),
-    fat_g: list.reduce(
-      (s, f) => s + Number(f.fat_g ?? 0) * Number(f.pivot?.quantity ?? 1),
-      0
-    ),
-    carbs_g: list.reduce(
-      (s, f) => s + Number(f.carbs_g ?? 0) * Number(f.pivot?.quantity ?? 1),
-      0
-    ),
-    protein_g: list.reduce(
-      (s, f) => s + Number(f.protein_g ?? 0) * Number(f.pivot?.quantity ?? 1),
-      0
-    ),
-  };
-});
 </script>
 
 <template>
@@ -152,8 +231,49 @@ const totals = computed(() => {
     <Navbar />
 
     <main class="mx-auto w-full max-w-7xl px-4 py-6">
-      <!-- 3x1 grid -->
+      <!-- DATE NAV ROW (calendar + arrows) -->
+      <section class="mb-6 rounded-2xl border p-5">
+        <h2 class="text-lg font-semibold">Food diary date</h2>
+
+        <div class="mt-4 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+          <div class="flex items-center gap-2">
+            <Button
+              label="←"
+              severity="secondary"
+              type="button"
+              @click="shiftDate(-1)"
+              :disabled="loadingDiary"
+            />
+            <div class="space-y-1">
+              <label class="text-xs font-medium">Date</label>
+              <input
+                v-model="selectedDate"
+                type="date"
+                class="w-full rounded-lg border px-3 py-2 text-sm"
+                :disabled="loadingDiary"
+              />
+            </div>
+            <Button
+              label="→"
+              severity="secondary"
+              type="button"
+              @click="shiftDate(1)"
+              :disabled="loadingDiary"
+            />
+          </div>
+
+          <div class="text-sm">
+            <span v-if="loadingDiary">Loading diary...</span>
+            <span v-else>
+              Entries: <b>{{ entries.length }}</b>
+            </span>
+          </div>
+        </div>
+      </section>
+
+      <!-- EXISTING 3-COLUMN GRID -->
       <div class="grid grid-cols-1 gap-6 lg:grid-cols-3">
+        <!-- SEARCH -->
         <section class="rounded-2xl border p-5">
           <h2 class="text-lg font-semibold">Keresés</h2>
           <p class="mt-1 text-sm">Keress név alapján.</p>
@@ -180,18 +300,14 @@ const totals = computed(() => {
               >
                 <div class="flex items-start justify-between gap-3">
                   <div class="min-w-0">
-                    <div class="truncate font-semibold">
-                      {{ food.name }}
-                    </div>
+                    <div class="truncate font-semibold">{{ food.name }}</div>
                     <div class="mt-1 text-xs">
                       {{ food.calories }} kcal · Zsír {{ food.fat_g }} g ·
                       Fehérje {{ food.protein_g }} g
                     </div>
                   </div>
 
-                  <div
-                    class="shrink-0 rounded-full border px-2 py-1 text-xs"
-                  >
+                  <div class="shrink-0 rounded-full border px-2 py-1 text-xs">
                     #{{ food.id }}
                   </div>
                 </div>
@@ -215,18 +331,13 @@ const totals = computed(() => {
           </div>
         </section>
 
-        <!-- RIGHT: Selected food -->
+        <!-- SELECTED FOOD + ADD TO SELECTED DATE -->
         <section class="rounded-2xl border p-5">
           <h2 class="text-lg font-semibold">Kiválasztott étel</h2>
-          <p class="mt-1 text-sm">Kattints egy ételre középen.</p>
+          <p class="mt-1 text-sm">Add hozzá a kiválasztott dátumhoz.</p>
 
           <div v-if="selectedFood" class="mt-4 rounded-xl border p-4">
-            <div class="flex items-start justify-between gap-3">
-              <div>
-                <div class="text-xl font-semibold">{{ selectedFood.name }}</div>
-                <div class="mt-1 text-xs">ID: {{ selectedFood.id }}</div>
-              </div>
-            </div>
+            <div class="text-xl font-semibold">{{ selectedFood.name }}</div>
 
             <img
               v-if="selectedFood.image_path"
@@ -235,46 +346,11 @@ const totals = computed(() => {
               alt="Food image"
             />
 
-            <div class="mt-4 grid grid-cols-2 gap-3 text-sm">
-              <div class="rounded-lg border p-3">
-                <div class="text-xs">Kalória</div>
-                <div class="mt-1 font-semibold">
-                  {{ selectedFood.calories }} kcal
-                </div>
-              </div>
-
-              <div class="rounded-lg border p-3">
-                <div class="text-xs">Zsír</div>
-                <div class="mt-1 font-semibold">{{ selectedFood.fat_g }} g</div>
-              </div>
-
-              <div class="rounded-lg border p-3">
-                <div class="text-xs">Szénhidrát</div>
-                <div class="mt-1 font-semibold">
-                  {{ selectedFood.carbs_g }} g
-                </div>
-              </div>
-
-              <div class="rounded-lg border p-3">
-                <div class="text-xs">Fehérje</div>
-                <div class="mt-1 font-semibold">
-                  {{ selectedFood.protein_g }} g
-                </div>
-              </div>
-            </div>
-
-            <div v-if="selectedFood.notes" class="mt-4 rounded-lg border p-3">
-              <div class="text-xs font-medium">Megjegyzés</div>
-              <div class="mt-1 whitespace-pre-wrap text-sm">
-                {{ selectedFood.notes }}
-              </div>
-            </div>
-
             <div class="mt-4 space-y-3">
               <div class="space-y-1">
                 <label class="text-xs font-medium">Meal type</label>
                 <select
-                  v-model="addToDiaryForm.meal_type"
+                  v-model="addEntryForm.meal_type"
                   class="w-full rounded-lg border px-3 py-2 text-sm"
                 >
                   <option value="breakfast">breakfast</option>
@@ -288,7 +364,7 @@ const totals = computed(() => {
               <div class="space-y-1">
                 <label class="text-xs font-medium">Quantity</label>
                 <input
-                  v-model.number="addToDiaryForm.quantity"
+                  v-model.number="addEntryForm.quantity"
                   type="number"
                   min="1"
                   step="1"
@@ -299,24 +375,11 @@ const totals = computed(() => {
               <button
                 type="button"
                 class="w-full rounded-lg border px-3 py-2 text-sm font-medium"
-                :disabled="addToDiaryForm.processing"
-                @click="addSelectedFoodToToday"
+                :disabled="addEntryForm.processing"
+                @click="addSelectedFoodToSelectedDate"
               >
-                Add to today's diary
+                Add to {{ selectedDate }}
               </button>
-
-              <small
-                v-if="addToDiaryForm.invalid('food_id')"
-                class="block text-xs"
-              >
-                {{ addToDiaryForm.errors.food_id }}
-              </small>
-              <small
-                v-if="addToDiaryForm.invalid('quantity')"
-                class="block text-xs"
-              >
-                {{ addToDiaryForm.errors.quantity }}
-              </small>
             </div>
           </div>
 
@@ -325,15 +388,11 @@ const totals = computed(() => {
           </div>
         </section>
 
+        <!-- CREATE FOOD -->
         <section class="rounded-2xl border p-5">
           <h2 class="text-lg font-semibold">Új étel hozzáadása</h2>
-          <p class="mt-1 text-sm">Add meg a makrókat és opcionálisan egy képet.</p>
 
-          <form
-            class="mt-5 space-y-4"
-            @submit.prevent="onCreateFood"
-            novalidate
-          >
+          <form class="mt-5 space-y-4" @submit.prevent="onCreateFood" novalidate>
             <div class="space-y-1">
               <FloatLabel variant="on">
                 <InputText
@@ -347,105 +406,6 @@ const totals = computed(() => {
 
               <small v-if="createFoodForm.invalid('name')" class="block text-xs">
                 {{ createFoodForm.errors.name }}
-              </small>
-            </div>
-
-            <div class="space-y-1">
-              <FloatLabel variant="on">
-                <InputText
-                  id="calories"
-                  v-model="createFoodForm.calories"
-                  type="number"
-                  inputmode="numeric"
-                  class="w-full"
-                  @change="createFoodForm.validate('calories')"
-                />
-                <label for="calories">Kalória (kcal)</label>
-              </FloatLabel>
-
-              <small
-                v-if="createFoodForm.invalid('calories')"
-                class="block text-xs"
-              >
-                {{ createFoodForm.errors.calories }}
-              </small>
-            </div>
-
-            <div class="grid grid-cols-1 gap-4 sm:grid-cols-3 lg:grid-cols-1">
-              <div class="space-y-1">
-                <FloatLabel variant="on">
-                  <InputText
-                    id="fat_g"
-                    v-model="createFoodForm.fat_g"
-                    type="number"
-                    inputmode="numeric"
-                    class="w-full"
-                    @change="createFoodForm.validate('fat_g')"
-                  />
-                  <label for="fat_g">Zsír (g)</label>
-                </FloatLabel>
-
-                <small v-if="createFoodForm.invalid('fat_g')" class="block text-xs">
-                  {{ createFoodForm.errors.fat_g }}
-                </small>
-              </div>
-
-              <div class="space-y-1">
-                <FloatLabel variant="on">
-                  <InputText
-                    id="carbs_g"
-                    v-model="createFoodForm.carbs_g"
-                    type="number"
-                    inputmode="numeric"
-                    class="w-full"
-                    @change="createFoodForm.validate('carbs_g')"
-                  />
-                  <label for="carbs_g">Szénhidrát (g)</label>
-                </FloatLabel>
-
-                <small
-                  v-if="createFoodForm.invalid('carbs_g')"
-                  class="block text-xs"
-                >
-                  {{ createFoodForm.errors.carbs_g }}
-                </small>
-              </div>
-
-              <div class="space-y-1">
-                <FloatLabel variant="on">
-                  <InputText
-                    id="protein_g"
-                    v-model="createFoodForm.protein_g"
-                    type="number"
-                    inputmode="numeric"
-                    class="w-full"
-                    @change="createFoodForm.validate('protein_g')"
-                  />
-                  <label for="protein_g">Fehérje (g)</label>
-                </FloatLabel>
-
-                <small
-                  v-if="createFoodForm.invalid('protein_g')"
-                  class="block text-xs"
-                >
-                  {{ createFoodForm.errors.protein_g }}
-                </small>
-              </div>
-            </div>
-
-            <div class="space-y-1">
-              <FloatLabel variant="on">
-                <InputText
-                  id="notes"
-                  v-model="createFoodForm.notes"
-                  class="w-full"
-                  @change="createFoodForm.validate('notes')"
-                />
-                <label for="notes">Megjegyzés (opcionális)</label>
-              </FloatLabel>
-
-              <small v-if="createFoodForm.invalid('notes')" class="block text-xs">
-                {{ createFoodForm.errors.notes }}
               </small>
             </div>
 
@@ -463,14 +423,6 @@ const totals = computed(() => {
                 @clear="onRemoveImage"
                 class="w-full"
               />
-
-              <small v-if="createFoodForm.invalid('image')" class="block text-xs">
-                {{ createFoodForm.errors.image }}
-              </small>
-
-              <div v-if="createFoodForm.image" class="text-xs">
-                Selected: {{ createFoodForm.image.name }}
-              </div>
             </div>
 
             <Button
@@ -485,29 +437,28 @@ const totals = computed(() => {
 
       <Divider class="my-8" />
 
-      <!-- NEW ROW: Today's diary entries -->
+      <!-- DIARY LIST FOR SELECTED DATE -->
       <section class="rounded-2xl border p-5">
-        <h2 class="text-lg font-semibold">Mai napló</h2>
-        <p class="mt-1 text-sm">A mai nap hozzáadott tételek.</p>
+        <h2 class="text-lg font-semibold">Diary: {{ selectedDate }}</h2>
 
-        <div v-if="todayEntries.length" class="mt-4 space-y-3">
+        <div v-if="entries.length" class="mt-4 space-y-3">
           <div class="rounded-xl border p-4 text-sm">
-            <div class="font-semibold">Összesen</div>
+            <div class="font-semibold">Totals</div>
             <div class="mt-2 grid grid-cols-2 gap-2 sm:grid-cols-4">
               <div class="rounded-lg border p-2">
-                <div class="text-xs">Kalória</div>
+                <div class="text-xs">Calories</div>
                 <div class="font-semibold">{{ totals.calories }} kcal</div>
               </div>
               <div class="rounded-lg border p-2">
-                <div class="text-xs">Zsír</div>
+                <div class="text-xs">Fat</div>
                 <div class="font-semibold">{{ totals.fat_g }} g</div>
               </div>
               <div class="rounded-lg border p-2">
-                <div class="text-xs">Szénhidrát</div>
+                <div class="text-xs">Carbs</div>
                 <div class="font-semibold">{{ totals.carbs_g }} g</div>
               </div>
               <div class="rounded-lg border p-2">
-                <div class="text-xs">Fehérje</div>
+                <div class="text-xs">Protein</div>
                 <div class="font-semibold">{{ totals.protein_g }} g</div>
               </div>
             </div>
@@ -515,34 +466,35 @@ const totals = computed(() => {
 
           <ul class="space-y-2">
             <li
-              v-for="food in todayEntries"
+              v-for="food in entries"
               :key="food.pivot?.id ?? `${food.id}-${food.pivot?.created_at}`"
               class="rounded-xl border p-3"
             >
               <div class="flex items-start justify-between gap-3">
                 <div class="min-w-0">
-                  <div class="truncate font-semibold">
-                    {{ food.name }}
-                  </div>
+                  <div class="truncate font-semibold">{{ food.name }}</div>
                   <div class="mt-1 text-xs">
                     {{ food.calories }} kcal · qty {{ food.pivot?.quantity ?? 1 }}
                     · meal {{ food.pivot?.meal_type ?? "other" }}
                   </div>
                 </div>
 
-                <img
-                  v-if="food.image_path"
-                  :src="imageSrc(food)"
-                  class="h-12 w-12 rounded-lg border object-cover"
-                  alt="Food"
-                />
+                <div class="flex items-center gap-2">
+                  <Button
+                    label="Delete"
+                    severity="danger"
+                    size="small"
+                    type="button"
+                    @click="deleteEntry(food.pivot?.id)"
+                  />
+                </div>
               </div>
             </li>
           </ul>
         </div>
 
         <div v-else class="mt-4 rounded-xl border border-dashed p-6 text-sm">
-          Ma még nincs semmi a naplóban.
+          No entries for this date.
         </div>
       </section>
 
@@ -567,23 +519,22 @@ const totals = computed(() => {
         </template>
       </Dialog>
 
-      <!-- RESPONSE Dialog after add to diary -->
       <Dialog
-        v-model:visible="showAddResponseDialog"
+        v-model:visible="showResponseDialog"
         modal
         :closable="true"
         :draggable="false"
-        header="Diary update"
+        header="Diary"
         class="w-[92vw] max-w-md"
       >
-        <p>{{ addResponseMessage }}</p>
+        <p>{{ responseMessage }}</p>
 
         <template #footer>
           <div class="flex w-full justify-end gap-2">
             <Button
               label="Close"
               severity="secondary"
-              @click="showAddResponseDialog = false"
+              @click="showResponseDialog = false"
             />
           </div>
         </template>
