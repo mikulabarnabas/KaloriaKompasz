@@ -9,32 +9,33 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Http\Middleware\HandlePrecognitiveRequests;
 
 Route::get('/', [HomeController::class, 'show'])->name('home');
-Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
-Route::get('/register', [AuthController::class, 'showRegister']);
-Route::get('/wdiary', [ExercisesController::class, 'show']);
-Route::get('/profile', [ProfileController::class, 'show']);
+
+Route::get('/register', [AuthController::class, 'showRegister'])->middleware([HandlePrecognitiveRequests::class])->name('login');
+Route::get('/login', [AuthController::class, 'showLogin'])->middleware([HandlePrecognitiveRequests::class])->name('login');
 
 Route::post('/register', [AuthController::class, 'registerUser'])->middleware([HandlePrecognitiveRequests::class]);
 Route::post('/login', [AuthController::class, 'loginUser'])->middleware([HandlePrecognitiveRequests::class]);
-Route::post('/logout', [AuthController::class, 'logoutUser']);
-Route::post('/profile-save', [ProfileController::class, 'save'])->middleware([HandlePrecognitiveRequests::class]);
-Route::post('/fdiary/create', [FoodController::class, 'storeFood'])->middleware([HandlePrecognitiveRequests::class]);
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/profile', [ProfileController::class, 'show']);
+    Route::post('/logout', [AuthController::class, 'logoutUser']);
+    Route::post('/profile-save', [ProfileController::class, 'save'])->middleware([HandlePrecognitiveRequests::class]);
+});
+
+Route::middleware(['auth'])->group(function () {
+
+    Route::post('/fdiary/create', [FoodController::class, 'storeFood'])->middleware([HandlePrecognitiveRequests::class]);
+});
+
+Route::get('/wdiary', [ExercisesController::class, 'show']);
+
 Route::post('/wdiary/create', [ExercisesController::class, 'store'])->middleware([HandlePrecognitiveRequests::class]);
 Route::post('/fdiary/today/add', [FoodController::class, 'storeDiary']);
 
 Route::middleware(['auth'])->group(function () {
-    Route::get('/fdiary', [FoodController::class, 'show'])->name('fdiary.show');
-
-    // get diary by date (query string)
-    Route::get('/fdiary/diary', [FoodController::class, 'getDiaryByDate'])
-        ->name('fdiary.diary.by-date');
-
-    // add food entry to a diary (query string)
-    Route::post('/fdiary/entry', [FoodController::class, 'addEntry'])
-        ->name('fdiary.entry.add');
-
-    // delete one entry by pivot id (query string)
-    Route::delete('/fdiary/entry', [FoodController::class, 'deleteEntry'])
-        ->name('fdiary.entry.delete');
+    Route::get('/fdiary', [FoodController::class, 'show']);
+    Route::get('/fdiary/diary', [FoodController::class, 'getDiaryByDate']);
+    Route::post('/fdiary/entry', [FoodController::class, 'addEntry']);
+    Route::delete('/fdiary/entry', [FoodController::class, 'deleteEntry']);
 });
 

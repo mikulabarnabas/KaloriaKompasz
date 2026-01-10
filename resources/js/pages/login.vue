@@ -34,12 +34,12 @@ function closeSuccessDialog() {
 </script>
 
 <template>
-  <div class="min-h-screen w-full bg-slate-50 flex items-center justify-center p-4">
+  <div class="min-h-screen w-full flex items-center justify-center p-4">
     <div class="w-full max-w-md">
-      <div class="rounded-2xl bg-white shadow-sm ring-1 ring-slate-200">
+      <div class="rounded-2xl shadow-sm ring-1">
         <div class="p-6 sm:p-8">
-          <h1 class="text-2xl font-semibold text-slate-900">Sign in</h1>
-          <p class="mt-1 text-sm text-slate-600">
+          <h1 class="text-2xl font-semibold">Sign in</h1>
+          <p class="mt-1 text-sm">
             Use your email and password to continue.
           </p>
 
@@ -52,7 +52,7 @@ function closeSuccessDialog() {
                 <label for="email">Email</label>
               </FloatLabel>
 
-              <small v-if="form.invalid('email')" class="block text-xs text-red-600">
+              <small v-if="form.invalid('email')" class="block text-xs">
                 {{ form.errors.email }}
               </small>
             </div>
@@ -65,7 +65,7 @@ function closeSuccessDialog() {
                 <label for="password">Password</label>
               </FloatLabel>
 
-              <small v-if="form.invalid('password')" class="block text-xs text-red-600" ">
+              <small v-if="form.invalid('password')" class="block text-xs" ">
                 {{ form.errors.password }}
               </small>
             </div>
@@ -73,19 +73,19 @@ function closeSuccessDialog() {
             <div class="flex items-center justify-between gap-3">
               <div class="flex items-center gap-2">
                 <Checkbox input-id="remember" v-model="form.rememberme" :binary="true" />
-                <label for="rememberme" class="text-sm text-slate-700">Remember me</label>
+                <label for="rememberme" class="text-sm">Remember me</label>
               </div>
 
-              <a href="#" class="text-sm font-medium text-indigo-600 hover:text-indigo-700">
+              <a href="#" class="text-sm font-medium">
                 Forgot password?
               </a>
             </div>
 
             <Button type="submit" label="Sign in" class="w-full" :loading="loading" />
 
-            <p class="text-center text-sm text-slate-600">
+            <p class="text-center text-sm">
               Don't have an account?
-              <a href="/register" class="font-medium text-indigo-600 hover:text-indigo-700">
+              <a href="/register" class="font-medium">
                 Create one
               </a>
             </p>
@@ -93,14 +93,14 @@ function closeSuccessDialog() {
         </div>
       </div>
 
-      <p class="mt-4 text-center text-xs text-slate-500">
+      <p class="mt-4 text-center text-xs">
         By continuing you agree to our Terms & Privacy Policy.
       </p>
     </div>
 
     <Dialog v-model:visible="showSuccessDialog" modal :closable="true" :draggable="false"
       header="Registration successful" class="w-[92vw] max-w-md" @hide="closeSuccessDialog">
-      <p class="text-slate-700">
+      <p>
         Your account has been created successfully. You can now sign in.
       </p>
 

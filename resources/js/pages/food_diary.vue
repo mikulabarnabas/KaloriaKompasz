@@ -245,7 +245,6 @@ const onCreateFood = () =>
               :disabled="loadingDiary"
             />
             <div class="space-y-1">
-              <label class="text-xs font-medium">Date</label>
               <input
                 v-model="selectedDate"
                 type="date"

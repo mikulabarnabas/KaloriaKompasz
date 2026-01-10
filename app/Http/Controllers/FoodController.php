@@ -14,9 +14,6 @@ class FoodController extends Controller
 {
     public function show(Request $request)
     {
-        if (!auth()->check()) {
-            return redirect()->route('login');
-        }
 
         $userId = (int) $request->user()->id;
         $selectedDate = $request->query('date')
@@ -58,7 +55,6 @@ class FoodController extends Controller
         ]);
     }
 
-    // GET /fdiary/diary?date=YYYY-MM-DD
     public function getDiaryByDate(Request $request)
     {
         $data = $request->validate([
@@ -92,8 +88,7 @@ class FoodController extends Controller
         ]);
     }
 
-    // POST /fdiary/entry?date=YYYY-MM-DD
-    // body: food_id, meal_type, quantity
+
     public function addEntry(Request $request)
     {
         $data = $request->validate([
@@ -130,7 +125,6 @@ class FoodController extends Controller
         ]);
     }
 
-    // DELETE /fdiary/entry?entry_id=123
     public function deleteEntry(Request $request)
     {
         $data = $request->validate([
@@ -158,7 +152,6 @@ class FoodController extends Controller
         ]);
     }
 
-    // (your storeFood stays the same)
     public function storeFood(FoodRequest $request)
     {
         $data = $request->validated();

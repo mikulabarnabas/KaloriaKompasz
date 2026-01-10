@@ -37,12 +37,12 @@ function closeSuccessDialog() {
 </script>
 
 <template>
-  <div class="min-h-screen w-full bg-slate-50 flex items-center justify-center p-4">
+  <div class="min-h-screen w-full flex items-center justify-center p-4">
     <div class="w-full max-w-md">
-      <div class="rounded-2xl bg-white shadow-sm ring-1 ring-slate-200">
+      <div class="rounded-2xl shadow-sm ring-1">
         <div class="p-6 sm:p-8">
-          <h1 class="text-2xl font-semibold text-slate-900">Create account</h1>
-          <p class="mt-1 text-sm text-slate-600">
+          <h1 class="text-2xl font-semibold">Create account</h1>
+          <p class="mt-1 text-sm">
             Fill in your details to get started.
           </p>
 
@@ -55,7 +55,7 @@ function closeSuccessDialog() {
                 <label for="name">Full name</label>
               </FloatLabel>
 
-              <small v-if="form.invalid('name')" class="block text-xs text-red-600">
+              <small v-if="form.invalid('name')" class="block text-xs">
                 {{ form.errors.name }}
               </small>
             </div>
@@ -68,7 +68,7 @@ function closeSuccessDialog() {
                 <label for="email">Email</label>
               </FloatLabel>
 
-              <small v-if="form.invalid('email')" class="block text-xs text-red-600">
+              <small v-if="form.invalid('email')" class="block text-xs">
                 {{ form.errors.email }}
               </small>
             </div>
@@ -81,7 +81,7 @@ function closeSuccessDialog() {
                 <label for="password">Password</label>
               </FloatLabel>
 
-              <small v-if="form.invalid('password')" class="block text-xs text-red-600" ">
+              <small v-if="form.invalid('password')" class="block text-xs" ">
                 {{ form.errors.password }}
               </small>
             </div>
@@ -100,12 +100,12 @@ function closeSuccessDialog() {
               <div class="flex items-center gap-2">
                 <Checkbox input-id="acceptTerms" v-model="form.acceptTerms" @change="form.validate('acceptTerms')"
                   :binary="true" />
-                <label for="acceptTerms" class="text-sm text-slate-700">
+                <label for="acceptTerms" class="text-sm">
                   I agree to the Terms & Privacy Policy
                 </label>
               </div>
 
-              <small v-if="form.invalid('acceptTerms')" class="block text-xs text-red-600"
+              <small v-if="form.invalid('acceptTerms')" class="block text-xs"
                 :class="form.errors.acceptTerms">
                 {{ form.errors.acceptTerms }}
               </small>
@@ -117,14 +117,14 @@ function closeSuccessDialog() {
         </div>
       </div>
 
-      <p class="mt-4 text-center text-xs text-slate-500">
+      <p class="mt-4 text-center text-xs">
         By continuing you agree to our Terms & Privacy Policy.
       </p>
     </div>
 
     <Dialog v-model:visible="showSuccessDialog" modal :closable="true" :draggable="false"
       header="Registration successful" class="w-[92vw] max-w-md" @hide="closeSuccessDialog">
-      <p class="text-slate-700">
+      <p>
         Your account has been created successfully. You can now sign in.
       </p>
 
