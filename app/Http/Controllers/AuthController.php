@@ -24,27 +24,19 @@ class AuthController extends Controller
 
     public function registerUser(RegisterUserRequest $request)
     {
-        $validated = $request->validated();
+        $data = $request->validated();
 
-        User::create([
-            'name' => $validated['name'],
-            'email' => $validated['email'],
-            'password' => Hash::make($validated['password']),
-        ]);
+        $user = User::create($data);
 
         return redirect()->route('home');
     }
 
     public function loginUser(LoginUserRequest $request)
     {
-        $credentials = $request->validated();
+        $data = $request->validated();
 
         if (
-            Auth::attempt([
-                'email' => $credentials['email'],
-                'password' => $credentials['password']
-
-            ], $credentials['rememberme'])
+            Auth::attempt($data, $data)
         ) {
             $request->session()->regenerate();
             return redirect()->route('home');

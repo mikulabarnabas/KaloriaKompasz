@@ -14,7 +14,7 @@ const showSuccessDialog = ref(false);
 const form = useForm('post', '/login', {
   email: "",
   password: "",
-  rememberme: true,
+  remeber_token: true,
 });
 
 const onSubmit = () => form.submit()
@@ -99,9 +99,9 @@ function closeSuccessDialog() {
     </div>
 
     <Dialog v-model:visible="showSuccessDialog" modal :closable="true" :draggable="false"
-      header="Registration successful" class="w-[92vw] max-w-md" @hide="closeSuccessDialog">
+      header="Login successful" class="w-[92vw] max-w-md" @hide="closeSuccessDialog">
       <p class="text-slate-700">
-        Your account has been created successfully. You can now sign in.
+        You signed in.
       </p>
 
       <template #footer>

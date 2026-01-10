@@ -15,10 +15,7 @@ class ExercisesController extends Controller
         }
 
         return Inertia::render('workout_diary', [
-            'exercises' => Exercises::query()
-                ->latest()
-                ->get(['id', 'name', 'quantity', 'burned_calories', 'note']),
-        ]);
+            'exercises' => Exercises::all()]);
     }
 
     public function store(WorkoutDiaryRequest $request)
@@ -29,12 +26,7 @@ class ExercisesController extends Controller
 
         $data = $request->validated();
 
-        Exercises::create([
-            'name' => $data['name'],
-            'quantity' => $data['quantity'],
-            'burned_calories' => $data['burned_calories'],
-            'note' => $data['note'] ?? null,
-        ]);
+        Exercises::create($data);
 
         return redirect()->back()->with('success', 'Exercise created.');
     }

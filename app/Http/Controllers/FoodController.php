@@ -31,10 +31,10 @@ class FoodController extends Controller
                     $q->select([
                         'foods.id',
                         'foods.name',
-                        'foods.calories',
-                        'foods.fat_g',
-                        'foods.carbs_g',
-                        'foods.protein_g',
+                        'foods.calorie',
+                        'foods.fat',
+                        'foods.carb',
+                        'foods.protein',
                         'foods.image_path',
                     ]);
                 },
@@ -42,17 +42,7 @@ class FoodController extends Controller
             ->first();
 
         return Inertia::render('food_diary', [
-            'foods' => Foods::query()
-                ->orderBy('name')
-                ->get([
-                    'id',
-                    'name',
-                    'calories',
-                    'fat_g',
-                    'carbs_g',
-                    'protein_g',
-                    'image_path',
-                ]),
+            'foods' => Foods::all(),
             'selectedDate' => $selectedDate,
             'selectedDiary' => $selectedDiary,
         ]);
@@ -76,10 +66,10 @@ class FoodController extends Controller
                     $q->select([
                         'foods.id',
                         'foods.name',
-                        'foods.calories',
-                        'foods.fat_g',
-                        'foods.carbs_g',
-                        'foods.protein_g',
+                        'foods.calorie',
+                        'foods.fat',
+                        'foods.carb',
+                        'foods.protein',
                         'foods.image_path',
                     ]);
                 },
@@ -92,8 +82,6 @@ class FoodController extends Controller
         ]);
     }
 
-    // POST /fdiary/entry?date=YYYY-MM-DD
-    // body: food_id, meal_type, quantity
     public function addEntry(Request $request)
     {
         $data = $request->validate([
@@ -114,7 +102,6 @@ class FoodController extends Controller
                 'date' => $date,
             ]);
 
-            // duplicates allowed
             $diary->foods()->attach([(int) $data['food_id'] => [
                 'meal_type' => $mealType,
                 'quantity' => $quantity,
@@ -130,7 +117,6 @@ class FoodController extends Controller
         ]);
     }
 
-    // DELETE /fdiary/entry?entry_id=123
     public function deleteEntry(Request $request)
     {
         $data = $request->validate([
@@ -139,12 +125,12 @@ class FoodController extends Controller
 
         $userId = (int) $request->user()->id;
 
-        // Ensure the pivot row belongs to this user (security)
         $deleted = DB::table('food_to_food_diary as p')
             ->join('food_diary as d', 'd.id', '=', 'p.food_diary_id')
             ->where('p.id', (int) $data['entry_id'])
             ->where('d.user_id', $userId)
             ->delete();
+        
 
         if ($deleted === 0) {
             return response()->json([
@@ -158,20 +144,11 @@ class FoodController extends Controller
         ]);
     }
 
-    // (your storeFood stays the same)
     public function storeFood(FoodRequest $request)
     {
         $data = $request->validated();
 
-        $food = Foods::create([
-            'name' => $data['name'],
-            'calories' => $data['calories'],
-            'fat_g' => $data['fat_g'],
-            'carbs_g' => $data['carbs_g'],
-            'protein_g' => $data['protein_g'],
-            'notes' => $data['notes'],
-            'image_path' => null,
-        ]);
+        $food = Foods::create($data);
 
         if ($request->hasFile('image')) {
             $file = $request->file('image');

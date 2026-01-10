@@ -14,13 +14,15 @@ return new class extends Migration {
             $table->id();
 
             $table->string('name');
+            $table->enum('unit', ['g', 'dkg', 'kg', 'l', 'cl', 'dl']);
+            $table->unsignedInteger('quantity');
 
-            $table->unsignedInteger('fat_g')->default(0);
-            $table->unsignedInteger('carbs_g')->default(0);
-            $table->unsignedInteger('protein_g')->default(0);
+            $table->unsignedInteger('fat')->default(0);
+            $table->unsignedInteger('carb')->default(0);
+            $table->unsignedInteger('protein')->default(0);
 
-            $table->unsignedInteger('calories')->default(0);
-            $table->text('notes')->nullable();
+            $table->unsignedInteger('calorie')->default(0);
+            $table->text('note')->nullable();
 
             $table->string('image_path')->nullable();
 
