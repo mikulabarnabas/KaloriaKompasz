@@ -7,29 +7,41 @@ import Footer from "../components/footer.vue";
 
 import Paginator from "primevue/paginator";
 import Divider from "primevue/divider";
-
 import FloatLabel from "primevue/floatlabel";
 import InputText from "primevue/inputtext";
 import Button from "primevue/button";
 import Dialog from "primevue/dialog";
+import Select from "primevue/select";
 import FileUpload from "primevue/fileupload";
 
 import { useForm } from "laravel-precognition-vue";
 
 const page = usePage();
 
+
+const mealTypeOptions = [
+  { label: "Breakfast", value: "breakfast" },
+  { label: "Lunch", value: "lunch" },
+  { label: "Dinner", value: "dinner" },
+  { label: "Snack", value: "snack" },
+  { label: "Other", value: "other" },
+];
+const unitOptions = ref(['g', 'dkg', 'kg', 'l', 'cl', 'dl']);
 const foods = ref(page.props.foods ?? []);
-const selectedDate = ref(page.props.selectedDate ?? new Date().toISOString().slice(0, 10));
+const selectedDate = ref(
+  page.props.selectedDate ?? new Date().toISOString().slice(0, 10)
+);
 const selectedDiary = ref(page.props.selectedDiary ?? null);
 
 const search = ref("");
 const first = ref(0);
-const rows = ref(3);
+const rows = ref(5);
 const selectedFood = ref(null);
 
-// feedback dialog
 const showResponseDialog = ref(false);
 const responseMessage = ref("");
+
+const showSuccessDialog = ref(false);
 
 const imageSrc = (food) => {
   if (!food?.image_path) return null;
@@ -64,26 +76,25 @@ const totals = computed(() => {
   const list = entries.value;
 
   return {
-    calories: list.reduce(
-      (s, f) => s + Number(f.calories ?? 0) * Number(f.pivot?.quantity ?? 1),
+    calorie: list.reduce(
+      (s, f) => s + Number(f.calorie ?? 0) * Number(f.pivot?.quantity ?? 1),
       0
     ),
-    fat_g: list.reduce(
-      (s, f) => s + Number(f.fat_g ?? 0) * Number(f.pivot?.quantity ?? 1),
+    fat: list.reduce(
+      (s, f) => s + Number(f.fat ?? 0) * Number(f.pivot?.quantity ?? 1),
       0
     ),
-    carbs_g: list.reduce(
-      (s, f) => s + Number(f.carbs_g ?? 0) * Number(f.pivot?.quantity ?? 1),
+    carb: list.reduce(
+      (s, f) => s + Number(f.carb ?? 0) * Number(f.pivot?.quantity ?? 1),
       0
     ),
-    protein_g: list.reduce(
-      (s, f) => s + Number(f.protein_g ?? 0) * Number(f.pivot?.quantity ?? 1),
+    protein: list.reduce(
+      (s, f) => s + Number(f.protein ?? 0) * Number(f.pivot?.quantity ?? 1),
       0
     ),
   };
 });
 
-// ---- Load diary for a date (API) ----
 const loadingDiary = ref(false);
 
 const loadDiary = async (date) => {
@@ -92,9 +103,7 @@ const loadDiary = async (date) => {
   try {
     const url = `/fdiary/diary?date=${encodeURIComponent(date)}`;
     const res = await fetch(url, {
-      headers: {
-        Accept: "application/json",
-      },
+      headers: { Accept: "application/json" },
       credentials: "same-origin",
     });
 
@@ -112,25 +121,21 @@ const loadDiary = async (date) => {
 };
 
 watch(selectedDate, (d) => {
-  // keep URL in sync so refresh works
   router.get(
     "/fdiary",
     { date: d },
     { preserveState: true, replace: true, only: ["selectedDate", "selectedDiary"] }
   );
 
-  // also load immediately (so UI updates without relying on inertia partial reload)
   loadDiary(d);
 });
 
-// arrows
 const shiftDate = (days) => {
   const dt = new Date(selectedDate.value);
   dt.setDate(dt.getDate() + days);
   selectedDate.value = dt.toISOString().slice(0, 10);
 };
 
-// ---- Add entry to selected date (API) ----
 const addEntryForm = useForm("post", "/fdiary/entry", {
   date: selectedDate.value,
   food_id: null,
@@ -149,24 +154,21 @@ const addSelectedFoodToSelectedDate = async () => {
   addEntryForm.date = selectedDate.value;
 
   try {
-    await addEntryForm.submit({
-      // Precognition form submits via inertia/axios internally; keep as-is.
-      // But endpoint returns JSON. That's OK; still works for submit, but
-      // easiest is to use fetch for pure JSON. If submit causes issues,
-      // tell me and we switch this to fetch with CSRF.
-    });
+    await addEntryForm.submit();
 
     responseMessage.value = `Added: ${selectedFood.value.name} (${addEntryForm.meal_type}) x${addEntryForm.quantity} on ${selectedDate.value}`;
     showResponseDialog.value = true;
 
     await loadDiary(selectedDate.value);
   } catch (e) {
-    responseMessage.value = "Could not add entry.";
+    responseMessage.value =
+      addEntryForm.errors?.food_id ||
+      addEntryForm.errors?.date ||
+      "Could not add entry.";
     showResponseDialog.value = true;
   }
 };
 
-// ---- Delete entry by pivot id (API) ----
 const deleteEntry = async (entryId) => {
   if (!entryId) return;
 
@@ -193,16 +195,15 @@ const deleteEntry = async (entryId) => {
   }
 };
 
-// ---- Create food form ----
-const showSuccessDialog = ref(false);
-
 const createFoodForm = useForm("post", "/fdiary/create", {
   name: "",
-  fat_g: 0,
-  carbs_g: 0,
-  protein_g: 0,
-  calories: 0,
-  notes: "",
+  unit: "g",
+  quantity: 100,
+  fat: 0,
+  carb: 0,
+  protein: 0,
+  calorie: 0,
+  note: "",
   image: null,
 });
 
@@ -214,16 +215,30 @@ const onRemoveImage = () => {
   createFoodForm.image = null;
 };
 
-const onCreateFood = () =>
-  createFoodForm
-    .submit({ forceFormData: true })
-    .then(() => {
-      createFoodForm.reset();
-      onRemoveImage();
-      showSuccessDialog.value = true;
-      router.reload({ only: ["foods"] });
-    })
-    .catch(() => {});
+const onCreateFood = async () => {
+  try {
+    await createFoodForm.submit({ forceFormData: true });
+
+    createFoodForm.reset();
+    onRemoveImage();
+
+    showSuccessDialog.value = true;
+    router.reload({ only: ["foods"] });
+  } catch (e) {
+    responseMessage.value =
+      createFoodForm.errors?.name ||
+      createFoodForm.errors?.unit ||      // <--- Add error check
+      createFoodForm.errors?.quantity ||  // <--- Add error check
+      createFoodForm.errors?.calorie ||
+      createFoodForm.errors?.fat ||
+      createFoodForm.errors?.carb ||
+      createFoodForm.errors?.protein ||
+      createFoodForm.errors?.note ||
+      createFoodForm.errors?.image ||
+      "Create failed.";
+    showResponseDialog.value = true;
+  }
+};
 </script>
 
 <template>
@@ -231,34 +246,19 @@ const onCreateFood = () =>
     <Navbar />
 
     <main class="mx-auto w-full max-w-7xl px-4 py-6">
-      <!-- DATE NAV ROW (calendar + arrows) -->
+      <!-- DATE NAV -->
       <section class="mb-6 rounded-2xl border p-5">
         <h2 class="text-lg font-semibold">Food diary date</h2>
 
         <div class="mt-4 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
           <div class="flex items-center gap-2">
-            <Button
-              label="←"
-              severity="secondary"
-              type="button"
-              @click="shiftDate(-1)"
-              :disabled="loadingDiary"
-            />
+            <Button label="←" severity="secondary" type="button" :disabled="loadingDiary" @click="shiftDate(-1)" />
             <div class="space-y-1">
-              <input
-                v-model="selectedDate"
-                type="date"
-                class="w-full rounded-lg border px-3 py-2 text-sm"
-                :disabled="loadingDiary"
-              />
+              <label class="text-xs font-medium">Date</label>
+              <input v-model="selectedDate" type="date" class="w-full rounded-lg border px-3 py-2 text-sm"
+                :disabled="loadingDiary" />
             </div>
-            <Button
-              label="→"
-              severity="secondary"
-              type="button"
-              @click="shiftDate(1)"
-              :disabled="loadingDiary"
-            />
+            <Button label="→" severity="secondary" type="button" :disabled="loadingDiary" @click="shiftDate(1)" />
           </div>
 
           <div class="text-sm">
@@ -270,7 +270,6 @@ const onCreateFood = () =>
         </div>
       </section>
 
-      <!-- EXISTING 3-COLUMN GRID -->
       <div class="grid grid-cols-1 gap-6 lg:grid-cols-3">
         <!-- SEARCH -->
         <section class="rounded-2xl border p-5">
@@ -278,12 +277,8 @@ const onCreateFood = () =>
           <p class="mt-1 text-sm">Keress név alapján.</p>
 
           <div class="mt-4 flex gap-2">
-            <input
-              v-model="search"
-              type="text"
-              placeholder="Keress ételt..."
-              class="w-full rounded-lg border px-3 py-2 text-sm outline-none"
-            />
+            <input v-model="search" type="text" placeholder="Keress ételt..."
+              class="w-full rounded-lg border px-3 py-2 text-sm outline-none" />
             <button type="button" class="rounded-lg border px-3 py-2 text-sm">
               🔍
             </button>
@@ -291,18 +286,16 @@ const onCreateFood = () =>
 
           <div class="mt-4">
             <ul v-if="paginatedFoods.length" class="space-y-2">
-              <li
-                v-for="food in paginatedFoods"
-                :key="food.id ?? food.name"
-                @click="selectFood(food)"
-                class="cursor-pointer rounded-xl border p-3"
-              >
+              <li v-for="food in paginatedFoods" :key="food.id ?? food.name"
+                class="cursor-pointer rounded-xl border p-3" @click="selectFood(food)">
                 <div class="flex items-start justify-between gap-3">
                   <div class="min-w-0">
-                    <div class="truncate font-semibold">{{ food.name }}</div>
+                    <div class="truncate font-semibold">
+                      {{ food.name }}
+                    </div>
                     <div class="mt-1 text-xs">
-                      {{ food.calories }} kcal · Zsír {{ food.fat_g }} g ·
-                      Fehérje {{ food.protein_g }} g
+                      {{ food.calorie }} kcal · Fat {{ food.fat }} g · Carb
+                      {{ food.carb }} g · Protein {{ food.protein }} g
                     </div>
                   </div>
 
@@ -318,19 +311,13 @@ const onCreateFood = () =>
             </div>
 
             <div class="mt-4">
-              <Paginator
-                v-if="filteredFoods.length > rows"
-                :first="first"
-                :rows="rows"
-                :totalRecords="filteredFoods.length"
-                :pageLinkSize="4"
-                @page="(e) => (first = e.first)"
-              />
+              <Paginator v-if="filteredFoods.length > rows" :first="first" :rows="rows"
+                :totalRecords="filteredFoods.length" :pageLinkSize="4" @page="(e) => (first = e.first)" />
             </div>
           </div>
         </section>
 
-        <!-- SELECTED FOOD + ADD TO SELECTED DATE -->
+        <!-- SELECTED FOOD -->
         <section class="rounded-2xl border p-5">
           <h2 class="text-lg font-semibold">Kiválasztott étel</h2>
           <p class="mt-1 text-sm">Add hozzá a kiválasztott dátumhoz.</p>
@@ -338,46 +325,26 @@ const onCreateFood = () =>
           <div v-if="selectedFood" class="mt-4 rounded-xl border p-4">
             <div class="text-xl font-semibold">{{ selectedFood.name }}</div>
 
-            <img
-              v-if="selectedFood.image_path"
-              :src="imageSrc(selectedFood)"
-              class="mt-4 h-44 w-full rounded-xl border object-cover"
-              alt="Food image"
-            />
+            <img v-if="selectedFood.image_path" :src="imageSrc(selectedFood)"
+              class="mt-4 h-44 w-full rounded-xl border object-cover" alt="Food image" />
 
             <div class="mt-4 space-y-3">
               <div class="space-y-1">
                 <label class="text-xs font-medium">Meal type</label>
-                <select
-                  v-model="addEntryForm.meal_type"
-                  class="w-full rounded-lg border px-3 py-2 text-sm"
-                >
-                  <option value="breakfast">breakfast</option>
-                  <option value="lunch">lunch</option>
-                  <option value="dinner">dinner</option>
-                  <option value="snack">snack</option>
-                  <option value="other">other</option>
-                </select>
+
+                <Select v-model="addEntryForm.meal_type" :options="mealTypeOptions" optionLabel="label"
+                  optionValue="value" class="w-full" placeholder="Select meal type" />
               </div>
 
               <div class="space-y-1">
                 <label class="text-xs font-medium">Quantity</label>
-                <input
-                  v-model.number="addEntryForm.quantity"
-                  type="number"
-                  min="1"
-                  step="1"
-                  class="w-full rounded-lg border px-3 py-2 text-sm"
-                />
+                <input v-model.number="addEntryForm.quantity" type="number" min="1" step="1"
+                  class="w-full rounded-lg border px-3 py-2 text-sm" />
               </div>
 
-              <button
-                type="button"
-                class="w-full rounded-lg border px-3 py-2 text-sm font-medium"
-                :disabled="addEntryForm.processing"
-                @click="addSelectedFoodToSelectedDate"
-              >
-                Add to {{ selectedDate }}
+              <button type="button" class="w-full rounded-lg border px-3 py-2 text-sm font-medium"
+                :disabled="addEntryForm.processing" @click="addSelectedFoodToSelectedDate">
+                Hozzáadás {{ selectedDate }}
               </button>
             </div>
           </div>
@@ -391,54 +358,122 @@ const onCreateFood = () =>
         <section class="rounded-2xl border p-5">
           <h2 class="text-lg font-semibold">Új étel hozzáadása</h2>
 
-          <form class="mt-5 space-y-4" @submit.prevent="onCreateFood" novalidate>
-            <div class="space-y-1">
-              <FloatLabel variant="on">
-                <InputText
-                  id="food_name"
-                  v-model="createFoodForm.name"
-                  class="w-full"
-                  @change="createFoodForm.validate('name')"
-                />
-                <label for="food_name">Név</label>
-              </FloatLabel>
+          <form class="mt-5 space-y-4" novalidate @submit.prevent="onCreateFood">
+            <div class="space-y-3">
+              <div>
+                <FloatLabel variant="on">
+                  <InputText id="food_name" v-model="createFoodForm.name" class="w-full"
+                    @change="createFoodForm.validate('name')" />
+                  <label for="food_name">Név</label>
+                </FloatLabel>
+                <small v-if="createFoodForm.invalid('name')" class="block text-xs">
+                  {{ createFoodForm.errors.name }}
+                </small>
+              </div>
 
-              <small v-if="createFoodForm.invalid('name')" class="block text-xs">
-                {{ createFoodForm.errors.name }}
-              </small>
+              <div class="grid grid-cols-2 gap-3">
+                <!-- Quantity -->
+                <div>
+                  <FloatLabel variant="on">
+                    <InputText id="food_quantity" v-model="createFoodForm.quantity" type="number" class="w-full"
+                      @change="createFoodForm.validate('quantity')" />
+                    <label for="food_quantity">Mennyiség</label>
+                  </FloatLabel>
+                  <small v-if="createFoodForm.invalid('quantity')" class="block text-xs">
+                    {{ createFoodForm.errors.quantity }}
+                  </small>
+                </div>
+
+                <div>
+                  <FloatLabel variant="on">
+                    <Select inputId="food_unit" v-model="createFoodForm.unit" :options="unitOptions" class="w-full"
+                      @change="createFoodForm.validate('unit')" />
+                    <label for="food_unit">Mértékegység</label>
+                  </FloatLabel>
+                  <small v-if="createFoodForm.invalid('unit')" class="block text-xs">
+                    {{ createFoodForm.errors.unit }}
+                  </small>
+                </div>
+              </div>
+
+              <div>
+                <FloatLabel variant="on">
+                  <InputText id="food_calorie" v-model="createFoodForm.calorie" class="w-full"
+                    @change="createFoodForm.validate('calorie')" />
+                  <label for="food_calorie">Kalória</label>
+                </FloatLabel>
+                <small v-if="createFoodForm.invalid('calorie')" class="block text-xs">
+                  {{ createFoodForm.errors.calorie }}
+                </small>
+              </div>
+
+              <div>
+                <FloatLabel variant="on">
+                  <InputText id="food_fat" v-model="createFoodForm.fat" class="w-full"
+                    @change="createFoodForm.validate('fat')" />
+                  <label for="food_fat">Zsír</label>
+                </FloatLabel>
+                <small v-if="createFoodForm.invalid('fat')" class="block text-xs">
+                  {{ createFoodForm.errors.fat }}
+                </small>
+              </div>
+
+              <div>
+                <FloatLabel variant="on">
+                  <InputText id="food_carb" v-model="createFoodForm.carb" class="w-full"
+                    @change="createFoodForm.validate('carb')" />
+                  <label for="food_carb">Szénhidrát</label>
+                </FloatLabel>
+                <small v-if="createFoodForm.invalid('carb')" class="block text-xs">
+                  {{ createFoodForm.errors.carb }}
+                </small>
+              </div>
+
+              <div>
+                <FloatLabel variant="on">
+                  <InputText id="food_protein" v-model="createFoodForm.protein" class="w-full"
+                    @change="createFoodForm.validate('protein')" />
+                  <label for="food_protein">Fehérje</label>
+                </FloatLabel>
+                <small v-if="createFoodForm.invalid('protein')" class="block text-xs">
+                  {{ createFoodForm.errors.protein }}
+                </small>
+              </div>
+
+              <div>
+                <FloatLabel variant="on">
+                  <InputText id="food_note" v-model="createFoodForm.note" class="w-full"
+                    @change="createFoodForm.validate('note')" />
+                  <label for="food_note">Megjegyzés</label>
+                </FloatLabel>
+                <small v-if="createFoodForm.invalid('note')" class="block text-xs">
+                  {{ createFoodForm.errors.note }}
+                </small>
+              </div>
             </div>
 
             <div class="space-y-2">
               <div class="text-sm font-medium">Kép (opcionális)</div>
 
-              <FileUpload
-                mode="basic"
-                name="image"
-                accept="image/*"
-                :maxFileSize="4_000_000"
-                chooseLabel="Kép kiválasztása"
-                customUpload
-                @select="onSelectImage"
-                @clear="onRemoveImage"
-                class="w-full"
-              />
+              <FileUpload mode="basic" name="image" accept="image/*" :maxFileSize="4_000_000"
+                chooseLabel="Kép kiválasztása" customUpload class="w-full" @select="onSelectImage"
+                @clear="onRemoveImage" />
+
+              <small v-if="createFoodForm.invalid('image')" class="block text-xs">
+                {{ createFoodForm.errors.image }}
+              </small>
             </div>
 
-            <Button
-              type="submit"
-              label="Étel mentése"
-              class="w-full"
-              :disabled="createFoodForm.processing"
-            />
+            <Button type="submit" label="Étel mentése" class="w-full" :disabled="createFoodForm.processing" />
           </form>
         </section>
       </div>
 
       <Divider class="my-8" />
 
-      <!-- DIARY LIST FOR SELECTED DATE -->
+      <!-- DIARY -->
       <section class="rounded-2xl border p-5">
-        <h2 class="text-lg font-semibold">Diary: {{ selectedDate }}</h2>
+        <h2 class="text-lg font-semibold">Naptár: {{ selectedDate }}</h2>
 
         <div v-if="entries.length" class="mt-4 space-y-3">
           <div class="rounded-xl border p-4 text-sm">
@@ -446,46 +481,38 @@ const onCreateFood = () =>
             <div class="mt-2 grid grid-cols-2 gap-2 sm:grid-cols-4">
               <div class="rounded-lg border p-2">
                 <div class="text-xs">Calories</div>
-                <div class="font-semibold">{{ totals.calories }} kcal</div>
+                <div class="font-semibold">{{ totals.calorie }} kcal</div>
               </div>
               <div class="rounded-lg border p-2">
                 <div class="text-xs">Fat</div>
-                <div class="font-semibold">{{ totals.fat_g }} g</div>
+                <div class="font-semibold">{{ totals.fat }} g</div>
               </div>
               <div class="rounded-lg border p-2">
-                <div class="text-xs">Carbs</div>
-                <div class="font-semibold">{{ totals.carbs_g }} g</div>
+                <div class="text-xs">Carb</div>
+                <div class="font-semibold">{{ totals.carb }} g</div>
               </div>
               <div class="rounded-lg border p-2">
                 <div class="text-xs">Protein</div>
-                <div class="font-semibold">{{ totals.protein_g }} g</div>
+                <div class="font-semibold">{{ totals.protein }} g</div>
               </div>
             </div>
           </div>
 
           <ul class="space-y-2">
-            <li
-              v-for="food in entries"
-              :key="food.pivot?.id ?? `${food.id}-${food.pivot?.created_at}`"
-              class="rounded-xl border p-3"
-            >
+            <li v-for="food in entries" :key="food.pivot?.id ?? `${food.id}-${food.pivot?.created_at}`"
+              class="rounded-xl border p-3">
               <div class="flex items-start justify-between gap-3">
                 <div class="min-w-0">
                   <div class="truncate font-semibold">{{ food.name }}</div>
                   <div class="mt-1 text-xs">
-                    {{ food.calories }} kcal · qty {{ food.pivot?.quantity ?? 1 }}
+                    {{ food.calorie }} kcal · qty {{ food.pivot?.quantity ?? 1 }}
                     · meal {{ food.pivot?.meal_type ?? "other" }}
                   </div>
                 </div>
 
                 <div class="flex items-center gap-2">
-                  <Button
-                    label="Delete"
-                    severity="danger"
-                    size="small"
-                    type="button"
-                    @click="deleteEntry(food.pivot?.id)"
-                  />
+                  <Button label="Törlés" severity="danger" size="small" type="button"
+                    @click="deleteEntry(food.pivot?.id)" />
                 </div>
               </div>
             </li>
@@ -497,44 +524,26 @@ const onCreateFood = () =>
         </div>
       </section>
 
-      <Dialog
-        v-model:visible="showSuccessDialog"
-        modal
-        :closable="true"
-        :draggable="false"
-        header="Siker"
-        class="w-[92vw] max-w-md"
-      >
+      <!-- SUCCESS DIALOG -->
+      <Dialog v-model:visible="showSuccessDialog" modal :closable="true" :draggable="false" header="Siker"
+        class="w-[92vw] max-w-md">
         <p>Az étel sikeresen mentve lett.</p>
 
         <template #footer>
           <div class="flex w-full justify-end gap-2">
-            <Button
-              label="Close"
-              severity="secondary"
-              @click="showSuccessDialog = false"
-            />
+            <Button label="Close" severity="secondary" @click="showSuccessDialog = false" />
           </div>
         </template>
       </Dialog>
 
-      <Dialog
-        v-model:visible="showResponseDialog"
-        modal
-        :closable="true"
-        :draggable="false"
-        header="Diary"
-        class="w-[92vw] max-w-md"
-      >
+      <!-- RESPONSE DIALOG -->
+      <Dialog v-model:visible="showResponseDialog" modal :closable="true" :draggable="false" header="Diary"
+        class="w-[92vw] max-w-md">
         <p>{{ responseMessage }}</p>
 
         <template #footer>
           <div class="flex w-full justify-end gap-2">
-            <Button
-              label="Close"
-              severity="secondary"
-              @click="showResponseDialog = false"
-            />
+            <Button label="Close" severity="secondary" @click="showResponseDialog = false" />
           </div>
         </template>
       </Dialog>

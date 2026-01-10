@@ -15,7 +15,6 @@ return new class extends Migration {
 
             $table->timestamps();
 
-            // You want ONE diary per user per day:
             $table->unique(['user_id', 'date']);
             $table->index(['user_id', 'date']);
         });

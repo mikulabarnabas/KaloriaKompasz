@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+
 use Illuminate\Database\Eloquent\Model;
 
 class Foods extends Model
@@ -9,19 +10,21 @@ class Foods extends Model
 
     protected $fillable = [
         'name',
-        'fat_g',
-        'carbs_g',
-        'protein_g',
-        'calories',
+        'fat',
+        'carb',
+        'protein',
+        'calorie',
+        'unit',
+        'quantity',
         'notes',
         'image_path',
     ];
 
     protected $casts = [
-        'fat_g' => 'integer',
-        'carbs_g' => 'integer',
-        'protein_g' => 'integer',
-        'calories' => 'integer',
+        'fat' => 'integer',
+        'carb' => 'integer',
+        'protein' => 'integer',
+        'calorie' => 'integer',
     ];
 
     public function diaries()

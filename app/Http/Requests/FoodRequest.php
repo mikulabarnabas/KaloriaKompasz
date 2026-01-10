@@ -24,11 +24,13 @@ class FoodRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string', 'min:1', 'max:255'],
-            'calories' => ['required', 'integer', 'min:0'],
-            'fat_g' => ['required', 'integer', 'min:0'],
-            'carbs_g' => ['required', 'integer', 'min:0'],
-            'protein_g' => ['required', 'integer', 'min:0'],
-            'notes' => ['nullable', 'string', 'max:5000'],
+            'unit' => ['required'],
+            'quantity' => ['required', 'integer', 'min:1'],
+            'calorie' => ['required', 'integer', 'min:0'],
+            'fat' => ['required', 'integer', 'min:0'],
+            'carb' => ['required', 'integer', 'min:0'],
+            'protein' => ['required', 'integer', 'min:0'],
+            'note' => ['nullable', 'string', 'max:5000'],
             'image' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:4096'],
         ];
     }
