@@ -1,4 +1,6 @@
 <script setup>
+import { getBaseFoodMacros, loadDiary } from "../helpers/functions";
+
 import { ref, computed, watch } from "vue";
 import { usePage, router } from "@inertiajs/vue3";
 
@@ -6,7 +8,6 @@ import Navbar from "../components/navbar.vue";
 import Footer from "../components/footer.vue";
 
 import Paginator from "primevue/paginator";
-import Divider from "primevue/divider";
 import FloatLabel from "primevue/floatlabel";
 import InputText from "primevue/inputtext";
 import Button from "primevue/button";
@@ -26,6 +27,7 @@ const mealTypeOptions = [
   { label: "Snack", value: "snack" },
   { label: "Other", value: "other" },
 ];
+
 const unitOptions = ref(['g', 'dkg', 'kg', 'l', 'cl', 'dl']);
 const foods = ref(page.props.foods ?? []);
 const selectedDate = ref(
@@ -72,63 +74,16 @@ const selectFood = (food) => {
 
 const entries = computed(() => selectedDiary.value?.foods ?? []);
 
-const totals = computed(() => {
-  const list = entries.value;
+watch(selectedDate, async (d) => {
+  const result = await loadDiary("/fdiary/diary/", d);
+  addEntryForm.date = d;
 
-  return {
-    calorie: list.reduce(
-      (s, f) => s + Number(f.calorie ?? 0) * Number(f.pivot?.quantity ?? 1),
-      0
-    ),
-    fat: list.reduce(
-      (s, f) => s + Number(f.fat ?? 0) * Number(f.pivot?.quantity ?? 1),
-      0
-    ),
-    carb: list.reduce(
-      (s, f) => s + Number(f.carb ?? 0) * Number(f.pivot?.quantity ?? 1),
-      0
-    ),
-    protein: list.reduce(
-      (s, f) => s + Number(f.protein ?? 0) * Number(f.pivot?.quantity ?? 1),
-      0
-    ),
-  };
-});
-
-const loadingDiary = ref(false);
-
-const loadDiary = async (date) => {
-  loadingDiary.value = true;
-
-  try {
-    const url = `/fdiary/diary?date=${encodeURIComponent(date)}`;
-    const res = await fetch(url, {
-      headers: { Accept: "application/json" },
-      credentials: "same-origin",
-    });
-
-    if (!res.ok) throw new Error("Failed to load diary.");
-
-    const data = await res.json();
-    selectedDiary.value = data.diary ?? null;
-  } catch (e) {
+  if (result.ok) {
+    selectedDiary.value = result.diary;
+  } else {
     selectedDiary.value = null;
-    responseMessage.value = e?.message ?? "Failed to load diary.";
-    showResponseDialog.value = true;
-  } finally {
-    loadingDiary.value = false;
   }
-};
-
-watch(selectedDate, (d) => {
-  router.get(
-    "/fdiary",
-    { date: d },
-    { preserveState: true, replace: true, only: ["selectedDate", "selectedDiary"] }
-  );
-
-  loadDiary(d);
-});
+}, { immediate: true });
 
 const shiftDate = (days) => {
   const dt = new Date(selectedDate.value);
@@ -140,11 +95,8 @@ const addEntryForm = useForm("post", "/fdiary/entry", {
   date: selectedDate.value,
   food_id: null,
   meal_type: "other",
-  quantity: 1,
-});
-
-watch(selectedDate, (d) => {
-  addEntryForm.date = d;
+  unit: null,
+  amount: 1,
 });
 
 const addSelectedFoodToSelectedDate = async () => {
@@ -154,12 +106,13 @@ const addSelectedFoodToSelectedDate = async () => {
   addEntryForm.date = selectedDate.value;
 
   try {
+    console.log(addEntryForm)
     await addEntryForm.submit();
 
-    responseMessage.value = `Added: ${selectedFood.value.name} (${addEntryForm.meal_type}) x${addEntryForm.quantity} on ${selectedDate.value}`;
+    responseMessage.value = `Added: ${selectedFood.value.name} (${addEntryForm.meal_type}) x${addEntryForm.amount} on ${selectedDate.value}`;
     showResponseDialog.value = true;
 
-    await loadDiary(selectedDate.value);
+    await loadDiary("/fdiary/diary/", selectedDate.value);
   } catch (e) {
     responseMessage.value =
       addEntryForm.errors?.food_id ||
@@ -188,7 +141,7 @@ const deleteEntry = async (entryId) => {
     responseMessage.value = "Entry deleted.";
     showResponseDialog.value = true;
 
-    await loadDiary(selectedDate.value);
+    await loadDiary("/fdiary/diary/", selectedDate.value);
   } catch (e) {
     responseMessage.value = e?.message ?? "Failed to delete entry.";
     showResponseDialog.value = true;
@@ -198,7 +151,7 @@ const deleteEntry = async (entryId) => {
 const createFoodForm = useForm("post", "/fdiary/create", {
   name: "",
   unit: "g",
-  quantity: 100,
+  amount: 100,
   fat: 0,
   carb: 0,
   protein: 0,
@@ -228,7 +181,7 @@ const onCreateFood = async () => {
     responseMessage.value =
       createFoodForm.errors?.name ||
       createFoodForm.errors?.unit ||      // <--- Add error check
-      createFoodForm.errors?.quantity ||  // <--- Add error check
+      createFoodForm.errors?.amount ||  // <--- Add error check
       createFoodForm.errors?.calorie ||
       createFoodForm.errors?.fat ||
       createFoodForm.errors?.carb ||
@@ -252,25 +205,16 @@ const onCreateFood = async () => {
 
         <div class="mt-4 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
           <div class="flex items-center gap-2">
-            <Button label="←" severity="secondary" type="button" :disabled="loadingDiary" @click="shiftDate(-1)" />
+            <Button label="←" severity="secondary" type="button" @click="shiftDate(-1)" />
             <div class="space-y-1">
-              <label class="text-xs font-medium">Date</label>
-              <input v-model="selectedDate" type="date" class="w-full rounded-lg border px-3 py-2 text-sm"
-                :disabled="loadingDiary" />
+              <input v-model="selectedDate" type="date" class="w-full rounded-lg border px-3 py-2 text-sm" />
             </div>
-            <Button label="→" severity="secondary" type="button" :disabled="loadingDiary" @click="shiftDate(1)" />
-          </div>
-
-          <div class="text-sm">
-            <span v-if="loadingDiary">Loading diary...</span>
-            <span v-else>
-              Entries: <b>{{ entries.length }}</b>
-            </span>
+            <Button label="→" severity="secondary" type="button" @click="shiftDate(1)" />
           </div>
         </div>
       </section>
 
-      <div class="grid grid-cols-1 gap-6 lg:grid-cols-3">
+      <div class="grid grid-cols-1 gap-6 lg:grid-cols-3 mb-6">
         <!-- SEARCH -->
         <section class="rounded-2xl border p-5">
           <h2 class="text-lg font-semibold">Keresés</h2>
@@ -279,9 +223,6 @@ const onCreateFood = async () => {
           <div class="mt-4 flex gap-2">
             <input v-model="search" type="text" placeholder="Keress ételt..."
               class="w-full rounded-lg border px-3 py-2 text-sm outline-none" />
-            <button type="button" class="rounded-lg border px-3 py-2 text-sm">
-              🔍
-            </button>
           </div>
 
           <div class="mt-4">
@@ -336,10 +277,28 @@ const onCreateFood = async () => {
                   optionValue="value" class="w-full" placeholder="Select meal type" />
               </div>
 
-              <div class="space-y-1">
-                <label class="text-xs font-medium">Quantity</label>
-                <input v-model.number="addEntryForm.quantity" type="number" min="1" step="1"
-                  class="w-full rounded-lg border px-3 py-2 text-sm" />
+              <div class="grid grid-cols-2 gap-3">
+                <div>
+                  <FloatLabel variant="on">
+                    <InputText id="food_amount" v-model="addEntryForm.amount" type="number" class="w-full"
+                      />
+                    <label for="food_amount">Mennyiség</label>
+                  </FloatLabel>
+                  <small v-if="addEntryForm.validate('amount')" class="block text-xs">
+                    {{ addEntryForm.errors.amount }}
+                  </small>
+                </div>
+
+                <div>
+                  <FloatLabel variant="on">
+                    <Select inputId="food_unit" v-model="addEntryForm.unit" :options="unitOptions" class="w-full"
+                       />
+                    <label for="food_unit">Mértékegység</label>
+                  </FloatLabel>
+                  <small v-if="addEntryForm.invalid('unit')" class="block text-xs">
+                    {{ addEntryForm.errors.unit }}
+                  </small>
+                </div>
               </div>
 
               <button type="button" class="w-full rounded-lg border px-3 py-2 text-sm font-medium"
@@ -372,15 +331,15 @@ const onCreateFood = async () => {
               </div>
 
               <div class="grid grid-cols-2 gap-3">
-                <!-- Quantity -->
+                <!-- amount -->
                 <div>
                   <FloatLabel variant="on">
-                    <InputText id="food_quantity" v-model="createFoodForm.quantity" type="number" class="w-full"
-                      @change="createFoodForm.validate('quantity')" />
-                    <label for="food_quantity">Mennyiség</label>
+                    <InputText id="food_amount" v-model="createFoodForm.amount" type="number" class="w-full"
+                      @change="createFoodForm.validate('amount')" />
+                    <label for="food_amount">Mennyiség</label>
                   </FloatLabel>
-                  <small v-if="createFoodForm.invalid('quantity')" class="block text-xs">
-                    {{ createFoodForm.errors.quantity }}
+                  <small v-if="createFoodForm.invalid('amount')" class="block text-xs">
+                    {{ createFoodForm.errors.amount }}
                   </small>
                 </div>
 
@@ -469,44 +428,20 @@ const onCreateFood = async () => {
         </section>
       </div>
 
-      <Divider class="my-8" />
-
       <!-- DIARY -->
       <section class="rounded-2xl border p-5">
         <h2 class="text-lg font-semibold">Naptár: {{ selectedDate }}</h2>
 
         <div v-if="entries.length" class="mt-4 space-y-3">
-          <div class="rounded-xl border p-4 text-sm">
-            <div class="font-semibold">Totals</div>
-            <div class="mt-2 grid grid-cols-2 gap-2 sm:grid-cols-4">
-              <div class="rounded-lg border p-2">
-                <div class="text-xs">Calories</div>
-                <div class="font-semibold">{{ totals.calorie }} kcal</div>
-              </div>
-              <div class="rounded-lg border p-2">
-                <div class="text-xs">Fat</div>
-                <div class="font-semibold">{{ totals.fat }} g</div>
-              </div>
-              <div class="rounded-lg border p-2">
-                <div class="text-xs">Carb</div>
-                <div class="font-semibold">{{ totals.carb }} g</div>
-              </div>
-              <div class="rounded-lg border p-2">
-                <div class="text-xs">Protein</div>
-                <div class="font-semibold">{{ totals.protein }} g</div>
-              </div>
-            </div>
-          </div>
 
           <ul class="space-y-2">
-            <li v-for="food in entries" :key="food.pivot?.id ?? `${food.id}-${food.pivot?.created_at}`"
-              class="rounded-xl border p-3">
+            <li v-for="food in entries" :key="food.pivot?.id" class="rounded-xl border p-3">
               <div class="flex items-start justify-between gap-3">
                 <div class="min-w-0">
                   <div class="truncate font-semibold">{{ food.name }}</div>
                   <div class="mt-1 text-xs">
-                    {{ food.calorie }} kcal · qty {{ food.pivot?.quantity ?? 1 }}
-                    · meal {{ food.pivot?.meal_type ?? "other" }}
+                    {{ food.calorie }} kcal · {{ food.pivot?.amount }} {{ food.pivot?.unit }}
+                    · meal {{ food.pivot?.meal_type }}
                   </div>
                 </div>
 

@@ -6,15 +6,17 @@ use Illuminate\Database\Eloquent\Model;
 
 class Exercises extends Model
 {
-
     protected $fillable = [
         'name',
-        'quantity',
-        'burned_calories',
+        'unit',
+        'calories_per_unit',
         'note',
     ];
 
-    protected $casts = [
-        'burned_calories' => 'integer',
-    ];
+    public function workoutDiaries()
+    {
+        return $this->belongsToMany(WorkoutDiary::class, 'exercise_to_workout_diary')
+            ->withPivot(['id', 'quantity', 'burned_calories', 'note'])
+            ->withTimestamps();
+    }
 }

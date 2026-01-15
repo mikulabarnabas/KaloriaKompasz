@@ -5,23 +5,34 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
-        Schema::create('exercise_to_workout_diary', function (Blueprint $table) {
-            
-            $table->foreignId('workout_diary_id')->constrained('workout_diary')->cascadeOnDelete();
-            $table->foreignId('exercise_id')->constrained('exercises')->restrictOnDelete();
+        Schema::create('exercises_to_workout_diary', function (Blueprint $table) {
+            $table->id();
+
+            $table
+                ->foreignId('workout_diary_id')
+                ->constrained('workout_diary')
+                ->cascadeOnDelete();
+
+            $table
+                ->foreignId('exercises_id')
+                ->constrained('exercises')
+                ->restrictOnDelete();
+
+            $table->unsignedInteger('quantity')->default(1);
+            $table->unsignedInteger('burned_calories')->default(0);
+
+            $table->text('note')->nullable();
+
+            $table->timestamps();
+
+            $table->index(['workout_diary_id']);
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
-        Schema::dropIfExists('exercise_workout_log');
+        Schema::dropIfExists('exercises_to_workout_diary');
     }
 };

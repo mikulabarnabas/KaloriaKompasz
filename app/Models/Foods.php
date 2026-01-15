@@ -15,7 +15,7 @@ class Foods extends Model
         'protein',
         'calorie',
         'unit',
-        'quantity',
+        'amount',
         'notes',
         'image_path',
     ];
@@ -32,8 +32,8 @@ class Foods extends Model
         return $this->belongsToMany(
             FoodDiary::class,
             'food_to_food_diary',
-            'food_id',       // THIS table's FK on pivot
-            'food_diary_id'  // Diary FK on pivot
+            'food_id',
+            'food_diary_id' 
         );
     }
 }

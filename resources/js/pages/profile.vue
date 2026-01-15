@@ -72,13 +72,13 @@ function closeSuccessDialog() {
 
 <template>
   <div
-    class="min-h-screen w-full bg-slate-50 flex items-center justify-center p-4"
+    class="min-h-screen w-full flex items-center justify-center p-4"
   >
     <div class="w-full max-w-md">
-      <div class="rounded-2xl bg-white shadow-sm ring-1 ring-slate-200">
+      <div class="rounded-2xl shadow-sm ring-1">
         <div class="p-6 sm:p-8">
-          <h1 class="text-2xl font-semibold text-slate-900">Profile</h1>
-          <p class="mt-1 text-sm text-slate-600">
+          <h1 class="text-2xl font-semibold">Profile</h1>
+          <p class="mt-1 text-sm">
             Add your profile details to personalize your experience.
           </p>
 
@@ -100,7 +100,7 @@ function closeSuccessDialog() {
 
               <small
                 v-if="form.invalid('gender')"
-                class="block text-xs text-red-600"
+                class="block text-xs"
               >
                 {{ form.errors.gender }}
               </small>
@@ -124,7 +124,7 @@ function closeSuccessDialog() {
 
               <small
                 v-if="form.invalid('date_of_birth')"
-                class="block text-xs text-red-600"
+                class="block text-xs"
               >
                 {{ form.errors.date_of_birth }}
               </small>
@@ -148,7 +148,7 @@ function closeSuccessDialog() {
 
               <small
                 v-if="form.invalid('height_cm')"
-                class="block text-xs text-red-600"
+                class="block text-xs"
               >
                 {{ form.errors.height_cm }}
               </small>
@@ -173,7 +173,7 @@ function closeSuccessDialog() {
 
               <small
                 v-if="form.invalid('weight_kg')"
-                class="block text-xs text-red-600"
+                class="block text-xs"
               >
                 {{ form.errors.weight_kg }}
               </small>
@@ -196,7 +196,7 @@ function closeSuccessDialog() {
 
               <small
                 v-if="form.invalid('activity_level')"
-                class="block text-xs text-red-600"
+                class="block text-xs"
               >
                 {{ form.errors.activity_level }}
               </small>
@@ -219,7 +219,7 @@ function closeSuccessDialog() {
 
               <small
                 v-if="form.invalid('diet')"
-                class="block text-xs text-red-600"
+                class="block text-xs"
               >
                 {{ form.errors.diet }}
               </small>
@@ -235,7 +235,7 @@ function closeSuccessDialog() {
         </div>
       </div>
 
-      <p class="mt-4 text-center text-xs text-slate-500">
+      <p class="mt-4 text-center text-xs">
         You can update these details later.
       </p>
     </div>

@@ -15,7 +15,7 @@ return new class extends Migration {
 
             $table->string('name');
             $table->enum('unit', ['g', 'dkg', 'kg', 'l', 'cl', 'dl']);
-            $table->unsignedInteger('quantity');
+            $table->unsignedInteger('amount');
 
             $table->unsignedInteger('fat')->default(0);
             $table->unsignedInteger('carb')->default(0);

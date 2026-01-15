@@ -24,7 +24,8 @@ return new class extends Migration {
                 ->enum('meal_type', ['breakfast', 'lunch', 'dinner', 'snack', 'other'])
                 ->default('other');
 
-            $table->unsignedInteger('quantity')->default(1);
+            $table->unsignedInteger('amount');
+            $table->enum('unit', ['g', 'dkg', 'kg', 'l', 'cl', 'dl']);
 
             $table->timestamps();
 

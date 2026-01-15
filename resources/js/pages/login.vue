@@ -100,7 +100,7 @@ function closeSuccessDialog() {
 
     <Dialog v-model:visible="showSuccessDialog" modal :closable="true" :draggable="false"
       header="Login successful" class="w-[92vw] max-w-md" @hide="closeSuccessDialog">
-      <p class="text-slate-700">
+      <p>
         You signed in.
       </p>
 

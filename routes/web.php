@@ -3,7 +3,7 @@
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\ExercisesController;
+use App\Http\Controllers\WorkoutController;
 use App\Http\Controllers\FoodController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Http\Middleware\HandlePrecognitiveRequests;
@@ -23,19 +23,18 @@ Route::middleware(['auth'])->group(function () {
 });
 
 Route::middleware(['auth'])->group(function () {
-
+    Route::get('/fdiary', [FoodController::class, 'show']);
+    Route::get('/fdiary/diary/{date}', [FoodController::class, 'getDiaryByDate'])->where('date', '\d{4}-\d{2}-\d{2}');
+    Route::post('/fdiary/entry', [FoodController::class, 'addEntry']);
+    Route::delete('/fdiary/entry', [FoodController::class, 'deleteEntry']);
     Route::post('/fdiary/create', [FoodController::class, 'storeFood'])->middleware([HandlePrecognitiveRequests::class]);
 });
 
-Route::get('/wdiary', [ExercisesController::class, 'show']);
-
-Route::post('/wdiary/create', [ExercisesController::class, 'store'])->middleware([HandlePrecognitiveRequests::class]);
-Route::post('/fdiary/today/add', [FoodController::class, 'storeDiary']);
-
 Route::middleware(['auth'])->group(function () {
-    Route::get('/fdiary', [FoodController::class, 'show']);
-    Route::get('/fdiary/diary', [FoodController::class, 'getDiaryByDate']);
-    Route::post('/fdiary/entry', [FoodController::class, 'addEntry']);
-    Route::delete('/fdiary/entry', [FoodController::class, 'deleteEntry']);
+    Route::get('/wdiary', [WorkoutController::class, 'show']);
+    Route::post('/wdiary/create', [WorkoutController::class, 'store'])->middleware([HandlePrecognitiveRequests::class]);
+    Route::get('/wdiary/diary', [WorkoutController::class, 'getDiaryByDate']);
+    Route::post('/wdiary/entry', [WorkoutController::class, 'addEntry']);
+    Route::delete('/wdiary/entry', [WorkoutController::class, 'deleteEntry']);
 });
 

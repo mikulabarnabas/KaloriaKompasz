@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\FoodRequest;
 use App\Models\FoodDiary;
 use App\Models\Foods;
+use Illuminate\Http\Client\Events\RequestSending;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -14,45 +15,23 @@ class FoodController extends Controller
 {
     public function show(Request $request)
     {
-
-        $userId = (int) $request->user()->id;
-        $selectedDate = $request->query('date')
-            ? Carbon::parse($request->query('date'))->toDateString()
-            : now()->toDateString();
-
-        $selectedDiary = FoodDiary::query()
-            ->where('user_id', $userId)
-            ->whereDate('date', $selectedDate)
-            ->with([
-                'foods' => function ($q) {
-                    $q->select([
-                        'foods.id',
-                        'foods.name',
-                        'foods.calorie',
-                        'foods.fat',
-                        'foods.carb',
-                        'foods.protein',
-                        'foods.image_path',
-                    ]);
-                },
-            ])
-            ->first();
-
         return Inertia::render('food_diary', [
-            'foods' => Foods::all(),
-            'selectedDate' => $selectedDate,
-            'selectedDiary' => $selectedDiary,
+            'foods' => Foods::all()
         ]);
     }
 
-    public function getDiaryByDate(Request $request)
+    public function getDiaryByDate(Request $request, string $date)
     {
-        $data = $request->validate([
-            'date' => ['required', 'date'],
-        ]);
-
         $userId = (int) $request->user()->id;
-        $date = Carbon::parse($data['date'])->toDateString();
+
+        try {
+            $date = Carbon::parse($date)->toDateString();
+        } catch (\Throwable $e) {
+            return response()->json([
+                'ok' => false,
+                'message' => 'Invalid date format.',
+            ], 422);
+        }
 
         $diary = FoodDiary::query()
             ->where('user_id', $userId)
@@ -67,12 +46,13 @@ class FoodController extends Controller
                         'foods.carb',
                         'foods.protein',
                         'foods.image_path',
-                    ]);
+                    ])->withPivot(['id', 'amount', 'meal_type', 'created_at']);
                 },
             ])
             ->first();
 
         return response()->json([
+            'ok' => true,
             'date' => $date,
             'diary' => $diary,
         ]);
@@ -81,36 +61,25 @@ class FoodController extends Controller
     public function addEntry(Request $request)
     {
         $data = $request->validate([
-            'date' => ['required', 'date'],
             'food_id' => ['required', 'integer', 'exists:foods,id'],
             'meal_type' => ['nullable', 'in:breakfast,lunch,dinner,snack,other'],
-            'quantity' => ['nullable', 'integer', 'min:1', 'max:100'],
+            'amount' => ['nullable', 'integer', 'min:1'],
         ]);
+
+        $date = $request->validate([
+            'date' => ['required', 'date'],
+        ]);
+        $date = Carbon::parse($date['date'])->toDateString();
 
         $userId = (int) $request->user()->id;
-        $date = Carbon::parse($data['date'])->toDateString();
-        $mealType = $data['meal_type'] ?? 'other';
-        $quantity = (int) ($data['quantity'] ?? 1);
-
-        $diary = DB::transaction(function () use ($userId, $date, $data, $mealType, $quantity) {
-            $diary = FoodDiary::query()->firstOrCreate([
-                'user_id' => $userId,
-                'date' => $date,
-            ]);
-
-            $diary->foods()->attach([(int) $data['food_id'] => [
-                'meal_type' => $mealType,
-                'quantity' => $quantity,
-            ]]);
-
-            return $diary->fresh()->load('foods');
-        });
-
-        return response()->json([
-            'ok' => true,
+        $diary = FoodDiary::query()->firstOrCreate([
+            'user_id' => $userId,
             'date' => $date,
-            'diary' => $diary,
         ]);
+
+        $diary->foods()->attach($data, $data);
+
+        return response()->json(['ok' => true]);
     }
 
     public function deleteEntry(Request $request)
@@ -121,12 +90,14 @@ class FoodController extends Controller
 
         $userId = (int) $request->user()->id;
 
+
+
         $deleted = DB::table('food_to_food_diary as p')
             ->join('food_diary as d', 'd.id', '=', 'p.food_diary_id')
             ->where('p.id', (int) $data['entry_id'])
             ->where('d.user_id', $userId)
             ->delete();
-        
+
 
         if ($deleted === 0) {
             return response()->json([

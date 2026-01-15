@@ -25,7 +25,7 @@ class FoodRequest extends FormRequest
         return [
             'name' => ['required', 'string', 'min:1', 'max:255'],
             'unit' => ['required'],
-            'quantity' => ['required', 'integer', 'min:1'],
+            'amount' => ['required', 'integer', 'min:1'],
             'calorie' => ['required', 'integer', 'min:0'],
             'fat' => ['required', 'integer', 'min:0'],
             'carb' => ['required', 'integer', 'min:0'],

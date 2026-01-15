@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class WorkoutDiaryRequest extends FormRequest
+class WorkoutRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,13 +22,10 @@ class WorkoutDiaryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string', 'min:1', 'max:255'],
-
-            'quantity' => ['required', 'string', 'min:1', 'max:255'],
-
-            'burned_calories' => ['required', 'integer', 'min:0'],
-
-            'note' => ['nullable', 'string', 'max:5000'],
+            'name' => ['required', 'string', 'max:255'],
+            'unit' => ['required', 'in:reps,sets,minutes,seconds,km,m,other'],
+            'calories_per_unit' => ['nullable', 'integer', 'min:0', 'max:50000'],
+            'note' => ['nullable', 'string', 'max:2000'],
         ];
     }
 }
