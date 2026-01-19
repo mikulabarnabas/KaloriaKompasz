@@ -76,7 +76,6 @@ const entries = computed(() => selectedDiary.value?.foods ?? []);
 
 watch(selectedDate, async (d) => {
   const result = await loadDiary("/fdiary/diary/", d);
-  addEntryForm.date = d;
 
   if (result.ok) {
     selectedDiary.value = result.diary;

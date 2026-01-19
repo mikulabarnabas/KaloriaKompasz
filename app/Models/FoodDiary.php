@@ -31,7 +31,7 @@ class FoodDiary extends Model
             'food_diary_id',
             'food_id'
         )
-            ->withPivot(['id', 'meal_type', 'amount', 'unit', 'created_at'])
+            ->withPivot(['id', 'meal_type', 'amount', 'unit'])
             ->withTimestamps();
     }
 }

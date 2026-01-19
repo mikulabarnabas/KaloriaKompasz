@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Log;
 
 class FoodController extends Controller
 {
@@ -62,22 +63,24 @@ class FoodController extends Controller
     {
         $data = $request->validate([
             'food_id' => ['required', 'integer', 'exists:foods,id'],
-            'meal_type' => ['nullable', 'in:breakfast,lunch,dinner,snack,other'],
-            'amount' => ['nullable', 'integer', 'min:1'],
+            'meal_type' => ['in:breakfast,lunch,dinner,snack,other'],
+            'amount' => ['integer', 'min:1'],
+            'unit' => ['in:g,kg,dkg,l,dl,cl']
         ]);
 
         $date = $request->validate([
             'date' => ['required', 'date'],
         ]);
-        $date = Carbon::parse($date['date'])->toDateString();
 
+        $date = Carbon::parse($date['date'])->toDateString();
         $userId = (int) $request->user()->id;
+        
         $diary = FoodDiary::query()->firstOrCreate([
             'user_id' => $userId,
             'date' => $date,
         ]);
 
-        $diary->foods()->attach($data, $data);
+        $diary->foods()->attach($data['food_id'], $data);
 
         return response()->json(['ok' => true]);
     }
