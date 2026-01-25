@@ -27,13 +27,18 @@ class Foods extends Model
         'calorie' => 'integer',
     ];
 
+    public function scopeSearch($query, $keywords)
+    {
+        return $query->where('name', 'LIKE', '%' . $keywords . '%');
+    }
+
     public function diaries()
     {
         return $this->belongsToMany(
             FoodDiary::class,
             'food_to_food_diary',
             'food_id',
-            'food_diary_id' 
+            'food_diary_id'
         );
     }
 }

@@ -4,6 +4,7 @@ import { createInertiaApp } from '@inertiajs/vue3';
 import PrimeVue from 'primevue/config';
 import Aura from '@primeuix/themes/aura';
 import { definePreset } from '@primeuix/themes';
+import { i18nVue } from 'laravel-vue-i18n'
 
 import 'primeicons/primeicons.css';
 
@@ -166,6 +167,13 @@ createInertiaApp({
             },
             ripple: true,
         });
+
+        vueApp.use(i18nVue, {
+            resolve: async lang => {
+                const langs = import.meta.glob('../../lang/*.json');
+                return await langs[`../../lang/${lang}.json`]();
+            }
+        })
 
         const saved = localStorage.getItem('theme') || 'light';
         document.documentElement.classList.toggle(

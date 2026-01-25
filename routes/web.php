@@ -25,8 +25,10 @@ Route::middleware(['auth'])->group(function () {
 Route::middleware(['auth'])->group(function () {
     Route::get('/fdiary', [FoodController::class, 'show']);
     Route::get('/fdiary/diary/{date}', [FoodController::class, 'getDiaryByDate'])->where('date', '\d{4}-\d{2}-\d{2}');
+    Route::get('/fdiary/getFoods/{searchTerm}/{page}', [FoodController::class, 'getFoods']);
+    Route::get('/fdiary/getPageCount/{searchTerm}', [FoodController::class, 'getPageCount']);
     Route::post('/fdiary/entry', [FoodController::class, 'addEntry']);
-    Route::delete('/fdiary/entry', [FoodController::class, 'deleteEntry']);
+    Route::delete('/fdiary/entry/{date}/{id}', [FoodController::class, 'deleteEntry']);
     Route::post('/fdiary/create', [FoodController::class, 'storeFood'])->middleware([HandlePrecognitiveRequests::class]);
 });
 

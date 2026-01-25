@@ -16,13 +16,13 @@ import Footer from "../components/footer.vue";
 const people = [
   {
     id: 1,
-    name: "Név 1",
+    name: "Mikula Barnabás",
     role: "rövid leírás",
     photo: "",
   },
   {
     id: 2,
-    name: "Név 2",
+    name: "Bóta Gergely",
     role: "rövid leírás",
     photo: "",
   }
@@ -44,19 +44,18 @@ const people = [
       </template>
 
       <template #title>
-        <div class="text-center font-semibold">Ételnapló</div>
+        <div class="text-center font-semibold">{{$t('home_card_first_title')}}</div>
       </template>
 
       <template #content>
         <p class="m-0">
-          Jegyezd fel napi étkezéseidet és kalóriabeviteledet! Az ételnapló segít átlátni a makrotápanyagokat,
-          kontrollálni az adagokat, és tudatosabb döntéseket hozni a céljaid eléréséhez.
+          {{$t('home_card_first_content')}}
         </p>
       </template>
 
       <template #footer>
         <div class="flex gap-4 mt-1">
-          <Button label="Vágjunk bele!" severity="secondary" variant="outlined" class="w-full" />
+          <Button :label="$t('home_cards_button')" severity="secondary" variant="outlined" class="w-full" />
         </div>
       </template>
     </Card>
@@ -68,20 +67,18 @@ const people = [
       </template>
 
       <template #title>
-        <div class="text-center font-semibold">Edzésnapló</div>
+        <div class="text-center font-semibold">{{$t('home_card_second_title')}}</div>
       </template>
 
       <template #content>
         <p class="m-0">
-          Kövesd nyomon az edzéseidet egyszerűen! Rögzítheted a gyakorlatokat, súlyokat,
-          ismétléseket és az edzés időtartamát, így pontos képet kapsz a fejlődésedről és könnyen
-          tervezheted a következő edzéseidet.
+          {{$t('home_card_second_content')}}
         </p>
       </template>
 
       <template #footer>
         <div class="flex gap-4 mt-1">
-          <Button label="Vágjunk bele!" severity="secondary" variant="outlined" class="w-full" />
+          <Button :label="$t('home_cards_button')" severity="secondary" variant="outlined" class="w-full" />
         </div>
       </template>
     </Card>
@@ -93,62 +90,49 @@ const people = [
       </template>
 
       <template #title>
-        <div class="text-center font-semibold">Statisztika</div>
+        <div class="text-center font-semibold">{{$t('home_card_third_title')}}</div>
       </template>
 
       <template #content>
         <p class="m-0">
-          Vizualizált adatokkal követheted a haladásodat. Grafikonokon láthatod a súlyváltozást, kalóriabevitelt,
-          edzésmennyiséget és egyéb fontos mutatókat, hogy könnyebb legyen értékelni az eredményeidet.
+          {{$t('home_card_third_content')}}
         </p>
       </template>
 
       <template #footer>
         <div class="flex gap-4 mt-1">
-          <Button label="Vágjunk bele!" severity="secondary" variant="outlined" class="w-full" />
+          <Button :label="$t('home_cards_button')" severity="secondary" variant="outlined" class="w-full" />
         </div>
       </template>
     </Card>
   </div>
 
   <h1 class="text-center text-4xl font-semibold tracking-tight py-12">
-    Gyakori kérdések
+    {{$t('faq_title')}}
   </h1>
 
   <Accordion value="0" class="w-3/4  mx-auto">
     <AccordionPanel value="0">
-      <AccordionHeader>Hogyan működik az edzésnapló?</AccordionHeader>
+      <AccordionHeader>{{$t('faq_first_question')}}</AccordionHeader>
       <AccordionContent>
         <p class="m-0">
-          Az edzésnapló lehetővé teszi, hogy minden edzésedet részletesen rögzítsd. Felviheted az egyes gyakorlatokat,
-          az
-          alkalmazott súlyokat, az ismétlések számát, az edzés időtartamát és akár a pihenőidőt is. Minden adat
-          automatikusan elmentésre kerül,
-          így bármikor visszanézheted a korábbi edzéseidet, elemezheted a fejlődésedet, és könnyebben tervezheted a
-          következő edzéseidet. A napló segítségé vel nyomon követheted a hosszú távú trendeket, például az erőnlét és
-          állóképesség javulását.
+          {{$t('faq_first_answer')}}
         </p>
       </AccordionContent>
     </AccordionPanel>
     <AccordionPanel value="1">
-      <AccordionHeader>Milyen adatokat mutat a statisztika oldal?</AccordionHeader>
+      <AccordionHeader>{{$t('faq_second_question')}}</AccordionHeader>
       <AccordionContent>
         <p class="m-0">
-          A statisztika oldal vizuálisan jeleníti meg a haladásodat. Grafikonokon követheted a testsúlyváltozásodat, a
-          napi kalóriabeviteledet, az edzés mennyiségét és más fontos mutatókat,
-          például a makrotápanyagok arányát. Ez lehetővé teszi, hogy gyorsan átlásd, mely területeken kell változtatnod
-          a
-          céljaid eléréséhez.
+          {{$t('faq_second_answer')}}
         </p>
       </AccordionContent>
     </AccordionPanel>
     <AccordionPanel value="2">
-      <AccordionHeader>Mit rögzíthetek az ételnaplóban?</AccordionHeader>
+      <AccordionHeader>{{$t('faq_third_question')}}</AccordionHeader>
       <AccordionContent>
         <p class="m-0">
-          Az ételnapló segítségével részletesen nyomon követheted a napi étkezéseidet. Rögzítheted az elfogyasztott
-          ételeket, azok mennyiségét, kalóriatartalmát, valamint a makrotápanyagokat (fehérje, szénhidrát, zsír).
-          Ez segít abban, hogy tudatosan étkezz, és könnyebben tartsd a napi kalóriakeretedet a céljaid eléréséhez.
+          {{$t('faq_third_answer')}}
         </p>
       </AccordionContent>
     </AccordionPanel>
@@ -157,7 +141,7 @@ const people = [
   <section class="w-full py-12">
     <div class="mx-auto max-w-5xl px-4">
       <h1 class="text-center text-4xl font-semibold tracking-tight">
-        Csapatunk
+        {{$t('team_title')}}
       </h1>
 
       <div class="mx-auto mt-12 grid max-w-3xl grid-cols-1 gap-12 sm:grid-cols-2">

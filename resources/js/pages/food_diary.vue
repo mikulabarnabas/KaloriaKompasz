@@ -3,6 +3,7 @@ import { getBaseFoodMacros, loadDiary } from "../helpers/functions";
 
 import { ref, computed, watch } from "vue";
 import { usePage, router } from "@inertiajs/vue3";
+import axios from "axios";
 
 import Navbar from "../components/navbar.vue";
 import Footer from "../components/footer.vue";
@@ -29,16 +30,18 @@ const mealTypeOptions = [
 ];
 
 const unitOptions = ref(['g', 'dkg', 'kg', 'l', 'cl', 'dl']);
-const foods = ref(page.props.foods ?? []);
+
 const selectedDate = ref(
   page.props.selectedDate ?? new Date().toISOString().slice(0, 10)
 );
-const selectedDiary = ref(page.props.selectedDiary ?? null);
 
 const search = ref("");
-const first = ref(0);
-const rows = ref(5);
+const first = 0;
+const rows = 5;
 const selectedFood = ref(null);
+const pageCount = ref(0);
+const entries = ref([]);
+let searchedFoods = ref([]);
 
 const showResponseDialog = ref(false);
 const responseMessage = ref("");
@@ -50,38 +53,30 @@ const imageSrc = (food) => {
   return `/storage/${food.image_path}`;
 };
 
-const filteredFoods = computed(() => {
-  const q = search.value.trim().toLowerCase();
-  if (!q) return [];
-  return foods.value.filter((food) =>
-    (food.name ?? "").toLowerCase().includes(q)
-  );
-});
+async function searchFood(page) {
+  const { data } = await axios.get(`/fdiary/getFoods/${search.value}/${page}`);
+  searchedFoods.value = data.result;
+}
 
-const paginatedFoods = computed(() =>
-  filteredFoods.value.slice(first.value, first.value + rows.value)
-);
-
-watch(search, () => {
-  first.value = 0;
-  selectedFood.value = null;
-});
+async function getPageCount() {
+  const { data } = await axios.get(`/fdiary/getPageCount/${search.value}`);
+  pageCount.value = data.pageCount;
+  return data.pageCount;
+}
 
 const selectFood = (food) => {
   selectedFood.value = food;
   addEntryForm.food_id = food?.id ?? null;
 };
 
-const entries = computed(() => selectedDiary.value?.foods ?? []);
+watch(search, () => {
+  getPageCount();
+  searchFood(1);
+}, { immediate: true })
 
-watch(selectedDate, async (d) => {
-  const result = await loadDiary("/fdiary/diary/", d);
-
-  if (result.ok) {
-    selectedDiary.value = result.diary;
-  } else {
-    selectedDiary.value = null;
-  }
+watch(selectedDate, async (date) => {
+  const { data } = await axios.get(`/fdiary/diary/${date}`);
+  entries.value = data.diary ?? [];
 }, { immediate: true });
 
 const shiftDate = (days) => {
@@ -94,7 +89,7 @@ const addEntryForm = useForm("post", "/fdiary/entry", {
   date: selectedDate.value,
   food_id: null,
   meal_type: "other",
-  unit: null,
+  unit: "g",
   amount: 1,
 });
 
@@ -104,48 +99,19 @@ const addSelectedFoodToSelectedDate = async () => {
   addEntryForm.food_id = selectedFood.value.id;
   addEntryForm.date = selectedDate.value;
 
-  try {
-    console.log(addEntryForm)
-    await addEntryForm.submit();
+  addEntryForm.submit();
 
-    responseMessage.value = `Added: ${selectedFood.value.name} (${addEntryForm.meal_type}) x${addEntryForm.amount} on ${selectedDate.value}`;
-    showResponseDialog.value = true;
+  responseMessage.value = `Hozáadtad: ${selectedFood.value.name} (${addEntryForm.meal_type}) x${addEntryForm.amount} on ${selectedDate.value}`;
+  responseMessage.value = this.$t('added_response');
+  showResponseDialog.value = true;
 
-    await loadDiary("/fdiary/diary/", selectedDate.value);
-  } catch (e) {
-    responseMessage.value =
-      addEntryForm.errors?.food_id ||
-      addEntryForm.errors?.date ||
-      "Could not add entry.";
-    showResponseDialog.value = true;
-  }
+  const result = axios.get(`/fdiary/diary/${d}`);
+  entries.value = result.diary;
 };
 
-const deleteEntry = async (entryId) => {
-  if (!entryId) return;
-
-  try {
-    const url = `/fdiary/entry?entry_id=${encodeURIComponent(entryId)}`;
-    const res = await fetch(url, {
-      method: "DELETE",
-      headers: {
-        Accept: "application/json",
-        "X-CSRF-TOKEN": page.props.csrf_token,
-      },
-      credentials: "same-origin",
-    });
-
-    if (!res.ok) throw new Error("Failed to delete entry.");
-
-    responseMessage.value = "Entry deleted.";
-    showResponseDialog.value = true;
-
-    await loadDiary("/fdiary/diary/", selectedDate.value);
-  } catch (e) {
-    responseMessage.value = e?.message ?? "Failed to delete entry.";
-    showResponseDialog.value = true;
-  }
-};
+function deleteEntry(entryId) {
+  axios.delete(`/fdiary/entry/${selectedDate.value}/${entryId}`)
+}
 
 const createFoodForm = useForm("post", "/fdiary/create", {
   name: "",
@@ -159,38 +125,10 @@ const createFoodForm = useForm("post", "/fdiary/create", {
   image: null,
 });
 
-const onSelectImage = (event) => {
-  createFoodForm.image = event.files?.[0] ?? null;
-};
-
-const onRemoveImage = () => {
+function onCreateFood() {
+  createFoodForm.submit();
   createFoodForm.image = null;
-};
-
-const onCreateFood = async () => {
-  try {
-    await createFoodForm.submit({ forceFormData: true });
-
-    createFoodForm.reset();
-    onRemoveImage();
-
-    showSuccessDialog.value = true;
-    router.reload({ only: ["foods"] });
-  } catch (e) {
-    responseMessage.value =
-      createFoodForm.errors?.name ||
-      createFoodForm.errors?.unit ||      // <--- Add error check
-      createFoodForm.errors?.amount ||  // <--- Add error check
-      createFoodForm.errors?.calorie ||
-      createFoodForm.errors?.fat ||
-      createFoodForm.errors?.carb ||
-      createFoodForm.errors?.protein ||
-      createFoodForm.errors?.note ||
-      createFoodForm.errors?.image ||
-      "Create failed.";
-    showResponseDialog.value = true;
-  }
-};
+}
 </script>
 
 <template>
@@ -200,7 +138,7 @@ const onCreateFood = async () => {
     <main class="mx-auto w-full max-w-7xl px-4 py-6">
       <!-- DATE NAV -->
       <section class="mb-6 rounded-2xl border p-5">
-        <h2 class="text-lg font-semibold">Food diary date</h2>
+        <h2 class="text-lg font-semibold">{{ $t('food_diary_date') }}</h2>
 
         <div class="mt-4 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
           <div class="flex items-center gap-2">
@@ -216,26 +154,22 @@ const onCreateFood = async () => {
       <div class="grid grid-cols-1 gap-6 lg:grid-cols-3 mb-6">
         <!-- SEARCH -->
         <section class="rounded-2xl border p-5">
-          <h2 class="text-lg font-semibold">Keresés</h2>
-          <p class="mt-1 text-sm">Keress név alapján.</p>
-
-          <div class="mt-4 flex gap-2">
-            <input v-model="search" type="text" placeholder="Keress ételt..."
-              class="w-full rounded-lg border px-3 py-2 text-sm outline-none" />
-          </div>
+          <h2 class="text-lg font-semibold">{{ $t('search_title') }}</h2>
+          <InputText class="mt-4 flex gap-2 w-full" v-model="search" type="text"
+            :placeholder="$t('search_placeholder')" />
 
           <div class="mt-4">
-            <ul v-if="paginatedFoods.length" class="space-y-2">
-              <li v-for="food in paginatedFoods" :key="food.id ?? food.name"
-                class="cursor-pointer rounded-xl border p-3" @click="selectFood(food)">
+            <ul class="space-y-2">
+              <li v-for="food in searchedFoods" :key="food.id ?? food.name" class="cursor-pointer rounded-xl border p-3"
+                @click="selectFood(food)">
                 <div class="flex items-start justify-between gap-3">
                   <div class="min-w-0">
                     <div class="truncate font-semibold">
                       {{ food.name }}
                     </div>
                     <div class="mt-1 text-xs">
-                      {{ food.calorie }} kcal · Fat {{ food.fat }} g · Carb
-                      {{ food.carb }} g · Protein {{ food.protein }} g
+                      {{ food.calorie }} kcal · {{ $t('fat_label') }} {{ food.fat }} g · {{ $t('carb_label') }}
+                      {{ food.carb }} g · {{ $t('protein_label') }} {{ food.protein }} g
                     </div>
                   </div>
 
@@ -246,21 +180,32 @@ const onCreateFood = async () => {
               </li>
             </ul>
 
-            <div v-else class="rounded-xl border border-dashed p-6 text-sm">
-              Írj be valamit a kereséshez.
-            </div>
-
-            <div class="mt-4">
-              <Paginator v-if="filteredFoods.length > rows" :first="first" :rows="rows"
-                :totalRecords="filteredFoods.length" :pageLinkSize="4" @page="(e) => (first = e.first)" />
-            </div>
+            <Paginator class="mt-8" :rows="rows" :totalRecords="pageCount" @page="(e) => searchFood(e.page + 1)">
+              <template #container="{ first, last, page, pageCount, prevPageCallback, nextPageCallback, totalRecords }">
+                <div
+                  class="flex items-center gap-4 border border-primary bg-transparent rounded-full w-full py-1 px-2 justify-between">
+                  <Button icon="pi pi-chevron-left" rounded variant="text" @click="prevPageCallback"
+                    :disabled="page === 0" />
+                  <div class="text-color font-medium">
+                    <span class="hidden sm:block">{{ $t('paginator_visible_range', {
+                      first: first, last: last, total:
+                      totalRecords}) }}</span>
+                    <span class="block sm:hidden">{{ $t('paginator_page_of', {
+                      page: page, pageCount: pageCount
+                      })}}</span>
+                  </div>
+                  <Button icon="pi pi-chevron-right" rounded variant="text" @click="nextPageCallback"
+                    :disabled="page === pageCount - 1" />
+                </div>
+              </template>
+            </Paginator>
           </div>
         </section>
 
         <!-- SELECTED FOOD -->
         <section class="rounded-2xl border p-5">
-          <h2 class="text-lg font-semibold">Kiválasztott étel</h2>
-          <p class="mt-1 text-sm">Add hozzá a kiválasztott dátumhoz.</p>
+          <h2 class="text-lg font-semibold">{{ $t('selected_food_title') }}</h2>
+          <p class="mt-1 text-sm">{{ $t('selected_food_subtitle') }}</p>
 
           <div v-if="selectedFood" class="mt-4 rounded-xl border p-4">
             <div class="text-xl font-semibold">{{ selectedFood.name }}</div>
@@ -270,18 +215,17 @@ const onCreateFood = async () => {
 
             <div class="mt-4 space-y-3">
               <div class="space-y-1">
-                <label class="text-xs font-medium">Meal type</label>
+                <label class="text-xs font-medium">{{ $t('meal_type_label') }}</label>
 
                 <Select v-model="addEntryForm.meal_type" :options="mealTypeOptions" optionLabel="label"
-                  optionValue="value" class="w-full" placeholder="Select meal type" />
+                  optionValue="value" class="w-full" :placeholder="$t('meal_type_placeholder')" />
               </div>
 
               <div class="grid grid-cols-2 gap-3">
                 <div>
                   <FloatLabel variant="on">
-                    <InputText id="food_amount" v-model="addEntryForm.amount" type="number" class="w-full"
-                      />
-                    <label for="food_amount">Mennyiség</label>
+                    <InputText id="food_amount" v-model="addEntryForm.amount" type="number" class="w-full" />
+                    <label for="food_amount">{{ $t('amount_label') }}</label>
                   </FloatLabel>
                   <small v-if="addEntryForm.validate('amount')" class="block text-xs">
                     {{ addEntryForm.errors.amount }}
@@ -290,9 +234,8 @@ const onCreateFood = async () => {
 
                 <div>
                   <FloatLabel variant="on">
-                    <Select inputId="food_unit" v-model="addEntryForm.unit" :options="unitOptions" class="w-full"
-                       />
-                    <label for="food_unit">Mértékegység</label>
+                    <Select inputId="food_unit" v-model="addEntryForm.unit" :options="unitOptions" class="w-full" />
+                    <label for="food_unit">{{ $t('unit_label') }}</label>
                   </FloatLabel>
                   <small v-if="addEntryForm.invalid('unit')" class="block text-xs">
                     {{ addEntryForm.errors.unit }}
@@ -302,19 +245,19 @@ const onCreateFood = async () => {
 
               <button type="button" class="w-full rounded-lg border px-3 py-2 text-sm font-medium"
                 :disabled="addEntryForm.processing" @click="addSelectedFoodToSelectedDate">
-                Hozzáadás {{ selectedDate }}
+                {{ $t('add_button') }} {{ selectedDate }}
               </button>
             </div>
           </div>
 
           <div v-else class="mt-4 rounded-xl border border-dashed p-6 text-sm">
-            Nincs kiválasztott étel.
+            {{ $t('no_selected_food') }}
           </div>
         </section>
 
         <!-- CREATE FOOD -->
         <section class="rounded-2xl border p-5">
-          <h2 class="text-lg font-semibold">Új étel hozzáadása</h2>
+          <h2 class="text-lg font-semibold">{{ $t('create_food_title') }}</h2>
 
           <form class="mt-5 space-y-4" novalidate @submit.prevent="onCreateFood">
             <div class="space-y-3">
@@ -322,7 +265,7 @@ const onCreateFood = async () => {
                 <FloatLabel variant="on">
                   <InputText id="food_name" v-model="createFoodForm.name" class="w-full"
                     @change="createFoodForm.validate('name')" />
-                  <label for="food_name">Név</label>
+                  <label for="food_name">{{ $t('food_name_label') }}</label>
                 </FloatLabel>
                 <small v-if="createFoodForm.invalid('name')" class="block text-xs">
                   {{ createFoodForm.errors.name }}
@@ -335,7 +278,7 @@ const onCreateFood = async () => {
                   <FloatLabel variant="on">
                     <InputText id="food_amount" v-model="createFoodForm.amount" type="number" class="w-full"
                       @change="createFoodForm.validate('amount')" />
-                    <label for="food_amount">Mennyiség</label>
+                    <label for="food_amount">{{ $t('amount_label') }}</label>
                   </FloatLabel>
                   <small v-if="createFoodForm.invalid('amount')" class="block text-xs">
                     {{ createFoodForm.errors.amount }}
@@ -346,7 +289,7 @@ const onCreateFood = async () => {
                   <FloatLabel variant="on">
                     <Select inputId="food_unit" v-model="createFoodForm.unit" :options="unitOptions" class="w-full"
                       @change="createFoodForm.validate('unit')" />
-                    <label for="food_unit">Mértékegység</label>
+                    <label for="food_unit">{{ $t('unit_label') }}</label>
                   </FloatLabel>
                   <small v-if="createFoodForm.invalid('unit')" class="block text-xs">
                     {{ createFoodForm.errors.unit }}
@@ -358,7 +301,7 @@ const onCreateFood = async () => {
                 <FloatLabel variant="on">
                   <InputText id="food_calorie" v-model="createFoodForm.calorie" class="w-full"
                     @change="createFoodForm.validate('calorie')" />
-                  <label for="food_calorie">Kalória</label>
+                  <label for="food_calorie">{{ $t('calorie_label') }}</label>
                 </FloatLabel>
                 <small v-if="createFoodForm.invalid('calorie')" class="block text-xs">
                   {{ createFoodForm.errors.calorie }}
@@ -369,7 +312,7 @@ const onCreateFood = async () => {
                 <FloatLabel variant="on">
                   <InputText id="food_fat" v-model="createFoodForm.fat" class="w-full"
                     @change="createFoodForm.validate('fat')" />
-                  <label for="food_fat">Zsír</label>
+                  <label for="food_fat">{{ $t('fat_label') }}</label>
                 </FloatLabel>
                 <small v-if="createFoodForm.invalid('fat')" class="block text-xs">
                   {{ createFoodForm.errors.fat }}
@@ -380,7 +323,7 @@ const onCreateFood = async () => {
                 <FloatLabel variant="on">
                   <InputText id="food_carb" v-model="createFoodForm.carb" class="w-full"
                     @change="createFoodForm.validate('carb')" />
-                  <label for="food_carb">Szénhidrát</label>
+                  <label for="food_carb">{{ $t('carb_label') }}</label>
                 </FloatLabel>
                 <small v-if="createFoodForm.invalid('carb')" class="block text-xs">
                   {{ createFoodForm.errors.carb }}
@@ -391,7 +334,7 @@ const onCreateFood = async () => {
                 <FloatLabel variant="on">
                   <InputText id="food_protein" v-model="createFoodForm.protein" class="w-full"
                     @change="createFoodForm.validate('protein')" />
-                  <label for="food_protein">Fehérje</label>
+                  <label for="food_protein">{{ $t('protein_label') }}</label>
                 </FloatLabel>
                 <small v-if="createFoodForm.invalid('protein')" class="block text-xs">
                   {{ createFoodForm.errors.protein }}
@@ -402,7 +345,7 @@ const onCreateFood = async () => {
                 <FloatLabel variant="on">
                   <InputText id="food_note" v-model="createFoodForm.note" class="w-full"
                     @change="createFoodForm.validate('note')" />
-                  <label for="food_note">Megjegyzés</label>
+                  <label for="food_note">{{ $t('note_label') }}</label>
                 </FloatLabel>
                 <small v-if="createFoodForm.invalid('note')" class="block text-xs">
                   {{ createFoodForm.errors.note }}
@@ -411,42 +354,41 @@ const onCreateFood = async () => {
             </div>
 
             <div class="space-y-2">
-              <div class="text-sm font-medium">Kép (opcionális)</div>
+              <div class="text-sm font-medium">{{ $t('image_optional') }}</div>
 
               <FileUpload mode="basic" name="image" accept="image/*" :maxFileSize="4_000_000"
-                chooseLabel="Kép kiválasztása" customUpload class="w-full" @select="onSelectImage"
-                @clear="onRemoveImage" />
+                :chooseLabel="$t('choose_image')" customUpload class="w-full" />
 
               <small v-if="createFoodForm.invalid('image')" class="block text-xs">
                 {{ createFoodForm.errors.image }}
               </small>
             </div>
 
-            <Button type="submit" label="Étel mentése" class="w-full" :disabled="createFoodForm.processing" />
+            <Button type="submit" :label="$t('save_food')" class="w-full" :disabled="createFoodForm.processing" />
           </form>
         </section>
       </div>
 
       <!-- DIARY -->
       <section class="rounded-2xl border p-5">
-        <h2 class="text-lg font-semibold">Naptár: {{ selectedDate }}</h2>
+        <h2 class="text-lg font-semibold">{{ $t('diary_title') }}: {{ selectedDate }}</h2>
 
         <div v-if="entries.length" class="mt-4 space-y-3">
 
           <ul class="space-y-2">
-            <li v-for="food in entries" :key="food.pivot?.id" class="rounded-xl border p-3">
+            <li v-for="food in entries" :key="food.id" class="rounded-xl border p-3">
               <div class="flex items-start justify-between gap-3">
                 <div class="min-w-0">
                   <div class="truncate font-semibold">{{ food.name }}</div>
                   <div class="mt-1 text-xs">
-                    {{ food.calorie }} kcal · {{ food.pivot?.amount }} {{ food.pivot?.unit }}
-                    · meal {{ food.pivot?.meal_type }}
+                    {{ food.calorie }} kcal · {{ food.amount }} {{ food.unit }}
+                    · {{ food.meal_type }}
                   </div>
                 </div>
 
                 <div class="flex items-center gap-2">
-                  <Button label="Törlés" severity="danger" size="small" type="button"
-                    @click="deleteEntry(food.pivot?.id)" />
+                  <Button :label="$t('delete')" severity="danger" size="small" type="button"
+                    @click="deleteEntry(food.pivot.id)" />
                 </div>
               </div>
             </li>
@@ -454,25 +396,25 @@ const onCreateFood = async () => {
         </div>
 
         <div v-else class="mt-4 rounded-xl border border-dashed p-6 text-sm">
-          No entries for this date.
+          {{ $t('diary_title') }}
         </div>
       </section>
 
       <!-- SUCCESS DIALOG -->
-      <Dialog v-model:visible="showSuccessDialog" modal :closable="true" :draggable="false" header="Siker"
-        class="w-[92vw] max-w-md">
-        <p>Az étel sikeresen mentve lett.</p>
+      <Dialog v-model:visible="showSuccessDialog" modal :closable="true" :draggable="false"
+        :header="$t('success_title')" class="w-[92vw] max-w-md">
+        <p>{{ $t('food_saved_success') }}</p>
 
         <template #footer>
           <div class="flex w-full justify-end gap-2">
-            <Button label="Close" severity="secondary" @click="showSuccessDialog = false" />
+            <Button :label="$t('dialog_close')" severity="secondary" @click="showSuccessDialog = false" />
           </div>
         </template>
       </Dialog>
 
       <!-- RESPONSE DIALOG -->
-      <Dialog v-model:visible="showResponseDialog" modal :closable="true" :draggable="false" header="Diary"
-        class="w-[92vw] max-w-md">
+      <Dialog v-model:visible="showResponseDialog" modal :closable="true" :draggable="false"
+        :header="$t('response_dialog_title')" class="w-[92vw] max-w-md">
         <p>{{ responseMessage }}</p>
 
         <template #footer>
