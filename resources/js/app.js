@@ -1,4 +1,5 @@
 import { createApp, h } from 'vue';
+import ConfirmationService from 'primevue/confirmationservice';
 import { createInertiaApp } from '@inertiajs/vue3';
 
 import PrimeVue from 'primevue/config';
@@ -155,6 +156,8 @@ createInertiaApp({
     title: (title) => `${title} - KalóriaKompasz`,
     setup({ el, App, props, plugin }) {
         const vueApp = createApp({ render: () => h(App, props) });
+
+        vueApp.use(ConfirmationService);
 
         vueApp.use(plugin);
 

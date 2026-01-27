@@ -47,7 +47,7 @@ function closeSuccessDialog() {
             <!-- Email -->
             <div class="space-y-1">
               <FloatLabel variant="on">
-                <InputText id="email" v-model="form.email" type="email" inputmode="email" class="w-full"
+                <InputText id="email" v-model="form.email" type="text" inputmode="email" class="w-full"
                   @change="form.validate('email')" autocomplete="email" />
                 <label for="email">Email</label>
               </FloatLabel>

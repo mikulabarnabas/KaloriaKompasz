@@ -44,18 +44,18 @@ const people = [
       </template>
 
       <template #title>
-        <div class="text-center font-semibold">{{$t('home_card_first_title')}}</div>
+        <div class="text-center font-semibold">{{$t('home.card_first_title')}}</div>
       </template>
 
       <template #content>
         <p class="m-0">
-          {{$t('home_card_first_content')}}
+          {{$t('home.card_first_content')}}
         </p>
       </template>
 
       <template #footer>
         <div class="flex gap-4 mt-1">
-          <Button :label="$t('home_cards_button')" severity="secondary" variant="outlined" class="w-full" />
+          <Button :label="$t('home.cards_button')" severity="secondary" variant="outlined" class="w-full" />
         </div>
       </template>
     </Card>
@@ -67,18 +67,18 @@ const people = [
       </template>
 
       <template #title>
-        <div class="text-center font-semibold">{{$t('home_card_second_title')}}</div>
+        <div class="text-center font-semibold">{{$t('home.card_second_title')}}</div>
       </template>
 
       <template #content>
         <p class="m-0">
-          {{$t('home_card_second_content')}}
+          {{$t('home.card_second_content')}}
         </p>
       </template>
 
       <template #footer>
         <div class="flex gap-4 mt-1">
-          <Button :label="$t('home_cards_button')" severity="secondary" variant="outlined" class="w-full" />
+          <Button :label="$t('home.cards_button')" severity="secondary" variant="outlined" class="w-full" />
         </div>
       </template>
     </Card>
@@ -90,49 +90,49 @@ const people = [
       </template>
 
       <template #title>
-        <div class="text-center font-semibold">{{$t('home_card_third_title')}}</div>
+        <div class="text-center font-semibold">{{$t('home.card_third_title')}}</div>
       </template>
 
       <template #content>
         <p class="m-0">
-          {{$t('home_card_third_content')}}
+          {{$t('home.card_third_content')}}
         </p>
       </template>
 
       <template #footer>
         <div class="flex gap-4 mt-1">
-          <Button :label="$t('home_cards_button')" severity="secondary" variant="outlined" class="w-full" />
+          <Button :label="$t('home.cards_button')" severity="secondary" variant="outlined" class="w-full" />
         </div>
       </template>
     </Card>
   </div>
 
   <h1 class="text-center text-4xl font-semibold tracking-tight py-12">
-    {{$t('faq_title')}}
+    {{$t('home.faq_title')}}
   </h1>
 
   <Accordion value="0" class="w-3/4  mx-auto">
     <AccordionPanel value="0">
-      <AccordionHeader>{{$t('faq_first_question')}}</AccordionHeader>
+      <AccordionHeader>{{$t('home.faq_first_question')}}</AccordionHeader>
       <AccordionContent>
         <p class="m-0">
-          {{$t('faq_first_answer')}}
+          {{$t('home.faq_first_answer')}}
         </p>
       </AccordionContent>
     </AccordionPanel>
     <AccordionPanel value="1">
-      <AccordionHeader>{{$t('faq_second_question')}}</AccordionHeader>
+      <AccordionHeader>{{$t('home.faq_second_question')}}</AccordionHeader>
       <AccordionContent>
         <p class="m-0">
-          {{$t('faq_second_answer')}}
+          {{$t('home.faq_second_answer')}}
         </p>
       </AccordionContent>
     </AccordionPanel>
     <AccordionPanel value="2">
-      <AccordionHeader>{{$t('faq_third_question')}}</AccordionHeader>
+      <AccordionHeader>{{$t('home.faq_third_question')}}</AccordionHeader>
       <AccordionContent>
         <p class="m-0">
-          {{$t('faq_third_answer')}}
+          {{$t('home.faq_third_answer')}}
         </p>
       </AccordionContent>
     </AccordionPanel>
@@ -141,7 +141,7 @@ const people = [
   <section class="w-full py-12">
     <div class="mx-auto max-w-5xl px-4">
       <h1 class="text-center text-4xl font-semibold tracking-tight">
-        {{$t('team_title')}}
+        {{$t('home.team_title')}}
       </h1>
 
       <div class="mx-auto mt-12 grid max-w-3xl grid-cols-1 gap-12 sm:grid-cols-2">

@@ -9,6 +9,8 @@ use App\Models\User;
 use App\Http\Requests\RegisterUserRequest;
 use App\Http\Requests\LoginUserRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
+use Locale;
 
 class AuthController extends Controller
 {
@@ -17,8 +19,9 @@ class AuthController extends Controller
         return Inertia::render('register');
     }
 
-    public function showLogin()
+    public function showLogin(Request $request)
     {
+        App::setLocale('hu');
         return Inertia::render('login');
     }
 
@@ -41,7 +44,7 @@ class AuthController extends Controller
             $request->session()->regenerate();
             return redirect()->route('home');
         }
-        
+
 
 
         return back()->withErrors([
