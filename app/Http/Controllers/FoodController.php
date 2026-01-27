@@ -8,12 +8,13 @@ use App\Models\Foods;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\App;
 
 class FoodController extends Controller
 {
     public function show(Request $request)
     {
-        return Inertia::render('food_diary', );
+        return Inertia::render('food_diary', ['locale' => App::getLocale()]);
     }
 
     public function getDiaryByDate(Request $request, string $date)

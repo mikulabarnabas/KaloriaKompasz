@@ -24,7 +24,6 @@ import 'primeicons/primeicons.css'
 
 const page = usePage();
 
-
 const mealTypeOptions = [
   { label: "Breakfast", value: "breakfast" },
   { label: "Lunch", value: "lunch" },

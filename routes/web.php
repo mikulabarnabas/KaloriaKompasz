@@ -40,3 +40,8 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/wdiary/entry', [WorkoutController::class, 'deleteEntry']);
 });
 
+
+Route::get('/lang/{lang}', function ($lang) {
+    session(['locale' => $lang]);
+    return redirect()->back();
+});

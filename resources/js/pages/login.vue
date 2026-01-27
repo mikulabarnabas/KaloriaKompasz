@@ -11,6 +11,9 @@ import { useForm } from "laravel-precognition-vue"
 
 const showSuccessDialog = ref(false);
 
+import { router, usePage } from "@inertiajs/vue3";
+
+
 const form = useForm('post', '/login', {
   email: "",
   password: "",
@@ -60,8 +63,8 @@ function closeSuccessDialog() {
             <!-- Password -->
             <div class="space-y-1">
               <FloatLabel variant="on">
-                <Password id="password" :feedback="false" v-model="form.password" class="w-full" input-class="w-full" toggle-mask
-                  @change="form.validate('password')" autocomplete="new-password" />
+                <Password id="password" :feedback="false" v-model="form.password" class="w-full" input-class="w-full"
+                  toggle-mask @change="form.validate('password')" autocomplete="new-password" />
                 <label for="password">Password</label>
               </FloatLabel>
 
@@ -70,15 +73,15 @@ function closeSuccessDialog() {
               </small>
             </div>
 
-            <div class="flex items-center justify-between gap-3">
-              <div class="flex items-center gap-2">
-                <Checkbox input-id="remember" v-model="form.rememberme" :binary="true" />
-                <label for="rememberme" class="text-sm">Remember me</label>
-              </div>
+            <div class=" flex items-center justify-between gap-3">
+                <div class="flex items-center gap-2">
+                  <Checkbox input-id="remember" v-model="form.rememberme" :binary="true" />
+                  <label for="rememberme" class="text-sm">Remember me</label>
+                </div>
 
-              <a href="#" class="text-sm font-medium">
-                Forgot password?
-              </a>
+                <a href="#" class="text-sm font-medium">
+                  Forgot password?
+                </a>
             </div>
 
             <Button type="submit" label="Sign in" class="w-full" :loading="loading" />
@@ -98,8 +101,8 @@ function closeSuccessDialog() {
       </p>
     </div>
 
-    <Dialog v-model:visible="showSuccessDialog" modal :closable="true" :draggable="false"
-      header="Login successful" class="w-[92vw] max-w-md" @hide="closeSuccessDialog">
+    <Dialog v-model:visible="showSuccessDialog" modal :closable="true" :draggable="false" header="Login successful"
+      class="w-[92vw] max-w-md" @hide="closeSuccessDialog">
       <p>
         You signed in.
       </p>

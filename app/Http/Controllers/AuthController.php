@@ -22,7 +22,9 @@ class AuthController extends Controller
     public function showLogin(Request $request)
     {
         App::setLocale('hu');
-        return Inertia::render('login');
+        return Inertia::render('login', [
+            'locale' => App::getLocale(),
+        ]);
     }
 
     public function registerUser(RegisterUserRequest $request)
