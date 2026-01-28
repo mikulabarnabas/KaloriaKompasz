@@ -4,6 +4,7 @@ import Menubar from "primevue/menubar";
 import Button from "primevue/button";
 import Menu from "primevue/menu";
 import { router, usePage } from "@inertiajs/vue3";
+import axios from "axios";
 
 const page = usePage();
 
@@ -89,29 +90,25 @@ function toggleDarkMode() {
   syncThemeFromDom();
   localStorage.setItem("theme", isDark.value ? "dark" : "light");
 }
+
+function changeLang(lang) {
+  axios.patch(`/lang/${lang}`)
+  window.location.reload();
+}
+
 </script>
 
 <template>
-  <Menubar
-    :model="items"
-    :breakpoint="'768px'"
-    class="w-full border-0 shadow-md rounded-none px-2 sm:px-4"
-  >
+  <Menubar :model="items" :breakpoint="'768px'" class="w-full border-0 shadow-md rounded-none px-2 sm:px-4">
     <template #start>
-      <button
-        type="button"
-        class="flex items-center gap-2 text-lg sm:text-2xl font-bold whitespace-nowrap"
-        @click="goHome"
-      >
+      <button type="button" class="flex items-center gap-2 text-lg sm:text-2xl font-bold whitespace-nowrap"
+        @click="goHome">
         Kalória Kompasz
       </button>
     </template>
 
     <template #item="{ item, props }">
-      <a
-        v-bind="props.action"
-        class="flex items-center gap-2 rounded-md px-3 py-2"
-      >
+      <a v-bind="props.action" class="flex items-center gap-2 rounded-md px-3 py-2">
         <i v-if="item.icon" :class="item.icon"></i>
         <span class="min-w-0 truncate">{{ item.label }}</span>
       </a>
@@ -119,39 +116,20 @@ function toggleDarkMode() {
 
     <template #end>
       <div class="flex items-center gap-2">
+        <Button @click='changeLang("hu")'>HU</Button>
+        <Button @click='changeLang("en")'>EN</Button>
         <template v-if="isLoggedIn">
           <Menu ref="accountMenuRef" :model="accountItems" popup />
-          <Button
-            :label="user?.name ?? 'Account'"
-            icon="pi pi-user"
-            class="p-button-text"
-            @click="toggleAccountMenu"
-          />
+          <Button :label="user?.name ?? 'Account'" icon="pi pi-user" class="p-button-text" @click="toggleAccountMenu" />
         </template>
 
         <template v-else>
-          <Button
-            label="Sign in"
-            icon="pi pi-sign-in"
-            class="p-button-text"
-            @click="goToLogin"
-          />
-          <Button
-            label="Registration"
-            icon="pi pi-user-plus"
-            class="p-button-outlined"
-            @click="goToRegister"
-          />
+          <Button label="Sign in" icon="pi pi-sign-in" class="p-button-text" @click="goToLogin" />
+          <Button label="Registration" icon="pi pi-user-plus" class="p-button-outlined" @click="goToRegister" />
         </template>
 
-        <Button
-          :icon="themeIcon"
-          class="p-button-text"
-          rounded
-          text
-          :aria-label="themeAriaLabel"
-          @click="toggleDarkMode"
-        />
+        <Button :icon="themeIcon" class="p-button-text" rounded text :aria-label="themeAriaLabel"
+          @click="toggleDarkMode" />
       </div>
     </template>
   </Menubar>

@@ -41,7 +41,6 @@ Route::middleware(['auth'])->group(function () {
 });
 
 
-Route::get('/lang/{lang}', function ($lang) {
+Route::patch('/lang/{lang}', function ($lang) {
     session(['locale' => $lang]);
-    return redirect()->back();
 });
