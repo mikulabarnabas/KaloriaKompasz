@@ -14,7 +14,7 @@ class FoodController extends Controller
 {
     public function show(Request $request)
     {
-        return Inertia::render('food_diary', ['locale' => App::getLocale()]);
+        return Inertia::render('food_diary');
     }
 
     public function getDiaryByDate(Request $request, string $date)
@@ -42,7 +42,10 @@ class FoodController extends Controller
 
         $date = Carbon::parse($date['date'])->toDateString();
         $userId = (int) $request->user()->id;
-        $diary = FoodDiary::getDiaryByIdAndDate($userId, $date)->firstOrCreate();
+        $diary = FoodDiary::firstOrCreate([
+            'user_id' => $userId,
+            'date'    => $date,
+        ]);
         $diary->foods()->attach($data['food_id'], $data);
 
         return response()->json(['ok' => true]);
@@ -79,7 +82,8 @@ class FoodController extends Controller
         return redirect()->back()->with('success', 'Food created.');
     }
 
-    public function getFoods(string $searchTerm, string $page) {
+    public function getFoods(string $searchTerm, string $page)
+    {
         $page -= 1; #Beacuse It would skip the first page
         $foodPerPage = 5;
         $result = Foods::search($searchTerm)->skip($foodPerPage * $page)->limit($foodPerPage)->get() ?? [];
@@ -88,10 +92,13 @@ class FoodController extends Controller
         ]);
     }
 
-    public function getPageCount(string $searchTerm) {
+    public function getPageCount(string $searchTerm)
+    {
         $result = Foods::search($searchTerm)->count();
         return response()->json([
             'pageCount' => $result,
         ]);
+
+        
     }
 }

@@ -5,7 +5,7 @@ return [
     "search_title" => "Search",
     "search_placeholder" => "Search for food by name.",
     "paginator_visible_range" => "Showing from :first to :last of :total",
-    "paginator_page_of" => " =>page page of :pageCount",
+    "paginator_page_of" => ":page page of :pageCount",
     "selected_food_title" => "Selected Food",
     "selected_food_subtitle" => "Add it to the selected date.",
     "no_selected_food" => "No food selected.",
@@ -32,5 +32,12 @@ return [
     "success_title" => "Success",
     "food_saved_success" => "Food has been saved successfully.",
     "dialog_close" => "Close",
-    "response_dialog_title" => "Diary"
+    "response_dialog_title" => "Diary",
+    "confirmation" => "Confirmation",
+    "delete_confirmation" => "Are you sure you want to delete the selected food?",
+    "breakfast" => "breakfast",
+    "lunch" => "lunch",
+    "dinner" =>  "dinner",
+    "snack" => "snack",
+    "other" => "other",
 ];

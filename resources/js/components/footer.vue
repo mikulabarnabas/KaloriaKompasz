@@ -20,8 +20,6 @@ const version = "v0.1.0";
 
         <div class="flex flex-wrap items-center gap-x-3 gap-y-2 text-xs">
           <span>© {{ year }}</span>
-          <span class="opacity-60">•</span>
-          <span>{{ version }}</span>
         </div>
       </div>
 
@@ -50,18 +48,10 @@ const version = "v0.1.0";
               support@kaloriakompasz.hu
             </a>
           </li>
-
-          <li class="flex items-center gap-2">
-            <i class="pi pi-check-circle"></i>
-            <span>Rendszer: aktív</span>
-          </li>
         </ul>
       </div>
     </div>
 
-    <div class="mt-6 text-center text-xs opacity-70">
-      Készítette: Mikula Barnabás és Bóta Gergely
-    </div>
   </footer>
 </template>
 

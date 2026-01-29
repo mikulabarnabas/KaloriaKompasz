@@ -9,24 +9,24 @@ import Button from "primevue/button";
 import Dialog from "primevue/dialog";
 import { useForm } from "laravel-precognition-vue"
 
+import AppLayout from "@/Layouts/AppLayout.vue"
+
+defineOptions({
+  layout: AppLayout,
+})
+
 const showSuccessDialog = ref(false);
-
-import { router, usePage } from "@inertiajs/vue3";
-
 
 const form = useForm('post', '/login', {
   email: "",
   password: "",
-  remeber_token: true,
+  remeber_token: false,
 });
 
 const onSubmit = () => form.submit()
   .then(response => {
     form.reset();
     showSuccessDialog.value = true;
-  })
-  .catch(error => {
-
   });
 
 function closeSuccessDialog() {
@@ -37,13 +37,15 @@ function closeSuccessDialog() {
 </script>
 
 <template>
-  <div class="min-h-screen w-full flex items-center justify-center p-4">
     <div class="w-full max-w-md">
       <div class="rounded-2xl shadow-sm ring-1">
         <div class="p-6 sm:p-8">
-          <h1 class="text-2xl font-semibold">Sign in</h1>
+          <h1 class="text-2xl font-semibold">
+            {{ $t('auth.sign_in') }}
+          </h1>
+
           <p class="mt-1 text-sm">
-            Use your email and password to continue.
+            {{ $t('auth.login_subtitle') }}
           </p>
 
           <form class="mt-6 space-y-5" @submit.prevent="onSubmit" novalidate>
@@ -52,7 +54,9 @@ function closeSuccessDialog() {
               <FloatLabel variant="on">
                 <InputText id="email" v-model="form.email" type="text" inputmode="email" class="w-full"
                   @change="form.validate('email')" autocomplete="email" />
-                <label for="email">Email</label>
+                <label for="email">
+                  {{ $t('auth.email') }}
+                </label>
               </FloatLabel>
 
               <small v-if="form.invalid('email')" class="block text-xs">
@@ -65,55 +69,55 @@ function closeSuccessDialog() {
               <FloatLabel variant="on">
                 <Password id="password" :feedback="false" v-model="form.password" class="w-full" input-class="w-full"
                   toggle-mask @change="form.validate('password')" autocomplete="new-password" />
-                <label for="password">Password</label>
+                <label for="password">
+                  {{ $t('auth.password') }}
+                </label>
               </FloatLabel>
 
-              <small v-if="form.invalid('password')" class="block text-xs" ">
+              <small v-if="form.invalid('password')" class="block text-xs">
                 {{ form.errors.password }}
               </small>
             </div>
 
-            <div class=" flex items-center justify-between gap-3">
-                <div class="flex items-center gap-2">
-                  <Checkbox input-id="remember" v-model="form.rememberme" :binary="true" />
-                  <label for="rememberme" class="text-sm">Remember me</label>
-                </div>
+            <div class="flex items-center justify-between gap-3">
+              <div class="flex items-center gap-2">
+                <Checkbox input-id="remember" v-model="form.rememberme" :binary="true" />
+                <label for="remember" class="text-sm">
+                  {{ $t('auth.remember_me') }}
+                </label>
+              </div>
 
-                <a href="#" class="text-sm font-medium">
-                  Forgot password?
-                </a>
+              <a href="#" class="text-sm font-medium">
+                {{ $t('auth.forgot_password') }}
+              </a>
             </div>
 
-            <Button type="submit" label="Sign in" class="w-full" :loading="loading" />
+            <Button type="submit" :label="$t('auth.sign_in')" class="w-full" />
 
             <p class="text-center text-sm">
-              Don't have an account?
+              {{ $t('auth.no_account') }}
               <a href="/register" class="font-medium">
-                Create one
+                {{ $t('auth.registration') }}
               </a>
             </p>
           </form>
         </div>
       </div>
-
-      <p class="mt-4 text-center text-xs">
-        By continuing you agree to our Terms & Privacy Policy.
-      </p>
     </div>
 
-    <Dialog v-model:visible="showSuccessDialog" modal :closable="true" :draggable="false" header="Login successful"
-      class="w-[92vw] max-w-md" @hide="closeSuccessDialog">
+    <Dialog v-model:visible="showSuccessDialog" modal :closable="true" :draggable="false"
+      :header="$t('auth.dialog_title')" class="w-[92vw] max-w-md" @hide="closeSuccessDialog">
       <p>
-        You signed in.
+        {{ $t('auth.login_dialog_message') }}
       </p>
 
       <template #footer>
         <div class="flex w-full justify-end gap-2">
-          <Button label="Close" severity="secondary" @click="closeSuccessDialog" />
+          <Button :label="$t('auth.close')" severity="secondary" @click="closeSuccessDialog" />
         </div>
       </template>
     </Dialog>
-  </div>
 </template>
+
 
 <style scoped></style>

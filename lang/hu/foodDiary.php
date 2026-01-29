@@ -33,4 +33,11 @@ return [
     "food_saved_success" => "Az étel sikeresen mentve lett.",
     "dialog_close" => "Bezárás",
     "response_dialog_title" => "Napló",
+    "confirmation" => "Megerősítés",
+    "delete_confirmation" => "Biztosan törölni akarod ezt az ételt?",
+    "breakfast" => "reggeli",
+    "lunch" => "ebéd",
+    "dinner" =>  "vacsora",
+    "snack" => "nasi",
+    "other" => "más",
 ];

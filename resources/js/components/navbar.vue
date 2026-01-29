@@ -99,7 +99,7 @@ function changeLang(lang) {
 </script>
 
 <template>
-  <Menubar :model="items" :breakpoint="'768px'" class="w-full border-0 shadow-md rounded-none px-2 sm:px-4">
+  <Menubar :model="items" :breakpoint="'1150px'" class="w-full border-0 shadow-md rounded-none px-2 sm:px-4">
     <template #start>
       <button type="button" class="flex items-center gap-2 text-lg sm:text-2xl font-bold whitespace-nowrap"
         @click="goHome">
@@ -116,16 +116,21 @@ function changeLang(lang) {
 
     <template #end>
       <div class="flex items-center gap-2">
-        <Button @click='changeLang("hu")'>HU</Button>
-        <Button @click='changeLang("en")'>EN</Button>
+        <Button class="p-button-outlined" @click='changeLang("hu")'>HU</Button>
+        <Button class="p-button-outlined" @click='changeLang("en")'>EN</Button>
         <template v-if="isLoggedIn">
           <Menu ref="accountMenuRef" :model="accountItems" popup />
-          <Button :label="user?.name ?? 'Account'" icon="pi pi-user" class="p-button-text" @click="toggleAccountMenu" />
+          <Button :label="user?.name ?? 'Account'" icon="pi pi-user" class="hide-on-mobile p-button-text" @click="toggleAccountMenu" />
+          <Button label="" icon="pi pi-user" class="hide-on-desktop p-button-text" @click="toggleAccountMenu" />
         </template>
 
         <template v-else>
-          <Button label="Sign in" icon="pi pi-sign-in" class="p-button-text" @click="goToLogin" />
-          <Button label="Registration" icon="pi pi-user-plus" class="p-button-outlined" @click="goToRegister" />
+          <Button label="Sign in" icon="pi pi-sign-in" class="hide-on-mobile p-button-outlined" @click="goToLogin" />
+          <Button label="Registration" icon="pi pi-user-plus" class="hide-on-mobile p-button-outlined"
+            @click="goToRegister" />
+
+          <Button label="" icon="pi pi-sign-in" class="hide-on-desktop p-button-outlined" @click="goToLogin" />
+          <Button label="" icon="pi pi-user-plus" class="hide-on-desktop p-button-outlined" @click="goToRegister" />
         </template>
 
         <Button :icon="themeIcon" class="p-button-text" rounded text :aria-label="themeAriaLabel"
@@ -134,3 +139,17 @@ function changeLang(lang) {
     </template>
   </Menubar>
 </template>
+
+<style lang="css" scoped>
+@media (max-width: 768px) {
+  .hide-on-mobile {
+    display: none !important;
+  }
+}
+
+@media (min-width: 769px) {
+  .hide-on-desktop {
+    display: none !important;
+  }
+}
+</style>
