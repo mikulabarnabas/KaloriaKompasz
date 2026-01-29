@@ -59,28 +59,31 @@ class FoodController extends Controller
         return response(204);
     }
 
-    public function storeFood(FoodRequest $request)
-    {
-        $data = $request->validated();
-        $food = Foods::create($data);
+public function storeFood(FoodRequest $request)
+{
+    $data = $request->safe()->except(['images']);
+    $food = Foods::create($data);
 
-        if ($request->hasFile('image')) {
-            $file = $request->file('image');
-            $ext = strtolower($file->extension());
+    if ($request->hasFile('images')) {
+        $paths = "{$food->id}:";
 
-            $storedPath = $file->storeAs(
-                'foods',
-                "food_{$food->id}.{$ext}",
+        foreach ($request->file('images') as $index => $file) {
+            $filename = "image_{$index}." . $file->extension();
+            $paths .= $filename . ":";
+            $file->storeAs(
+                "foods/{$food->id}",
+                $filename,
                 'public'
             );
-
-            $food->update([
-                'image_path' => $storedPath,
-            ]);
         }
-
-        return redirect()->back()->with('success', 'Food created.');
+        $food->update([
+            'image_paths' => $paths,
+        ]);
     }
+     return response()->json(['success' => true]);
+}
+
+
 
     public function getFoods(string $searchTerm, string $page)
     {
@@ -98,7 +101,5 @@ class FoodController extends Controller
         return response()->json([
             'pageCount' => $result,
         ]);
-
-        
     }
 }

@@ -17,7 +17,7 @@ class Foods extends Model
         'unit',
         'amount',
         'notes',
-        'image_path',
+        'image_paths',
     ];
 
     protected $casts = [

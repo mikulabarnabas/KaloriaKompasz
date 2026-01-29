@@ -24,7 +24,7 @@ return new class extends Migration {
             $table->unsignedInteger('calorie')->default(0);
             $table->text('note')->nullable();
 
-            $table->string('image_path')->nullable();
+            $table->string('image_paths')->nullable();
 
             $table->timestamps();
         });

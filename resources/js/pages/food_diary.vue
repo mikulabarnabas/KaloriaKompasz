@@ -1,7 +1,8 @@
 <script setup>
 import { getBaseFoodMacros, loadDiary } from "../helpers/functions";
 
-import { ref, watch } from "vue";
+import Carousel from 'primevue/carousel';
+import { computed, ref, watch } from "vue";
 import { usePage } from "@inertiajs/vue3";
 import axios from "axios";
 
@@ -13,6 +14,7 @@ import ConfirmPopup from 'primevue/confirmpopup';
 import { useConfirm } from "primevue/useconfirm";
 import Select from "primevue/select";
 import FileUpload from "primevue/fileupload";
+import Image from 'primevue/image'
 
 
 import { useForm } from "laravel-precognition-vue";
@@ -50,14 +52,9 @@ const pageCount = ref(0);
 const entries = ref([]);
 let searchedFoods = ref([]);
 
-
-const imageSrc = (food) => {
-  if (!food?.image_path) return null;
-  return `/storage/${food.image_path}`;
-};
-
 async function searchFood(page) {
   const { data } = await axios.get(`/fdiary/getFoods/${search.value}/${page}`);
+  console.log(data)
   searchedFoods.value = data.result;
 }
 
@@ -70,6 +67,10 @@ const selectFood = (food) => {
   selectedFood.value = food;
   addEntryForm.food_id = food?.id ?? null;
 };
+
+function onImagesSelect(event) {
+  createFoodForm.images = event.files
+}
 
 watch(search, () => {
   if (search.value == "") return
@@ -117,12 +118,17 @@ const createFoodForm = useForm("post", "/fdiary/create", {
   protein: 0,
   calorie: 0,
   note: "",
-  image: null,
+  images: [],
 });
 
 function onCreateFood() {
-  createFoodForm.submit();
-  createFoodForm.image = null;
+  createFoodForm.submit({
+    forceFormData: true,
+    onSuccess: () => {
+      createFoodForm.reset()
+      createFoodForm.images = []
+    }
+  })
 }
 
 const confirm = useConfirm()
@@ -137,6 +143,20 @@ const deleteionConfirmation = (entryId) => {
     }
   })
 }
+
+const images = computed(() => {
+  if (!selectedFood.value?.image_paths) return []
+
+  const parts = selectedFood.value.image_paths.split(':').filter(Boolean)
+  const folder = parts[0].trim()
+  const filenames = parts.slice(1)
+
+  return filenames.map(file => ({
+    itemImageSrc: `/storage/foods/${folder}/${file.trim()}`,
+    thumbnailImageSrc: `/storage/foods/${folder}/${file.trim()}`,
+    alt: selectedFood.value.name
+  }))
+})
 </script>
 
 <template>
@@ -186,7 +206,8 @@ const deleteionConfirmation = (entryId) => {
             </li>
           </ul>
 
-          <Paginator v-if="searchedFoods.length" class="mt-8" :rows="rows" :totalRecords="pageCount" @page="(e) => searchFood(e.page + 1)">
+          <Paginator v-if="searchedFoods.length" class="mt-8" :rows="rows" :totalRecords="pageCount"
+            @page="(e) => searchFood(e.page + 1)">
             <template #container="{ first, last, page, pageCount, prevPageCallback, nextPageCallback, totalRecords }">
               <div
                 class="flex items-center border border-primary bg-transparent rounded-full w-full py-1 px-2 justify-between">
@@ -217,8 +238,16 @@ const deleteionConfirmation = (entryId) => {
         <div v-if="selectedFood" class="mt-4 rounded-xl border p-4">
           <div class="text-xl font-semibold">{{ selectedFood.name }}</div>
 
-          <img v-if="selectedFood.image_path" :src="imageSrc(selectedFood)"
-            class="mt-4 h-44 w-full rounded-xl border object-cover" alt="Food image" />
+          <Carousel v-if="images.length" :value="images" :numVisible="3" :numScroll="1" circular>
+            <template #item="{ data }">
+              <Image :src="data.itemImageSrc" preview imageClass="h-40 w-full object-cover rounded-xl" />
+            </template>
+          </Carousel>
+
+          <div v-else
+            class="mt-4 h-40 flex items-center justify-center rounded-xl border border-dashed text-sm text-gray-500">
+            No images available
+          </div>
 
           <div class="mt-4 space-y-3">
             <div class="space-y-1">
@@ -363,8 +392,8 @@ const deleteionConfirmation = (entryId) => {
           <div class="space-y-2">
             <div class="text-sm font-medium">{{ $t('foodDiary.image_optional') }}</div>
 
-            <FileUpload mode="basic" name="image" accept="image/*" :maxFileSize="4_000_000"
-              :chooseLabel="$t('foodDiary.choose_image')" customUpload class="w-full" />
+            <FileUpload mode="basic" name="images[]" multiple :fileLimit="5" accept="image/*" :maxFileSize="4_000_000"
+              customUpload @select="onImagesSelect" class="w-full" />
 
             <small v-if="createFoodForm.invalid('image')" class="block text-xs">
               {{ createFoodForm.errors.image }}
@@ -409,13 +438,13 @@ const deleteionConfirmation = (entryId) => {
     </section>
 
     <ConfirmPopup group="headless">
-      <template #container="{acceptCallback, rejectCallback }">
+      <template #container="{ acceptCallback, rejectCallback }">
         <div class="rounded p-4">
           <span>{{ $t('foodDiary.delete_confirmation') }}</span>
           <div class="flex items-center gap-2 mt-4">
             <Button :label="$t('foodDiary.delete')" size="small" severity="danger" @click="acceptCallback"></Button>
-            <Button :label="$t('foodDiary.dialog_close')" variant="outlined" @click="rejectCallback" severity="secondary" size="small"
-              text></Button>
+            <Button :label="$t('foodDiary.dialog_close')" variant="outlined" @click="rejectCallback"
+              severity="secondary" size="small" text></Button>
           </div>
         </div>
       </template>
