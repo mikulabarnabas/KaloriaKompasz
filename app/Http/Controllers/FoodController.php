@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\App;
+use phpDocumentor\Reflection\Types\Object_;
 
 class FoodController extends Controller
 {
@@ -59,29 +60,67 @@ class FoodController extends Controller
         return response(204);
     }
 
-public function storeFood(FoodRequest $request)
-{
-    $data = $request->safe()->except(['images']);
-    $food = Foods::create($data);
+    private const UNIT_TO_BASE = [
+        'g' => 1,
+        'dkg' => 10,
+        'kg' => 1000,
+        'ml' => 1,
+        'dl' => 100,
+        'l' => 1000,
+    ];
 
-    if ($request->hasFile('images')) {
-        $paths = "{$food->id}:";
+    public function normalizeFood(array $data): array
+    {
+        $unitFactor = self::UNIT_TO_BASE[$data['unit']] ?? 1;
 
-        foreach ($request->file('images') as $index => $file) {
-            $filename = "image_{$index}." . $file->extension();
-            $paths .= $filename . ":";
-            $file->storeAs(
-                "foods/{$food->id}",
-                $filename,
-                'public'
-            );
+        // convert submitted amount to grams/ml
+        $baseAmount = $data['amount'] * $unitFactor;
+
+        if ($baseAmount <= 0) {
+            throw new \InvalidArgumentException('Amount must be > 0');
         }
-        $food->update([
-            'image_paths' => $paths,
-        ]);
+
+        // normalize to per 100g/ml
+        $factor = 100 / $baseAmount;
+
+        $data['calorie'] = round($data['calorie'] * $factor, 2);
+        $data['fat']     = round($data['fat'] * $factor, 2);
+        $data['carb']    = round($data['carb'] * $factor, 2);
+        $data['protein'] = round($data['protein'] * $factor, 2);
+
+        // store normalized base reference
+        $data['amount'] = 100;
+        $data['unit']   = in_array($data['unit'], ['g', 'dkg', 'kg']) ? 'g' : 'ml';
+
+        return $data;
     }
-     return response()->json(['success' => true]);
-}
+
+    public function storeFood(FoodRequest $request)
+    {
+        $data = $request->validated();
+
+        $data = $this->normalizeFood($data);
+
+        $food = Foods::create($data);
+
+        if ($request->hasFile('images')) {
+            $paths = "{$food->id}:";
+
+            foreach ($request->file('images') as $index => $file) {
+                $filename = "image_{$index}." . $file->extension();
+                $paths .= $filename . ":";
+                $file->storeAs(
+                    "foods/{$food->id}",
+                    $filename,
+                    'public'
+                );
+            }
+            $food->update([
+                'image_paths' => $paths,
+            ]);
+        }
+        return response()->json(['success' => true]);
+    }
 
 
 

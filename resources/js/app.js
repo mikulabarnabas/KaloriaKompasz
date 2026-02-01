@@ -5,7 +5,7 @@ import { createInertiaApp } from '@inertiajs/vue3';
 import PrimeVue from 'primevue/config';
 import Aura from '@primeuix/themes/aura';
 import { definePreset } from '@primeuix/themes';
-import { i18nVue } from 'laravel-vue-i18n'
+import { createI18n } from 'vue-i18n'
 
 import 'primeicons/primeicons.css';
 
@@ -150,16 +150,17 @@ const MyPreset = definePreset(Aura, {
 
 createInertiaApp({
     resolve: (name) => {
-        const pages = import.meta.glob('./Pages/**/*.vue', { eager: true });
-        return pages[`./Pages/${name}.vue`];
+        const pages = import.meta.glob('./Pages/**/*.vue', { eager: true })
+        return pages[`./Pages/${name}.vue`]
     },
+
     title: (title) => `${title} - KalóriaKompasz`,
+
     setup({ el, App, props, plugin }) {
-        const vueApp = createApp({ render: () => h(App, props) });
+        const vueApp = createApp({ render: () => h(App, props) })
 
-        vueApp.use(ConfirmationService);
-
-        vueApp.use(plugin);
+        vueApp.use(plugin)
+        vueApp.use(ConfirmationService)
 
         vueApp.use(PrimeVue, {
             theme: {
@@ -169,21 +170,27 @@ createInertiaApp({
                 },
             },
             ripple: true,
-        });
-
-        vueApp.use(i18nVue, {
-            resolve: async lang => {
-                const langs = import.meta.glob('../../lang/*.json');
-                return await langs[`../../lang/${lang}.json`]();
-            }
         })
 
-        const saved = localStorage.getItem('theme') || 'light';
+        const { locale, translations } = props.initialPage.props
+
+        const i18n = createI18n({
+            legacy: false,
+            locale,
+            fallbackLocale: 'en',
+            messages: {
+                [locale]: translations,
+            },
+        })
+
+        vueApp.use(i18n)
+
+        const saved = localStorage.getItem('theme') || 'light'
         document.documentElement.classList.toggle(
             'my-app-dark',
-            saved === 'dark',
-        );
+            saved === 'dark'
+        )
 
-        vueApp.mount(el);
+        vueApp.mount(el)
     },
-});
+})

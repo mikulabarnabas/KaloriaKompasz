@@ -15,7 +15,7 @@ return [
 
     'failed' => 'These credentials do not match our records.',
     'password' => 'The provided password is incorrect.',
-    'throttle' => 'Too many login attempts. Please try again in :seconds seconds.',
+    'throttle' => 'Too many login attempts. Please try again in {seconds} seconds.',
 
     'login_subtitle' => 'Az e-mail-címed és jelszavad megadásával folytathatod.',
     'register_subtitle' => 'Add meg az adataidat a regisztráció megkezdéséhez.',

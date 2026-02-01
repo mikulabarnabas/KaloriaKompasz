@@ -1,5 +1,4 @@
 <script setup>
-import { getBaseFoodMacros, loadDiary } from "../helpers/functions";
 
 import Carousel from 'primevue/carousel';
 import { computed, ref, watch } from "vue";
@@ -17,6 +16,10 @@ import FileUpload from "primevue/fileupload";
 import Image from 'primevue/image'
 
 
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
+
 import { useForm } from "laravel-precognition-vue";
 
 import 'primeicons/primeicons.css'
@@ -31,11 +34,11 @@ defineOptions({
 const page = usePage();
 
 const mealTypeOptions = [
-  { label: "Breakfast", value: "breakfast" },
-  { label: "Lunch", value: "lunch" },
-  { label: "Dinner", value: "dinner" },
-  { label: "Snack", value: "snack" },
-  { label: "Other", value: "other" },
+  { label: t('foodDiary.breakfast'), value: "breakfast" },
+  { label: t('foodDiary.lunch'), value: "lunch" },
+  { label: t('foodDiary.dinner'), value: "dinner" },
+  { label: t('foodDiary.snack'), value: "snack" },
+  { label: t('foodDiary.other'), value: "other" },
 ];
 
 const unitOptions = ref(['g', 'dkg', 'kg', 'l', 'cl', 'dl']);
@@ -117,7 +120,7 @@ const createFoodForm = useForm("post", "/fdiary/create", {
   carb: 0,
   protein: 0,
   calorie: 0,
-  note: "",
+  notes: "",
   images: [],
 });
 
@@ -157,6 +160,8 @@ const images = computed(() => {
     alt: selectedFood.value.name
   }))
 })
+
+
 </script>
 
 <template>
@@ -238,9 +243,9 @@ const images = computed(() => {
         <div v-if="selectedFood" class="mt-4 rounded-xl border p-4">
           <div class="text-xl font-semibold">{{ selectedFood.name }}</div>
 
-          <Carousel v-if="images.length" :value="images" :numVisible="3" :numScroll="1" circular>
+          <Carousel v-if="images.length" :value="images" :numVisible="1" :numScroll="1" circular>
             <template #item="{ data }">
-              <Image :src="data.itemImageSrc" preview imageClass="h-40 w-full object-cover rounded-xl" />
+              <Image :src="data.itemImageSrc" preview imageClass="h-48 w-full object-cover rounded-xl" />
             </template>
           </Carousel>
 
@@ -379,12 +384,12 @@ const images = computed(() => {
 
             <div>
               <FloatLabel variant="on">
-                <InputText id="food_note" v-model="createFoodForm.note" class="w-full"
-                  @change="createFoodForm.validate('note')" />
-                <label for="food_note">{{ $t('foodDiary.note_label') }}</label>
+                <InputText id="food_notes" v-model="createFoodForm.notes" class="w-full"
+                  @change="createFoodForm.validate('notes')" />
+                <label for="food_notes">{{ $t('foodDiary.note_label') }}</label>
               </FloatLabel>
-              <small v-if="createFoodForm.invalid('note')" class="block text-xs">
-                {{ createFoodForm.errors.note }}
+              <small v-if="createFoodForm.invalid('notes')" class="block text-xs">
+                {{ createFoodForm.errors.notes }}
               </small>
             </div>
           </div>
@@ -452,3 +457,12 @@ const images = computed(() => {
 
   </main>
 </template>
+
+<style>
+@media (max-width: 640px) {
+  .p-carousel-prev-button,
+  .p-carousel-next-button {
+    display: none !important;
+  }
+}
+</style>
