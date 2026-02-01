@@ -57,7 +57,6 @@ let searchedFoods = ref([]);
 
 async function searchFood(page) {
   const { data } = await axios.get(`/fdiary/getFoods/${search.value}/${page}`);
-  console.log(data)
   searchedFoods.value = data.result;
 }
 
@@ -412,35 +411,73 @@ const images = computed(() => {
     </div>
 
     <!-- DIARY -->
+
     <section class="rounded-2xl border p-5">
-      <h2 class="text-lg font-semibold">{{ $t('foodDiary.diary_title') }}: {{ selectedDate }}</h2>
+      <h2 class="text-lg font-semibold">
+        {{ $t('foodDiary.diary_title') }}: {{ selectedDate }}
+      </h2>
 
-      <div v-if="entries.length" class="mt-4 space-y-3">
+      <div v-if="Object.keys(entries).length" class="mt-4 space-y-6">
 
-        <ul class="space-y-2">
-          <li v-for="food in entries" :key="food.id" class="rounded-xl border p-3">
-            <div class="flex items-start justify-between gap-3">
-              <div class="min-w-0">
-                <div class="truncate font-semibold">{{ food.name }}</div>
-                <div class="mt-1 text-xs">
-                  {{ food.calorie }} kcal · {{ food.amount }} {{ food.unit }}
-                  · {{ $t('foodDiary.' + food.pivot.meal_type) }}
+        <!-- MEAL GROUP -->
+        <div v-for="(foods, mealType) in entries" :key="mealType">
+
+          <!-- Meal header -->
+          <h2 class="text-base font-semibold border-b pb-2 mb-3">
+            {{ $t('foodDiary.' + mealType) }}
+          </h2>
+
+          <!-- Foods -->
+          <ul class="space-y-2">
+            <li v-for="food in foods" :key="food.pivot_id" class="rounded-xl border p-3">
+              <div class="flex items-center gap-4">
+
+                <!-- CENTER -->
+                <div class="flex-1 min-w-0">
+                  <div class="font-semibold truncate">
+                    {{ food.name }}
+                  </div>
+                  <div class="text-sm opacity-80">
+                    {{ food.amount }} {{ food.unit }}
+                    · {{ $t('foodDiary.' + food.meal_type) }}
+                  </div>
                 </div>
+
+                <div class="hidden sm:flex flex-col text-lg text-right leading-tight">
+                  <div>{{ food.calorie }} kcal</div>
+                </div>
+
+                <!-- RIGHT MACROS -->
+                <div class="hidden sm:flex flex-col text-sm text-left leading-tight">
+                  <div>{{ $t('foodDiary.carb_label') }}: {{ food.carb }} </div>
+                  <div>{{ $t('foodDiary.protein_label') }}: {{ food.protein }}</div>
+                  <div>{{ $t('foodDiary.fat_label') }}: {{ food.fat }}</div>
+                </div>
+
+                <!-- DELETE -->
+                <Button icon="pi pi-trash" severity="danger" text @click="deleteionConfirmation(food.pivot_id)" />
+
               </div>
 
-              <div class="flex items-center gap-2">
-                <Button :label="$t('foodDiary.delete')" severity="danger" size="small" type="button"
-                  @click="deleteionConfirmation(food.pivot.id)" />
+              <!-- MOBILE MACROS -->
+              <div class="mt-3 grid grid-cols-2 gap-2 text-sm sm:hidden">
+                <div>{{ food.calorie }} kcal</div>
+                <div>{{ food.carb }} {{ $t('foodDiary.carb_label') }}</div>
+                <div>{{ food.protein }} {{ $t('foodDiary.protein_label') }}</div>
+                <div>{{ food.fat }} {{ $t('foodDiary.fat_label') }}</div>
               </div>
-            </div>
-          </li>
-        </ul>
+
+            </li>
+          </ul>
+
+        </div>
       </div>
 
       <div v-else class="mt-4 rounded-xl border border-dashed p-6 text-sm">
         {{ $t('foodDiary.no_entries') }}
       </div>
     </section>
+
 
     <ConfirmPopup group="headless">
       <template #container="{ acceptCallback, rejectCallback }">
@@ -460,6 +497,7 @@ const images = computed(() => {
 
 <style>
 @media (max-width: 640px) {
+
   .p-carousel-prev-button,
   .p-carousel-next-button {
     display: none !important;

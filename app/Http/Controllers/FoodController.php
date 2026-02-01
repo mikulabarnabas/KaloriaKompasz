@@ -22,11 +22,59 @@ class FoodController extends Controller
     {
         $userId = (int) $request->user()->id;
         $date = Carbon::parse($date)->toDateString();
-        $diary = FoodDiary::getDiaryByIdAndDate($userId, $date)->first()?->foods ?? [];
+
+        $foods = FoodDiary::getDiaryByIdAndDate($userId, $date)
+            ->first()?->foods ?? collect();
+
+        $scaled = $foods
+            ->map(fn($food) => $this->scaleFoodByPivot($food))
+            ->groupBy('meal_type');
+
+        $order = [
+            'breakfast',
+            'lunch',
+            'dinner',
+            'snack',
+            'other'
+        ];
+
+        $sorted = collect($order)
+            ->mapWithKeys(fn($type) => [
+                $type => $scaled->get($type, collect())
+            ])
+            ->filter(fn($group) => $group->isNotEmpty());
+//            ->map(fn($group) => $group->sortBy('pivot.created_at')->values());
+
         return response()->json([
-            'diary' => $diary,
+            'diary' => $sorted,
         ]);
     }
+
+
+
+    private function scaleFoodByPivot(Foods $food): array
+    {
+        $pivot = $food->pivot;
+
+        $unitFactor = self::UNIT_TO_BASE[$pivot->unit] ?? 1;
+        $consumedBase = $pivot->amount * $unitFactor;
+
+        $factor = $consumedBase / 100;
+
+        $scaledFood['calorie'] = round($food->calorie * $factor, 2);
+        $scaledFood['fat'] = round($food->fat * $factor, 2);
+        $scaledFood['carb'] = round($food->carb * $factor, 2);
+        $scaledFood['protein'] = round($food->protein * $factor, 2);
+        $scaledFood['name'] = $food->name;
+        $scaledFood['amount'] = $pivot->amount;
+        $scaledFood['unit'] = $pivot->unit;
+        $scaledFood['meal_type'] = $pivot->meal_type;
+        $scaledFood['id'] = $pivot->id;
+
+
+        return $scaledFood;
+    }
+
 
     public function addEntry(Request $request)
     {
@@ -45,7 +93,7 @@ class FoodController extends Controller
         $userId = (int) $request->user()->id;
         $diary = FoodDiary::firstOrCreate([
             'user_id' => $userId,
-            'date'    => $date,
+            'date' => $date,
         ]);
         $diary->foods()->attach($data['food_id'], $data);
 
@@ -76,21 +124,17 @@ class FoodController extends Controller
         // convert submitted amount to grams/ml
         $baseAmount = $data['amount'] * $unitFactor;
 
-        if ($baseAmount <= 0) {
-            throw new \InvalidArgumentException('Amount must be > 0');
-        }
-
         // normalize to per 100g/ml
         $factor = 100 / $baseAmount;
 
         $data['calorie'] = round($data['calorie'] * $factor, 2);
-        $data['fat']     = round($data['fat'] * $factor, 2);
-        $data['carb']    = round($data['carb'] * $factor, 2);
+        $data['fat'] = round($data['fat'] * $factor, 2);
+        $data['carb'] = round($data['carb'] * $factor, 2);
         $data['protein'] = round($data['protein'] * $factor, 2);
 
         // store normalized base reference
         $data['amount'] = 100;
-        $data['unit']   = in_array($data['unit'], ['g', 'dkg', 'kg']) ? 'g' : 'ml';
+        $data['unit'] = in_array($data['unit'], ['g', 'dkg', 'kg']) ? 'g' : 'ml';
 
         return $data;
     }
