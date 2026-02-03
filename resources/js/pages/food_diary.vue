@@ -2,7 +2,6 @@
 
 import Carousel from 'primevue/carousel';
 import { computed, ref, watch } from "vue";
-import { usePage } from "@inertiajs/vue3";
 import axios from "axios";
 
 import Paginator from "primevue/paginator";
@@ -14,6 +13,7 @@ import { useConfirm } from "primevue/useconfirm";
 import Select from "primevue/select";
 import FileUpload from "primevue/fileupload";
 import Image from 'primevue/image'
+import DatePicker from 'primevue/datepicker';
 
 
 import { useI18n } from 'vue-i18n'
@@ -30,9 +30,6 @@ defineOptions({
   layout: AppLayout,
 })
 
-
-const page = usePage();
-
 const mealTypeOptions = [
   { label: t('foodDiary.breakfast'), value: "breakfast" },
   { label: t('foodDiary.lunch'), value: "lunch" },
@@ -43,12 +40,12 @@ const mealTypeOptions = [
 
 const unitOptions = ref(['g', 'dkg', 'kg', 'l', 'cl', 'dl']);
 
-const selectedDate = ref(
-  page.props.selectedDate ?? new Date().toISOString().slice(0, 10)
-);
+const selectedDate = ref(new Date());
+const formattedDate = computed(() =>
+  selectedDate.value.toISOString().slice(0, 10)
+)
 
 const search = ref("");
-const first = 1;
 const rows = 5;
 const selectedFood = ref(null);
 const pageCount = ref(0);
@@ -80,19 +77,18 @@ watch(search, () => {
   searchFood(1);
 }, { immediate: true })
 
-watch(selectedDate, async (date) => {
+watch(formattedDate, async (date) => {
   const { data } = await axios.get(`/fdiary/diary/${date}`);
   entries.value = data.diary ?? [];
 }, { immediate: true });
 
 const shiftDate = (days) => {
   const dt = new Date(selectedDate.value);
-  dt.setDate(dt.getDate() + days);
-  selectedDate.value = dt.toISOString().slice(0, 10);
+  selectedDate.value = dt.setDate(dt.getDate() + days);
 };
 
 const addEntryForm = useForm("post", "/fdiary/entry", {
-  date: selectedDate.value,
+  date: formattedDate.value,
   food_id: null,
   meal_type: "other",
   unit: "g",
@@ -103,11 +99,14 @@ const addSelectedFoodToSelectedDate = async () => {
   if (!selectedFood.value?.id) return;
 
   addEntryForm.food_id = selectedFood.value.id;
-  addEntryForm.date = selectedDate.value;
+  addEntryForm.date = formattedDate.value;
 
-  await addEntryForm.submit();
+  await addEntryForm.submit({
+    forceFormData: true,
+    only: []
+  })
 
-  const { data } = await axios.get(`/fdiary/diary/${selectedDate.value}`);
+  const { data } = await axios.get(`/fdiary/diary/${formattedDate.value}`);
   entries.value = data.diary ?? [];
 };
 
@@ -139,8 +138,8 @@ const deleteionConfirmation = (entryId) => {
   confirm.require({
     group: 'headless',
     accept: async () => {
-      axios.delete(`/fdiary/entry/${selectedDate.value}/${entryId}`)
-      const { data } = await axios.get(`/fdiary/diary/${selectedDate.value}`);
+      axios.delete(`/fdiary/entry/${formattedDate.value}/${entryId}`)
+      const { data } = await axios.get(`/fdiary/diary/${formattedDate.value}`);
       entries.value = data.diary ?? [];
     }
   })
@@ -171,11 +170,11 @@ const images = computed(() => {
 
       <div class="mt-4 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
         <div class="flex items-center gap-2">
-          <Button label="←" severity="secondary" type="button" @click="shiftDate(-1)" />
+          <Button icon="pi pi-arrow-left"  severity="secondary" type="button" @click="shiftDate(-1)" />
           <div class="space-y-1">
-            <input v-model="selectedDate" type="date" class="w-full rounded-lg border px-3 py-2 text-sm" />
+            <DatePicker v-model="selectedDate" type="date" />
           </div>
-          <Button label="→" severity="secondary" type="button" @click="shiftDate(1)" />
+          <Button icon="pi pi-arrow-right" severity="secondary" type="button" @click="shiftDate(1)" />
         </div>
       </div>
     </section>
@@ -189,7 +188,7 @@ const images = computed(() => {
 
         <div class="mt-4">
           <ul class="space-y-2">
-            <li v-for="food in searchedFoods" :key="food.id ?? food.name" class="cursor-pointer rounded-xl border p-3"
+            <li v-for="food in searchedFoods" :key="food.id" class="cursor-pointer rounded-xl border p-3"
               @click="selectFood(food)">
               <div class="flex items-start justify-between gap-3">
                 <div class="min-w-0">
@@ -253,7 +252,7 @@ const images = computed(() => {
             No images available
           </div>
 
-          <div class="mt-4 space-y-3">
+          <form @submit.prevent="addSelectedFoodToSelectedDate" class="mt-4 space-y-3">
             <div class="space-y-1">
               <label class="text-xs font-medium">{{ $t('foodDiary.meal_type_label') }}</label>
 
@@ -264,10 +263,11 @@ const images = computed(() => {
             <div class="grid grid-cols-2 gap-3">
               <div>
                 <FloatLabel variant="on">
-                  <InputText id="food_amount" v-model="addEntryForm.amount" type="number" class="w-full" />
+                  <InputText id="food_amount" v-model="addEntryForm.amount" type="number" class="w-full"
+                    @change="addEntryForm.invalid('amount')" />
                   <label for="food_amount">{{ $t('foodDiary.amount_label') }}</label>
                 </FloatLabel>
-                <small v-if="addEntryForm.validate('amount')" class="block text-xs">
+                <small v-if="addEntryForm.invalid('amount')" class="block text-xs">
                   {{ addEntryForm.errors.amount }}
                 </small>
               </div>
@@ -277,17 +277,14 @@ const images = computed(() => {
                   <Select inputId="food_unit" v-model="addEntryForm.unit" :options="unitOptions" class="w-full" />
                   <label for="food_unit">{{ $t('foodDiary.unit_label') }}</label>
                 </FloatLabel>
-                <small v-if="addEntryForm.invalid('unit')" class="block text-xs">
-                  {{ addEntryForm.errors.unit }}
-                </small>
               </div>
             </div>
 
-            <button type="button" class="w-full rounded-lg border px-3 py-2 text-sm font-medium"
-              :disabled="addEntryForm.processing" @click="addSelectedFoodToSelectedDate">
-              {{ $t('foodDiary.add_button') }} {{ selectedDate }}
+            <Button class="w-full rounded-lg border px-3 py-2 text-sm font-medium" :disabled="addEntryForm.processing"
+              type="submit">
+              {{ $t('foodDiary.add_button') }} {{ formattedDate }}
             </button>
-          </div>
+          </form>
         </div>
 
         <div v-else class="mt-4 rounded-xl border border-dashed p-6 text-sm">
@@ -414,7 +411,7 @@ const images = computed(() => {
 
     <section class="rounded-2xl border p-5">
       <h2 class="text-lg font-semibold">
-        {{ $t('foodDiary.diary_title') }}: {{ selectedDate }}
+        {{ $t('foodDiary.diary_title') }} — {{ formattedDate }}
       </h2>
 
       <div v-if="Object.keys(entries).length" class="mt-4 space-y-6">
@@ -455,7 +452,7 @@ const images = computed(() => {
                 </div>
 
                 <!-- DELETE -->
-                <Button icon="pi pi-trash" severity="danger" text @click="deleteionConfirmation(food.pivot_id)" />
+                <Button icon="pi pi-trash" severity="danger" text @click="deleteionConfirmation(food.id)" />
 
               </div>
 

@@ -13,10 +13,15 @@ class Exercises extends Model
         'note',
     ];
 
+    public function scopeSearch($query, $keywords)
+    {
+        return $query->where('name', 'LIKE', '%' . $keywords . '%');
+    }
+
     public function workoutDiaries()
     {
         return $this->belongsToMany(WorkoutDiary::class, 'exercise_to_workout_diary')
-            ->withPivot(['id', 'quantity', 'burned_calories', 'note'])
+            ->withPivot(['id', 'amount', 'unit', 'note'])
             ->withTimestamps();
     }
 }

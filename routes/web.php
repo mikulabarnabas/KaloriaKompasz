@@ -34,10 +34,12 @@ Route::middleware(['auth'])->group(function () {
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/wdiary', [WorkoutController::class, 'show']);
-    Route::post('/wdiary/create', [WorkoutController::class, 'store'])->middleware([HandlePrecognitiveRequests::class]);
-    Route::get('/wdiary/diary', [WorkoutController::class, 'getDiaryByDate']);
+    Route::post('/wdiary/create', [WorkoutController::class, 'storeExercise'])->middleware([HandlePrecognitiveRequests::class]);
+    Route::get('/wdiary/diary/{date}', [WorkoutController::class, 'getDiaryByDate']);
     Route::post('/wdiary/entry', [WorkoutController::class, 'addEntry']);
-    Route::delete('/wdiary/entry', [WorkoutController::class, 'deleteEntry']);
+    Route::delete('/wdiary/entry/{date}/{id}', [WorkoutController::class, 'deleteEntry']);
+    Route::get('/wdiary/getExercises/{search}/{page}', [WorkoutController::class, 'getExercises']);
+    Route::get('/wdiary/getPageCount/{search}', [WorkoutController::class, 'getPageCount']);
 });
 
 

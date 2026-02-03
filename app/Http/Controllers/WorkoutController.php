@@ -2,149 +2,137 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Exercises;
 use App\Http\Requests\WorkoutRequest;
+use App\Models\Exercises;
 use App\Models\WorkoutDiary;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 
 class WorkoutController extends Controller
 {
     public function show(Request $request)
     {
+        return Inertia::render('workout_diary');
+    }
+
+    public function getDiaryByDate(Request $request, string $date)
+    {
         $userId = (int) $request->user()->id;
+        $date = Carbon::parse($date)->toDateString();
 
-        $selectedDate = $request->query('date')
-            ? Carbon::parse($request->query('date'))->toDateString()
-            : now()->toDateString();
-
-        $selectedDiary = WorkoutDiary::query()
-            ->where('user_id', $userId)
-            ->whereDate('date', $selectedDate)
-            ->with([
-                'exercises' => function ($q) {
-                    $q->select([
-                        'exercises.id',
-                        'exercises.name',
-                        'exercises.unit',
-                        'exercises.calories_per_unit',
-                    ]);
-                },
+        $exercises = WorkoutDiary::query()
+            ->where([
+                'user_id' => $userId,
+                'date' => $date,
             ])
-            ->first();
+            ->first()?->exercises ?? collect();
 
-        return Inertia::render('workout_diary', [
-            'exercises' => Exercises::query()->orderBy('name')->get(),
-            'selectedDate' => $selectedDate,
-            'selectedDiary' => $selectedDiary,
+        $formatted = $exercises
+            ->map(fn($exercise) => $this->formatExerciseByPivot($exercise))
+            ->values();
+
+        return response()->json([
+            'diary' => $formatted,
         ]);
     }
 
-    public function store(WorkoutRequest $request)
+    private const UNIT_TO_BASE = [
+        'minutes' => 1,
+        'hours' => 60,
+        'm' => 1,
+        'km' => 1000
+    ];
+
+    private function formatExerciseByPivot(Exercises $exercise): array
+    {
+        $pivot = $exercise->pivot;
+
+        $amount = (int) ($pivot->amount ?? 1);
+
+        return [
+            'id' => $pivot->id,
+            'name' => $exercise->name,
+            'unit' => $pivot->unit,
+            'amount' => $amount,
+            'burned_calories' => $amount * (self::UNIT_TO_BASE[$pivot->unit]) * $exercise->calories_per_unit
+        ];
+    }
+
+
+    public function storeExercise(WorkoutRequest $request)
     {
         $data = $request->validated();
 
-        Exercises::query()->create($data);
-
-        return redirect()->back()->with('success', 'Exercise created.');
-    }
-
-    public function getDiaryByDate(Request $request)
-    {
-        $data = $request->validate([
-            'date' => ['required', 'date'],
-        ]);
-
-        $userId = (int) $request->user()->id;
-        $date = Carbon::parse($data['date'])->toDateString();
-
-        $diary = WorkoutDiary::query()
-            ->where('user_id', $userId)
-            ->whereDate('date', $date)
-            ->with([
-                'exercises' => function ($q) {
-                    $q->select([
-                        'exercises.id',
-                        'exercises.name',
-                        'exercises.unit',
-                        'exercises.calories_per_unit',
-                    ]);
-                },
-            ])
-            ->first();
+        Exercises::create($data);
 
         return response()->json([
-            'date' => $date,
-            'diary' => $diary,
+            'success' => true,
         ]);
     }
 
     public function addEntry(Request $request)
     {
         $data = $request->validate([
-            'date' => ['required', 'date'],
             'exercise_id' => ['required', 'integer', 'exists:exercises,id'],
-            'quantity' => ['nullable', 'integer', 'min:1', 'max:1000'],
-            'burned_calories' => ['nullable', 'integer', 'min:0', 'max:200000'],
-            'note' => ['nullable', 'string', 'max:2000'],
+            'amount' => ['integer', 'min:1'],
+            'unit' => ['in:minutes,seconds,km,m'],
         ]);
 
+        $date = $request->validate([
+            'date' => ['required', 'date'],
+        ]);
+
+        $date = Carbon::parse($date['date'])->toDateString();
         $userId = (int) $request->user()->id;
-        $date = Carbon::parse($data['date'])->toDateString();
 
-        $quantity = (int) ($data['quantity'] ?? 1);
-        $burnedCalories = (int) ($data['burned_calories'] ?? 0);
-        $note = $data['note'] ?? null;
+        $diary = WorkoutDiary::firstOrCreate([
+            'user_id' => $userId,
+            'date' => $date,
+        ]);
 
-        $diary = DB::transaction(function () use ($userId, $date, $data, $quantity, $burnedCalories, $note) {
-            $diary = WorkoutDiary::query()->firstOrCreate([
-                'user_id' => $userId,
-                'date' => $date,
-            ]);
+        $diary->exercises()->attach($data['exercise_id'], $data);
 
-            $diary->exercises()->attach([
-                (int) $data['exercise_id'] => [
-                    'quantity' => $quantity,
-                    'burned_calories' => $burnedCalories,
-                    'note' => $note,
-                ]
-            ]);
+        return response()->json(['ok' => true]);
+    }
 
-            return $diary->fresh()->load('exercises');
-        });
+
+    public function deleteEntry(Request $request, string $date, string $entryId)
+    {
+        $userId = (int) $request->user()->id;
+
+        $diary = WorkoutDiary::query()
+            ->where('user_id', $userId)
+            ->whereDate('date', $date)
+            ->firstOrFail();
+
+        $diary->exercises()
+            ->newPivotQuery()
+            ->where('id', $entryId)
+            ->delete();
+
+        return response(204);
+    }
+
+    public function getExercises(string $searchTerm, string $page)
+    {
+        $page -= 1;
+        $perPage = 5;
+
+        $result = Exercises::search($searchTerm)
+            ->skip($perPage * $page)
+            ->limit($perPage)
+            ->get() ?? [];
 
         return response()->json([
-            'ok' => true,
-            'date' => $date,
-            'diary' => $diary,
+            'result' => $result,
         ]);
     }
 
-    public function deleteEntry(Request $request)
+    public function getPageCount(string $searchTerm)
     {
-        $data = $request->validate([
-            'entry_id' => ['required', 'integer'],
-        ]);
-
-        $userId = (int) $request->user()->id;
-
-        $deleted = DB::table('exercises_to_workout_diary as p')
-            ->join('workout_diary as d', 'd.id', '=', 'p.workout_diary_id')
-            ->where('p.id', (int) $data['entry_id'])
-            ->where('d.user_id', $userId)
-            ->delete();
-
-        if ($deleted === 0) {
-            return response()->json([
-                'ok' => false,
-                'message' => 'Entry not found.',
-            ], 404);
-        }
-
         return response()->json([
-            'ok' => true,
+            'pageCount' => Exercises::search($searchTerm)->count(),
         ]);
     }
 }

@@ -12,7 +12,7 @@ return new class extends Migration {
 
             $table->string('name');
 
-            $table->enum('unit', ['reps', 'sets', 'minutes', 'seconds', 'km', 'm', 'other'])
+            $table->enum('unit', ['minutes', 'seconds', 'km', 'm', 'other'])
                 ->default('other');
 
             $table->unsignedInteger('calories_per_unit')->default(0);
