@@ -16,18 +16,16 @@ return new class extends Migration {
                 ->cascadeOnDelete();
 
             $table
-                ->foreignId('exercises_id')
+                ->foreignId('exercise_id')
                 ->constrained('exercises')
                 ->restrictOnDelete();
 
-            $table->unsignedInteger('quantity')->default(1);
-            $table->unsignedInteger('burned_calories')->default(0);
+            $table->enum('unit', ['minutes', 'hours', 'km', 'm'])
+                ->default('minutes');
 
-            $table->text('note')->nullable();
+            $table->unsignedInteger('amount')->default(1);
 
             $table->timestamps();
-
-            $table->index(['workout_diary_id']);
         });
     }
 

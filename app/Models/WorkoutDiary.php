@@ -22,8 +22,13 @@ class WorkoutDiary extends Model
 
     public function exercises()
     {
-        return $this->belongsToMany(Exercises::class, 'exercises_to_workout_diary')
-            ->withPivot(['id', 'amount', 'burned_calories', 'note'])
+        return $this->belongsToMany(
+            Exercises::class,
+            'exercises_to_workout_diary',
+            'workout_diary_id',
+            'exercise_id'
+        )
+            ->withPivot(['id', 'unit', 'amount'])
             ->withTimestamps();
     }
 }

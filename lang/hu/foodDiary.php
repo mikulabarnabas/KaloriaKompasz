@@ -25,7 +25,7 @@ return [
     "image_optional" => "Kép (opcionális)",
     "choose_image" => "Kép kiválasztása",
     "save_food" => "Étel mentése",
-    "diary_title" => "Naptár",
+    "diary_title" => "Ételnapló",
     "meal_label" => "étkezés",
     "delete" => "Törlés",
     "no_entries" => "Nincs bejegyzés erre a dátumra.",

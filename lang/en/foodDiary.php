@@ -25,7 +25,7 @@ return [
     "image_optional" => "Image (optional)",
     "choose_image" => "Choose image",
     "save_food" => "Save Food",
-    "diary_title" => "Diary",
+    "diary_title" => "Food diary",
     "meal_label" => "meal",
     "delete" => "Delete",
     "no_entries" => "No entries for this date.",
