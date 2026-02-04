@@ -49,6 +49,16 @@ class User extends Authenticatable
         ];
     }
 
+    public function foodDiary()
+    {
+        return $this->hasMany(FoodDiary::class);
+    }
+
+    public function workoutDiary()
+    {
+        return $this->hasMany(WorkoutDiary::class);
+    }
+
     public function profile()
     {
         return $this->hasOne(UserProfile::class);

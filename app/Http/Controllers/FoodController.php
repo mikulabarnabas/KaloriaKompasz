@@ -23,8 +23,10 @@ class FoodController extends Controller
         $userId = (int) $request->user()->id;
         $date = Carbon::parse($date)->toDateString();
 
-        $foods = FoodDiary::getDiaryByIdAndDate($userId, $date)
-            ->first()?->foods ?? collect();
+        $foods = FoodDiary::query()->where([
+            'user_id' => $userId,
+            'date' => $date,
+        ])->first()?->foods ?? collect();
 
         $scaled = $foods
             ->map(fn($food) => $this->scaleFoodByPivot($food))
@@ -38,12 +40,7 @@ class FoodController extends Controller
             'other'
         ];
 
-        $sorted = collect($order)
-            ->mapWithKeys(fn($type) => [
-                $type => $scaled->get($type, collect())
-            ])
-            ->filter(fn($group) => $group->isNotEmpty());
-//            ->map(fn($group) => $group->sortBy('pivot.created_at')->values());
+        $sorted = collect($order)->mapWithKeys(fn($type) => [$type => $scaled->get($type, collect())])->filter(fn($group) => $group->isNotEmpty());
 
         return response()->json([
             'diary' => $sorted,
@@ -103,7 +100,10 @@ class FoodController extends Controller
     public function deleteEntry(Request $request, string $date, string $entryId)
     {
         $userId = (int) $request->user()->id;
-        $diary = FoodDiary::getDiaryByIdAndDate($userId, $date)->firstOrFail();
+        $diary = FoodDiary::query()->where([
+            'user_id' => $userId,
+            'date' => $date,
+        ])->firstOrFail();
         $diary->foods()->newPivotQuery()->where('id', $entryId)->delete();
         return response(204);
     }

@@ -11,19 +11,21 @@ class WorkoutDiary extends Model
     protected $fillable = [
         'user_id',
         'date',
-        'workout_name',
-        'burned_calories',
-        'duration_minutes',
     ];
 
     protected $casts = [
-        'date' => 'date:Y-m-d',
+        'date' => 'date',
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 
     public function exercises()
     {
         return $this->belongsToMany(
-            Exercises::class,
+            \App\Models\Exercises::class,
             'exercises_to_workout_diary',
             'workout_diary_id',
             'exercise_id'

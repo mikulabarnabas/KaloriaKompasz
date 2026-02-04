@@ -23,14 +23,6 @@ class FoodDiary extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function scopeGetDiaryByIdAndDate($query, $userId, $date)
-    {
-        return $query->where([
-            'user_id' => $userId,
-            'date' => $date,
-        ]);
-    }
-
     public function foods()
     {
         return $this->belongsToMany(

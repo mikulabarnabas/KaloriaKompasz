@@ -26,6 +26,8 @@ return new class extends Migration {
             $table->unsignedInteger('amount')->default(1);
 
             $table->timestamps();
+
+            $table->index(['workout_diary_id']);
         });
     }
 

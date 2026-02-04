@@ -21,21 +21,21 @@ class WorkoutController extends Controller
         $userId = (int) $request->user()->id;
         $date = Carbon::parse($date)->toDateString();
 
-        $exercises = WorkoutDiary::query()
-            ->where([
-                'user_id' => $userId,
-                'date' => $date,
-            ])
-            ->first()?->exercises ?? collect();
+        $diary = WorkoutDiary::query()
+            ->where('user_id', $userId)
+            ->whereDate('date', $date)
+            ->with('exercises')
+            ->first();
 
-        $formatted = $exercises
+        $formatted = $diary?->exercises
             ->map(fn($exercise) => $this->formatExerciseByPivot($exercise))
-            ->values();
+            ->values() ?? [];
 
         return response()->json([
             'diary' => $formatted,
         ]);
     }
+
 
     private const UNIT_TO_BASE = [
         'minutes' => 1,
@@ -50,13 +50,13 @@ class WorkoutController extends Controller
 
         $amount = (int) ($pivot->amount ?? 1);
 
-        return [
-            'id' => $pivot->id,
-            'name' => $exercise->name,
-            'unit' => $pivot->unit,
-            'amount' => $amount,
-            'burned_calories' => $amount * (self::UNIT_TO_BASE[$pivot->unit]) * $exercise->calories_per_unit
-        ];
+        $formatted['id'] = $pivot->id;
+        $formatted['name'] = $exercise->name;
+        $formatted['unit'] = $pivot->unit;
+        $formatted['burned_calories'] = $amount * (self::UNIT_TO_BASE[$pivot->unit]) * $exercise->calories_per_unit;
+
+
+        return $formatted;
     }
 
 

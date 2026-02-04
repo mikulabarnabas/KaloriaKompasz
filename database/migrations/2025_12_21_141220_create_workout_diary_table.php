@@ -13,11 +13,6 @@ return new class extends Migration {
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->date('date');
 
-            $table->string('workout_name')->nullable();
-
-            $table->unsignedInteger('burned_calories')->default(0);
-            $table->unsignedInteger('duration_minutes')->nullable();
-
             $table->timestamps();
 
             $table->unique(['user_id', 'date']);

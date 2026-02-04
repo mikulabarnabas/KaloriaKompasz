@@ -83,9 +83,10 @@ watch(formattedDate, async (date) => {
 }, { immediate: true });
 
 const shiftDate = (days) => {
-  const dt = new Date(selectedDate.value);
-  selectedDate.value = dt.setDate(dt.getDate() + days);
-};
+  const dt = new Date(selectedDate.value)
+  dt.setDate(dt.getDate() + days)
+  selectedDate.value = dt
+}
 
 const addEntryForm = useForm("post", "/fdiary/entry", {
   date: formattedDate.value,
@@ -170,7 +171,7 @@ const images = computed(() => {
 
       <div class="mt-4 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
         <div class="flex items-center gap-2">
-          <Button icon="pi pi-arrow-left"  severity="secondary" type="button" @click="shiftDate(-1)" />
+          <Button icon="pi pi-arrow-left" severity="secondary" type="button" @click="shiftDate(-1)" />
           <div class="space-y-1">
             <DatePicker v-model="selectedDate" type="date" />
           </div>

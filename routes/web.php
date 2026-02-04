@@ -5,6 +5,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\WorkoutController;
 use App\Http\Controllers\FoodController;
+use App\Http\Controllers\StatisticsController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Http\Middleware\HandlePrecognitiveRequests;
 
@@ -40,6 +41,10 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/wdiary/entry/{date}/{id}', [WorkoutController::class, 'deleteEntry']);
     Route::get('/wdiary/getExercises/{search}/{page}', [WorkoutController::class, 'getExercises']);
     Route::get('/wdiary/getPageCount/{search}', [WorkoutController::class, 'getPageCount']);
+});
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/stats', [StatisticsController::class, 'index']);
 });
 
 

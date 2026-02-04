@@ -71,6 +71,7 @@ async function loadDiary(date) {
   loadingDiary.value = true
   const { data } = await axios.get(`/wdiary/diary/${date}`)
   entries.value = data.diary ?? [];
+  console.log(data)
   loadingDiary.value = false
 }
 
@@ -81,7 +82,7 @@ watch(formattedDate, (d) => {
 const shiftDate = (days) => {
   const dt = new Date(selectedDate.value)
   dt.setDate(dt.getDate() + days)
-  selectedDate.value = dt.toISOString().slice(0, 10)
+  selectedDate.value = dt
 }
 
 const entries = ref([])
@@ -173,7 +174,7 @@ const onCreateExercise = async () => {
       </h2>
 
       <div class="mt-4 flex items-center gap-2">
-        <Button icon="pi pi-arrow-left" severity="secondary" @click="shiftDate(1)" />
+        <Button icon="pi pi-arrow-left" severity="secondary" @click="shiftDate(-1)" />
         <DatePicker v-model="selectedDate" dateFormat="dd-mm-yy" />
         <Button icon="pi pi-arrow-right" severity="secondary" type="button" @click="shiftDate(1)" />
       </div>
