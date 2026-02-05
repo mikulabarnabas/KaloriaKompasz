@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use App\Enums\Units;
+use App\Enums\FoodUnits;
 
 return new class extends Migration {
     /**
@@ -15,7 +15,7 @@ return new class extends Migration {
             $table->id();
 
             $table->string('name');
-            $table->enum('unit', Units::baseValues());
+            $table->enum('unit', FoodUnits::baseValues());
 
             $table->decimal('fat', 8, 2)->default(0);
             $table->decimal('carb', 8, 2)->default(0);

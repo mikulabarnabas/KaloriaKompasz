@@ -8,7 +8,7 @@ use App\Models\Foods;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Inertia\Inertia;
-use App\Enums\Units;
+use App\Enums\FoodUnits;
 
 class FoodController extends Controller
 {
@@ -57,7 +57,7 @@ class FoodController extends Controller
             'food_id' => ['required', 'integer', 'exists:foods,id'],
             'meal_type' => ['in:breakfast,lunch,dinner,snack,other'],
             'amount' => ['integer', 'min:1'],
-            'unit' => ['required', 'string', 'in:' . implode(',', Units::values())] //This is not looking fine
+            'unit' => ['required', 'string', 'in:' . implode(',', FoodUnits::values())] //This is not looking fine TODO
         ]);
 
         $date = $request->validate([

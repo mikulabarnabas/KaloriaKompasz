@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use App\Enums\Units;
+use App\Enums\FoodUnits;
 
 return new class extends Migration {
     public function up(): void
@@ -13,7 +13,7 @@ return new class extends Migration {
 
             $table->string('name');
 
-            $table->enum('unit', Units::values())
+            $table->enum('unit', FoodUnits::values())
                 ->default('other');
 
             $table->unsignedInteger('calories_per_unit')->default(0);

@@ -3,7 +3,7 @@
 namespace App\Observers;
 
 use App\Models\Foods;
-use App\Enums\Units;
+use App\Enums\FoodUnits;
 
 class FoodsObserver
 {
@@ -26,7 +26,7 @@ class FoodsObserver
         // if cast exists → already enum
         $unit = $food->unit instanceof Units
             ? $food->unit
-            : Units::from($food->unit);
+            : FoodUnits::from($food->unit);
 
         $baseAmount = $food->amount * $unit->toBaseFactor();
 

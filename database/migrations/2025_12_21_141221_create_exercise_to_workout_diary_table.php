@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use App\Enums\WorkoutUnits;
 
 return new class extends Migration {
     public function up(): void
@@ -20,10 +21,11 @@ return new class extends Migration {
                 ->constrained('exercises')
                 ->restrictOnDelete();
 
-            $table->enum('unit', ['minutes', 'hours', 'km', 'm'])
+            $table->enum('unit', WorkoutUnits::values())
                 ->default('minutes');
 
             $table->unsignedInteger('amount')->default(1);
+            $table->decimal('burned_calories', 8, 2)->default(0);
 
             $table->timestamps();
 

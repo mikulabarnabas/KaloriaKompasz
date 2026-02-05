@@ -2,7 +2,7 @@
 
 namespace App\Enums;
 
-enum Units: string
+enum FoodUnits: string
 {
     case G = 'g';
     case DKG = 'dkg';

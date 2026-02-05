@@ -30,7 +30,7 @@ class WorkoutDiary extends Model
             'workout_diary_id',
             'exercise_id'
         )
-            ->withPivot(['id', 'unit', 'amount'])
+            ->withPivot(['id', 'unit', 'amount', 'burned_calories'])
             ->withTimestamps();
     }
 }

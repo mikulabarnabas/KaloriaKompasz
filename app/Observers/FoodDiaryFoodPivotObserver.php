@@ -4,7 +4,7 @@ namespace App\Observers;
 
 use App\Models\FoodDiaryFoodPivot;
 use App\Models\Foods;
-use App\Enums\Units;
+use App\Enums\FoodUnits;
 
 class FoodDiaryFoodPivotObserver
 {
@@ -22,7 +22,7 @@ class FoodDiaryFoodPivotObserver
     {
         $food = Foods::find($pivot->food_id);
 
-        $unit = Units::from($pivot->unit);
+        $unit = FoodUnits::from($pivot->unit);
         $consumedBase = $pivot->amount * $unit->toBaseFactor();
         $factor = $consumedBase / 100;
 
