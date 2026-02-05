@@ -26,12 +26,13 @@ class FoodDiary extends Model
     public function foods()
     {
         return $this->belongsToMany(
-            \App\Models\Foods::class,
+            Foods::class,
             'food_to_food_diary',
             'food_diary_id',
             'food_id'
         )
-            ->withPivot(['id', 'meal_type', 'amount', 'unit'])
+            ->using(FoodDiaryFoodPivot::class)
+            ->withPivot(['id', 'meal_type', 'amount', 'unit', 'fat', 'carb', 'protein', 'calorie'])
             ->withTimestamps();
     }
 }

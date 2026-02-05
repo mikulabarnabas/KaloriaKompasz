@@ -8,8 +8,7 @@ use App\Models\Foods;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Inertia\Inertia;
-use Illuminate\Support\Facades\App;
-use phpDocumentor\Reflection\Types\Object_;
+use App\Enums\Units;
 
 class FoodController extends Controller
 {
@@ -23,14 +22,14 @@ class FoodController extends Controller
         $userId = (int) $request->user()->id;
         $date = Carbon::parse($date)->toDateString();
 
-        $foods = FoodDiary::query()->where([
-            'user_id' => $userId,
-            'date' => $date,
-        ])->first()?->foods ?? collect();
+        $diary = FoodDiary::query()
+            ->where([
+                'user_id' => $userId,
+                'date' => $date,
+            ])
+            ->first()?->foods ?? collect();
 
-        $scaled = $foods
-            ->map(fn($food) => $this->scaleFoodByPivot($food))
-            ->groupBy('meal_type');
+        $groupedByMealTypes = $diary->groupBy(fn($food) => $food->pivot->meal_type);
 
         $order = [
             'breakfast',
@@ -40,36 +39,15 @@ class FoodController extends Controller
             'other'
         ];
 
-        $sorted = collect($order)->mapWithKeys(fn($type) => [$type => $scaled->get($type, collect())])->filter(fn($group) => $group->isNotEmpty());
+        $sortedDiary = collect($order)
+            ->mapWithKeys(fn($type) => [
+                $type => $groupedByMealTypes->get($type, collect())
+            ])
+            ->filter(fn($group) => $group->isNotEmpty());
 
         return response()->json([
-            'diary' => $sorted,
+            'diary' => $sortedDiary,
         ]);
-    }
-
-
-
-    private function scaleFoodByPivot(Foods $food): array
-    {
-        $pivot = $food->pivot;
-
-        $unitFactor = self::UNIT_TO_BASE[$pivot->unit] ?? 1;
-        $consumedBase = $pivot->amount * $unitFactor;
-
-        $factor = $consumedBase / 100;
-
-        $scaledFood['calorie'] = round($food->calorie * $factor, 2);
-        $scaledFood['fat'] = round($food->fat * $factor, 2);
-        $scaledFood['carb'] = round($food->carb * $factor, 2);
-        $scaledFood['protein'] = round($food->protein * $factor, 2);
-        $scaledFood['name'] = $food->name;
-        $scaledFood['amount'] = $pivot->amount;
-        $scaledFood['unit'] = $pivot->unit;
-        $scaledFood['meal_type'] = $pivot->meal_type;
-        $scaledFood['id'] = $pivot->id;
-
-
-        return $scaledFood;
     }
 
 
@@ -79,12 +57,14 @@ class FoodController extends Controller
             'food_id' => ['required', 'integer', 'exists:foods,id'],
             'meal_type' => ['in:breakfast,lunch,dinner,snack,other'],
             'amount' => ['integer', 'min:1'],
-            'unit' => ['in:g,kg,dkg,l,dl,cl']
+            'unit' => ['required', 'string', 'in:' . implode(',', Units::values())] //This is not looking fine
         ]);
 
         $date = $request->validate([
             'date' => ['required', 'date'],
         ]);
+
+
 
         $date = Carbon::parse($date['date'])->toDateString();
         $userId = (int) $request->user()->id;
@@ -92,7 +72,11 @@ class FoodController extends Controller
             'user_id' => $userId,
             'date' => $date,
         ]);
-        $diary->foods()->attach($data['food_id'], $data);
+        $diary->foods()->attach($data['food_id'], [
+            'meal_type' => $data['meal_type'],
+            'amount' => $data['amount'],
+            'unit' => $data['unit'],
+        ]);
 
         return response()->json(['ok' => true]);
     }
@@ -108,42 +92,9 @@ class FoodController extends Controller
         return response(204);
     }
 
-    private const UNIT_TO_BASE = [
-        'g' => 1,
-        'dkg' => 10,
-        'kg' => 1000,
-        'ml' => 1,
-        'dl' => 100,
-        'l' => 1000,
-    ];
-
-    public function normalizeFood(array $data): array
-    {
-        $unitFactor = self::UNIT_TO_BASE[$data['unit']] ?? 1;
-
-        // convert submitted amount to grams/ml
-        $baseAmount = $data['amount'] * $unitFactor;
-
-        // normalize to per 100g/ml
-        $factor = 100 / $baseAmount;
-
-        $data['calorie'] = round($data['calorie'] * $factor, 2);
-        $data['fat'] = round($data['fat'] * $factor, 2);
-        $data['carb'] = round($data['carb'] * $factor, 2);
-        $data['protein'] = round($data['protein'] * $factor, 2);
-
-        // store normalized base reference
-        $data['amount'] = 100;
-        $data['unit'] = in_array($data['unit'], ['g', 'dkg', 'kg']) ? 'g' : 'ml';
-
-        return $data;
-    }
-
     public function storeFood(FoodRequest $request)
     {
         $data = $request->validated();
-
-        $data = $this->normalizeFood($data);
 
         $food = Foods::create($data);
 

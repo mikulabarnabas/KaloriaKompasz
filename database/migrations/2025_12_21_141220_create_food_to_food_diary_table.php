@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use App\Enums\Units;
 
 return new class extends Migration {
     public function up(): void
@@ -24,8 +25,13 @@ return new class extends Migration {
                 ->enum('meal_type', ['breakfast', 'lunch', 'dinner', 'snack', 'other'])
                 ->default('other');
 
+            $table->decimal('fat', 8, 2)->default(0);
+            $table->decimal('carb', 8, 2)->default(0);
+            $table->decimal('protein', 8, 2)->default(0);
+            $table->decimal('calorie', 8, 2)->default(0);
+
             $table->unsignedInteger('amount');
-            $table->enum('unit', ['g', 'dkg', 'kg', 'l', 'cl', 'dl']);
+            $table->enum('unit', Units::values());
 
             $table->timestamps();
 

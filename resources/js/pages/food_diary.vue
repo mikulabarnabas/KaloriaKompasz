@@ -435,21 +435,17 @@ const images = computed(() => {
                   <div class="font-semibold truncate">
                     {{ food.name }}
                   </div>
-                  <div class="text-sm opacity-80">
-                    {{ food.amount }} {{ food.unit }}
-                    · {{ $t('foodDiary.' + food.meal_type) }}
-                  </div>
                 </div>
 
                 <div class="hidden sm:flex flex-col text-lg text-right leading-tight">
-                  <div>{{ food.calorie }} kcal</div>
+                  <div>{{ food.pivot.calorie }} kcal</div>
                 </div>
 
                 <!-- RIGHT MACROS -->
                 <div class="hidden sm:flex flex-col text-sm text-left leading-tight">
-                  <div>{{ $t('foodDiary.carb_label') }}: {{ food.carb }} </div>
-                  <div>{{ $t('foodDiary.protein_label') }}: {{ food.protein }}</div>
-                  <div>{{ $t('foodDiary.fat_label') }}: {{ food.fat }}</div>
+                  <div>{{ $t('foodDiary.carb_label') }}: {{ food.pivot.carb }} </div>
+                  <div>{{ $t('foodDiary.protein_label') }}: {{ food.pivot.protein }}</div>
+                  <div>{{ $t('foodDiary.fat_label') }}: {{ food.pivot.fat }}</div>
                 </div>
 
                 <!-- DELETE -->

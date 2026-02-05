@@ -2,7 +2,11 @@
 
 namespace App\Providers;
 
+use App\Models\FoodDiaryFoodPivot;
+use App\Observers\FoodDiaryFoodPivotObserver;
 use Illuminate\Support\ServiceProvider;
+use App\Models\Foods;
+use App\Observers\FoodsObserver;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -19,6 +23,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        FoodDiaryFoodPivot::observe(FoodDiaryFoodPivotObserver::class);
+        Foods::observe(FoodsObserver::class);
     }
 }

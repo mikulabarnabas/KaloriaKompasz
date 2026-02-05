@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use App\Enums\Units;
 
 return new class extends Migration {
     /**
@@ -14,12 +15,11 @@ return new class extends Migration {
             $table->id();
 
             $table->string('name');
-            $table->enum('unit', ['g', 'dkg', 'kg', 'l', 'cl', 'dl']);
-            $table->unsignedInteger('amount');
+            $table->enum('unit', Units::baseValues());
 
-            $table->unsignedInteger('fat')->default(0);
-            $table->unsignedInteger('carb')->default(0);
-            $table->unsignedInteger('protein')->default(0);
+            $table->decimal('fat', 8, 2)->default(0);
+            $table->decimal('carb', 8, 2)->default(0);
+            $table->decimal('protein', 8, 2)->default(0);
 
             $table->unsignedInteger('calorie')->default(0);
             $table->text('notes')->nullable();
