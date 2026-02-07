@@ -249,7 +249,7 @@ const images = computed(() => {
           </Carousel>
 
           <div v-else
-            class="mt-4 h-40 flex items-center justify-center rounded-xl border border-dashed text-sm text-gray-500">
+            class="mt-4 h-40 flex items-center justify-center rounded-xl border border-dashed text-sm">
             No images available
           </div>
 

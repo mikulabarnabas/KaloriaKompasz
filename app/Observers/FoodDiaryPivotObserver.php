@@ -6,7 +6,7 @@ use App\Models\FoodDiaryFoodPivot;
 use App\Models\Foods;
 use App\Enums\FoodUnits;
 
-class FoodDiaryFoodPivotObserver
+class FoodDiaryPivotObserver
 {
     public function creating(FoodDiaryFoodPivot $pivot): void
     {

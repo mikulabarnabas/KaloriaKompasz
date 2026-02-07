@@ -23,8 +23,7 @@ class FoodsObserver
             return;
         }
 
-        // if cast exists → already enum
-        $unit = $food->unit instanceof Units
+        $unit = $food->unit instanceof FoodUnits
             ? $food->unit
             : FoodUnits::from($food->unit);
 
@@ -41,9 +40,10 @@ class FoodsObserver
         $food->carb = round($food->carb * $factor, 2);
         $food->protein = round($food->protein * $factor, 2);
 
-        // normalize to base unit
         $food->amount = 100;
-        $food->unit = $unit->baseUnit(); // enum value stored automatically
+        $food->unit = $unit->baseUnit();
+
+        unset($food->amount);
     }
 }
 

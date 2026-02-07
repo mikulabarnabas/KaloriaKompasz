@@ -3,10 +3,11 @@
 namespace App\Providers;
 
 use App\Models\FoodDiaryFoodPivot;
-use App\Observers\FoodDiaryFoodPivotObserver;
+use App\Models\WorkoutDiaryPivot;
 use Illuminate\Support\ServiceProvider;
 use App\Models\Foods;
 use App\Observers\FoodsObserver;
+use App\Observers\WorkoutDiaryPivotObserver;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -23,7 +24,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        FoodDiaryFoodPivot::observe(FoodDiaryFoodPivotObserver::class);
+        FoodDiaryFoodPivot::observe(FoodDiaryFoodPivot::class);
+        WorkoutDiaryPivot::observe(WorkoutDiaryPivotObserver::class);
         Foods::observe(FoodsObserver::class);
     }
 }

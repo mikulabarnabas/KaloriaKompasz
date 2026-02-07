@@ -12,10 +12,10 @@ enum WorkoutUnits: string
     public function toBaseFactor(): int
     {
         return match($this) {
-            self::MINUTES => 1,       // base unit is minutes
-            self::SECONDS => 1 / 60,  // seconds to minutes
-            self::M => 1,             // base unit is meters
-            self::KM => 1000,          // km to meters
+            self::MINUTES => 1,
+            self::SECONDS => 1 / 60,
+            self::M => 1,
+            self::KM => 1000,
         };
     }
 

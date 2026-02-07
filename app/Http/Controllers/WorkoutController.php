@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\WorkoutRequest;
 use App\Models\Exercises;
 use App\Models\WorkoutDiary;
+use App\Enums\WorkoutUnits;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Inertia\Inertia;
@@ -27,36 +28,9 @@ class WorkoutController extends Controller
             ->with('exercises')
             ->first();
 
-        $formatted = $diary?->exercises
-            ->map(fn($exercise) => $this->formatExerciseByPivot($exercise))
-            ->values() ?? [];
-
         return response()->json([
-            'diary' => $formatted,
+            'diary' => $diary,
         ]);
-    }
-
-
-    private const UNIT_TO_BASE = [
-        'minutes' => 1,
-        'hours' => 60,
-        'm' => 1,
-        'km' => 1000
-    ];
-
-    private function formatExerciseByPivot(Exercises $exercise): array
-    {
-        $pivot = $exercise->pivot;
-
-        $amount = (int) ($pivot->amount ?? 1);
-
-        $formatted['id'] = $pivot->id;
-        $formatted['name'] = $exercise->name;
-        $formatted['unit'] = $pivot->unit;
-        $formatted['burned_calories'] = $amount * (self::UNIT_TO_BASE[$pivot->unit]) * $exercise->calories_per_unit;
-
-
-        return $formatted;
     }
 
 
@@ -71,12 +45,13 @@ class WorkoutController extends Controller
         ]);
     }
 
+
     public function addEntry(Request $request)
     {
         $data = $request->validate([
             'exercise_id' => ['required', 'integer', 'exists:exercises,id'],
             'amount' => ['integer', 'min:1'],
-            'unit' => ['in:minutes,seconds,km,m'],
+            'unit' => ['required', 'in:' . implode(',', WorkoutUnits::values())],
         ]);
 
         $date = $request->validate([
@@ -114,6 +89,7 @@ class WorkoutController extends Controller
         return response(204);
     }
 
+
     public function getExercises(string $searchTerm, string $page)
     {
         $page -= 1;
@@ -128,6 +104,7 @@ class WorkoutController extends Controller
             'result' => $result,
         ]);
     }
+
 
     public function getPageCount(string $searchTerm)
     {

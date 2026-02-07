@@ -114,7 +114,7 @@ const addSelectedExercise = async () => {
   if (!selectedExercise.value) return
 
   await addEntryForm.submit({ only: [] })
-  await loadDiary(selectedDate.value)
+  await loadDiary(formattedDate.value)
 }
 
 /* -------------------- DELETE -------------------- */
@@ -125,8 +125,8 @@ const deleteEntry = (id) => {
   confirm.require({
     group: "headless",
     accept: async () => {
-      await axios.delete(`/wdiary/entry/${selectedDate.value}/${id}`)
-      await loadDiary(selectedDate.value)
+      await axios.delete(`/wdiary/entry/${formattedDate.value}/${id}`)
+      await loadDiary(formattedDate.value)
     }
   })
 }
