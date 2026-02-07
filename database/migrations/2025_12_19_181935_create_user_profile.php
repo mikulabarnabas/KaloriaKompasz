@@ -19,8 +19,16 @@ return new class extends Migration
             $table->date('date_of_birth')->nullable();
             $table->unsignedSmallInteger('height_cm')->nullable();
             $table->decimal('weight_kg', 5, 2)->nullable();
+
+            $table->enum('weight_goal', ['maintain', 'lose', 'gain'])->default('maintain');
+            $table->decimal('target_weight_kg', 5, 2)->nullable();
+            $table->unsignedSmallInteger('goal_period_weeks')->nullable();
+
+            $table->decimal('calories_per_day', 6, 1)->nullable();
+            $table->decimal('protein_per_day', 5, 1)->nullable();
+            $table->decimal('fat_per_day', 5, 1)->nullable();
+            $table->decimal('carbs_per_day', 5, 1)->nullable();
             $table->string('activity_level')->nullable();
-            $table->string('diet')->nullable();
 
             $table->timestamps();
         });

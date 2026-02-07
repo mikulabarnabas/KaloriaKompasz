@@ -9,6 +9,8 @@ use App\Models\Foods;
 use App\Observers\FoodDiaryPivotObserver;
 use App\Observers\FoodsObserver;
 use App\Observers\WorkoutDiaryPivotObserver;
+use App\Models\UserProfile;
+use App\Observers\UserProfileObserver;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -28,5 +30,6 @@ class AppServiceProvider extends ServiceProvider
         FoodDiaryFoodPivot::observe(FoodDiaryPivotObserver::class);
         WorkoutDiaryPivot::observe(WorkoutDiaryPivotObserver::class);
         Foods::observe(FoodsObserver::class);
+        UserProfile::observe(UserProfileObserver::class);
     }
 }

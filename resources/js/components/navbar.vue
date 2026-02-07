@@ -6,6 +6,9 @@ import Menu from "primevue/menu";
 import { router, usePage } from "@inertiajs/vue3";
 import axios from "axios";
 
+import { useI18n } from 'vue-i18n';
+const { t } = useI18n();
+
 const page = usePage();
 
 const user = computed(() => page.props.auth?.user ?? null);

@@ -5,25 +5,31 @@ namespace App\Http\Controllers;
 use App\Models\UserProfile;
 use App\Http\Requests\ProfileRequest;
 use Inertia\Inertia;
+use Illuminate\Http\Request;
 
 class ProfileController extends Controller
 {
+    public function show(Request $request)
+    {
+        $profile = $request->user()->profile;
+
+        return Inertia::render('profile', [
+            'profile' => $profile
+        ]);
+    }
+
     public function save(ProfileRequest $request)
     {
         $data = $request->validated();
+        $userId = $request->user()->id;
 
-        $user = $request->user();
+        $profile = UserProfile::updateOrCreate(
+            ['user_id' => $userId],
+            $data
+        );
 
-        $profile = $user->profile
-            ?: UserProfile::firstOrCreate(['user_id' => $user->id]);
-
-        $profile->fill($data)->save();
+        $profile->refresh();
 
         return back()->with('success', 'Profile updated.');
-    }
-
-    public function show()
-    {
-        return Inertia::render('profile');
     }
 }
