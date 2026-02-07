@@ -6,6 +6,7 @@ use App\Models\FoodDiaryFoodPivot;
 use App\Models\WorkoutDiaryPivot;
 use Illuminate\Support\ServiceProvider;
 use App\Models\Foods;
+use App\Observers\FoodDiaryPivotObserver;
 use App\Observers\FoodsObserver;
 use App\Observers\WorkoutDiaryPivotObserver;
 
@@ -24,7 +25,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        FoodDiaryFoodPivot::observe(FoodDiaryFoodPivot::class);
+        FoodDiaryFoodPivot::observe(FoodDiaryPivotObserver::class);
         WorkoutDiaryPivot::observe(WorkoutDiaryPivotObserver::class);
         Foods::observe(FoodsObserver::class);
     }
