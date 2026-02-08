@@ -132,9 +132,9 @@ function closeSuccessDialog() {
       </div>
 
       <Dialog v-model:visible="showSuccessDialog" modal :closable="true" :draggable="false"
-        :header="$t('auth.dialog_title')" class="w-[92vw] max-w-md" @hide="closeSuccessDialog">
+        :header="$t('auth.register_dialog_title')" class="w-[92vw] max-w-md" @hide="closeSuccessDialog">
         <p>
-          {{ $t('auth.register.dialog_message') }}
+          {{ $t('auth.register_dialog_message') }}
         </p>
 
         <template #footer>

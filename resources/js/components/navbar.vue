@@ -5,14 +5,14 @@ import Button from "primevue/button";
 import Menu from "primevue/menu";
 import { router, usePage } from "@inertiajs/vue3";
 import axios from "axios";
-
 import { useI18n } from 'vue-i18n';
-const { t } = useI18n();
 
+const { t } = useI18n();
 const page = usePage();
 
 const user = computed(() => page.props.auth?.user ?? null);
 const isLoggedIn = computed(() => Boolean(user.value));
+const lang = ref(page.props.locale.toUpperCase())
 
 function goHome() {
   router.visit("/");
@@ -20,22 +20,22 @@ function goHome() {
 
 const items = ref([
   {
-    label: "Ételnapló",
+    label: t("navbar.foodDiary"),
     icon: "fa-solid fa-bowl-food",
     command: () => router.visit("/fdiary"),
   },
   {
-    label: "Edzésnapló",
+    label: t("navbar.workoutDiary"),
     icon: "fa-solid fa-heart",
     command: () => router.visit("/wdiary"),
   },
   {
-    label: "Statisztika",
+    label: t("navbar.stats"),
     icon: "fa-solid fa-chart-column",
     command: () => router.visit("/stats"),
   },
   {
-    label: "Segítség",
+    label: t("navbar.help"),
     icon: "pi pi-info-circle",
     command: () => router.visit("/help"),
   },
@@ -55,16 +55,15 @@ function goToRegister() {
 
 const accountItems = computed(() => [
   {
-    label: "Profile",
+    label: t("navbar.profile"),
     icon: "pi pi-user",
     command: () => router.visit("/profile"),
   },
   { separator: true },
-  { label: "Logout", icon: "pi pi-sign-out", command: logout },
+  { label: t("navbar.logout"), icon: "pi pi-sign-out", command: logout },
 ]);
 
 const accountMenuRef = ref(null);
-
 function toggleAccountMenu(event) {
   accountMenuRef.value?.toggle(event);
 }
@@ -78,14 +77,13 @@ function syncThemeFromDom() {
 onMounted(() => {
   const saved = localStorage.getItem("theme");
   if (saved === "dark") document.documentElement.classList.add("my-app-dark");
-  if (saved === "light")
-    document.documentElement.classList.remove("my-app-dark");
+  if (saved === "light") document.documentElement.classList.remove("my-app-dark");
   syncThemeFromDom();
 });
 
 const themeIcon = computed(() => (isDark.value ? "pi pi-sun" : "pi pi-moon"));
 const themeAriaLabel = computed(() =>
-  isDark.value ? "Switch to light mode" : "Switch to dark mode"
+  isDark.value ? t("navbar.themeLight") : t("navbar.themeDark")
 );
 
 function toggleDarkMode() {
@@ -94,11 +92,13 @@ function toggleDarkMode() {
   localStorage.setItem("theme", isDark.value ? "dark" : "light");
 }
 
-function changeLang(lang) {
-  axios.patch(`/lang/${lang}`)
+console.log(lang)
+
+async function changeLang() {
+  if (lang.value == 'EN') await axios.patch(`/lang/hu`);
+  else if (lang.value == 'HU') await axios.patch(`/lang/en`);
   window.location.reload();
 }
-
 </script>
 
 <template>
@@ -118,22 +118,19 @@ function changeLang(lang) {
     </template>
 
     <template #end>
-      <div class="flex items-center gap-2">
-        <Button class="p-button-outlined" @click='changeLang("hu")'>HU</Button>
-        <Button class="p-button-outlined" @click='changeLang("en")'>EN</Button>
+      <div class="flex items-center gap-1">
+        <Button :label="lang" class="p-button-outlined" @click='changeLang()'/>
+
         <template v-if="isLoggedIn">
           <Menu ref="accountMenuRef" :model="accountItems" popup />
-          <Button :label="user?.name ?? 'Account'" icon="pi pi-user" class="hide-on-mobile p-button-text" @click="toggleAccountMenu" />
+          <Button :label="user?.name ?? t('navbar.profile')" icon="pi pi-user" class="hide-on-mobile p-button-text" @click="toggleAccountMenu" />
           <Button label="" icon="pi pi-user" class="hide-on-desktop p-button-text" @click="toggleAccountMenu" />
         </template>
 
         <template v-else>
-          <Button label="Sign in" icon="pi pi-sign-in" class="hide-on-mobile p-button-outlined" @click="goToLogin" />
-          <Button label="Registration" icon="pi pi-user-plus" class="hide-on-mobile p-button-outlined"
-            @click="goToRegister" />
-
+          <Button :label="t('navbar.signIn')" icon="pi pi-sign-in" class="hide-on-mobile p-button-outlined" @click="goToLogin" />
+          <Button :label="t('navbar.registration')" icon="pi pi-user-plus" class="hide-on-mobile p-button-outlined" @click="goToRegister" />
           <Button label="" icon="pi pi-sign-in" class="hide-on-desktop p-button-outlined" @click="goToLogin" />
-          <Button label="" icon="pi pi-user-plus" class="hide-on-desktop p-button-outlined" @click="goToRegister" />
         </template>
 
         <Button :icon="themeIcon" class="p-button-text" rounded text :aria-label="themeAriaLabel"
@@ -143,7 +140,7 @@ function changeLang(lang) {
   </Menubar>
 </template>
 
-<style lang="css" scoped>
+<style scoped>
 @media (max-width: 768px) {
   .hide-on-mobile {
     display: none !important;

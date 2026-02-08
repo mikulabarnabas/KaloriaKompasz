@@ -22,9 +22,10 @@ class WorkoutDiaryPivotObserver
     {
         $exercise = Exercises::find($entry->exercise_id);
 
-        $unit = WorkoutUnits::from($entry->unit);
-        $amountInBase = $entry->amount * $unit->toBaseFactor();
+        $exerciseUnit = WorkoutUnits::from($exercise->unit)->toBaseFactor();
+        $entrytUnit = WorkoutUnits::from($entry->unit)->toBaseFactor();
+        $factor = $entrytUnit / $exerciseUnit;
 
-        $entry->burned_calories = round($amountInBase * $exercise->calories_per_unit, 2);
+        $entry->burned_calories = round($exercise->calories_per_unit * $factor * $entry->amount, 2);
     }
 }

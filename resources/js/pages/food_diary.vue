@@ -13,7 +13,6 @@ import { useConfirm } from "primevue/useconfirm";
 import Select from "primevue/select";
 import FileUpload from "primevue/fileupload";
 import Image from 'primevue/image'
-import DatePicker from 'primevue/datepicker';
 
 
 import { useI18n } from 'vue-i18n'
@@ -25,6 +24,8 @@ import { useForm } from "laravel-precognition-vue";
 import 'primeicons/primeicons.css'
 
 import AppLayout from "@/Layouts/AppLayout.vue"
+import DateNavigator from "@/Components/dateNavigator.vue";
+
 
 defineOptions({
   layout: AppLayout,
@@ -39,6 +40,24 @@ const mealTypeOptions = [
 ];
 
 const unitOptions = ref(['g', 'dkg', 'kg', 'l', 'cl', 'dl']);
+
+const allowedUnits = computed(() => {
+  if (!selectedFood.value) return [];
+
+  const weightUnits = ['g', 'dkg', 'kg'];
+  const cubicUnits = ['l', 'cl', 'dl'];
+
+  if (weightUnits.includes(selectedFood.value.unit)) {
+    return unitOptions.value.filter(u => weightUnits.includes(u));
+  }
+
+  if (cubicUnits.includes(selectedFood.value.unit)) {
+    return unitOptions.value.filter(u => cubicUnits.includes(u));
+  }
+
+  return unitOptions.value;
+});
+
 
 const selectedDate = ref(new Date());
 const formattedDate = computed(() =>
@@ -81,12 +100,6 @@ watch(formattedDate, async (date) => {
   const { data } = await axios.get(`/fdiary/diary/${date}`);
   entries.value = data.diary ?? [];
 }, { immediate: true });
-
-const shiftDate = (days) => {
-  const dt = new Date(selectedDate.value)
-  dt.setDate(dt.getDate() + days)
-  selectedDate.value = dt
-}
 
 const addEntryForm = useForm("post", "/fdiary/entry", {
   date: formattedDate.value,
@@ -169,15 +182,7 @@ const images = computed(() => {
     <section class="mb-6 rounded-2xl border p-5">
       <h2 class="text-lg font-semibold">{{ $t('foodDiary.date') }}</h2>
 
-      <div class="mt-4 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
-        <div class="flex items-center gap-2">
-          <Button icon="pi pi-arrow-left" severity="secondary" type="button" @click="shiftDate(-1)" />
-          <div class="space-y-1">
-            <DatePicker v-model="selectedDate" type="date" />
-          </div>
-          <Button icon="pi pi-arrow-right" severity="secondary" type="button" @click="shiftDate(1)" />
-        </div>
-      </div>
+      <DateNavigator v-model="selectedDate"/>
     </section>
 
     <div class="grid grid-cols-1 gap-6 lg:grid-cols-3 mb-6">
@@ -275,7 +280,7 @@ const images = computed(() => {
 
               <div>
                 <FloatLabel variant="on">
-                  <Select inputId="food_unit" v-model="addEntryForm.unit" :options="unitOptions" class="w-full" />
+                  <Select inputId="food_unit" v-model="addEntryForm.unit" :options="allowedUnits" class="w-full" />
                   <label for="food_unit">{{ $t('foodDiary.unit_label') }}</label>
                 </FloatLabel>
               </div>

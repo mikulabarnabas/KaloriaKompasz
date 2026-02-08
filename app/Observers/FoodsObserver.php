@@ -19,13 +19,8 @@ class FoodsObserver
 
     private function normalize(Foods $food): void
     {
-        if (!$food->unit || !$food->amount) {
-            return;
-        }
 
-        $unit = $food->unit instanceof FoodUnits
-            ? $food->unit
-            : FoodUnits::from($food->unit);
+        $unit = FoodUnits::from($food->unit);
 
         $baseAmount = $food->amount * $unit->toBaseFactor();
 

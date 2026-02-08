@@ -23,7 +23,7 @@ class WorkoutRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string', 'max:255'],
-            'unit' => ['required', 'in:minutes,seconds,km,m'],
+            'unit' => ['required', 'in:minutes,hours,km,m'],
             'calories_per_unit' => ['nullable', 'integer', 'min:0', 'max:50000'],
             'note' => ['nullable', 'string', 'max:2000'],
         ];

@@ -12,9 +12,13 @@ import Button from "primevue/button";
 import Select from "primevue/select";
 import ConfirmPopup from "primevue/confirmpopup";
 import { useConfirm } from "primevue/useconfirm";
-import DatePicker from 'primevue/datepicker';
+import DateNavigator from "../components/datenavigator.vue";
 
 import { useForm } from "laravel-precognition-vue";
+
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
 
 const UNIT_TO_BASE = {
   minutes: 1,
@@ -70,8 +74,7 @@ async function loadDiary(date) {
   addEntryForm.date = date
   loadingDiary.value = true
   const { data } = await axios.get(`/wdiary/diary/${date}`)
-  entries.value = data.diary ?? [];
-  console.log(data)
+  entries.value = data.diary?.exercises ?? [];
   loadingDiary.value = false
 }
 
@@ -79,31 +82,28 @@ watch(formattedDate, (d) => {
   loadDiary(d);
 }, { immediate: true });
 
-const shiftDate = (days) => {
-  const dt = new Date(selectedDate.value)
-  dt.setDate(dt.getDate() + days)
-  selectedDate.value = dt
-}
-
 const entries = ref([])
 
-
 const unitOptions = [
-  { label: "Minutes", value: "minutes" },
-  { label: "Hours", value: "hours" },
-  { label: "Kilometers", value: "km" },
-  { label: "Meters", value: "m" },
+  { label: t('workoutDiary.minute'), value: "minutes" },
+  { label: t('workoutDiary.hour'), value: "hours" },
+  { label: t('workoutDiary.km'), value: "km" },
+  { label: t('workoutDiary.m'), value: "m" },
 ]
 
 const selectedBurnedCalories = computed(() => {
-  if (!selectedExercise.value) return 0;
-
   const amount = Number(addEntryForm.amount);
-  const unitFactor = UNIT_TO_BASE[addEntryForm.unit];
+
+  const exerciseUnitFactor = UNIT_TO_BASE[selectedExercise.value.unit];
+  const entryUnitFactor = UNIT_TO_BASE[addEntryForm.unit];
+
+  const factor = entryUnitFactor / exerciseUnitFactor;
+
   const perUnit = Number(selectedExercise.value.calories_per_unit);
 
-  return amount * unitFactor * perUnit;
+  return Math.round(perUnit * factor * amount * 100) / 100;
 });
+
 
 const selectExercise = (e) => {
   selectedExercise.value = e
@@ -173,11 +173,7 @@ const onCreateExercise = async () => {
         {{ $t('workoutDiary.date') }}
       </h2>
 
-      <div class="mt-4 flex items-center gap-2">
-        <Button icon="pi pi-arrow-left" severity="secondary" @click="shiftDate(-1)" />
-        <DatePicker v-model="selectedDate" dateFormat="dd-mm-yy" />
-        <Button icon="pi pi-arrow-right" severity="secondary" type="button" @click="shiftDate(1)" />
-      </div>
+      <DateNavigator v-model="selectedDate"/>
     </section>
 
     <div class="grid grid-cols-1 gap-6 lg:grid-cols-3 mb-6">
@@ -281,10 +277,10 @@ const onCreateExercise = async () => {
               </FloatLabel>
             </div>
 
-            <div v-if="addEntryForm.unit && addEntryForm.amount"">
+          </div>
+                      <div v-if="addEntryForm.unit && addEntryForm.amount"">
               {{ $t('workoutDiary.burned_label') }}: {{ selectedBurnedCalories }} kcal
             </div>
-          </div>
 
           <Button class=" w-full" :disabled="addEntryForm.processing" @click="addSelectedExercise">
               {{ $t('workoutDiary.add_button') }} {{ formattedDate }}
@@ -362,16 +358,16 @@ const onCreateExercise = async () => {
                   {{ exercise.name }}
                 </div>
                 <div class="text-sm opacity-80">
-                  {{ exercise.amount }} {{ exercise.unit }}
+                  {{ exercise.pivot.amount }} {{ exercise.pivot.unit }}
                 </div>
               </div>
 
               <div class="hidden sm:flex flex-col text-lg text-right leading-tight">
-                <div>{{ exercise.burned_calories }} kcal</div>
+                <div>{{ exercise.pivot.burned_calories }} kcal</div>
               </div>
 
               <!-- DELETE -->
-              <Button icon="pi pi-trash" severity="danger" text @click="deleteEntry(exercise.id)" />
+              <Button icon="pi pi-trash" severity="danger" text @click="deleteEntry(exercise.pivot.id)" />
 
             </div>
 

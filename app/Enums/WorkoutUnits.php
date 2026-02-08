@@ -5,15 +5,15 @@ namespace App\Enums;
 enum WorkoutUnits: string
 {
     case MINUTES = 'minutes';
-    case SECONDS = 'seconds';
+    case HOURS = 'hours';
     case M = 'm';
     case KM = 'km';
 
-    public function toBaseFactor(): int
+    public function toBaseFactor(): float
     {
         return match($this) {
             self::MINUTES => 1,
-            self::SECONDS => 1 / 60,
+            self::HOURS => 60,
             self::M => 1,
             self::KM => 1000,
         };

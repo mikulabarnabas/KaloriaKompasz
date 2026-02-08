@@ -45,7 +45,6 @@ class UserProfileObserver
 
         $calories = $bmr * $activityMultiplier;
 
-        // Adjust calories for weight goal
         if (in_array($profile->weight_goal, ['lose', 'gain']) && $profile->target_weight_kg && $profile->goal_period_weeks) {
             $weeks = $profile->goal_period_weeks ?: 1;
 

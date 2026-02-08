@@ -106,10 +106,7 @@ function closeSuccessDialog() {
     </div>
 
     <Dialog v-model:visible="showSuccessDialog" modal :closable="true" :draggable="false"
-      :header="$t('auth.dialog_title')" class="w-[92vw] max-w-md" @hide="closeSuccessDialog">
-      <p>
-        {{ $t('auth.login_dialog_message') }}
-      </p>
+      :header="$t('auth.login_dialog_title')" class="w-[92vw] max-w-md" @hide="closeSuccessDialog">
 
       <template #footer>
         <div class="flex w-full justify-end gap-2">

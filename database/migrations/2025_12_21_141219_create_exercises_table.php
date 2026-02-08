@@ -13,7 +13,7 @@ return new class extends Migration {
 
             $table->string('name');
 
-            $table->enum('unit', WorkoutUnits::baseValues());
+            $table->enum('unit', WorkoutUnits::values());
 
             $table->unsignedInteger('calories_per_unit')->default(0);
 

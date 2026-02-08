@@ -52,5 +52,9 @@ return [
 
     // confirm
     "delete_confirmation" => "Are you sure you want to delete the selected exercise?",
+    "minute" => "minute",
+    "hour" => "hour",
+    "km" => "kilometer",
+    "m" => "meter"
 
 ];

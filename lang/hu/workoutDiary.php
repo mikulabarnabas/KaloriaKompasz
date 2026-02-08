@@ -52,5 +52,9 @@ return [
 
     // megerősítés
     "delete_confirmation" => "Biztosan törölni szeretnéd a kiválasztott gyakorlatot?",
+    "minute" => "perc",
+    "hour" => "óra",
+    "km" => "kilométer",
+    "m" => "méter"
 
 ];

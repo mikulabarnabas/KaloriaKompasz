@@ -26,7 +26,7 @@ return [
     'forgot_password' => 'Elfelejtetted a jelszavad?',
     'sign_in' => 'Bejelentkezés',
     'no_account' => 'Még nincs fiókod?',
-    'dialog_title' => 'Sikeres bejelentkezés',
+    'login_dialog_title' => 'Sikeres bejelentkezés',
     'login.dialog_message' => 'Sikeresen bejelentkeztél.',
     'registration' => 'Fiók létrehozása',
     'register.footer_note' => 'A folytatással elfogadod az Általános Szerződési Feltételeket és az Adatvédelmi irányelveket.',
@@ -34,8 +34,9 @@ return [
     'password_confirmation' => 'Jelszó megerősítése',
     'accept_terms' => 'Elfogadom az Általános Szerződési Feltételeket és az Adatvédelmi irányelveket',
     'create_account' => 'Fiók létrehozása',
-    'dialog_title' => 'Sikeres regisztráció',
+    'register_dialog_title' => 'Sikeres regisztráció',
     'register.dialog_message' => 'A fiókod sikeresen létrejött. Most már bejelentkezhetsz.',
     'close' => 'Bezárás',
+    'register_dialog_message' => 'Mostmár bejelentkezhet',
 
 ];
