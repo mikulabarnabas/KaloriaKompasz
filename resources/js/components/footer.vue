@@ -1,58 +1,33 @@
-<script setup>
-const year = new Date().getFullYear();
-
-const version = "v0.1.0";
-</script>
-
 <template>
-  <footer class="mx-auto w-full px-4 pb-8 pt-10">
-    <div
-      class="grid grid-cols-1 gap-8 rounded-2xl border p-6 sm:grid-cols-2 sm:p-8"
-    >
-      <!-- LEFT -->
-      <div class="space-y-3">
-        <div class="text-xl font-semibold">KalóriaKompasz</div>
+<footer class="border-t border-neutral-border py-16 px-6">
+  <div class="max-w-7xl mx-auto grid md:grid-cols-4 gap-12 text-sm text-white/60">
 
-        <p class="text-sm leading-relaxed">
-          Egyszerű ételnapló és kalóriaszámláló alkalmazás a tudatosabb
-          mindennapokhoz.
-        </p>
-
-        <div class="flex flex-wrap items-center gap-x-3 gap-y-2 text-xs">
-          <span>© {{ year }}</span>
-        </div>
-      </div>
-
-      <!-- RIGHT -->
-      <div class="space-y-3">
-        <div class="text-sm font-semibold">Információ</div>
-
-        <ul class="space-y-2 text-sm">
-          <li class="flex items-center gap-2">
-            <i class="pi pi-info-circle"></i>
-            <span>Verzió: {{ version }}</span>
-          </li>
-
-          <li class="flex items-center gap-2">
-            <i class="pi pi-shield"></i>
-            <span>Adatvédelem</span>
-          </li>
-
-          <li class="flex items-center gap-2">
-            <i class="pi pi-envelope"></i>
-            <span>Kapcsolat:</span>
-            <a
-              href="mailto:support@kaloriakompasz.hu"
-              class="underline underline-offset-4"
-            >
-              support@kaloriakompasz.hu
-            </a>
-          </li>
-        </ul>
-      </div>
+    <div>
+      <div class="font-bold text-white mb-4">KalóriaKompasz</div>
+      <p>Modern calorie & workout tracker.</p>
     </div>
 
-  </footer>
-</template>
+    <div>
+      <div class="font-bold text-white mb-4">Platform</div>
+      <ul class="space-y-2">
+        <li>Features</li>
+        <li>API</li>
+      </ul>
+    </div>
 
-<style scoped></style>
+    <div>
+      <div class="font-bold text-white mb-4">Company</div>
+      <ul class="space-y-2">
+        <li>Privacy</li>
+        <li>Terms</li>
+      </ul>
+    </div>
+
+    <div>
+      <div class="font-bold text-white mb-4">Contact</div>
+      support@kaloriakompasz.hu
+    </div>
+
+  </div>
+</footer>
+</template>

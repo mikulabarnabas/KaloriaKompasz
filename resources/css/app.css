@@ -1,36 +1,48 @@
 @import "tailwindcss";
-@import "@fortawesome/fontawesome-free/css/all.min.css";
 
-@source "../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php";
-@source "../../storage/framework/views/*.php";
-@source "../**/*.blade.php";
-@source "../**/*.js";
-@source "../**/*.vue";
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source '../**/*.blade.php';
+@source '../**/*.js';
 
-/*
+
+
 @theme {
-  --font-sans: "Instrument Sans", ui-sans-serif, system-ui, sans-serif,
-    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  /* Custom Colors */
+  --color-primary: #0df259;
+  --color-background-light: #f5f8f6;
+  --color-background-dark: #102216;
+  --color-neutral-dark: #1a2e21;
+  --color-neutral-border: #22492f;
 
+  /* Fonts */
+  --font-display: "Inter", ui-sans-serif, system-ui, sans-serif;
 
-  --color-mint-glow: #8ef166;
-  --color-pearl-aqua: #a8e6cf;
-  --color-medium-jungle: #4caf50;
-  --color-malachite: #3dd652;
-  --color-blue-spruce: #00695c;
-
-
-  --color-brand: var(--color-blue-spruce);
-  --color-brand-2: var(--color-malachite);
-  --color-brand-soft: var(--color-pearl-aqua);
-
-  --color-surface: #0b0f0e;
-  --color-surface-2: #111816;
-
-  --color-text: #e7f7f1;
-  --color-muted: #b7d7d0;
-
-  --color-border: color-mix(in oklab, var(--color-brand), transparent 70%);
-  --color-ring: color-mix(in oklab, var(--color-brand-2), white 20%);
+  /* Border Radii */
+  --radius-default: 0.5rem;
+  --radius-lg: 1rem;
+  --radius-xl: 1.5rem;
+  --radius-full: 9999px;
 }
-*/
+
+/* --- DARK MODE FELÜLDEFINIÁLÁS --- */
+/* Amikor a html vagy body elemen rajta van a .dark osztály */
+@variant dark (&:where(.dark, .dark *));
+
+@layer base {
+  .dark {
+    /* Custom Colors */
+    --color-primary: red;
+    --color-background-light: #f5f8f6;
+    --color-background-dark: #102216;
+    --color-neutral-dark: #1a2e21;
+    --color-neutral-border: #22492f;
+  }
+}
+
+/* Globális alapbeállítások a színek alkalmazásához */
+@layer base {
+  body {
+    @apply bg-[family-name:--color-background-page] text-[family-name:--color-text-main] transition-colors duration-300;
+  }
+}

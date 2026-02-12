@@ -1,18 +1,7 @@
 <script setup>
 
-import Carousel from 'primevue/carousel';
 import { computed, ref, watch } from "vue";
 import axios from "axios";
-
-import Paginator from "primevue/paginator";
-import FloatLabel from "primevue/floatlabel";
-import InputText from "primevue/inputtext";
-import Button from "primevue/button";
-import ConfirmPopup from 'primevue/confirmpopup';
-import { useConfirm } from "primevue/useconfirm";
-import Select from "primevue/select";
-import FileUpload from "primevue/fileupload";
-import Image from 'primevue/image'
 
 
 import { useI18n } from 'vue-i18n'
@@ -20,8 +9,6 @@ import { useI18n } from 'vue-i18n'
 const { t } = useI18n()
 
 import { useForm } from "laravel-precognition-vue";
-
-import 'primeicons/primeicons.css'
 
 import AppLayout from "@/Layouts/AppLayout.vue"
 import DateNavigator from "@/Components/dateNavigator.vue";

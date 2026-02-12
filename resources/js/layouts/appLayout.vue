@@ -1,16 +1,14 @@
 <script setup>
-import Navbar from "@/components/navbar.vue"
-import Footer from "@/components/footer.vue"
+import Navbar from "@/Components/navbar.vue"
+import Footer from "@/Components/footer.vue"
 </script>
 
 <template>
-  <div class="min-h-screen flex flex-col">
-    <Navbar />
-
-    <main class="flex-1 flex items-center justify-center p-4">
-      <slot />
-    </main>
-
-    <Footer />
-  </div>
+<div class="min-h-screen bg-background-dark text-white font-display">
+  <Navbar/>
+  <main>
+    <slot/>
+  </main>
+  <Footer/>
+</div>
 </template>

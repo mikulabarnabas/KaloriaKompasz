@@ -5,13 +5,6 @@ import axios from "axios";
 
 import AppLayout from "@/Layouts/AppLayout.vue"
 
-import Paginator from "primevue/paginator";
-import FloatLabel from "primevue/floatlabel";
-import InputText from "primevue/inputtext";
-import Button from "primevue/button";
-import Select from "primevue/select";
-import ConfirmPopup from "primevue/confirmpopup";
-import { useConfirm } from "primevue/useconfirm";
 import DateNavigator from "../components/datenavigator.vue";
 
 import { useForm } from "laravel-precognition-vue";
