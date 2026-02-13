@@ -37,5 +37,7 @@ return [
     'register_dialog_title' => 'Registration successful',
     'register_dialog_message' => 'Your account has been created successfully. You can now sign in.',
     'close' => 'Close',
-    'register_dialog_message' => 'You can sign in now'
+    'register_dialog_message' => 'You can sign in now',
+    'continue_with' => 'Or continue with',
+    'welcome_back' => 'Welcome back'
 ];

@@ -38,5 +38,6 @@ return [
     'register.dialog_message' => 'A fiókod sikeresen létrejött. Most már bejelentkezhetsz.',
     'close' => 'Bezárás',
     'register_dialog_message' => 'Mostmár bejelentkezhet',
-
+    'continue_with' => 'Vagy folytas',
+    'welcome_back' => 'Üdv újra'
 ];

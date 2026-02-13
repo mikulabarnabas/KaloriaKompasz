@@ -37,7 +37,7 @@ const faqItems = [
                 </p>
                 <div class="flex flex-wrap gap-4">
                   <button
-                    class="flex items-center gap-2 rounded-xl bg-primary px-8 py-4 text-lg font-bold text-background-dark hover:shadow-[0_0_20px_rgba(13,242,89,0.4)] transition-all">
+                    class="flex items-center gap-2 rounded-xl bg-primary px-8 py-4 text-lg font-bold text-background-dark hover:shadow-[0_0_20px_rgba(13,242,89,0.4)] transition">
                     Vágj bele most
                     <span class="material-symbols-outlined">arrow_forward</span>
                   </button>
@@ -59,9 +59,9 @@ const faqItems = [
             </div>
             <div class="grid grid-cols-1 gap-8 md:grid-cols-3">
               <div
-                class="group relative flex flex-col gap-6 rounded-3xl border border-neutral-border bg-neutral-dark p-8 hover:border-primary/50 transition-all">
+                class="group relative flex flex-col gap-6 rounded-3xl border border-neutral-border bg-neutral-dark p-8 hover:border-primary/50 transition">
                 <div
-                  class="flex h-14 w-14 items-center justify-center rounded-2xl bg-primary/10 text-primary group-hover:bg-primary group-hover:text-background-dark transition-all">
+                  class="flex h-14 w-14 items-center justify-center rounded-2xl bg-primary/10 text-primary group-hover:bg-primary group-hover:text-background-dark transition">
                   <span class="material-symbols-outlined text-3xl font-bold">restaurant</span>
                 </div>
                 <div>
@@ -73,9 +73,9 @@ const faqItems = [
                 </div>
               </div>
               <div
-                class="group relative flex flex-col gap-6 rounded-3xl border border-neutral-border bg-neutral-dark p-8 hover:border-primary/50 transition-all">
+                class="group relative flex flex-col gap-6 rounded-3xl border border-neutral-border bg-neutral-dark p-8 hover:border-primary/50 transition">
                 <div
-                  class="flex h-14 w-14 items-center justify-center rounded-2xl bg-primary/10 text-primary group-hover:bg-primary group-hover:text-background-dark transition-all">
+                  class="flex h-14 w-14 items-center justify-center rounded-2xl bg-primary/10 text-primary group-hover:bg-primary group-hover:text-background-dark transition">
                   <span class="material-symbols-outlined text-3xl font-bold">fitness_center</span>
                 </div>
                 <div>
@@ -87,9 +87,9 @@ const faqItems = [
                 </div>
               </div>
               <div
-                class="group relative flex flex-col gap-6 rounded-3xl border border-neutral-border bg-neutral-dark p-8 hover:border-primary/50 transition-all">
+                class="group relative flex flex-col gap-6 rounded-3xl border border-neutral-border bg-neutral-dark p-8 hover:border-primary/50 transition">
                 <div
-                  class="flex h-14 w-14 items-center justify-center rounded-2xl bg-primary/10 text-primary group-hover:bg-primary group-hover:text-background-dark transition-all">
+                  class="flex h-14 w-14 items-center justify-center rounded-2xl bg-primary/10 text-primary group-hover:bg-primary group-hover:text-background-dark transition">
                   <span class="material-symbols-outlined text-3xl font-bold">insights</span>
                 </div>
                 <div>
@@ -121,9 +121,9 @@ const faqItems = [
 
               <div class="group flex flex-col items-center text-center">
                 <div
-                  class="relative mb-6 h-48 w-48 overflow-hidden rounded-full border-4 border-transparent group-hover:border-primary transition-all p-1">
+                  class="relative mb-6 h-48 w-48 overflow-hidden rounded-full border-4 border-transparent group-hover:border-primary transition">
                   <img alt="Alapító 1"
-                    class="h-full w-full rounded-full object-cover grayscale group-hover:grayscale-0 transition-all"
+                    class="h-full w-full rounded-full object-cover grayscale group-hover:grayscale-0 transition"
                     src="https://lh3.googleusercontent.com/aida-public/AB6AXuAAh2wlXleEXK9sxmGaVzhsMJXeaJecyfwhGr_F7aE9qGJ_UehP914nVYc2a1aiCKdAtcBnUhpTT4dltsxwC2jnHCiVvhwywv7PK9V8gK2JtyJwQb-yGr4O8mpVl8Wg7asqN8dTTjlj2i6i_obuvTJxT8hOWwvNPkwIP3NY9QvgnPne6x8LBtO82B5Z5a0MjGT30GUp9A-LxJ1p3Rb78cIKudSLcv2Ym4TH1J1Ib9WCkjRlz3SFV5G7ubOJBTtOpnymvHMX-E8CJeJN" />
                 </div>
                 <h4 class="text-xl font-bold text-white">Név 1</h4>
@@ -132,9 +132,9 @@ const faqItems = [
 
               <div class="group flex flex-col items-center text-center">
                 <div
-                  class="relative mb-6 h-48 w-48 overflow-hidden rounded-full border-4 border-transparent group-hover:border-primary transition-all p-1">
+                  class="relative mb-6 h-48 w-48 overflow-hidden rounded-full border-4 border-transparent group-hover:border-primary transition p-1">
                   <img alt="Alapító 2"
-                    class="h-full w-full rounded-full object-cover grayscale group-hover:grayscale-0 transition-all"
+                    class="h-full w-full rounded-full object-cover grayscale group-hover:grayscale-0 transition"
                     src="https://lh3.googleusercontent.com/aida-public/AB6AXuCTxUiUKhhbC_9IvJmhJ9UoRGDnrCtJ2xYHsYKU9706bTHtX6nkHzpPB7EfHDuzWcKfX86OWEhB6hclOjH54mIJncqG-a2lkMiJCTzdYe13XtVayhQCmD4MPdL5TnUits_88rwFbGf8V1V1VkEz9TgMbd98Akx4F71pmKiOHc3DHbGgxkwLfjb_SmukVKsYplyV-PSGvOYplCInAd_RERo2_5MnSRa_00Qeemg10kCvxYcKn2U-IC5fK0JGTIzz-B6VI3_hb5sf_4aa" />
                 </div>
                 <h4 class="text-xl font-bold text-white">Név 2</h4>

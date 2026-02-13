@@ -23,6 +23,22 @@
   --radius-lg: 1rem;
   --radius-xl: 1.5rem;
   --radius-full: 9999px;
+
+  --animate-fly-in: fly-in 0.6s forwards;
+
+  @keyframes fly-in {
+    0% {
+      opacity: 0;
+      transform: translateY(28px) scale(0.96);
+      filter: blur(6px);
+    }
+
+    100% {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+      filter: blur(0);
+    }
+  }
 }
 
 /* --- DARK MODE FELÜLDEFINIÁLÁS --- */
@@ -43,6 +59,7 @@
 /* Globális alapbeállítások a színek alkalmazásához */
 @layer base {
   body {
-    @apply bg-[family-name:--color-background-page] text-[family-name:--color-text-main] transition-colors duration-300;
+    background: var(--color-background-dark);
+    color: white;
   }
 }
