@@ -1,6 +1,7 @@
 <script setup>
 import AppLayout from "@/Layouts/AppLayout.vue"
 import Accordion from "@/Components/accordion.vue"
+import Button from "@/Components/glowingButton.vue"
 
 const faqItems = [
   {
@@ -21,8 +22,26 @@ const faqItems = [
 
 <template>
   <AppLayout>
-    <div class="relative flex min-h-screen flex-col overflow-x-hidden">
-      <main class="grow">
+    <div class="relative w-full bg-background-dark">
+
+      <div class="absolute inset-0 pointer-events-none z-0 opacity-20">
+        <svg width="100%" height="100%" viewBox="0 0 100 1000" preserveAspectRatio="none" fill="none"
+          xmlns="http://www.w3.org/2000/svg">
+          <path d="M 80 0 
+               C 80 150, 20 250, 20 400 
+               S 90 550, 80 750 
+               S 10 850, 50 1000" stroke="url(#gradient-path)" stroke-width="3" stroke-linecap="round"
+            stroke-dasharray="12 12" vector-effect="non-scaling-stroke" class="route-path" />
+
+          <defs>
+            <linearGradient id="gradient-path" x1="0" y1="0" x2="0" y2="1000" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stop-color="#0df259" stop-opacity="0.8" />
+              <stop offset="100%" stop-color="#0df259" stop-opacity="0.2" />
+            </linearGradient>
+          </defs>
+        </svg>
+      </div>
+      <main class="relative z-10 flex min-h-screen flex-col overflow-x-hidden">
         <section class="relative overflow-hidden px-6 py-20 lg:py-32">
           <div class="mx-auto max-w-7xl">
             <div class="grid grid-cols-1 items-center gap-16 lg:grid-cols-2">
@@ -36,11 +55,9 @@ const faqItems = [
                   sallangok nélkül.
                 </p>
                 <div class="flex flex-wrap gap-4">
-                  <button
-                    class="flex items-center gap-2 rounded-xl bg-primary px-8 py-4 text-lg font-bold text-background-dark hover:shadow-[0_0_20px_rgba(13,242,89,0.4)] transition">
+                  <Button @click="handleJoin" icon="arrow_forward">
                     Vágj bele most
-                    <span class="material-symbols-outlined">arrow_forward</span>
-                  </button>
+                  </Button>
                 </div>
               </div>
             </div>

@@ -1,6 +1,7 @@
 <script setup>
 import { router, usePage } from "@inertiajs/vue3"
 import { computed, onMounted, ref } from "vue"
+import Button from "@/Components/glowingButton.vue"
 
 import { useI18n } from 'vue-i18n'
 
@@ -45,9 +46,9 @@ function toggleTheme() {
       </div>
 
       <nav class="hidden md:flex gap-8 text-sm text-white/70">
-        <a href="/fdiary" class="hover:text-primary">{{ t('navbar.foodDiary') }}</a>
-        <a href="/wdiary" class="hover:text-primary">{{ t('navbar.workoutDiary') }}</a>
-        <a href="/stats" class="hover:text-primary">{{ t('navbar.stats') }}</a>
+        <button @click="router.visit('/fdiary')" class="hover:text-primary">{{ t('navbar.foodDiary') }}</button>
+        <button @click="router.visit('/wdiary')" class="hover:text-primary">{{ t('navbar.workoutDiary') }}</button>
+        <button @click="router.visit('/stats')" class="hover:text-primary">{{ t('navbar.stats') }}</button>
       </nav>
 
       <div class="flex items-center gap-4">
@@ -58,7 +59,8 @@ function toggleTheme() {
         </button>
 
         <template v-if="user">
-          <button @click="router.post('/logout')" class="text-sm">{{ t('navbar.logout') }}</button>
+          <button class="bg-primary text-black px-4 py-2 rounded-lg font-bold">{{ user.name }}</button>
+          <button @click="router.post('/logout')" class="bg-primary text-black px-4 py-2 rounded-lg font-bold">{{ t('navbar.logout') }}</button>
         </template>
 
         <template v-else>

@@ -1,492 +1,94 @@
 <script setup>
-
 import { computed, ref, watch } from "vue";
 import axios from "axios";
-
-
-import { useI18n } from 'vue-i18n'
-
-const { t } = useI18n()
-
+import { useI18n } from 'vue-i18n';
 import { useForm } from "laravel-precognition-vue";
 
-import AppLayout from "@/Layouts/AppLayout.vue"
-import DateNavigator from "@/Components/dateNavigator.vue";
+// Layout & Components
+import AppLayout from "@/Layouts/AppLayout.vue";
+import MacroSummary from "@/Components/macroSummary.vue";
+import MealSection from "@/Components/mealSection.vue";
+import Search from "@/Components/search.vue"
 
+const { t } = useI18n();
+defineOptions({ layout: AppLayout });
 
-defineOptions({
-  layout: AppLayout,
-})
-
+// --- DATA ---
 const mealTypeOptions = [
-  { label: t('foodDiary.breakfast'), value: "breakfast" },
-  { label: t('foodDiary.lunch'), value: "lunch" },
-  { label: t('foodDiary.dinner'), value: "dinner" },
-  { label: t('foodDiary.snack'), value: "snack" },
-  { label: t('foodDiary.other'), value: "other" },
+  { label: t('foodDiary.breakfast'), value: "breakfast", icon: 'light_mode', color: 'text-orange-400' },
+  { label: t('foodDiary.lunch'), value: "lunch", icon: 'wb_sunny', color: 'text-primary' },
+  { label: t('foodDiary.dinner'), value: "dinner", icon: 'dark_mode', color: 'text-indigo-400' },
+  { label: t('foodDiary.snack'), value: "snack", icon: 'styler', color: 'text-pink-400' },
 ];
 
-const unitOptions = ref(['g', 'dkg', 'kg', 'l', 'cl', 'dl']);
-
-const allowedUnits = computed(() => {
-  if (!selectedFood.value) return [];
-
-  const weightUnits = ['g', 'dkg', 'kg'];
-  const cubicUnits = ['l', 'cl', 'dl'];
-
-  if (weightUnits.includes(selectedFood.value.unit)) {
-    return unitOptions.value.filter(u => weightUnits.includes(u));
-  }
-
-  if (cubicUnits.includes(selectedFood.value.unit)) {
-    return unitOptions.value.filter(u => cubicUnits.includes(u));
-  }
-
-  return unitOptions.value;
-});
-
-
 const selectedDate = ref(new Date());
-const formattedDate = computed(() =>
-  selectedDate.value.toISOString().slice(0, 10)
-)
-
-const search = ref("");
-const rows = 5;
-const selectedFood = ref(null);
-const pageCount = ref(0);
+const formattedDate = computed(() => selectedDate.value.toISOString().slice(0, 10));
 const entries = ref([]);
-let searchedFoods = ref([]);
 
-async function searchFood(page) {
-  const { data } = await axios.get(`/fdiary/getFoods/${search.value}/${page}`);
-  searchedFoods.value = data.result;
-}
-
-async function getPageCount() {
-  const { data } = await axios.get(`/fdiary/getPageCount/${search.value}`);
-  pageCount.value = data.pageCount;
-}
-
-const selectFood = (food) => {
-  selectedFood.value = food;
-  addEntryForm.food_id = food?.id ?? null;
-};
-
-function onImagesSelect(event) {
-  createFoodForm.images = event.files
-}
-
-watch(search, () => {
-  if (search.value == "") return
-  getPageCount();
-  searchFood(1);
-}, { immediate: true })
-
-watch(formattedDate, async (date) => {
-  const { data } = await axios.get(`/fdiary/diary/${date}`);
-  entries.value = data.diary ?? [];
-}, { immediate: true });
-
-const addEntryForm = useForm("post", "/fdiary/entry", {
-  date: formattedDate.value,
-  food_id: null,
-  meal_type: "other",
-  unit: "g",
-  amount: 100,
+// --- COMPUTED ---
+const dailyTotals = computed(() => {
+  let totals = { kcal: 0, protein: 0, carbs: 0, fats: 0 };
+  Object.values(entries.value).flat().forEach(food => {
+    totals.kcal += Number(food.pivot.calorie || 0);
+    totals.protein += Number(food.pivot.protein || 0);
+    totals.carbs += Number(food.pivot.carb || 0);
+    totals.fats += Number(food.pivot.fat || 0);
+  });
+  return totals;
 });
 
-const addSelectedFoodToSelectedDate = async () => {
-  if (!selectedFood.value?.id) return;
-
-  addEntryForm.food_id = selectedFood.value.id;
-  addEntryForm.date = formattedDate.value;
-
-  await addEntryForm.submit({
-    forceFormData: true,
-    only: []
-  })
-
+// --- METHODS ---
+const fetchDiary = async () => {
   const { data } = await axios.get(`/fdiary/diary/${formattedDate.value}`);
   entries.value = data.diary ?? [];
 };
 
-const createFoodForm = useForm("post", "/fdiary/create", {
-  name: "",
-  unit: "g",
-  amount: 100,
-  fat: 0,
-  carb: 0,
-  protein: 0,
-  calorie: 0,
-  notes: "",
-  images: [],
-});
+const addFoodToDiary = async (food) => {
+  const form = useForm("post", "/fdiary/entry", {
+    date: formattedDate.value,
+    food_id: food.id,
+    meal_type: "breakfast",
+    unit: "g",
+    amount: 100,
+  });
+  await form.submit();
+  fetchDiary();
+};
 
-function onCreateFood() {
-  createFoodForm.submit({
-    forceFormData: true,
-    onSuccess: () => {
-      createFoodForm.reset()
-      createFoodForm.images = []
-    }
-  })
-}
-
-const confirm = useConfirm()
-
-const deleteionConfirmation = (entryId) => {
-  confirm.require({
-    group: 'headless',
-    accept: async () => {
-      axios.delete(`/fdiary/entry/${formattedDate.value}/${entryId}`)
-      const { data } = await axios.get(`/fdiary/diary/${formattedDate.value}`);
-      entries.value = data.diary ?? [];
-    }
-  })
-}
-
-const images = computed(() => {
-  if (!selectedFood.value?.image_paths) return []
-
-  const parts = selectedFood.value.image_paths.split(':').filter(Boolean)
-  const folder = parts[0].trim()
-  const filenames = parts.slice(1)
-
-  return filenames.map(file => ({
-    itemImageSrc: `/storage/foods/${folder}/${file.trim()}`,
-    thumbnailImageSrc: `/storage/foods/${folder}/${file.trim()}`,
-    alt: selectedFood.value.name
-  }))
-})
-
-
+const deleteEntry = async (entryId) => {
+  await axios.delete(`/fdiary/entry/${formattedDate.value}/${entryId}`);
+  console.log(entries)
+  fetchDiary();
+};
+watch(formattedDate, fetchDiary, { immediate: true });
 </script>
 
 <template>
-  <main class="mx-auto w-full max-w-7xl px-4 py-6">
-    <!-- DATE NAV -->
-    <section class="mb-6 rounded-2xl border p-5">
-      <h2 class="text-lg font-semibold">{{ $t('foodDiary.date') }}</h2>
+  <div class="bg-background-dark text-white relative min-h-screen">
 
-      <DateNavigator v-model="selectedDate"/>
-    </section>
+    <main class="flex flex-col min-w-0">
+      <header class="p-6 border-b border-primary/10 bg-background-dark/50 backdrop-blur-md sticky top-0 z-40">
+        <div class="max-w-4xl mx-auto flex gap-4 items-center">
 
-    <div class="grid grid-cols-1 gap-6 lg:grid-cols-3 mb-6">
-      <!-- SEARCH -->
-      <section class="rounded-2xl border p-5">
-        <h2 class="text-lg font-semibold">{{ $t('foodDiary.search_title') }}</h2>
-        <InputText class="mt-4 flex gap-2 w-full" v-model="search" type="text"
-          :placeholder="$t('foodDiary.search_placeholder')" />
+          <Search :placeholder="$t('foodDiary.search_placeholder')" @select="addFoodToDiary" />
 
-        <div class="mt-4">
-          <ul class="space-y-2">
-            <li v-for="food in searchedFoods" :key="food.id" class="cursor-pointer rounded-xl border p-3"
-              @click="selectFood(food)">
-              <div class="flex items-start justify-between gap-3">
-                <div class="min-w-0">
-                  <div class="truncate font-semibold">
-                    {{ food.name }}
-                  </div>
-                  <div class="mt-1 text-xs">
-                    {{ food.calorie }} kcal · {{ $t('foodDiary.fat_label') }} {{ food.fat }} g · {{
-                      $t('foodDiary.carb_label') }}
-                    {{ food.carb }} g · {{ $t('foodDiary.protein_label') }} {{ food.protein }} g
-                  </div>
-                </div>
-
-                <div class="shrink-0 rounded-full border px-2 py-1 text-xs">
-                  #{{ food.id }}
-                </div>
-              </div>
-            </li>
-          </ul>
-
-          <Paginator v-if="searchedFoods.length" class="mt-8" :rows="rows" :totalRecords="pageCount"
-            @page="(e) => searchFood(e.page + 1)">
-            <template #container="{ first, last, page, pageCount, prevPageCallback, nextPageCallback, totalRecords }">
-              <div
-                class="flex items-center border border-primary bg-transparent rounded-full w-full py-1 px-2 justify-between">
-                <Button icon="pi pi-chevron-left" rounded variant="text" @click="prevPageCallback"
-                  :disabled="page === 0" />
-                <div class="text-color font-medium">
-                  <span class="hidden sm:block">{{ $t('foodDiary.paginator_visible_range', {
-                    first: first, last: last, total:
-                      totalRecords
-                  }) }}</span>
-                  <span class="block sm:hidden">{{ $t('foodDiary.paginator_page_of', {
-                    page: page + 1, pageCount: pageCount
-                  }) }}</span>
-                </div>
-                <Button icon="pi pi-chevron-right" rounded variant="text" @click="nextPageCallback"
-                  :disabled="page === pageCount - 1" />
-              </div>
-            </template>
-          </Paginator>
         </div>
-      </section>
+      </header>
 
-      <!-- SELECTED FOOD -->
-      <section class="rounded-2xl border p-5">
-        <h2 class="text-lg font-semibold">{{ $t('foodDiary.selected_food_title') }}</h2>
-        <p class="mt-1 text-sm">{{ $t('foodDiary.selected_food_subtitle') }}</p>
+      <div class="p-6 space-y-8 pb-32">
+        <div class="max-w-4xl mx-auto space-y-8">
 
-        <div v-if="selectedFood" class="mt-4 rounded-xl border p-4">
-          <div class="text-xl font-semibold">{{ selectedFood.name }}</div>
+          <MacroSummary :totals="dailyTotals" :goal="2500" />
 
-          <Carousel v-if="images.length" :value="images" :numVisible="1" :numScroll="1" circular>
-            <template #item="{ data }">
-              <Image :src="data.itemImageSrc" preview imageClass="h-48 w-full object-cover rounded-xl" />
-            </template>
-          </Carousel>
-
-          <div v-else
-            class="mt-4 h-40 flex items-center justify-center rounded-xl border border-dashed text-sm">
-            No images available
+          <div class="space-y-6">
+            <MealSection v-for="meal in mealTypeOptions" :key="meal.value" :meal-config="meal"
+              :foods="entries[meal.value]" @delete="deleteEntry" @add-click="search = ''" />
           </div>
-
-          <form @submit.prevent="addSelectedFoodToSelectedDate" class="mt-4 space-y-3">
-            <div class="space-y-1">
-              <label class="text-xs font-medium">{{ $t('foodDiary.meal_type_label') }}</label>
-
-              <Select v-model="addEntryForm.meal_type" :options="mealTypeOptions" optionLabel="label"
-                optionValue="value" class="w-full" :placeholder="$t('foodDiary.meal_type_placeholder')" />
-            </div>
-
-            <div class="grid grid-cols-2 gap-3">
-              <div>
-                <FloatLabel variant="on">
-                  <InputText id="food_amount" v-model="addEntryForm.amount" type="number" class="w-full"
-                    @change="addEntryForm.invalid('amount')" />
-                  <label for="food_amount">{{ $t('foodDiary.amount_label') }}</label>
-                </FloatLabel>
-                <small v-if="addEntryForm.invalid('amount')" class="block text-xs">
-                  {{ addEntryForm.errors.amount }}
-                </small>
-              </div>
-
-              <div>
-                <FloatLabel variant="on">
-                  <Select inputId="food_unit" v-model="addEntryForm.unit" :options="allowedUnits" class="w-full" />
-                  <label for="food_unit">{{ $t('foodDiary.unit_label') }}</label>
-                </FloatLabel>
-              </div>
-            </div>
-
-            <Button class="w-full rounded-lg border px-3 py-2 text-sm font-medium" :disabled="addEntryForm.processing"
-              type="submit">
-              {{ $t('foodDiary.add_button') }} {{ formattedDate }}
-            </button>
-          </form>
         </div>
+      </div>
+    </main>
 
-        <div v-else class="mt-4 rounded-xl border border-dashed p-6 text-sm">
-          {{ $t('foodDiary.no_selected_food') }}
-        </div>
-      </section>
-
-      <!-- CREATE FOOD -->
-      <section class="rounded-2xl border p-5">
-        <h2 class="text-lg font-semibold">{{ $t('foodDiary.create_food_title') }}</h2>
-
-        <form class="mt-5 space-y-4" novalidate @submit.prevent="onCreateFood">
-          <div class="space-y-3">
-            <div>
-              <FloatLabel variant="on">
-                <InputText id="food_name" v-model="createFoodForm.name" class="w-full"
-                  @change="createFoodForm.validate('name')" />
-                <label for="food_name">{{ $t('foodDiary.food_name_label') }}</label>
-              </FloatLabel>
-              <small v-if="createFoodForm.invalid('name')" class="block text-xs">
-                {{ createFoodForm.errors.name }}
-              </small>
-            </div>
-
-            <div class="grid grid-cols-2 gap-3">
-              <!-- amount -->
-              <div>
-                <FloatLabel variant="on">
-                  <InputText id="food_amount" v-model="createFoodForm.amount" type="number" class="w-full"
-                    @change="createFoodForm.validate('amount')" />
-                  <label for="food_amount">{{ $t('foodDiary.amount_label') }}</label>
-                </FloatLabel>
-                <small v-if="createFoodForm.invalid('amount')" class="block text-xs">
-                  {{ createFoodForm.errors.amount }}
-                </small>
-              </div>
-
-              <div>
-                <FloatLabel variant="on">
-                  <Select inputId="food_unit" v-model="createFoodForm.unit" :options="unitOptions" class="w-full"
-                    @change="createFoodForm.validate('unit')" />
-                  <label for="food_unit">{{ $t('foodDiary.unit_label') }}</label>
-                </FloatLabel>
-                <small v-if="createFoodForm.invalid('unit')" class="block text-xs">
-                  {{ createFoodForm.errors.unit }}
-                </small>
-              </div>
-            </div>
-
-            <div>
-              <FloatLabel variant="on">
-                <InputText id="food_calorie" v-model="createFoodForm.calorie" class="w-full"
-                  @change="createFoodForm.validate('calorie')" />
-                <label for="food_calorie">{{ $t('foodDiary.calorie_label') }}</label>
-              </FloatLabel>
-              <small v-if="createFoodForm.invalid('calorie')" class="block text-xs">
-                {{ createFoodForm.errors.calorie }}
-              </small>
-            </div>
-
-            <div>
-              <FloatLabel variant="on">
-                <InputText id="food_fat" v-model="createFoodForm.fat" class="w-full"
-                  @change="createFoodForm.validate('fat')" />
-                <label for="food_fat">{{ $t('foodDiary.fat_label') }}</label>
-              </FloatLabel>
-              <small v-if="createFoodForm.invalid('fat')" class="block text-xs">
-                {{ createFoodForm.errors.fat }}
-              </small>
-            </div>
-
-            <div>
-              <FloatLabel variant="on">
-                <InputText id="food_carb" v-model="createFoodForm.carb" class="w-full"
-                  @change="createFoodForm.validate('carb')" />
-                <label for="food_carb">{{ $t('foodDiary.carb_label') }}</label>
-              </FloatLabel>
-              <small v-if="createFoodForm.invalid('carb')" class="block text-xs">
-                {{ createFoodForm.errors.carb }}
-              </small>
-            </div>
-
-            <div>
-              <FloatLabel variant="on">
-                <InputText id="food_protein" v-model="createFoodForm.protein" class="w-full"
-                  @change="createFoodForm.validate('protein')" />
-                <label for="food_protein">{{ $t('foodDiary.protein_label') }}</label>
-              </FloatLabel>
-              <small v-if="createFoodForm.invalid('protein')" class="block text-xs">
-                {{ createFoodForm.errors.protein }}
-              </small>
-            </div>
-
-            <div>
-              <FloatLabel variant="on">
-                <InputText id="food_notes" v-model="createFoodForm.notes" class="w-full"
-                  @change="createFoodForm.validate('notes')" />
-                <label for="food_notes">{{ $t('foodDiary.note_label') }}</label>
-              </FloatLabel>
-              <small v-if="createFoodForm.invalid('notes')" class="block text-xs">
-                {{ createFoodForm.errors.notes }}
-              </small>
-            </div>
-          </div>
-
-          <div class="space-y-2">
-            <div class="text-sm font-medium">{{ $t('foodDiary.image_optional') }}</div>
-
-            <FileUpload mode="basic" name="images[]" multiple :fileLimit="5" accept="image/*" :maxFileSize="4_000_000"
-              customUpload @select="onImagesSelect" class="w-full" />
-
-            <small v-if="createFoodForm.invalid('image')" class="block text-xs">
-              {{ createFoodForm.errors.image }}
-            </small>
-          </div>
-
-          <Button type="submit" :label="$t('foodDiary.save_food')" class="w-full"
-            :disabled="createFoodForm.processing" />
-        </form>
-      </section>
+    <div class="fixed bottom-6 right-6 w-72 z-50 hidden lg:block">
     </div>
-
-    <!-- DIARY -->
-
-    <section class="rounded-2xl border p-5">
-      <h2 class="text-lg font-semibold">
-        {{ $t('foodDiary.diary_title') }} — {{ formattedDate }}
-      </h2>
-
-      <div v-if="Object.keys(entries).length" class="mt-4 space-y-6">
-
-        <!-- MEAL GROUP -->
-        <div v-for="(foods, mealType) in entries" :key="mealType">
-
-          <!-- Meal header -->
-          <h2 class="text-base font-semibold border-b pb-2 mb-3">
-            {{ $t('foodDiary.' + mealType) }}
-          </h2>
-
-          <!-- Foods -->
-          <ul class="space-y-2">
-            <li v-for="food in foods" :key="food.pivot_id" class="rounded-xl border p-3">
-              <div class="flex items-center gap-4">
-
-                <!-- CENTER -->
-                <div class="flex-1 min-w-0">
-                  <div class="font-semibold truncate">
-                    {{ food.name }}
-                  </div>
-                </div>
-
-                <div class="hidden sm:flex flex-col text-lg text-right leading-tight">
-                  <div>{{ food.pivot.calorie }} kcal</div>
-                </div>
-
-                <!-- RIGHT MACROS -->
-                <div class="hidden sm:flex flex-col text-sm text-left leading-tight">
-                  <div>{{ $t('foodDiary.carb_label') }}: {{ food.pivot.carb }} </div>
-                  <div>{{ $t('foodDiary.protein_label') }}: {{ food.pivot.protein }}</div>
-                  <div>{{ $t('foodDiary.fat_label') }}: {{ food.pivot.fat }}</div>
-                </div>
-
-                <!-- DELETE -->
-                <Button icon="pi pi-trash" severity="danger" text @click="deleteionConfirmation(food.id)" />
-
-              </div>
-
-              <!-- MOBILE MACROS -->
-              <div class="mt-3 grid grid-cols-2 gap-2 text-sm sm:hidden">
-                <div>{{ food.calorie }} kcal</div>
-                <div>{{ food.carb }} {{ $t('foodDiary.carb_label') }}</div>
-                <div>{{ food.protein }} {{ $t('foodDiary.protein_label') }}</div>
-                <div>{{ food.fat }} {{ $t('foodDiary.fat_label') }}</div>
-              </div>
-
-            </li>
-          </ul>
-
-        </div>
-      </div>
-
-      <div v-else class="mt-4 rounded-xl border border-dashed p-6 text-sm">
-        {{ $t('foodDiary.no_entries') }}
-      </div>
-    </section>
-
-
-    <ConfirmPopup group="headless">
-      <template #container="{ acceptCallback, rejectCallback }">
-        <div class="rounded p-4">
-          <span>{{ $t('foodDiary.delete_confirmation') }}</span>
-          <div class="flex items-center gap-2 mt-4">
-            <Button :label="$t('foodDiary.delete')" size="small" severity="danger" @click="acceptCallback"></Button>
-            <Button :label="$t('foodDiary.dialog_close')" variant="outlined" @click="rejectCallback"
-              severity="secondary" size="small" text></Button>
-          </div>
-        </div>
-      </template>
-    </ConfirmPopup>
-
-  </main>
+  </div>
 </template>
-
-<style>
-@media (max-width: 640px) {
-
-  .p-carousel-prev-button,
-  .p-carousel-next-button {
-    display: none !important;
-  }
-}
-</style>
