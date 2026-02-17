@@ -5,8 +5,6 @@ import axios from "axios";
 
 import AppLayout from "@/Layouts/AppLayout.vue"
 
-import DateNavigator from "../components/datenavigator.vue";
-
 import { useForm } from "laravel-precognition-vue";
 
 import { useI18n } from 'vue-i18n'

@@ -23,7 +23,7 @@ const toggle = (index) => {
             <button @click="toggle(index)"
                 class="flex w-full items-center justify-between p-6 text-left focus:outline-none">
                 <span class="text-lg font-bold transition-colors duration-300"
-                    :class="activeIndex === index ? 'text-primary' : 'text-white'">
+                    :class="activeIndex === index ? 'text-primary' : 'text-main-text'">
                     {{ item.question }}
                 </span>
                 <span class="material-symbols-outlined text-primary transition-transform duration-500"
@@ -36,7 +36,7 @@ const toggle = (index) => {
                 @before-leave="el => el.style.height = el.scrollHeight + 'px'" @leave="el => el.style.height = '0'">
                 <div v-show="activeIndex === index"
                     class="accordion-content overflow-hidden transition-[height] duration-300 ease-in-out">
-                    <div class="px-6 pb-6 text-white/60 leading-relaxed border-t border-neutral-border/30 pt-4">
+                    <div class="px-6 pb-6 text-main-text leading-relaxed border-t border-neutral-border/30 pt-4">
                         {{ item.answer }}
                     </div>
                 </div>

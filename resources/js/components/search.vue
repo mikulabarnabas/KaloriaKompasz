@@ -28,11 +28,10 @@ async function searchFood(page = 1) {
 
 const selectFood = (food) => {
   emit('select', food);
-  search.value = ""; // Clear search after selection
+  search.value = "";
   isDropdownOpen.value = false;
 };
 
-// Close dropdown when clicking outside (optional but recommended)
 const closeDropdown = () => {
   setTimeout(() => { isDropdownOpen.value = false; }, 200);
 };
@@ -55,7 +54,6 @@ watch(search, (val) => {
         @focus="isDropdownOpen = searchedFoods.length > 0"
         class="w-full pl-12 pr-12 py-3 bg-white/5 border border-white/10 rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent text-white placeholder-slate-500 transition-all outline-none" 
       />
-      <span class="material-symbols-outlined absolute right-4 text-slate-500 cursor-pointer hover:text-white transition-colors">barcode_scanner</span>
     </div>
 
     <Transition
@@ -86,7 +84,7 @@ watch(search, (val) => {
             <div class="flex-1 min-w-0">
               <h4 class="text-white font-medium truncate">{{ food.name }}</h4>
               <p class="text-sm text-slate-400 truncate">
-                {{ food.brand || 'Generic' }} • {{ food.unit_amount || 100 }}g • {{ food.kcal }} kcal
+                {{ food.calorie }} kcal • {{ food.protein }}g protein • {{ food.carb }}g carb • {{ food.fat }}g fat
               </p>
             </div>
           </button>

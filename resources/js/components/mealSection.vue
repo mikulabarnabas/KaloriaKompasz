@@ -14,8 +14,8 @@ const mealTotal = computed(() => {
 </script>
 
 <template>
-  <div class="bg-white/5 border border-white/10 rounded-2xl transition-all hover:border-white/20">
-    <div class="px-6 py-4 flex justify-between items-center bg-white/5 border-b border-white/5">
+  <div class="overflow-hidden bg-white/5 border border-white/10 rounded-2xl transition-all hover:border-white/20">
+    <div class="px-6 py-4 flex justify-between items-center bg-white/5 border border-white/5">
       <h2 class="text-lg font-bold flex items-center gap-3">
         <span class="material-symbols-outlined" :class="mealConfig.color">{{ mealConfig.icon }}</span>
         {{ mealConfig.label }}

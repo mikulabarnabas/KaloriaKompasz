@@ -42,23 +42,21 @@ const faqItems = [
         </svg>
       </div>
       <main class="relative z-10 flex min-h-screen flex-col overflow-x-hidden">
-        <section class="relative overflow-hidden px-6 py-20 lg:py-32">
+        <section class="relative overflow-hidden px-6 py-24 lg:py-40 animate-fly-in">
           <div class="mx-auto max-w-7xl">
-            <div class="grid grid-cols-1 items-center gap-16 lg:grid-cols-2">
-              <div class="flex flex-col gap-8">
-                <h1 class="text-5xl font-black leading-[1.1] text-white md:text-7xl">
-                  Több mint egy <span class="text-primary">Kalória</span> & <span class="text-primary">Edzés</span>
-                  napló
-                </h1>
-                <p class="max-w-xl text-lg leading-relaxed text-white/60">
-                  Nem csak egy alkalmazást építünk, hanem a jövőd alapkövét. Pontos követés és átlátható adatok,
-                  sallangok nélkül.
-                </p>
-                <div class="flex flex-wrap gap-4">
-                  <Button @click="handleJoin" icon="arrow_forward">
-                    Vágj bele most
-                  </Button>
-                </div>
+            <div class="max-w-4xl">
+              <h1 class="text-6xl font-black leading-[1.05] text-main-text md:text-8xl tracking-tight">
+                Több mint egy <br />
+                <span class="text-primary italic">Kalória</span> & <span class="text-primary italic">Edzés</span> napló
+              </h1>
+              <p class="mt-8 max-w-2xl text-xl leading-relaxed text-secondary-text">
+                Nem csak egy alkalmazást építünk, hanem a <span class="text-main-text">jövőd alapkövét</span>.
+                Pontos követés és átlátható adatok, sallangok nélkül.
+              </p>
+              <div class="mt-10 flex flex-wrap gap-4">
+                <Button @click="" icon="arrow_forward">
+                  Vágj bele most
+                </Button>
               </div>
             </div>
           </div>
@@ -67,10 +65,10 @@ const faqItems = [
         <section class="bg-neutral-dark/30 py-24 px-6">
           <div class="mx-auto max-w-7xl">
             <div class="mb-16 flex flex-col items-center text-center">
-              <h2 class="text-4xl font-black text-white md:text-5xl">A három pillér</h2>
+              <h2 class="text-4xl font-black text-main-text md:text-5xl">A három pillér</h2>
               <div class="mt-4 h-1.5 w-24 rounded-full bg-primary"></div>
-              <p class="mt-6 max-w-2xl text-lg text-white/60">
-                Olyan ökoszisztémát alkottunk, amiben minden megvan, amire a fejlődésedhez szükséged lehet – a konyhától
+              <p class="mt-6 max-w-2xl text-lg text-secondary-text">
+                Olyan ökoszisztémát alkottunk, amiben minden megvan, amire a fejlődésedhez szükséged lehet - a konyhától
                 a konditeremig.
               </p>
             </div>
@@ -82,8 +80,8 @@ const faqItems = [
                   <span class="material-symbols-outlined text-3xl font-bold">restaurant</span>
                 </div>
                 <div>
-                  <h3 class="text-2xl font-bold text-white">Étrend napló</h3>
-                  <p class="mt-3 text-white/60 leading-relaxed">
+                  <h3 class="text-2xl font-bold text-main-text">Étrend napló</h3>
+                  <p class="mt-3 text-secondary-text leading-relaxed">
                     Gyors és egyszerű étkezésrögzítés. Pontos makrotápanyag lebontás, hogy pontosan tudd, mit viszel be
                     a szervezetedbe.
                   </p>
@@ -96,8 +94,8 @@ const faqItems = [
                   <span class="material-symbols-outlined text-3xl font-bold">fitness_center</span>
                 </div>
                 <div>
-                  <h3 class="text-2xl font-bold text-white">Edzésterv</h3>
-                  <p class="mt-3 text-white/60 leading-relaxed">
+                  <h3 class="text-2xl font-bold text-main-text">Edzésterv</h3>
+                  <p class="mt-3 text-secondary-text leading-relaxed">
                     Saját rutinok összeállítása pillanatok alatt. Kövesd a fejlődésed sorozatról sorozatra, és törd át a
                     korlátaidat.
                   </p>
@@ -110,8 +108,8 @@ const faqItems = [
                   <span class="material-symbols-outlined text-3xl font-bold">insights</span>
                 </div>
                 <div>
-                  <h3 class="text-2xl font-bold text-white">Statisztikák</h3>
-                  <p class="mt-3 text-white/60 leading-relaxed">
+                  <h3 class="text-2xl font-bold text-main-text">Statisztikák</h3>
+                  <p class="mt-3 text-secondary-text leading-relaxed">
                     Látványos grafikonok a haladásodról. Lásd át az összefüggéseket az edzésed, az étkezésed és az
                     eredményeid között.
                   </p>
@@ -126,8 +124,8 @@ const faqItems = [
 
             <div class="flex flex-col items-center gap-8 mb-16">
               <div class="max-w-2xl">
-                <h2 class="text-4xl font-black text-white md:text-5xl">Ketten a világ ellen</h2>
-                <p class="mt-6 text-lg text-white/60">
+                <h2 class="text-4xl font-black text-main-text md:text-5xl">Ketten a világ ellen</h2>
+                <p class="mt-6 text-lg text-secondary-text">
                   Egy fiatal, ambiciózus csapat vagyunk, akik nem érik be a középszerűvel. Ketten indítottuk el a
                   FitTrack-et azzal a céllal, hogy a piac legjobb platformját hozzuk létre nektek.
                 </p>
@@ -143,7 +141,7 @@ const faqItems = [
                     class="h-full w-full rounded-full object-cover grayscale group-hover:grayscale-0 transition"
                     src="https://lh3.googleusercontent.com/aida-public/AB6AXuAAh2wlXleEXK9sxmGaVzhsMJXeaJecyfwhGr_F7aE9qGJ_UehP914nVYc2a1aiCKdAtcBnUhpTT4dltsxwC2jnHCiVvhwywv7PK9V8gK2JtyJwQb-yGr4O8mpVl8Wg7asqN8dTTjlj2i6i_obuvTJxT8hOWwvNPkwIP3NY9QvgnPne6x8LBtO82B5Z5a0MjGT30GUp9A-LxJ1p3Rb78cIKudSLcv2Ym4TH1J1Ib9WCkjRlz3SFV5G7ubOJBTtOpnymvHMX-E8CJeJN" />
                 </div>
-                <h4 class="text-xl font-bold text-white">Név 1</h4>
+                <h4 class="text-xl font-bold text-main-text">Név 1</h4>
                 <p class="text-sm font-medium text-primary uppercase tracking-widest">Alapító / Fejlesztő</p>
               </div>
 
@@ -154,7 +152,7 @@ const faqItems = [
                     class="h-full w-full rounded-full object-cover grayscale group-hover:grayscale-0 transition"
                     src="https://lh3.googleusercontent.com/aida-public/AB6AXuCTxUiUKhhbC_9IvJmhJ9UoRGDnrCtJ2xYHsYKU9706bTHtX6nkHzpPB7EfHDuzWcKfX86OWEhB6hclOjH54mIJncqG-a2lkMiJCTzdYe13XtVayhQCmD4MPdL5TnUits_88rwFbGf8V1V1VkEz9TgMbd98Akx4F71pmKiOHc3DHbGgxkwLfjb_SmukVKsYplyV-PSGvOYplCInAd_RERo2_5MnSRa_00Qeemg10kCvxYcKn2U-IC5fK0JGTIzz-B6VI3_hb5sf_4aa" />
                 </div>
-                <h4 class="text-xl font-bold text-white">Név 2</h4>
+                <h4 class="text-xl font-bold text-main-text">Név 2</h4>
                 <p class="text-sm font-medium text-primary uppercase tracking-widest">Alapító / Design</p>
               </div>
 
@@ -165,8 +163,8 @@ const faqItems = [
         <section class="bg-neutral-dark/30 py-24 px-6">
           <div class="mx-auto max-w-3xl">
             <div class="mb-16 text-center">
-              <h2 class="text-4xl font-black text-white">Gyakori kérdések</h2>
-              <p class="mt-4 text-white/60">Minden, amit tudni érdemes a platformunkról.</p>
+              <h2 class="text-4xl font-black text-main-text">Gyakori kérdések</h2>
+              <p class="mt-4 text-secondary-text">Minden, amit tudni érdemes a platformunkról.</p>
             </div>
 
             <Accordion :items="faqItems" />

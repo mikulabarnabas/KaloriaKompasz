@@ -2,18 +2,17 @@
 import { computed, ref, watch } from "vue";
 import axios from "axios";
 import { useI18n } from 'vue-i18n';
-import { useForm } from "laravel-precognition-vue";
 
-// Layout & Components
 import AppLayout from "@/Layouts/AppLayout.vue";
 import MacroSummary from "@/Components/macroSummary.vue";
 import MealSection from "@/Components/mealSection.vue";
 import Search from "@/Components/search.vue"
+import AddEntryOverlay from "@/Components/addEntryOverlay.vue";
+import AddFoodOverlay from "@/Components/addFoodOverlay.vue";
 
 const { t } = useI18n();
 defineOptions({ layout: AppLayout });
 
-// --- DATA ---
 const mealTypeOptions = [
   { label: t('foodDiary.breakfast'), value: "breakfast", icon: 'light_mode', color: 'text-orange-400' },
   { label: t('foodDiary.lunch'), value: "lunch", icon: 'wb_sunny', color: 'text-primary' },
@@ -25,7 +24,10 @@ const selectedDate = ref(new Date());
 const formattedDate = computed(() => selectedDate.value.toISOString().slice(0, 10));
 const entries = ref([]);
 
-// --- COMPUTED ---
+const isEntryModalOpen = ref(false);
+const isCreateModalOpen = ref(false);
+const selectedFoodForEntry = ref(null);
+
 const dailyTotals = computed(() => {
   let totals = { kcal: 0, protein: 0, carbs: 0, fats: 0 };
   Object.values(entries.value).flat().forEach(food => {
@@ -37,29 +39,31 @@ const dailyTotals = computed(() => {
   return totals;
 });
 
-// --- METHODS ---
 const fetchDiary = async () => {
   const { data } = await axios.get(`/fdiary/diary/${formattedDate.value}`);
   entries.value = data.diary ?? [];
 };
 
-const addFoodToDiary = async (food) => {
-  const form = useForm("post", "/fdiary/entry", {
-    date: formattedDate.value,
-    food_id: food.id,
-    meal_type: "breakfast",
-    unit: "g",
-    amount: 100,
-  });
-  await form.submit();
+const onFoodSelect = (food) => {
+  selectedFoodForEntry.value = food;
+  isEntryModalOpen.value = true;
+};
+
+const openCreateFoodModal = () => {
+  isCreateModalOpen.value = true;
+};
+
+const onSaved = () => {
   fetchDiary();
+  isCreateModalOpen.value = false;
+  isEntryModalOpen.value = false;
 };
 
 const deleteEntry = async (entryId) => {
   await axios.delete(`/fdiary/entry/${formattedDate.value}/${entryId}`);
-  console.log(entries)
   fetchDiary();
 };
+
 watch(formattedDate, fetchDiary, { immediate: true });
 </script>
 
@@ -70,7 +74,15 @@ watch(formattedDate, fetchDiary, { immediate: true });
       <header class="p-6 border-b border-primary/10 bg-background-dark/50 backdrop-blur-md sticky top-0 z-40">
         <div class="max-w-4xl mx-auto flex gap-4 items-center">
 
-          <Search :placeholder="$t('foodDiary.search_placeholder')" @select="addFoodToDiary" />
+          <Search class="flex-1" :placeholder="$t('foodDiary.search_placeholder')" @select="onFoodSelect" />
+
+          <button @click="openCreateFoodModal"
+            class="flex items-center gap-2 px-4 py-3 bg-primary/10 border border-primary/20 rounded-xl text-primary hover:bg-primary/20 transition-all active:scale-95 whitespace-nowrap">
+            <span class="material-symbols-outlined text-xl">add_circle</span>
+            <span class="hidden sm:inline font-medium text-sm">
+              {{ $t('foodDiary.create_food_title') }}
+            </span>
+          </button>
 
         </div>
       </header>
@@ -87,6 +99,12 @@ watch(formattedDate, fetchDiary, { immediate: true });
         </div>
       </div>
     </main>
+
+    <AddEntryOverlay :show="isEntryModalOpen" :food="selectedFoodForEntry" :date="formattedDate"
+      :meal-types="mealTypeOptions" @close="isEntryModalOpen = false" @saved="onSaved" />
+
+    <AddFoodOverlay :show="isCreateModalOpen" :date="formattedDate" :meal-types="mealTypeOptions"
+      @close="isCreateModalOpen = false" @saved="onSaved" />
 
     <div class="fixed bottom-6 right-6 w-72 z-50 hidden lg:block">
     </div>
