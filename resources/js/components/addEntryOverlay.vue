@@ -93,62 +93,60 @@ watch(() => props.date, (newDate) => form.date = newDate);
         enter-to-class="opacity-100" leave-active-class="transition duration-150 ease-in" leave-from-class="opacity-100"
         leave-to-class="opacity-0">
         <div v-if="show"
-            class="fixed inset-0 z-100 overflow-y-auto flex items-start justify-center px-4 py-6 sm:items-center sm:px-0">
+            class="fixed inset-0 z-[100] overflow-y-auto flex items-start justify-center px-4 py-6 sm:items-center sm:px-0">
 
-            <div class="fixed inset-0 bg-black/60 backdrop-blur-sm transition-opacity" @click="closeModal"></div>
+            <div class="fixed inset-0 bg-background-dark/80 backdrop-blur-sm transition-opacity" @click="closeModal">
+            </div>
 
             <div
-                class="relative w-full max-w-4xl bg-background-dark rounded-3xl shadow-2xl flex flex-col md:flex-row border border-primary/20 transform transition-all overflow-hidden my-auto">
-                <div
-                    class="w-full md:w-5/12 bg-black/20 p-6 md:p-8 flex flex-col relative border-b md:border-b-0 md:border-r border-white/5">
+                class="relative w-full max-w-4xl bg-background-dark rounded-[2rem] shadow-2xl flex flex-col md:flex-row border border-neutral-border transform transition-all overflow-hidden my-auto">
 
-                    <div class="mb-4 md:mb-6">
-                        <h2 class="text-2xl md:text-3xl font-bold text-white mb-1">{{ food?.name }}</h2>
+                <div
+                    class="w-full md:w-5/12 bg-neutral-dark/40 p-6 md:p-8 flex flex-col relative border-b md:border-b-0 md:border-r border-neutral-border">
+
+                    <div class="mb-6">
+                        <h2 class="text-2xl md:text-3xl font-black text-main-text mb-1 tracking-tight">{{ food?.name }}
+                        </h2>
+                        <p class="text-[10px] font-black text-primary uppercase tracking-[0.2em]">Product Details</p>
                     </div>
 
                     <div class="flex-1 flex flex-col items-center justify-center relative min-h-45 md:min-h-50 group">
-                        <button @click.prevent="prevImage"
-                            class="absolute left-0 p-2 text-primary/50 hover:text-primary transition-colors z-10">
-                            <span class="material-symbols-outlined text-3xl">chevron_left</span>
+                        <button v-if="images.length > 1" @click.prevent="prevImage"
+                            class="absolute left-0 p-2 text-primary/40 hover:text-primary transition-colors z-10">
+                            <span class="material-symbols-outlined text-4xl">chevron_left</span>
                         </button>
 
-                        <div class="w-40 h-40 md:w-56 md:h-56 relative z-0">
+                        <div class="w-44 h-44 md:w-60 md:h-60 relative z-0">
                             <img v-if="currentImage" :src="currentImage"
-                                class="w-full h-full object-contain drop-shadow-2xl" />
-                            <div v-else class="w-full h-full flex items-center justify-center bg-white/5 rounded-full">
-                                <span class="material-symbols-outlined text-6xl text-white/20">restaurant</span>
+                                class="w-full h-full object-contain drop-shadow-2xl transition-transform duration-500 group-hover:scale-105" />
+                            <div v-else
+                                class="w-full h-full flex items-center justify-center bg-background-dark/60 rounded-full border border-neutral-border">
+                                <span class="material-symbols-outlined text-6xl text-primary/20">restaurant</span>
                             </div>
+                            <div class="absolute inset-0 bg-primary/5 blur-3xl rounded-full -z-10"></div>
                         </div>
 
-                        <button @click.prevent="nextImage"
-                            class="absolute right-0 p-2 text-primary/50 hover:text-primary transition-colors z-10">
-                            <span class="material-symbols-outlined text-3xl">chevron_right</span>
+                        <button v-if="images.length > 1" @click.prevent="nextImage"
+                            class="absolute right-0 p-2 text-primary/40 hover:text-primary transition-colors z-10">
+                            <span class="material-symbols-outlined text-4xl">chevron_right</span>
                         </button>
 
-                        <div class="flex gap-2 mt-4 md:mt-6">
+                        <div class="flex gap-1.5 mt-6">
                             <button v-for="(_, idx) in images" :key="idx" @click="currentImageIndex = idx"
-                                class="w-8 h-1 rounded-full transition-all"
-                                :class="idx === currentImageIndex ? 'bg-primary' : 'bg-white/20 hover:bg-white/40'"></button>
+                                class="h-1 rounded-full transition-all duration-300"
+                                :class="idx === currentImageIndex ? 'w-6 bg-primary' : 'w-2 bg-neutral-border hover:bg-primary/40'"></button>
                         </div>
                     </div>
 
-                    <div class="mt-6 flex flex-wrap gap-1 justify-center text-center">
-                        <div
-                            class="px-3 py-1 rounded-full bg-orange-500/10 border border-orange-500/20 text-orange-500 md:text-sm font-medium min-w-20">
-                            {{ food?.calorie }} kcal
-                        </div>
-                        <div
-                            class="px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-500 md:text-sm font-medium min-w-20">
-                            {{ food?.carb }}g Carbs
-                        </div>
-                        <div
-                            class="px-3 py-1 rounded-full bg-green-500/10 border border-green-500/20 text-green-500 md:text-sm font-medium min-w-20">
-                            {{ food?.fat }}g Fat
-                        </div>
-                        <div
-                            class="px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-500 md:text-sm font-medium min-w-20">
-                            {{ food?.protein }}g Protein
-                        </div>
+                    <div class="mt-8 grid grid-cols-2 gap-2 text-[10px] font-bold uppercase tracking-wider opacity-60">
+                        <div class="flex justify-between border-b border-white/5 pb-1"><span>Protein</span><span>{{
+                                food?.protein }}g</span></div>
+                        <div class="flex justify-between border-b border-white/5 pb-1"><span>Carbs</span><span>{{
+                                food?.carb }}g</span></div>
+                        <div class="flex justify-between border-b border-white/5 pb-1"><span>Fat</span><span>{{
+                                food?.fat }}g</span></div>
+                        <div class="flex justify-between border-b border-white/5 pb-1"><span>Kcal</span><span>{{
+                                food?.calorie }}</span></div>
                     </div>
                 </div>
 
@@ -156,49 +154,53 @@ watch(() => props.date, (newDate) => form.date = newDate);
 
                     <div class="flex justify-between items-start mb-2">
                         <div>
-                            <h3 class="text-xl font-bold text-white">Add to Diary
-                            </h3>
-                            <p class="text-slate-400 text-sm mt-1">Select meal type and portion size.</p>
+                            <h3 class="text-xl font-black text-main-text uppercase tracking-tight">Add to Diary</h3>
+                            <p class="text-secondary-text text-sm mt-1">Select meal type and portion size.</p>
                         </div>
-                        <button @click="closeModal" class="text-slate-400 hover:text-white transition-colors">
+                        <button @click="closeModal" class="text-secondary-text hover:text-main-text transition-colors">
                             <span class="material-symbols-outlined">close</span>
                         </button>
                     </div>
 
-                    <form @submit.prevent="submitForm" class="mt-6 md:mt-8 space-y-5 md:space-y-6 flex-1 flex flex-col">
+                    <form @submit.prevent="submitForm" class="mt-6 md:mt-8 space-y-6 flex-1 flex flex-col">
 
                         <div class="space-y-2">
-                            <label class="text-primary text-xs font-medium ml-1">Meal Type</label>
+                            <label class="text-primary text-[10px] font-black uppercase tracking-[0.2em] ml-1">Meal
+                                Type</label>
                             <div class="relative">
                                 <select v-model="form.meal_type"
-                                    class="w-full appearance-none bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:ring-1 focus:ring-primary focus:border-primary outline-none transition-all cursor-pointer hover:bg-white/10">
-                                    <option value="" disabled selected class="text-gray-500">Select meal...</option>
+                                    class="w-full appearance-none bg-neutral-dark/40 border border-neutral-border rounded-xl px-4 py-3 text-main-text focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all cursor-pointer hover:bg-neutral-dark/60">
+                                    <option value="" disabled selected class="text-secondary-text">Select meal...
+                                    </option>
                                     <option v-for="meal in mealTypes" :key="meal.value" :value="meal.value"
-                                        class="bg-gray-800 text-white">
+                                        class="bg-background-dark text-main-text">
                                         {{ meal.label }}
                                     </option>
                                 </select>
                                 <span
                                     class="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 text-primary pointer-events-none text-sm">expand_more</span>
                             </div>
-                            <small v-if="form.invalid('meal_type')" class="text-red-400 text-xs ml-1">
+                            <small v-if="form.errors.meal_type"
+                                class="text-red-400 text-[10px] font-bold uppercase tracking-tighter ml-1">
                                 {{ form.errors.meal_type }}
                             </small>
                         </div>
 
                         <div class="grid grid-cols-5 gap-4">
                             <div class="col-span-3 space-y-2">
-                                <label class="text-primary text-xs font-medium ml-1">Amount</label>
+                                <label
+                                    class="text-primary text-[10px] font-black uppercase tracking-[0.2em] ml-1">Amount</label>
                                 <input v-model="form.amount" type="number" step="0.1" placeholder="0"
-                                    class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:ring-1 focus:ring-primary focus:border-primary outline-none transition-all placeholder-slate-600" />
+                                    class="w-full bg-neutral-dark/40 border border-neutral-border rounded-xl px-4 py-3 text-main-text focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all placeholder-secondary-text/30" />
                             </div>
                             <div class="col-span-2 space-y-2">
-                                <label class="text-primary text-xs font-medium ml-1">Unit</label>
+                                <label
+                                    class="text-primary text-[10px] font-black uppercase tracking-[0.2em] ml-1">Unit</label>
                                 <div class="relative">
                                     <select v-model="form.unit"
-                                        class="w-full appearance-none bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:ring-1 focus:ring-primary focus:border-primary outline-none transition-all cursor-pointer hover:bg-white/10">
+                                        class="w-full appearance-none bg-neutral-dark/40 border border-neutral-border rounded-xl px-4 py-3 text-main-text focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all cursor-pointer hover:bg-neutral-dark/60">
                                         <option v-for="unit in allowedUnits" :key="unit" :value="unit"
-                                            class="bg-gray-800">{{ unit }}</option>
+                                            class="bg-background-dark">{{ unit }}</option>
                                     </select>
                                     <span
                                         class="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 text-primary pointer-events-none text-sm">expand_more</span>
@@ -207,37 +209,52 @@ watch(() => props.date, (newDate) => form.date = newDate);
                         </div>
 
                         <div class="mt-auto pt-6 space-y-6">
-                            <div class="bg-black/20 rounded-xl p-4 border border-white/5">
-                                <div class="flex justify-center items-center text-sm mb-1">
-                                    <h2 class="text-lg font-bold text-white">Total macros</h2>
+                            <div
+                                class="bg-primary/5 rounded-2xl p-6 border border-primary/10 relative overflow-hidden group">
+                                <h2
+                                    class="text-[10px] font-black text-secondary-text uppercase tracking-[0.2em] mb-4 text-center">
+                                    Calculated Totals</h2>
+
+                                <div class="grid grid-cols-4 gap-2">
+                                    <div class="text-center">
+                                        <div class="text-xl font-black text-primary">{{ calculatedMacros.kcal }}</div>
+                                        <div
+                                            class="text-[8px] font-black text-secondary-text uppercase tracking-widest">
+                                            Kcal</div>
+                                    </div>
+                                    <div class="text-center border-l border-white/5">
+                                        <div class="text-xl font-black text-main-text">{{ calculatedMacros.carb }}g
+                                        </div>
+                                        <div
+                                            class="text-[8px] font-black text-secondary-text uppercase tracking-widest">
+                                            Carbs</div>
+                                    </div>
+                                    <div class="text-center border-l border-white/5">
+                                        <div class="text-xl font-black text-main-text">{{ calculatedMacros.fat }}g</div>
+                                        <div
+                                            class="text-[8px] font-black text-secondary-text uppercase tracking-widest">
+                                            Fat</div>
+                                    </div>
+                                    <div class="text-center border-l border-white/5">
+                                        <div class="text-xl font-black text-main-text">{{ calculatedMacros.protein }}g
+                                        </div>
+                                        <div
+                                            class="text-[8px] font-black text-secondary-text uppercase tracking-widest">
+                                            Protein</div>
+                                    </div>
                                 </div>
-                                <div class="flex justify-between text-slate-500">
-                                    <div
-                                        class="px-3 py-1 rounded-full bg-orange-500/10 border border-orange-500/20 text-orange-500 md:text-sm font-medium">
-                                        {{ calculatedMacros.kcal }}kcal
-                                    </div>
-                                    <div
-                                        class="px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-500 md:text-sm font-medium">
-                                        {{ calculatedMacros.carb }}g Carbs
-                                    </div>
-                                    <div
-                                        class="px-3 py-1 rounded-full bg-green-500/10 border border-green-500/20 text-green-500 md:text-sm font-medium">
-                                        {{ calculatedMacros.fat }}g Fat
-                                    </div>
-                                    <div
-                                        class="px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-500 md:text-sm font-medium">
-                                        {{ calculatedMacros.protein }}g Protein
-                                    </div>
+                                <div class="absolute -right-4 -bottom-4 size-20 bg-primary/5 blur-3xl rounded-full">
                                 </div>
                             </div>
 
                             <div class="flex gap-3">
-                                <GlowingButton type="submit" :disabled="form.processing"
-                                    class="flex-1 transition-all active:scale-[0.98] flex items-center justify-center gap-2">
-                                    <span>{{ t('foodDiary.add_button') }}</span>
+                                <GlowingButton type="submit" :disabled="form.processing || !form.meal_type"
+                                    class="flex-1 h-14 transition-all active:scale-[0.98] flex items-center justify-center gap-2 rounded-xl">
+                                    <span class="font-black uppercase tracking-widest text-sm">{{
+                                        t('foodDiary.add_button') }}</span>
                                     <span v-if="form.processing"
                                         class="material-symbols-outlined animate-spin text-xl">progress_activity</span>
-                                    <span v-else class="material-symbols-outlined text-xl">add</span>
+                                    <span v-else class="material-symbols-outlined text-xl">add_task</span>
                                 </GlowingButton>
                             </div>
                         </div>

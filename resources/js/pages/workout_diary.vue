@@ -1,389 +1,175 @@
 <script setup>
 import { computed, ref, watch } from "vue";
-import { usePage } from "@inertiajs/vue3";
 import axios from "axios";
+import { useI18n } from 'vue-i18n';
 
-import AppLayout from "@/Layouts/AppLayout.vue"
 
-import { useForm } from "laravel-precognition-vue";
+import WorkoutSearch from "@/Components/workoutSearch.vue";
+import AddWorkoutEntryOverlay from "@/Components/addWorkoutEntryOverlay.vue";
+import AddExerciseOverlay from "@/Components/addExerciseOverlay.vue";
+import DateNavigator from "@/Components/dateNavigator.vue"
 
-import { useI18n } from 'vue-i18n'
+const { t } = useI18n();
+import AppLayout from "@/Layouts/AppLayout.vue";
+defineOptions({ layout: AppLayout });
 
-const { t } = useI18n()
+const selectedDate = ref(new Date());
+const formattedDate = computed(() => selectedDate.value.toISOString().slice(0, 10));
+const entries = ref([]);
 
-const UNIT_TO_BASE = {
-  minutes: 1,
-  hours: 60,
-  m: 1,
-  km: 1000
+const isEntryModalOpen = ref(false);
+const isCreateModalOpen = ref(false);
+const selectedExerciseForEntry = ref(null);
+
+const totalBurned = computed(() => {
+  return entries.value.reduce((total, exercise) => {
+    return total + Number(exercise.pivot.burned_calories || 0);
+  }, 0);
+});
+
+const totalDuration = computed(() => {
+  return entries.value.reduce((total, exercise) => {
+    if (exercise.pivot.unit == "hours") return total + Number(exercise.pivot.amount * 60)
+    return total + Number(exercise.pivot.amount); 
+  }, 0);
+});
+
+const loadDiary = async () => {
+  const { data } = await axios.get(`/wdiary/diary/${formattedDate.value}`);
+  entries.value = data.diary?.exercises ?? [];
 };
 
+const onExerciseSelect = (exercise) => {
+  selectedExerciseForEntry.value = exercise;
+  isEntryModalOpen.value = true;
+};
 
-defineOptions({ layout: AppLayout })
+const openCreateExerciseModal = () => {
+  isCreateModalOpen.value = true;
+};
 
-const pageCount = ref(0);
-let searchedExercises = ref([]);
+const onSaved = () => {
+  loadDiary();
+  isCreateModalOpen.value = false;
+  isEntryModalOpen.value = false;
+};
 
-async function searchExercise(page) {
-  const { data } = await axios.get(`/wdiary/getExercises/${search.value}/${page}`)
-  searchedExercises.value = data.result
-}
-
-async function getExercisePageCount() {
-  const { data } = await axios.get(`/wdiary/getPageCount/${search.value}`)
-  pageCount.value = data.pageCount
-}
-
-
-const selectedDate = ref(new Date())
-const formattedDate = computed(() =>
-  selectedDate.value.toISOString().slice(0, 10)
-)
-
-const search = ref("")
-const rows = 5
-
-const selectedExercise = ref(null)
-const loadingDiary = ref(false)
-
-const addEntryForm = useForm("post", "/wdiary/entry", {
-  date: selectedDate.value,
-  exercise_id: null,
-  unit: null,
-  amount: 0
-})
-
-
-watch(search, () => {
-  if (search.value === "") return
-  getExercisePageCount()
-  searchExercise(1)
-}, { immediate: true })
-
-
-async function loadDiary(date) {
-  addEntryForm.date = date
-  loadingDiary.value = true
-  const { data } = await axios.get(`/wdiary/diary/${date}`)
-  entries.value = data.diary?.exercises ?? [];
-  loadingDiary.value = false
-}
-
-watch(formattedDate, (d) => {
-  loadDiary(d);
-}, { immediate: true });
-
-const entries = ref([])
-
-const unitOptions = [
-  { label: t('workoutDiary.minute'), value: "minutes" },
-  { label: t('workoutDiary.hour'), value: "hours" },
-  { label: t('workoutDiary.km'), value: "km" },
-  { label: t('workoutDiary.m'), value: "m" },
-]
-
-const selectedBurnedCalories = computed(() => {
-  const amount = Number(addEntryForm.amount);
-
-  const exerciseUnitFactor = UNIT_TO_BASE[selectedExercise.value.unit];
-  const entryUnitFactor = UNIT_TO_BASE[addEntryForm.unit];
-
-  const factor = entryUnitFactor / exerciseUnitFactor;
-
-  const perUnit = Number(selectedExercise.value.calories_per_unit);
-
-  return Math.round(perUnit * factor * amount * 100) / 100;
-});
-
-
-const selectExercise = (e) => {
-  selectedExercise.value = e
-  addEntryForm.exercise_id = e?.id ?? null
-}
-
-const addSelectedExercise = async () => {
-  if (!selectedExercise.value) return
-
-  await addEntryForm.submit({ only: [] })
-  await loadDiary(formattedDate.value)
-}
-
-/* -------------------- DELETE -------------------- */
-
-const confirm = useConfirm()
-
-const deleteEntry = (id) => {
-  confirm.require({
-    group: "headless",
-    accept: async () => {
-      await axios.delete(`/wdiary/entry/${formattedDate.value}/${id}`)
-      await loadDiary(formattedDate.value)
-    }
-  })
-}
-
-/* -------------------- CREATE EXERCISE -------------------- */
-
-const allowedUnits = computed(() => {
-  if (!selectedExercise.value) return [];
-
-  const timeUnits = ['minutes', 'hours'];
-  const distanceUnits = ['km', 'm'];
-
-  if (timeUnits.includes(selectedExercise.value.unit)) {
-    return unitOptions.filter(u => timeUnits.includes(u.value));
+const deleteEntry = async (entryId) => {
+  if (confirm(t('workoutDiary.delete_confirmation'))) {
+    await axios.delete(`/wdiary/entry/${formattedDate.value}/${entryId}`);
+    loadDiary();
   }
+};
 
-  if (distanceUnits.includes(selectedExercise.value.unit)) {
-    return unitOptions.filter(u => distanceUnits.includes(u.value));
-  }
-
-  return unitOptions;
-});
-
-
-const createExerciseForm = useForm("post", "/wdiary/create", {
-  name: "",
-  unit: "other",
-  calories_per_unit: 0,
-  note: ""
-})
-
-const onCreateExercise = async () => {
-  await createExerciseForm.submit()
-  createExerciseForm.reset()
-}
+watch(formattedDate, loadDiary, { immediate: true });
 </script>
 
 <template>
-  <main class="mx-auto w-full max-w-7xl px-4 py-6">
+  <div class="bg-background-dark text-white relative min-h-screen">
+    <main class="flex flex-col min-w-0">
+      
+      <header class="p-4 md:p-6 border-b border-neutral-border bg-background-dark/80 backdrop-blur-xl sticky top-0 z-40">
+        <div class="max-w-4xl mx-auto flex gap-4 items-center">
+          
+          <WorkoutSearch class="flex-1" :placeholder="$t('workoutDiary.search_placeholder')" @select="onExerciseSelect" />
 
-    <!-- DATE NAV -->
-    <section class="mb-6 rounded-2xl border p-5">
-      <h2 class="text-lg font-semibold">
-        {{ $t('workoutDiary.date') }}
-      </h2>
+          <DateNavigator v-model="selectedDate" />
 
-      <DateNavigator v-model="selectedDate"/>
-    </section>
-
-    <div class="grid grid-cols-1 gap-6 lg:grid-cols-3 mb-6">
-
-      <!-- SEARCH -->
-      <section class="rounded-2xl border p-5">
-        <h2 class="text-lg font-semibold">
-          {{ $t('workoutDiary.search_title') }}
-        </h2>
-
-        <InputText class="mt-4 flex gap-2 w-full" v-model="search" type="text"
-          :placeholder="$t('workoutDiary.search_placeholder')" />
-
-        <div class="mt-4">
-
-          <ul class="space-y-2">
-            <li v-for="exercise in searchedExercises" :key="exercise.id" class="cursor-pointer rounded-xl border p-3"
-              @click="selectExercise(exercise)">
-              <div class="flex items-start justify-between gap-3">
-
-                <div class="min-w-0">
-                  <div class="truncate font-semibold">
-                    {{ exercise.name }}
-                  </div>
-
-                  <div class="mt-1 text-xs">
-                    {{ exercise.calories_per_unit }}
-                    {{ $t('workoutDiary.calorie_label') }}
-                    / {{ exercise.unit }}
-                  </div>
-                </div>
-
-                <div class="shrink-0 rounded-full border px-2 py-1 text-xs">
-                  #{{ exercise.id }}
-                </div>
-
-              </div>
-            </li>
-          </ul>
-
-          <Paginator v-if="searchedExercises.length" class="mt-8" :rows="rows" :totalRecords="pageCount"
-            @page="(e) => searchExercise(e.page + 1)">
-            <template #container="{ first, last, page, pageCount, prevPageCallback, nextPageCallback, totalRecords }">
-              <div
-                class="flex items-center border border-primary bg-transparent rounded-full w-full py-1 px-2 justify-between">
-                <Button icon="pi pi-chevron-left" rounded variant="text" @click="prevPageCallback"
-                  :disabled="page === 0" />
-
-                <div class="text-color font-medium">
-                  <span class="hidden sm:block">
-                    {{ $t('workoutDiary.paginator_visible_range',
-                      { first: first, last: last, total: totalRecords }) }}
-                  </span>
-
-                  <span class="block sm:hidden">
-                    {{ $t('workoutDiary.paginator_page_of',
-                      { page: page + 1, pageCount: pageCount }) }}
-                  </span>
-                </div>
-
-                <Button icon="pi pi-chevron-right" rounded variant="text" @click="nextPageCallback"
-                  :disabled="page === pageCount - 1" />
-              </div>
-            </template>
-          </Paginator>
+          <button @click="openCreateExerciseModal"
+            class="flex items-center justify-center w-12 h-12 md:w-auto md:px-5 md:h-12 bg-primary/10 border border-primary/20 rounded-2xl text-primary hover:bg-primary hover:text-background-dark transition-all duration-300 active:scale-95 group">
+            <span class="material-symbols-outlined text-2xl group-hover:rotate-90 transition-transform duration-300">add_circle</span>
+            <span class="hidden md:inline ml-2 font-black uppercase tracking-widest text-xs">
+              {{ $t('workoutDiary.create_exercise_title') }}
+            </span>
+          </button>
 
         </div>
-      </section>
+      </header>
 
+      <div class="p-6 space-y-10 pb-32">
+        <div class="max-w-4xl mx-auto space-y-10">
 
-      <!-- SELECTED -->
-      <section class="rounded-2xl border p-5">
-        <h2 class="text-lg font-semibold">
-          {{ $t('workoutDiary.selected_exercise_title') }}
-        </h2>
-
-        <p class="mt-1 text-sm">
-          {{ $t('workoutDiary.selected_exercise_subtitle') }}
-        </p>
-
-        <div v-if="selectedExercise" class="mt-4 space-y-3 rounded-xl border p-4">
-
-          <div class="text-xl font-semibold">{{ selectedExercise.name }}</div>
-
-          <div>{{ selectedExercise.note }}</div>
-
-          <div class="grid grid-cols-2 gap-3">
-            <!-- amount -->
-            <div>
-              <FloatLabel variant="on">
-                <InputText v-model="addEntryForm.amount" class="w-full" />
-                <label>{{ $t('workoutDiary.time_label') }} / {{ $t('workoutDiary.distance_label') }}</label>
-              </FloatLabel>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <div class="relative overflow-hidden bg-neutral-dark/30 p-8 rounded-[2rem] border border-neutral-border shadow-2xl group">
+               <h3 class="text-secondary-text text-[10px] font-black uppercase tracking-[0.2em] mb-2">{{ $t('workoutDiary.burned_label') }}</h3>
+               <div class="relative z-10 flex items-baseline gap-2">
+                 <span class="text-5xl font-black text-primary tracking-tighter group-hover:scale-105 transition-transform duration-500">{{ totalBurned }}</span>
+                 <span class="text-primary/40 font-bold uppercase tracking-widest text-sm">kcal</span>
+               </div>
+               <div class="absolute -right-4 -bottom-4 size-24 bg-primary/5 blur-3xl rounded-full"></div>
             </div>
 
-            <div>
-              <FloatLabel variant="on">
-                <Select v-model="addEntryForm.unit" :options="allowedUnits" optionLabel="label" class="w-full"
-                  optionValue="value" />
-                <label>{{ $t('workoutDiary.unit_label') }}</label>
-              </FloatLabel>
-            </div>
-
-          </div>
-                      <div v-if="addEntryForm.unit && addEntryForm.amount"">
-              {{ $t('workoutDiary.burned_label') }}: {{ selectedBurnedCalories }} kcal
-            </div>
-
-          <Button class=" w-full" :disabled="addEntryForm.processing" @click="addSelectedExercise">
-              {{ $t('workoutDiary.add_button') }} {{ formattedDate }}
-              </Button>
-
-            </div>
-
-            <div v-else class="mt-4 border-dashed border rounded-xl p-6 text-sm">
-              {{ $t('workoutDiary.no_selected_exercise') }}
-            </div>
-
-      </section>
-
-      <!-- CREATE -->
-      <section class="rounded-2xl border p-5">
-        <h2 class="text-lg font-semibold">
-          {{ $t('workoutDiary.create_exercise_title') }}
-        </h2>
-
-        <form class="mt-4 space-y-3" @submit.prevent="onCreateExercise">
-
-          <FloatLabel variant="on">
-            <InputText v-model="createExerciseForm.name" class="w-full" />
-            <label>{{ $t('workoutDiary.exercise_name_label') }}</label>
-          </FloatLabel>
-
-          <div class="grid grid-cols-2 gap-3">
-            <!-- amount -->
-            <div>
-              <FloatLabel variant="on">
-                <InputText v-model.number="createExerciseForm.calories_per_unit" class="w-full" />
-                <label>{{ $t('workoutDiary.calorie_label') }}</label>
-              </FloatLabel>
-            </div>
-
-            <div>
-              <FloatLabel variant="on">
-                <Select v-model="createExerciseForm.unit" :options="unitOptions" optionLabel="label" class="w-full"
-                  optionValue="value" />
-                <label>{{ $t('workoutDiary.unit_label') }}</label>
-              </FloatLabel>
+            <div class="relative overflow-hidden bg-neutral-dark/30 p-8 rounded-[2rem] border border-neutral-border shadow-2xl group">
+               <h3 class="text-secondary-text text-[10px] font-black uppercase tracking-[0.2em] mb-2">{{ $t('workoutDiary.duration_label') }}</h3>
+               <div class="relative z-10 flex items-baseline gap-2">
+                 <span class="text-5xl font-black text-blue-400 tracking-tighter group-hover:scale-105 transition-transform duration-500">{{ totalDuration }}</span>
+                 <span class="text-blue-400/40 font-bold uppercase tracking-widest text-sm">min</span>
+               </div>
+               <div class="absolute -right-4 -bottom-4 size-24 bg-blue-500/5 blur-3xl rounded-full"></div>
             </div>
           </div>
 
-          <FloatLabel variant="on">
-            <InputText v-model="createExerciseForm.note" class="w-full" @change="createExerciseForm.validate('note')" />
-            <label for="food_note">{{ $t('foodDiary.note_label') }}</label>
-          </FloatLabel>
+          <div class="space-y-6">
+            <div class="flex items-center justify-between px-2">
+              <h3 class="text-sm font-black text-main-text uppercase tracking-[0.3em]">{{ $t('workoutDiary.diary_title') }}</h3>
+              <div class="h-[1px] flex-1 bg-neutral-border mx-4 opacity-50"></div>
+            </div>
+            
+            <div v-if="entries.length === 0" 
+                 class="group text-center p-16 border-2 border-dashed border-neutral-border rounded-[2.5rem] hover:border-primary/30 transition-colors duration-500">
+               <div class="w-20 h-20 bg-neutral-dark/50 rounded-full flex items-center justify-center mx-auto mb-4 border border-neutral-border group-hover:scale-110 transition-transform">
+                  <span class="material-symbols-outlined text-4xl text-secondary-text/30 group-hover:text-primary transition-colors">fitness_center</span>
+               </div>
+               <p class="text-secondary-text font-medium tracking-wide">{{ $t('workoutDiary.no_entries') }}</p>
+            </div>
 
-          <Button type="submit" class="w-full">
-            {{ $t('workoutDiary.save_exercise') }}
-          </Button>
-
-        </form>
-      </section>
-
-    </div>
-
-    <!-- DIARY -->
-    <section class="rounded-2xl border p-5">
-      <h2 class="text-lg font-semibold">
-        {{ $t('workoutDiary.diary_title') }} — {{ formattedDate }}
-      </h2>
-
-      <div v-if="entries.length" class="mt-4 space-y-4">
-
-        <ul class="space-y-2">
-          <li v-for="exercise in entries" :key="exercise.id" class="rounded-xl border p-3">
-
-            <div class="flex items-center gap-4">
-
-              <!-- CENTER -->
-              <div class="flex-1 min-w-0">
-                <div class="font-semibold truncate">
-                  {{ exercise.name }}
+            <div v-else class="space-y-3">
+              <div v-for="exercise in entries" :key="exercise.pivot.id" 
+                class="bg-neutral-dark/20 backdrop-blur-sm border border-neutral-border p-4 rounded-2xl flex items-center justify-between hover:border-primary/40 transition-all group">
+                
+                <div class="flex items-center gap-4 min-w-0">
+                  <div class="w-14 h-14 rounded-2xl bg-neutral-dark flex items-center justify-center border border-neutral-border shrink-0 group-hover:bg-primary/5 transition-colors">
+                    <span class="material-symbols-outlined text-2xl text-primary/60 group-hover:text-primary group-hover:scale-110 transition-all">fitness_center</span>
+                  </div>
+                  <div class="truncate">
+                    <h4 class="text-main-text font-black text-sm uppercase tracking-tight truncate">{{ exercise.name }}</h4>
+                    <p class="text-[10px] font-bold text-secondary-text uppercase tracking-[0.15em] mt-1">
+                      <span class="text-primary/80">{{ exercise.pivot.amount }}</span> {{ exercise.pivot.unit }}
+                    </p>
+                  </div>
                 </div>
-                <div class="text-sm opacity-80">
-                  {{ exercise.pivot.amount }} {{ exercise.pivot.unit }}
+
+                <div class="flex items-center gap-6 shrink-0">
+                  <div class="text-right">
+                    <div class="text-main-text font-black text-lg tracking-tighter">{{ exercise.pivot.burned_calories }}<span class="text-[10px] ml-1 opacity-40">kcal</span></div>
+                  </div>
+                  
+                  <button @click="deleteEntry(exercise.pivot.id)" 
+                    class="w-10 h-10 flex items-center justify-center rounded-full text-secondary-text/30 hover:text-red-400 hover:bg-red-400/10 transition-all active:scale-90">
+                    <span class="material-symbols-outlined text-xl">delete</span>
+                  </button>
                 </div>
               </div>
-
-              <div class="hidden sm:flex flex-col text-lg text-right leading-tight">
-                <div>{{ exercise.pivot.burned_calories }} kcal</div>
-              </div>
-
-              <!-- DELETE -->
-              <Button icon="pi pi-trash" severity="danger" text @click="deleteEntry(exercise.pivot.id)" />
-
             </div>
-
-          </li>
-        </ul>
-
-      </div>
-
-      <div v-else class="mt-4 border-dashed border rounded-xl p-6 text-sm">
-        {{ $t('workoutDiary.no_entries') }}
-      </div>
-
-    </section>
-
-    <ConfirmPopup group="headless">
-      <template #container="{ acceptCallback, rejectCallback }">
-        <div class="rounded p-4">
-          <span>{{ $t('workoutDiary.delete_confirmation') }}</span>
-          <div class="flex gap-2 mt-4">
-            <Button :label="$t('workoutDiary.delete')" severity="danger" size="small" @click="acceptCallback" />
-            <Button :label="$t('workoutDiary.dialog_close')" size="small" text @click="rejectCallback" />
           </div>
+
         </div>
-      </template>
-    </ConfirmPopup>
+      </div>
+    </main>
 
-  </main>
+    <AddWorkoutEntryOverlay 
+      :show="isEntryModalOpen" 
+      :exercise="selectedExerciseForEntry" 
+      :date="formattedDate"
+      @close="isEntryModalOpen = false" 
+      @saved="onSaved" 
+    />
+
+    <AddExerciseOverlay 
+      :show="isCreateModalOpen" 
+      @close="isCreateModalOpen = false" 
+      @saved="onSaved" 
+    />
+
+  </div>
 </template>

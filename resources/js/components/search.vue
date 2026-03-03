@@ -1,3 +1,4 @@
+
 <script setup>
 import { ref, watch } from "vue";
 import axios from "axios";
@@ -52,7 +53,7 @@ watch(search, (val) => {
         :placeholder="placeholder"
         @blur="closeDropdown"
         @focus="isDropdownOpen = searchedFoods.length > 0"
-        class="w-full pl-12 pr-12 py-3 bg-white/5 border border-white/10 rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent text-white placeholder-slate-500 transition-all outline-none" 
+        class="w-full pl-12 pr-12 py-3 bg-neutral-dark/40 backdrop-blur-md border border-neutral-border rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent text-main-text placeholder-secondary-text/50 transition-all outline-none" 
       />
     </div>
 
@@ -65,16 +66,16 @@ watch(search, (val) => {
       leave-to-class="translate-y-1 opacity-0"
     >
       <div v-if="isDropdownOpen && searchedFoods.length > 0" 
-           class="absolute top-full left-0 right-0 mt-2 bg-[#0d1a13] border border-white/10 rounded-2xl shadow-2xl overflow-hidden z-100 backdrop-blur-xl">
+           class="absolute top-full left-0 right-0 mt-2 bg-background-dark/95 backdrop-blur-xl border border-neutral-border rounded-2xl shadow-2xl overflow-hidden z-[100]">
         
-        <div class="max-h-100 overflow-y-auto divide-y divide-white/5">
+        <div class="max-h-100 overflow-y-auto divide-y divide-neutral-border/50">
           <button 
             v-for="food in searchedFoods" 
             :key="food.id"
             @click="selectFood(food)"
-            class="w-full flex items-center gap-4 p-4 hover:bg-white/5 transition-colors text-left"
+            class="w-full flex items-center gap-4 p-4 hover:bg-primary/10 transition-colors text-left group/item"
           >
-            <div class="w-12 h-12 rounded-xl bg-white/10 shrink-0 overflow-hidden">
+            <div class="w-12 h-12 rounded-xl bg-neutral-dark shrink-0 overflow-hidden border border-neutral-border group-hover/item:border-primary/50 transition-colors">
               <img v-if="food.image" :src="food.image" class="w-full h-full object-cover" />
               <div v-else class="w-full h-full flex items-center justify-center bg-primary/10 text-primary">
                 <span class="material-symbols-outlined text-xl">restaurant</span>
@@ -82,9 +83,11 @@ watch(search, (val) => {
             </div>
 
             <div class="flex-1 min-w-0">
-              <h4 class="text-white font-medium truncate">{{ food.name }}</h4>
-              <p class="text-sm text-slate-400 truncate">
-                {{ food.calorie }} kcal • {{ food.protein }}g protein • {{ food.carb }}g carb • {{ food.fat }}g fat
+              <h4 class="text-main-text font-bold truncate group-hover/item:text-primary transition-colors">
+                {{ food.name }}
+              </h4>
+              <p class="text-sm text-secondary-text truncate">
+                <span class="text-primary/80">{{ food.calorie }} kcal</span> • {{ food.protein }}g p • {{ food.carb }}g c • {{ food.fat }}g f
               </p>
             </div>
           </button>

@@ -21,131 +21,113 @@ const faqItems = [
 </script>
 
 <template>
+  <AppLayout>
+    <div class="relative w-full bg-background-dark">
 
-<Navbar></Navbar>
-  <h1 class="text-center text-4xl font-semibold tracking-tight py-12">
-    Kalória Kompasz
-  </h1>
+      <div class="absolute inset-0 pointer-events-none z-0 opacity-40 dark:opacity-20"> <svg width="100%" height="100%"
+          viewBox="0 0 100 1000" preserveAspectRatio="none" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M 80 0 
+           C 80 150, 20 250, 20 400 
+           S 90 550, 80 750 
+           S 10 850, 50 1000" stroke="url(#gradient-path)" stroke-width="3" stroke-linecap="round"
+            stroke-dasharray="12 12" vector-effect="non-scaling-stroke" class="route-path" />
 
-  <div class="grid lg:grid-cols-3 md:grid-cols-3 gap-8 px-12">
-    <Card class="h-full">
-      <template #header>
-        <div class="flex justify-center pt-3">
-          <i class="fa-solid fa-bowl-food text-6xl text-brand"></i>
-        </div>
-      </template>
+          <defs>
+            <linearGradient id="gradient-path" x1="0" y1="0" x2="0" y2="1000" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stop-color="#059669" stop-opacity="1" />
+              <stop offset="100%" stop-color="#10b981" stop-opacity="0.6" />
+            </linearGradient>
+          </defs>
+        </svg>
+      </div>
+      <main class="relative z-10 flex min-h-screen flex-col overflow-x-hidden">
+        <section class="relative overflow-hidden px-6 py-24 lg:py-40 animate-fly-in">
+          <div class="mx-auto max-w-7xl">
+            <div class="max-w-4xl">
+              <h1 class="text-6xl font-black leading-[1.05] text-main-text md:text-8xl tracking-tight">
+                Több mint egy <br />
+                <span class="text-primary italic">Kalória</span> & <span class="text-primary italic">Edzés</span> napló
+              </h1>
+              <p class="mt-8 max-w-2xl text-xl leading-relaxed text-secondary-text">
+                Nem csak egy alkalmazást építünk, hanem a <span class="text-main-text">jövőd alapkövét</span>.
+                Pontos követés és átlátható adatok, sallangok nélkül.
+              </p>
+              <div class="mt-10 flex flex-wrap gap-4">
+                <Button @click="" icon="arrow_forward">
+                  Vágj bele most
+                </Button>
+              </div>
+            </div>
+          </div>
+        </section>
 
-      <template #title>
-        <div class="text-center font-semibold">{{$t('home.card_first_title')}}</div>
-      </template>
+        <section class="bg-neutral-dark/30 py-24 px-6">
+          <div class="mx-auto max-w-7xl">
+            <div class="mb-16 flex flex-col items-center text-center">
+              <h2 class="text-4xl font-black text-main-text md:text-5xl">A három pillér</h2>
+              <div class="mt-4 h-1.5 w-24 rounded-full bg-primary"></div>
+              <p class="mt-6 max-w-2xl text-lg text-secondary-text">
+                Olyan ökoszisztémát alkottunk, amiben minden megvan, amire a fejlődésedhez szükséged lehet - a konyhától
+                a konditeremig.
+              </p>
+            </div>
+            <div class="grid grid-cols-1 gap-8 md:grid-cols-3">
+              <div
+                class="group relative flex flex-col gap-6 rounded-3xl border border-neutral-border bg-neutral-dark p-8 hover:border-primary/50 transition">
+                <div
+                  class="flex h-14 w-14 items-center justify-center rounded-2xl bg-primary/10 text-primary group-hover:bg-primary group-hover:text-background-dark transition">
+                  <span class="material-symbols-outlined text-3xl font-bold">restaurant</span>
+                </div>
+                <div>
+                  <h3 class="text-2xl font-bold text-main-text">Étrend napló</h3>
+                  <p class="mt-3 text-secondary-text leading-relaxed">
+                    Gyors és egyszerű étkezésrögzítés. Pontos makrotápanyag lebontás, hogy pontosan tudd, mit viszel be
+                    a szervezetedbe.
+                  </p>
+                </div>
+              </div>
+              <div
+                class="group relative flex flex-col gap-6 rounded-3xl border border-neutral-border bg-neutral-dark p-8 hover:border-primary/50 transition">
+                <div
+                  class="flex h-14 w-14 items-center justify-center rounded-2xl bg-primary/10 text-primary group-hover:bg-primary group-hover:text-background-dark transition">
+                  <span class="material-symbols-outlined text-3xl font-bold">fitness_center</span>
+                </div>
+                <div>
+                  <h3 class="text-2xl font-bold text-main-text">Edzésterv</h3>
+                  <p class="mt-3 text-secondary-text leading-relaxed">
+                    Saját rutinok összeállítása pillanatok alatt. Kövesd a fejlődésed sorozatról sorozatra, és törd át a
+                    korlátaidat.
+                  </p>
+                </div>
+              </div>
+              <div
+                class="group relative flex flex-col gap-6 rounded-3xl border border-neutral-border bg-neutral-dark p-8 hover:border-primary/50 transition">
+                <div
+                  class="flex h-14 w-14 items-center justify-center rounded-2xl bg-primary/10 text-primary group-hover:bg-primary group-hover:text-background-dark transition">
+                  <span class="material-symbols-outlined text-3xl font-bold">insights</span>
+                </div>
+                <div>
+                  <h3 class="text-2xl font-bold text-main-text">Statisztikák</h3>
+                  <p class="mt-3 text-secondary-text leading-relaxed">
+                    Látványos grafikonok a haladásodról. Lásd át az összefüggéseket az edzésed, az étkezésed és az
+                    eredményeid között.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
 
-      <template #content>
-        <p class="m-0">
-          {{$t('home.card_first_content')}}
-        </p>
-      </template>
+        <section class="py-24 px-6">
+          <div class="mx-auto max-w-7xl flex flex-col items-center text-center">
 
-      <template #footer>
-        <div class="flex gap-4 mt-1">
-          <Button :label="$t('home.cards_button')" severity="secondary" variant="outlined" class="w-full" />
-        </div>
-      </template>
-    </Card>
-    <Card class="">
-      <template #header>
-        <div class="flex justify-center pt-3">
-          <i class="fa-solid fa-heart text-6xl text-brand"></i>
-        </div>
-      </template>
-
-      <template #title>
-        <div class="text-center font-semibold">{{$t('home.card_second_title')}}</div>
-      </template>
-
-      <template #content>
-        <p class="m-0">
-          {{$t('home.card_second_content')}}
-        </p>
-      </template>
-
-      <template #footer>
-        <div class="flex gap-4 mt-1">
-          <Button :label="$t('home.cards_button')" severity="secondary" variant="outlined" class="w-full" />
-        </div>
-      </template>
-    </Card>
-    <Card class="">
-      <template #header>
-        <div class="flex justify-center pt-3">
-          <i class="fa-solid fa-chart-column text-6xl text-brand"></i>
-        </div>
-      </template>
-
-      <template #title>
-        <div class="text-center font-semibold">{{$t('home.card_third_title')}}</div>
-      </template>
-
-      <template #content>
-        <p class="m-0">
-          {{$t('home.card_third_content')}}
-        </p>
-      </template>
-
-      <template #footer>
-        <div class="flex gap-4 mt-1">
-          <Button :label="$t('home.cards_button')" severity="secondary" variant="outlined" class="w-full" />
-        </div>
-      </template>
-    </Card>
-  </div>
-
-  <h1 class="text-center text-4xl font-semibold tracking-tight py-12">
-    {{$t('home.faq_title')}}
-  </h1>
-
-  <Accordion value="0" class="w-3/4  mx-auto">
-    <AccordionPanel value="0">
-      <AccordionHeader>{{$t('home.faq_first_question')}}</AccordionHeader>
-      <AccordionContent>
-        <p class="m-0">
-          {{$t('home.faq_first_answer')}}
-        </p>
-      </AccordionContent>
-    </AccordionPanel>
-    <AccordionPanel value="1">
-      <AccordionHeader>{{$t('home.faq_second_question')}}</AccordionHeader>
-      <AccordionContent>
-        <p class="m-0">
-          {{$t('home.faq_second_answer')}}
-        </p>
-      </AccordionContent>
-    </AccordionPanel>
-    <AccordionPanel value="2">
-      <AccordionHeader>{{$t('home.faq_third_question')}}</AccordionHeader>
-      <AccordionContent>
-        <p class="m-0">
-          AAAAAAAAAAAAAAAb
-        </p>
-      </AccordionContent>
-    </AccordionPanel>
-  </Accordion>
-
-  <section class="w-full py-12">
-    <div class="mx-auto max-w-5xl px-4">
-      <h1 class="text-center text-4xl font-semibold tracking-tight">
-        {{$t('home.team_title')}}
-      </h1>
-
-      <div class="mx-auto mt-12 grid max-w-3xl grid-cols-1 gap-12 sm:grid-cols-2">
-        <Card v-for="p in people" :key="p.id" class="h-full" :pt="{
-          root: { class: 'h-full' },
-          body: { class: 'h-full' },
-          content: { class: 'h-full' },
-        }">
-          <template #content>
-            <div class="flex h-full flex-col items-center text-center">
-              <div class="h-44 w-44 overflow-hidden rounded-full border">
-                <img :src="p.photo" :alt="p.name" class="h-full w-full object-cover" loading="lazy" />
+            <div class="flex flex-col items-center gap-8 mb-16">
+              <div class="max-w-2xl">
+                <h2 class="text-4xl font-black text-main-text md:text-5xl">Ketten a világ ellen</h2>
+                <p class="mt-6 text-lg text-secondary-text">
+                  Egy fiatal, ambiciózus csapat vagyunk, akik nem érik be a középszerűvel. Ketten indítottuk el a
+                  FitTrack-et azzal a céllal, hogy a piac legjobb platformját hozzuk létre nektek.
+                </p>
               </div>
             </div>
 
