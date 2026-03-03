@@ -1,13 +1,6 @@
 <script setup>
 import { computed, ref } from "vue";
 
-import FloatLabel from "primevue/floatlabel";
-import InputNumber from "primevue/inputnumber";
-import Select from "primevue/select";
-import DatePicker from "primevue/datepicker";
-import Button from "primevue/button";
-import Dialog from "primevue/dialog";
-import Slider from "primevue/slider";
 import { usePage } from "@inertiajs/vue3"
 import { useI18n } from 'vue-i18n';
 
