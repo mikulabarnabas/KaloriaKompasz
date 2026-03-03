@@ -132,7 +132,7 @@ const people = [
       <AccordionHeader>{{$t('home.faq_third_question')}}</AccordionHeader>
       <AccordionContent>
         <p class="m-0">
-          {{$t('home.faq_third_answer')}}
+          AAAAAAAAAAAAAAAb
         </p>
       </AccordionContent>
     </AccordionPanel>
