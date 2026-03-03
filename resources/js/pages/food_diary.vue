@@ -9,6 +9,7 @@ import MealSection from "@/Components/mealSection.vue";
 import Search from "@/Components/search.vue"
 import AddEntryOverlay from "@/Components/addEntryOverlay.vue";
 import AddFoodOverlay from "@/Components/addFoodOverlay.vue";
+import DateNavigator from "@/Components/dateNavigator.vue"
 
 const { t } = useI18n();
 defineOptions({ layout: AppLayout });
@@ -68,18 +69,20 @@ watch(formattedDate, fetchDiary, { immediate: true });
 </script>
 
 <template>
-  <div class="bg-background-dark text-white relative min-h-screen">
+  <div class="bg-background-dark text-main-text relative min-h-screen">
 
     <main class="flex flex-col min-w-0">
-      <header class="p-6 border-b border-primary/10 bg-background-dark/50 backdrop-blur-md sticky top-0 z-40">
+      <header class="sticky top-0 z-40 p-6 border-b border-neutral-border bg-background-dark/60 backdrop-blur-xl">
         <div class="max-w-4xl mx-auto flex gap-4 items-center">
 
           <Search class="flex-1" :placeholder="$t('foodDiary.search_placeholder')" @select="onFoodSelect" />
 
+          <DateNavigator v-model="selectedDate" />
+
           <button @click="openCreateFoodModal"
-            class="flex items-center gap-2 px-4 py-3 bg-primary/10 border border-primary/20 rounded-xl text-primary hover:bg-primary/20 transition-all active:scale-95 whitespace-nowrap">
-            <span class="material-symbols-outlined text-xl">add_circle</span>
-            <span class="hidden sm:inline font-medium text-sm">
+            class="flex items-center gap-2 px-5 py-3 bg-primary/10 border border-primary/30 rounded-2xl text-primary hover:bg-primary group transition-all hover:text-background-dark active:scale-95 shadow-lg shadow-primary/5">
+            <span class="material-symbols-outlined text-xl group-hover:rotate-90 transition-transform">add_circle</span>
+            <span class="hidden sm:inline font-bold text-sm tracking-tight">
               {{ $t('foodDiary.create_food_title') }}
             </span>
           </button>
@@ -88,14 +91,21 @@ watch(formattedDate, fetchDiary, { immediate: true });
       </header>
 
       <div class="p-6 space-y-8 pb-32">
-        <div class="max-w-4xl mx-auto space-y-8">
+        <div class="max-w-4xl mx-auto space-y-10">
+          <div class="animate-fly-in" style="animation-delay: 100ms">
+            <MacroSummary :totals="dailyTotals" :goal="2500" />
+          </div>
 
-          <MacroSummary :totals="dailyTotals" :goal="2500" />
+          <div class="space-y-6 animate-fly-in" style="animation-delay: 200ms">
+            <div class="flex items-center gap-4 mb-2">
+              <h3 class="text-xs font-black uppercase tracking-[0.2em] text-secondary-text">Meal Log</h3>
+              <div class="h-px flex-1 bg-neutral-border/50"></div>
+            </div>
 
-          <div class="space-y-6">
             <MealSection v-for="meal in mealTypeOptions" :key="meal.value" :meal-config="meal"
               :foods="entries[meal.value]" @delete="deleteEntry" @add-click="search = ''" />
           </div>
+
         </div>
       </div>
     </main>
@@ -106,7 +116,5 @@ watch(formattedDate, fetchDiary, { immediate: true });
     <AddFoodOverlay :show="isCreateModalOpen" :date="formattedDate" :meal-types="mealTypeOptions"
       @close="isCreateModalOpen = false" @saved="onSaved" />
 
-    <div class="fixed bottom-6 right-6 w-72 z-50 hidden lg:block">
-    </div>
   </div>
 </template>

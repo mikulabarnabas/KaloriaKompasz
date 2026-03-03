@@ -15,21 +15,28 @@ const macroConfig = computed(() => [
 
 <template>
   <section class="grid grid-cols-2 md:grid-cols-4 gap-4">
-    <div class="bg-primary/10 border border-primary/20 rounded-xl p-4">
-      <p class="text-[10px] font-bold text-primary uppercase tracking-wider">Remaining</p>
-      <h3 class="text-xl font-bold mt-1">
-        {{ goal - totals.kcal }} 
+    <div class="bg-primary/10 border border-primary/20 rounded-2xl p-4 backdrop-blur-md relative overflow-hidden">
+      <p class="text-[10px] font-black text-primary uppercase tracking-widest">Remaining</p>
+      <h3 class="text-2xl font-black mt-1 text-main-text">
+        {{ goal - totals.kcal }}
         <span class="text-xs font-normal opacity-60">kcal</span>
       </h3>
+      <div class="absolute -right-2 -bottom-2 size-12 bg-primary/10 blur-2xl rounded-full"></div>
     </div>
 
-    <div 
-      v-for="macro in macroConfig" 
-      :key="macro.label"
-      class="bg-white/5 border border-white/10 rounded-xl p-4"
-    >
-      <p class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">{{ macro.label }}</p>
-      <h3 class="text-xl font-bold mt-1">{{ macro.value }}g</h3>
+    <div v-for="macro in macroConfig" :key="macro.label"
+      class="bg-neutral-dark/40 border border-neutral-border rounded-2xl p-4 backdrop-blur-md group hover:border-primary/30 transition-colors">
+      <p
+        class="text-[10px] font-black text-secondary-text uppercase tracking-widest group-hover:text-primary transition-colors">
+        {{ macro.label }}
+      </p>
+      <h3 class="text-2xl font-black mt-1 text-main-text">
+        {{ macro.value }}<span class="text-xs font-normal opacity-60 ml-0.5">g</span>
+      </h3>
+
+      <div class="w-full h-1 bg-white/5 rounded-full mt-3 overflow-hidden">
+        <div class="h-full bg-secondary-text/20 rounded-full group-hover:bg-primary/40 transition-all w-2/3"></div>
+      </div>
     </div>
   </section>
 </template>

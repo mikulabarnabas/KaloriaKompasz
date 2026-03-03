@@ -1,11 +1,28 @@
 <script setup>
-import { computed } from "vue"
+import { ref, computed } from "vue"
 import { usePage } from "@inertiajs/vue3"
+import DateNavigator from "@/Components/dateNavigator.vue"
+import SevendDayIntake from "@/Components/sevendDayIntake.vue";
 
+import AppLayout from "@/Layouts/AppLayout.vue";
+defineOptions({ layout: AppLayout });
 
 const page = usePage()
 const foodDiary = computed(() => page.props.foodDiary ?? [])
 const workoutDiary = computed(() => page.props.workoutDiary ?? [])
+const user = computed(() => page.props.auth?.user)
+
+
+const selectedDate = ref(new Date());
+const formattedDate = computed(() => selectedDate.value.toISOString().slice(0, 10));
+
+
+const getEntryForDate = (dataArray) => {
+  return dataArray.find(entry => {
+    const entryDate = new Date(entry.date).toISOString().split('T')[0]
+    return entryDate === formattedDate.value
+  })
+}
 
 const targets = {
   calories: 2400,
@@ -16,197 +33,172 @@ const targets = {
 
 const num = v => Number(v ?? 0)
 
-// Calculate Totals for "Today" (Assuming the last entry is today for this view)
+
 const todayStats = computed(() => {
-  const latestDay = foodDiary.value[foodDiary.value.length - 1]
-  if (!latestDay) return { calories: 0, protein: 0, carbs: 0, fat: 0 }
-  
-  let calories = 0, protein = 0, carbs = 0, fat = 0
-  latestDay.foods?.forEach(f => {
-    calories += num(f.pivot.calorie)
-    protein += num(f.pivot.protein)
-    carbs += num(f.pivot.carb)
-    fat += num(f.pivot.fat)
-  })
-  return { calories, protein, carbs, fat }
+  const dayEntry = getEntryForDate(foodDiary.value)
+  if (!dayEntry) return { calories: 0, protein: 0, carbs: 0, fat: 0 }
+
+  return (dayEntry.foods || []).reduce((acc, f) => {
+    acc.calories += num(f.pivot.calorie)
+    acc.protein += num(f.pivot.protein)
+    acc.carbs += num(f.pivot.carb)
+    acc.fat += num(f.pivot.fat)
+    return acc
+  }, { calories: 0, protein: 0, carbs: 0, fat: 0 })
+})
+
+const todayWorkouts = computed(() => {
+  const dayEntry = getEntryForDate(workoutDiary.value)
+  if (!dayEntry) return { burned: 0 }
+
+  return (dayEntry.exercises || []).reduce((acc, e) => {
+    acc.burned += num(e.pivot.amount) * num(e.calories_per_unit)
+    return acc
+  }, { burned: 0 })
+})
+
+const recentActivity = computed(() => {
+  const foodItems = (getEntryForDate(foodDiary.value)?.foods || []).map(i => ({ ...i, type: 'food' }))
+  const workoutItems = (getEntryForDate(workoutDiary.value)?.exercises || []).map(i => ({ ...i, type: 'workout' }))
+
+  return [...foodItems, ...workoutItems]
+    .sort((a, b) => b.pivot.id - a.pivot.id)
+    .slice(0, 4)
 })
 
 const getPercent = (current, target) => Math.min(Math.round((current / target) * 100), 100)
 </script>
 
 <template>
-  <main class="min-h-screen bg-[#0a0c0d] text-gray-100 p-6">
-    <div class="max-w-6xl mx-auto space-y-8">
-      
-      <header>
-        <h1 class="text-4xl font-bold tracking-tight">Welcome back, Alex!</h1>
-        <p class="text-gray-400 mt-2">
-          Ready to crush your goals today? You're already 
-          <span class="text-green-400 font-semibold">{{ getPercent(todayStats.protein, targets.protein) }}%</span> 
-          of the way to your protein target!
-        </p>
+  <main class="min-h-screen bg-background-dark text-main-text p-4 md:p-8 font-sans">
+    <div class="max-w-6xl mx-auto space-y-12">
+
+      <header class="flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
+        <div>
+          <h1 class="text-4xl md:text-5xl font-black tracking-tighter uppercase leading-none">
+            Welcome back, <span class="text-primary">{{ user.name }}</span>
+          </h1>
+          <p class="text-secondary-text mt-3 font-medium tracking-wide opacity-60 uppercase text-xs">
+            Ready to crush your goals for {{ formattedDate }}?
+          </p>
+        </div>
+        <DateNavigator v-model="selectedDate" />
       </header>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div class="bg-[#121619] p-6 rounded-2xl border border-gray-800 flex justify-between items-center group cursor-pointer hover:border-green-500/50 transition">
-          <div>
-            <h3 class="text-xl font-bold">Log Meal</h3>
-            <p class="text-gray-500 text-sm">Track your breakfast, lunch, or dinner.</p>
-            <button class="mt-4 bg-[#00ff66] text-black px-4 py-2 rounded-full font-bold flex items-center gap-2">
-              <i class="pi pi-plus-circle"></i> Add Entry
-            </button>
-          </div>
-          <i class="pi pi-utensils text-4xl text-gray-800 group-hover:text-green-900 transition"></i>
-        </div>
+      <section class="space-y-6">
+        <h2 class="text-xs font-black text-main-text uppercase tracking-[0.4em] flex items-center gap-3">
+          <span class="w-8 h-[1px] bg-primary"></span>
+          Daily Progress
+        </h2>
 
-        <div class="bg-[#121619] p-6 rounded-2xl border border-gray-800 flex justify-between items-center group cursor-pointer hover:border-blue-500/50 transition">
-          <div>
-            <h3 class="text-xl font-bold">Log Workout</h3>
-            <p class="text-gray-500 text-sm">Record your training and active sets.</p>
-            <button class="mt-4 bg-white text-black px-4 py-2 rounded-full font-bold flex items-center gap-2">
-              <i class="pi pi-play"></i> Start Session
-            </button>
-          </div>
-          <i class="pi pi-bolt text-4xl text-gray-800 group-hover:text-blue-900 transition"></i>
-        </div>
-      </div>
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+          <div
+            class="bg-neutral-dark/30 p-8 rounded-[2.5rem] border border-neutral-border hover:border-primary/50 flex flex-col items-center justify-center relative shadow-2xl group overflow-hidden transition-all duration-500">
+            <div
+              class="absolute -top-12 -left-12 size-32 bg-primary/5 blur-3xl rounded-full group-hover:bg-primary/10 transition-colors duration-500">
+            </div>
 
-      <section>
-        <div class="flex justify-between items-center mb-6">
-          <h2 class="text-xl font-bold flex items-center gap-2">
-            <span class="w-2 h-5 bg-green-500 rounded-full"></span> Daily Progress
-          </h2>
-          <span class="bg-green-900/30 text-green-400 px-3 py-1 rounded-md text-xs font-mono">AUGUST 24, 2024</span>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-          <div class="bg-[#121619] p-6 rounded-2xl border border-gray-800 flex flex-col items-center justify-center relative">
-            <div class="relative w-32 h-32">
+            <div class="relative w-40 h-40 group-hover:scale-105 transition-transform duration-700">
               <svg class="w-full h-full transform -rotate-90">
-                <circle cx="64" cy="64" r="58" stroke="currentColor" stroke-width="8" fill="transparent" class="text-gray-800" />
-                <circle cx="64" cy="64" r="58" stroke="currentColor" stroke-width="8" fill="transparent" 
-                  :stroke-dasharray="364.4" 
-                  :stroke-dashoffset="364.4 - (364.4 * getPercent(todayStats.calories, targets.calories)) / 100"
-                  class="text-green-500 transition-all duration-1000" stroke-linecap="round" />
+                <circle cx="80" cy="80" r="72" stroke="currentColor" stroke-width="10" fill="transparent"
+                  class="text-neutral-dark" />
+                <circle cx="80" cy="80" r="72" stroke="currentColor" stroke-width="10" fill="transparent"
+                  :stroke-dasharray="452.4"
+                  :stroke-dashoffset="452.4 - (452.4 * getPercent(todayStats.calories, targets.calories)) / 100"
+                  class="text-primary transition-all duration-1000 ease-out" stroke-linecap="round" />
               </svg>
               <div class="absolute inset-0 flex flex-col items-center justify-center">
-                <span class="text-2xl font-bold">{{ todayStats.calories.toLocaleString() }}</span>
-                <span class="text-[10px] uppercase text-gray-500 tracking-widest">Calories</span>
+                <span class="text-4xl font-black tracking-tighter">{{ todayStats.calories.toLocaleString() }}</span>
+                <span class="text-[9px] font-black uppercase text-secondary-text tracking-[0.2em] mt-1">Consumed</span>
               </div>
             </div>
-            <p class="mt-4 text-xs text-gray-500 uppercase tracking-widest">Goal: {{ targets.calories }}</p>
-          </div>
 
-          <div class="bg-[#121619] p-6 rounded-2xl border border-gray-800 flex flex-col justify-between">
-            <div class="flex justify-between items-start">
-              <span class="text-[10px] font-bold text-gray-500 uppercase tracking-widest">Protein</span>
-              <span class="text-blue-400 text-xs font-bold">{{ getPercent(todayStats.protein, targets.protein) }}%</span>
-            </div>
-            <div class="mt-4">
-              <div class="text-3xl font-bold">{{ todayStats.protein }}<span class="text-sm font-normal text-gray-500">g</span></div>
-              <div class="text-[10px] text-gray-600 uppercase mt-1">Target: {{ targets.protein }}g</div>
-            </div>
-            <div class="w-full bg-gray-800 h-1.5 rounded-full mt-4 overflow-hidden">
-              <div class="bg-blue-500 h-full transition-all" :style="`width: ${getPercent(todayStats.protein, targets.protein)}% shadow-lg`"></div>
+            <div class="mt-6 text-center z-10">
+              <p class="text-[10px] font-black text-secondary-text uppercase tracking-widest opacity-40">Goal: {{
+                targets.calories }} kcal</p>
+              <div
+                class="mt-2 inline-flex items-center gap-2 px-3 py-1 bg-blue-500/10 border border-blue-500/20 rounded-full group-hover:border-blue-500/40 transition-colors">
+                <span class="material-symbols-outlined text-sm text-blue-400">bolt</span>
+                <span class="text-blue-400 text-[10px] font-black uppercase tracking-wider">-{{ todayWorkouts.burned }}
+                  kcal burned</span>
+              </div>
             </div>
           </div>
 
-          <div class="bg-[#121619] p-6 rounded-2xl border border-gray-800 flex flex-col justify-between">
+          <div v-for="macro in [
+            { label: 'Protein', current: todayStats.protein, target: targets.protein, color: 'text-blue-400', bg: 'bg-blue-500', glow: 'shadow-blue-500/20' },
+            { label: 'Carbs', current: todayStats.carbs, target: targets.carbs, color: 'text-amber-400', bg: 'bg-amber-500', glow: 'shadow-amber-500/20' },
+            { label: 'Fat', current: todayStats.fat, target: targets.fat, color: 'text-pink-400', bg: 'bg-pink-500', glow: 'shadow-pink-500/20' }
+          ]" :key="macro.label"
+            class="bg-neutral-dark/30 p-8 rounded-[2.5rem] border border-neutral-border hover:border-primary/50 flex flex-col justify-between shadow-2xl transition-all duration-500 group">
             <div class="flex justify-between items-start">
-              <span class="text-[10px] font-bold text-gray-500 uppercase tracking-widest">Carbs</span>
-              <span class="text-yellow-400 text-xs font-bold">{{ getPercent(todayStats.carbs, targets.carbs) }}%</span>
+              <span
+                class="text-[10px] font-black text-secondary-text uppercase tracking-[0.2em] opacity-60 group-hover:text-primary/60 transition-colors">{{
+                macro.label }}</span>
+              <span :class="[macro.color, 'text-[10px] font-black uppercase tracking-widest']">{{
+                getPercent(macro.current, macro.target) }}%</span>
             </div>
-            <div class="mt-4">
-              <div class="text-3xl font-bold">{{ todayStats.carbs }}<span class="text-sm font-normal text-gray-500">g</span></div>
-              <div class="text-[10px] text-gray-600 uppercase mt-1">Target: {{ targets.carbs }}g</div>
-            </div>
-            <div class="w-full bg-gray-800 h-1.5 rounded-full mt-4 overflow-hidden">
-              <div class="bg-yellow-500 h-full transition-all" :style="`width: ${getPercent(todayStats.carbs, targets.carbs)}% shadow-lg`"></div>
-            </div>
-          </div>
 
-          <div class="bg-[#121619] p-6 rounded-2xl border border-gray-800 flex flex-col justify-between">
-            <div class="flex justify-between items-start">
-              <span class="text-[10px] font-bold text-gray-500 uppercase tracking-widest">Fat</span>
-              <span class="text-pink-400 text-xs font-bold">{{ getPercent(todayStats.fat, targets.fat) }}%</span>
-            </div>
             <div class="mt-4">
-              <div class="text-3xl font-bold">{{ todayStats.fat }}<span class="text-sm font-normal text-gray-500">g</span></div>
-              <div class="text-[10px] text-gray-600 uppercase mt-1">Target: {{ targets.fat }}g</div>
+              <div class="text-4xl font-black tracking-tighter">{{ macro.current }}<span
+                  class="text-sm font-bold text-secondary-text ml-1">g</span></div>
+              <div class="text-[9px] font-black text-secondary-text uppercase tracking-widest mt-1 opacity-40">Target:
+                {{ macro.target }}g</div>
             </div>
-            <div class="w-full bg-gray-800 h-1.5 rounded-full mt-4 overflow-hidden">
-              <div class="bg-pink-500 h-full transition-all" :style="`width: ${getPercent(todayStats.fat, targets.fat)}% shadow-lg`"></div>
+
+            <div class="w-full bg-neutral-dark h-2 rounded-full mt-6 overflow-hidden border border-white/5">
+              <div :class="[macro.bg, 'h-full transition-all duration-1000 ease-out shadow-lg', macro.glow]"
+                :style="`width: ${getPercent(macro.current, macro.target)}%`"></div>
             </div>
           </div>
         </div>
       </section>
 
-      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <div class="lg:col-span-2">
-          <div class="flex justify-between items-center mb-4">
-             <h2 class="text-xl font-bold flex items-center gap-2">
-              <i class="pi pi-history text-green-500"></i> Recent Activity
-            </h2>
-            <button class="text-green-500 text-sm font-bold">View All</button>
-          </div>
-          
-          <div class="space-y-3">
-            <div class="bg-[#121619] p-4 rounded-xl border border-gray-800 flex justify-between items-center">
+      <SevendDayIntake v-model="foodDiary" :workout-diary="workoutDiary" :targets="userTargets" />
+
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
+        <div class="lg:col-span-2 space-y-6">
+          <h2 class="text-xs font-black text-main-text uppercase tracking-[0.4em] flex items-center gap-3">
+            <span class="w-8 h-[1px] bg-secondary-text opacity-30"></span>
+            Activity Feed
+          </h2>
+
+          <div
+            class="bg-neutral-dark/10 rounded-[2.5rem] border border-neutral-border divide-y divide-neutral-border/50 overflow-hidden shadow-2xl">
+            <div v-if="recentActivity.length === 0" class="p-20 text-center">
+              <span class="material-symbols-outlined text-4xl text-neutral-dark mb-3">history</span>
+              <p class="text-secondary-text font-black uppercase tracking-widest text-xs opacity-40">No records found
+                for this date</p>
+            </div>
+
+            <div v-for="item in recentActivity" :key="item.pivot.id"
+              class="p-5 flex justify-between items-center hover:bg-white/5 transition-all group">
               <div class="flex items-center gap-4">
-                <div class="w-10 h-10 bg-green-900/20 rounded-lg flex items-center justify-center text-green-500">
-                   <i class="pi pi-shopping-bag"></i>
+                <div
+                  :class="`w-12 h-12 rounded-2xl flex items-center justify-center border border-neutral-border transition-all duration-300 ${item.type === 'food' ? 'bg-primary/10 text-primary group-hover:bg-primary' : 'bg-blue-500/10 text-blue-400 group-hover:bg-blue-500'} group-hover:text-background-dark group-hover:scale-110 group-hover:border-primary/50`">
+                  <span class="material-symbols-outlined text-xl">{{ item.type === 'food' ? 'restaurant' :
+                    'fitness_center' }}</span>
                 </div>
                 <div>
-                  <h4 class="font-bold">Grilled Chicken Salad</h4>
-                  <p class="text-xs text-gray-500">Lunch • 1:45 PM</p>
+                  <h4 class="font-black text-sm uppercase tracking-tight">{{ item.name }}</h4>
+                  <p class="text-[10px] font-bold text-secondary-text uppercase tracking-[0.15em] mt-0.5">
+                    {{ item.type === 'food' ? 'Nutritional Intake' : 'Physical Activity' }} • <span
+                      class="text-main-text">{{ item.pivot.amount }} {{ item.unit }}</span>
+                  </p>
                 </div>
               </div>
               <div class="text-right">
-                <div class="text-green-400 font-bold">+450 kcal</div>
-                <div class="text-[10px] text-gray-500">42g Protein</div>
-              </div>
-            </div>
-
-            <div class="bg-[#121619] p-4 rounded-xl border border-gray-800 flex justify-between items-center">
-              <div class="flex items-center gap-4">
-                <div class="w-10 h-10 bg-blue-900/20 rounded-lg flex items-center justify-center text-blue-500">
-                   <i class="pi pi-bolt"></i>
+                <div
+                  :class="`${item.type === 'food' ? 'text-primary' : 'text-blue-400'} font-black text-lg tracking-tighter uppercase`">
+                  {{ item.type === 'food' ? '+' : '-' }}{{ item.type === 'food' ? item.pivot.calorie :
+                    (item.pivot.amount * item.calories_per_unit) }}
+                  <span class="text-[10px] font-bold opacity-60 ml-0.5">kcal</span>
                 </div>
-                <div>
-                  <h4 class="font-bold">Push Workout (Strength)</h4>
-                  <p class="text-xs text-gray-500">Active • 10:30 AM</p>
-                </div>
-              </div>
-              <div class="text-right">
-                <div class="text-blue-400 font-bold">-320 kcal</div>
-                <div class="text-[10px] text-gray-500">45 mins</div>
               </div>
             </div>
           </div>
-        </div>
-
-        <div class="bg-[#00ff66] rounded-2xl p-6 text-black flex flex-col justify-between shadow-[0_0_50px_-12px_rgba(0,255,102,0.3)]">
-          <div>
-            <div class="flex items-center gap-2 mb-4 font-bold">
-              <i class="pi pi-lightbulb"></i> Daily Tip
-            </div>
-            <p class="text-sm font-medium leading-relaxed">
-              Drinking a glass of water before your meal can help digestion and naturally control calorie intake. You've only logged 1.2L of water today—aim for 2.5L!
-            </p>
-          </div>
-          <button class="w-full bg-black text-white font-bold py-3 rounded-xl mt-6">
-            Add Water Log
-          </button>
         </div>
       </div>
-
     </div>
   </main>
 </template>
-
-<style scoped>
-/* Optional: Adding a soft glow to the ring */
-circle.text-green-500 {
-  filter: drop-shadow(0 0 6px rgba(34, 197, 94, 0.4));
-}
-</style>

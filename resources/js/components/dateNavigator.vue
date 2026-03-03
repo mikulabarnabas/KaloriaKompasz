@@ -1,142 +1,83 @@
-<script>
-export default {
-    name: 'FoodDiaryDate',
-    props: {
-        modelValue: {
-            type: String,
-            default: () => new Date().toISOString().split('T')[0]
-        }
-    },
-    emits: ['update:modelValue'],
-    computed: {
-        formattedDisplayDate() {
-            const [year, month, day] = this.modelValue.split('-');
-            return `${month}/${day}/${year}`;
-        }
-    },
-    methods: {
-        adjustDate(days) {
-            const current = new Date(this.modelValue);
-            current.setDate(current.getDate() + days);
-            this.emitDate(current);
-            console.log(current)
-        },
-        jumpToToday() {
-            this.emitDate(new Date());
-        },
-        emitDate(dateObj) {
-            const yyyy = dateObj.getFullYear();
-            const mm = String(dateObj.getMonth() + 1).padStart(2, '0');
-            const dd = String(dateObj.getDate()).padStart(2, '0');
-            this.$emit('update:modelValue', `${yyyy}-${mm}-${dd}`);
-        }
+<script setup>
+import { computed } from 'vue';
+
+const props = defineProps({
+    modelValue: {
+        type: [Date, String],
+        required: true
     }
-}
+});
+
+const emit = defineEmits(['update:modelValue']);
+
+const currentDate = computed(() => new Date(props.modelValue));
+
+const formattedDate = computed(() => {
+    return currentDate.value.toISOString().slice(0, 10);
+});
+
+const changeDate = (days) => {
+    const newDate = new Date(currentDate.value);
+    newDate.setDate(newDate.getDate() + days);
+    emit('update:modelValue', newDate);
+};
+
+const handleInput = (e) => {
+    if (!e.target.value) return;
+    emit('update:modelValue', new Date(e.target.value));
+};
 </script>
 
 <template>
-    <div class="food-diary-picker">
-        <span class="label">FOOD DIARY DATE</span>
+    <div class="flex items-center gap-1 bg-neutral-dark/40 backdrop-blur-md border border-neutral-border p-1.5 rounded-2xl shadow-inner">
+        
+        <button @click="changeDate(-1)"
+            class="flex items-center justify-center w-10 h-10 hover:bg-primary/10 rounded-xl transition-all active:scale-90 group">
+            <span class="material-symbols-outlined text-secondary-text group-hover:text-primary transition-colors">
+                chevron_left
+            </span>
+        </button>
 
-        <div class="picker-controls">
-            <button @click="adjustDate(-1)" class="circle-btn">
-                <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none">
-                    <path d="M15 18l-6-6 6-6" />
-                </svg>
-            </button>
-
-            <div class="date-display">
-                <svg class="calendar-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor"
-                    stroke-width="2">
-                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-                    <line x1="16" y1="2" x2="16" y2="6"></line>
-                    <line x1="8" y1="2" x2="8" y2="6"></line>
-                    <line x1="3" y1="10" x2="21" y2="10"></line>
-                </svg>
-                <span>{{ formattedDisplayDate }}</span>
+        <div class="flex flex-col items-center relative group px-4 py-1 min-w-[140px]">
+            <div class="flex flex-col items-center justify-center cursor-pointer">
+                <div class="flex items-center gap-2">
+                    <span class="material-symbols-outlined text-primary text-[14px]">calendar_today</span>
+                    <h2 class="font-black text-sm tracking-[0.15em] text-main-text uppercase">
+                        {{ formattedDate }}
+                    </h2>
+                    <span class="material-symbols-outlined text-secondary-text/30 text-xs group-hover:text-primary group-hover:rotate-180 transition-all duration-300">
+                        expand_more
+                    </span>
+                </div>
             </div>
 
-            <button @click="adjustDate(1)" class="circle-btn">
-                <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none">
-                    <path d="M9 18l6-6-6-6" />
-                </svg>
-            </button>
-
-            <button @click="jumpToToday" class="jump-link">Jump to Today</button>
+            <input 
+                type="date" 
+                :value="formattedDate" 
+                @input="handleInput"
+                class="absolute inset-0 opacity-0 cursor-pointer w-full h-full z-10" 
+            />
         </div>
+
+        <button @click="changeDate(1)"
+            class="flex items-center justify-center w-10 h-10 hover:bg-primary/10 rounded-xl transition-all active:scale-90 group">
+            <span class="material-symbols-outlined text-secondary-text group-hover:text-primary transition-colors">
+                chevron_right
+            </span>
+        </button>
     </div>
 </template>
 
 <style scoped>
-.food-diary-picker {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    color: #607d8b;
-    padding: 20px;
-}
-
-.label {
-    font-size: 12px;
-    font-weight: 700;
-    letter-spacing: 1px;
-    margin-bottom: 12px;
-    color: #78909c;
-}
-
-.picker-controls {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-}
-
-.circle-btn {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    border: none;
-    background-color: #e0f7f4;
-    color: #10b981;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+/* Removes the default calendar icon in some browsers to keep the overlay clean */
+input[type="date"]::-webkit-calendar-picker-indicator {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
     cursor: pointer;
-    transition: opacity 0.2s;
-}
-
-.circle-btn:hover {
-    opacity: 0.8;
-}
-
-.date-display {
-    display: flex;
-    align-items: center;
-    padding: 8px 24px;
-    border: 2px solid #10b981;
-    border-radius: 30px;
-    color: #10b981;
-    font-weight: 600;
-    font-size: 18px;
-    min-width: 140px;
-    justify-content: center;
-}
-
-.calendar-icon {
-    margin-right: 10px;
-}
-
-.jump-link {
-    background: none;
-    border: none;
-    color: #607d8b;
-    font-size: 13px;
-    font-weight: 600;
-    cursor: pointer;
-    margin-left: 8px;
-}
-
-.jump-link:hover {
-    text-decoration: underline;
 }
 </style>

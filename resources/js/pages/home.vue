@@ -24,19 +24,18 @@ const faqItems = [
   <AppLayout>
     <div class="relative w-full bg-background-dark">
 
-      <div class="absolute inset-0 pointer-events-none z-0 opacity-20">
-        <svg width="100%" height="100%" viewBox="0 0 100 1000" preserveAspectRatio="none" fill="none"
-          xmlns="http://www.w3.org/2000/svg">
+      <div class="absolute inset-0 pointer-events-none z-0 opacity-40 dark:opacity-20"> <svg width="100%" height="100%"
+          viewBox="0 0 100 1000" preserveAspectRatio="none" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M 80 0 
-               C 80 150, 20 250, 20 400 
-               S 90 550, 80 750 
-               S 10 850, 50 1000" stroke="url(#gradient-path)" stroke-width="3" stroke-linecap="round"
+           C 80 150, 20 250, 20 400 
+           S 90 550, 80 750 
+           S 10 850, 50 1000" stroke="url(#gradient-path)" stroke-width="3" stroke-linecap="round"
             stroke-dasharray="12 12" vector-effect="non-scaling-stroke" class="route-path" />
 
           <defs>
             <linearGradient id="gradient-path" x1="0" y1="0" x2="0" y2="1000" gradientUnits="userSpaceOnUse">
-              <stop offset="0%" stop-color="#0df259" stop-opacity="0.8" />
-              <stop offset="100%" stop-color="#0df259" stop-opacity="0.2" />
+              <stop offset="0%" stop-color="#059669" stop-opacity="1" />
+              <stop offset="100%" stop-color="#10b981" stop-opacity="0.6" />
             </linearGradient>
           </defs>
         </svg>
