@@ -2,15 +2,15 @@
 import { ref } from "vue"
 import { useForm } from "laravel-precognition-vue"
 import { useI18n } from 'vue-i18n'
+import InputField from "@/Components/input.vue"
 
 const { t } = useI18n()
-
 const showSuccessDialog = ref(false)
 
 const form = useForm('post', '/login', {
     email: "",
     password: "",
-    remember_token: false,
+    remember: false,
 })
 
 const onSubmit = () =>
@@ -26,82 +26,81 @@ function closeSuccessDialog() {
 </script>
 
 <template>
-    <div class="space-y-5 animate-fly-in">
-        <h2 class="text-2xl font-bold text-white">
-            {{ $t('auth.welcome_back') }}
-        </h2>
-        <p class="text-white/50 text-sm mt-1 mb-6">
-            {{ $t('auth.login_subtitle') }}
-        </p>
+    <div class="space-y-6 animate-fly-in">
+        <header>
+            <h2 class="text-2xl font-bold text-black dark:text-white tracking-tight">
+                {{ t('auth.welcome_back') }}
+            </h2>
+            <p class="text-black/50 dark:text-white/50 text-sm mt-1">
+                {{ t('auth.login_subtitle') }}
+            </p>
+        </header>
 
         <form class="space-y-5" @submit.prevent="onSubmit" novalidate>
-            <div>
-                <label class="block text-xs text-white/60 mb-2">
-                    {{ $t('auth.email') }}
-                </label>
-                <input v-model="form.email" type="email" autocomplete="email" @change="form.validate('email')"
-                    class="w-full rounded-xl bg-white/5 border border-white/10 px-4 py-3 text-white placeholder-white/30 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/40"
-                    placeholder="name@example.com">
-                <p v-if="form.invalid('email')" class="text-xs text-red-400 mt-1">
-                    {{ form.errors.email }}
-                </p>
+            <InputField v-model="form.email" type="email" :label="t('auth.email')" :error="form.errors.email"
+                placeholder="name@example.com" @change="form.validate('email')" />
+
+            <div class="relative">
+                <InputField v-model="form.password" type="password" :label="t('auth.password')"
+                    :error="form.errors.password" placeholder="••••••••" @change="form.validate('password')" />
+                <a href="#"
+                    class="absolute top-0 right-1 text-[10px] uppercase tracking-wider font-bold text-primary hover:brightness-110 transition-all">
+                    {{ t('auth.forgot_password') }}
+                </a>
             </div>
 
-            <div>
-                <div class="flex justify-between mb-2">
-                    <label class="text-xs text-white/60">
-                        {{ $t('auth.password') }}
-                    </label>
-                    <a href="#" class="text-xs text-primary hover:underline">
-                        {{ $t('auth.forgot_password') }}
-                    </a>
-                </div>
-
-                <input v-model="form.password" type="password" autocomplete="current-password"
-                    @change="form.validate('password')"
-                    class="w-full rounded-xl bg-white/5 border border-white/10 px-4 py-3 text-white placeholder-white/30 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/40"
-                    placeholder="••••••••">
-
-                <p v-if="form.invalid('password')" class="text-xs text-red-400 mt-1">
-                    {{ form.errors.password }}
-                </p>
-            </div>
-
-            <div class="flex items-center gap-2">
-                <input type="checkbox" v-model="form.remember_token" class="accent-primary">
-                <label class="text-sm text-white/70">
-                    {{ $t('auth.remember_me') }}
-                </label>
-            </div>
+            <label class="flex items-center gap-3 px-1 cursor-pointer group w-fit">
+                <input type="checkbox" v-model="form.remember"
+                    class="accent-primary h-4 w-4 rounded border-black/10 dark:border-white/10">
+                <span
+                    class="text-xs font-medium text-black/60 dark:text-white/60 group-hover:text-black dark:group-hover:text-white transition-colors">
+                    {{ t('auth.remember_me') }}
+                </span>
+            </label>
 
             <button type="submit" :disabled="form.processing"
-                class="w-full py-3 rounded-xl font-bold bg-primary text-black hover:shadow-[0_0_20px_rgba(13,242,89,0.4)] transition disabled:opacity-60">
-                {{ $t('auth.sign_in') }}
+                class="w-full py-4 rounded-2xl font-black uppercase tracking-widest text-sm bg-primary text-black shadow-lg shadow-primary/20 hover:shadow-primary/40 active:scale-[0.98] transition-all disabled:opacity-50">
+                <span v-if="form.processing">{{ t('auth.signing_in') }}...</span>
+                <span v-else>{{ t('auth.sign_in') }}</span>
             </button>
         </form>
 
-        <div class="flex items-center gap-4 my-8 text-xs text-white/40">
-            <div class="h-px flex-1 bg-white/10"></div>
-            {{ t('auth.continue_with') }}
-            <div class="h-px flex-1 bg-white/10"></div>
+        <div class="relative py-2">
+            <div class="absolute inset-0 flex items-center">
+                <div class="w-full border-t border-black/5 dark:border-white/10"></div>
+            </div>
+            <div class="relative flex justify-center text-[10px] uppercase tracking-[0.2em] font-bold">
+                <span class="bg-white dark:bg-neutral-dark px-4 text-black/30 dark:text-white/30">
+                    {{ t('auth.continue_with') }}
+                </span>
+            </div>
         </div>
 
         <div class="grid grid-cols-2 gap-4">
-            <button class="py-3 rounded-xl bg-white/5 border border-white/10 text-white/80 hover:bg-white/10">
+            <a href="/auth/google/redirect"
+                class="flex items-center justify-center py-3 rounded-xl bg-black/[0.03] dark:bg-white/5 border border-black/5 dark:border-white/10 text-sm font-bold text-black/70 dark:text-white/80 hover:bg-black/[0.06] dark:hover:bg-white/10 transition-all">
                 Google
-            </button>
-            <button class="py-3 rounded-xl bg-white/5 border border-white/10 text-white/80 hover:bg-white/10">
+            </a>
+            <button
+                class="flex items-center justify-center py-3 rounded-xl bg-black/[0.03] dark:bg-white/5 border border-black/5 dark:border-white/10 text-sm font-bold text-black/70 dark:text-white/80 hover:bg-black/[0.06] dark:hover:bg-white/10 transition-all">
                 Apple
             </button>
         </div>
 
-        <div v-if="showSuccessDialog" class="fixed inset-0 bg-black/70 flex items-center justify-center">
-            <div class="bg-neutral-dark p-6 rounded-xl max-w-sm w-full text-center">
-                <h3 class="text-white font-bold mb-4">
-                    {{ $t('auth.login_dialog_title') }}
-                </h3>
-                <button @click="closeSuccessDialog" class="bg-primary text-black px-4 py-2 rounded-lg font-semibold">
-                    {{ $t('auth.close') }}
+        <div v-if="showSuccessDialog"
+            class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
+            <div
+                class="bg-white dark:bg-neutral-dark border border-black/5 dark:border-white/10 p-8 rounded-[2.5rem] max-w-sm w-full text-center shadow-2xl animate-fly-in">
+                <div
+                    class="w-16 h-16 bg-primary/20 text-primary rounded-full flex items-center justify-center mx-auto mb-4">
+                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                    </svg>
+                </div>
+                <h3 class="text-xl text-black dark:text-white font-bold mb-6">{{ t('auth.login_dialog_title') }}</h3>
+                <button @click="closeSuccessDialog"
+                    class="w-full bg-primary text-black py-4 rounded-2xl font-black uppercase tracking-widest text-sm hover:brightness-110 transition-all">
+                    {{ t('auth.close') }}
                 </button>
             </div>
         </div>

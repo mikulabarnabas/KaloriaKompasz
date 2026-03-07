@@ -1,8 +1,7 @@
 <script setup>
 import { ref } from "vue"
 import { useForm } from "laravel-precognition-vue"
-import InputField from "@/Components/input.vue"
-import Input from "./input.vue"
+import Input from "@/Components/input.vue"
 
 const showSuccessDialog = ref(false)
 
@@ -30,19 +29,19 @@ function closeSuccessDialog() {
     <div class="animate-fly-in">
         <form class="space-y-5" @submit.prevent="onSubmit">
 
-            <InputField v-model="form.name" :label="$t('auth.name')" :error="form.errors.name" placeholder="Zsákos Frodó"
+            <Input v-model="form.name" :label="$t('auth.name')" :error="form.errors.name" placeholder="Zsákos Frodó"
                 @change="form.validate('name')" />
 
-            <InputField v-model="form.email" type="email" :label="$t('auth.email')" :error="form.errors.email" placeholder="name@example.com"
+            <Input v-model="form.email" type="email" :label="$t('auth.email')" :error="form.errors.email" placeholder="name@example.com"
                 @change="form.validate('email')" />
 
-            <InputField v-model="form.password" type="password" :label="$t('auth.password')" placeholder="••••••••"
+            <Input v-model="form.password" type="password" :label="$t('auth.password')" placeholder="••••••••"
                 :error="form.errors.password" @change="form.validate('password')" />
 
-            <InputField v-model="form.password_confirmation" type="password" :label="$t('auth.password_confirmation')" placeholder="••••••••"
+            <Input v-model="form.password_confirmation" type="password" :label="$t('auth.password_confirmation')" placeholder="••••••••"
                 :error="form.errors.password_confirmation" @change="form.validate('password_confirmation')" />
 
-            <label class="flex gap-2 text-sm text-white/70 items-center">
+            <label class="flex gap-2 text-sm text-main-text/70 items-center">
                 <input type="checkbox" v-model="form.acceptTerms" @change="form.validate('acceptTerms')"
                     class="accent-primary">
                     {{ $t('auth.accept_terms') }}

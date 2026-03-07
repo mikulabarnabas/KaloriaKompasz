@@ -51,3 +51,30 @@ Route::middleware(['auth'])->group(function () {
 Route::patch('/lang/{lang}', function ($lang) {
     session(['locale' => $lang]);
 });
+
+use Laravel\Socialite\Facades\Socialite;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
+
+Route::get('/auth/google/redirect', function () {
+    return Socialite::driver('google')->redirect();
+})->name('auth.google.redirect');
+
+Route::get('/auth/google/callback', function () {
+    $googleUser = Socialite::driver('google')->stateless()->user();
+    Log::info(print_r($googleUser, true));
+
+    $user = User::updateOrCreate(
+        ['email' => $googleUser->email],
+        [
+            'name' => $googleUser->name,
+            'google_id' => $googleUser->id, 
+            'google_token' => $googleUser->token,
+            'google_refresh_token' => $googleUser->refreshToken,
+        ]
+    );
+
+    Auth::login($user);
+
+    return redirect('/');
+})->name('auth.google.callback');
