@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Inertia\Inertia;
 use App\Enums\FoodUnits;
+use OpenFoodFacts\Laravel\Facades\OpenFoodFacts;
 
 class FoodController extends Controller
 {
@@ -126,6 +127,7 @@ class FoodController extends Controller
         $result = Foods::search($searchTerm)->skip($foodPerPage * $page)->limit($foodPerPage)->get() ?? [];
         return response()->json([
             'result' => $result,
+            'a' => OpenFoodFacts::find("tej")
         ]);
     }
 

@@ -21,6 +21,7 @@ async function searchFood(page = 1) {
   try {
     const { data } = await axios.get(`/fdiary/getFoods/${search.value}/${page}`);
     searchedFoods.value = data.result;
+    console.log(data.result)
     isDropdownOpen.value = true;
   } catch (error) {
     console.error("Search failed", error);
