@@ -1,6 +1,11 @@
 apply plugin: 'com.android.application'
+apply plugin: 'org.jetbrains.kotlin.android'
+apply plugin: 'kotlin-parcelize'
 
 android {
+    kotlinOptions {
+        jvmTarget = '21'
+    }
     namespace = "hu.kaloriakompasz"
     compileSdk = rootProject.ext.compileSdkVersion
     defaultConfig {
@@ -40,9 +45,16 @@ dependencies {
     androidTestImplementation "androidx.test.ext:junit:$androidxJunitVersion"
     androidTestImplementation "androidx.test.espresso:espresso-core:$androidxEspressoCoreVersion"
     implementation project(':capacitor-cordova-android-plugins')
+    implementation "androidx.health.connect:connect-client:1.2.0-alpha02"
+    implementation "com.google.guava:guava:33.0.0-android"
+    implementation "androidx.concurrent:concurrent-futures:1.1.0"
+    implementation(name: 'samsung-health-data-api-1.0.0', ext: 'aar')
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.7.3"
+    implementation "com.google.android.gms:play-services-tasks:18.1.0"
 }
 
 apply from: 'capacitor.build.gradle'
+
 
 try {
     def servicesJSON = file('google-services.json')
