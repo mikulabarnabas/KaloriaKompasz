@@ -1,7 +1,6 @@
 <script setup>
 import { computed, ref, watch } from "vue";
 import axios from "axios";
-import { useI18n } from 'vue-i18n';
 
 
 import WorkoutSearch from "@/Components/workoutSearch.vue";
@@ -9,7 +8,7 @@ import AddWorkoutEntryOverlay from "@/Components/addWorkoutEntryOverlay.vue";
 import AddExerciseOverlay from "@/Components/addExerciseOverlay.vue";
 import DateNavigator from "@/Components/dateNavigator.vue"
 
-const { t } = useI18n();
+import { trans as t } from 'laravel-vue-i18n';
 import AppLayout from "@/Layouts/AppLayout.vue";
 defineOptions({ layout: AppLayout });
 

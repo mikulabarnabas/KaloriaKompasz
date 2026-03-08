@@ -1,10 +1,9 @@
 <script setup>
 import { ref } from "vue"
 import { useForm } from "laravel-precognition-vue"
-import { useI18n } from 'vue-i18n'
+import { trans as t } from 'laravel-vue-i18n';
 import InputField from "@/Components/input.vue"
 
-const { t } = useI18n()
 const showSuccessDialog = ref(false)
 
 const form = useForm('post', '/login', {

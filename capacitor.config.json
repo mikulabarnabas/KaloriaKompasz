@@ -1,9 +1,14 @@
 {
-  "appId": "hu.kaloriakompasz",
-  "appName": "KaloriaKompasz",
-  "webDir": "public",
-  "server": {
-    "url": "http://192.168.0.13:8000",
-    "cleartext": true
-  }
+    "appId": "hu.kaloriakompasz",
+    "appName": "KaloriaKompasz",
+    "webDir": "public",
+    "allowNavigation": ["192.168.0.13"],
+    "server": {
+        "url": "http://192.168.0.13:8000",
+        "cleartext": true
+    },
+    "plugins": {
+        "CapacitorCookies": { "enabled": true },
+        "CapacitorHttp": { "enabled": true }
+    }
 }

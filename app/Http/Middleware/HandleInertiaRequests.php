@@ -5,7 +5,6 @@ namespace App\Http\Middleware;
 use Inertia\Middleware;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
-use Illuminate\Support\Facades\File;
 
 class HandleInertiaRequests extends Middleware
 {
@@ -14,11 +13,7 @@ class HandleInertiaRequests extends Middleware
     {
         return array_merge(parent::share($request), [
             'csrf_token' => csrf_token(),
-            'locale' => fn () => App::getLocale(),
-            'translations' => fn() => collect(File::files(lang_path(App::getLocale())))
-                ->mapWithKeys(fn($file) => [
-                    pathinfo($file, PATHINFO_FILENAME) => require $file->getPathname(),
-                ]),
+            'locale' => fn() => App::getLocale(),
             "auth" => [
                 "user" => fn() => $request->user()
                     ? $request->user()->only("id", "name", "email")
