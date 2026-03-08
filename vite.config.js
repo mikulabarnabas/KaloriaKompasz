@@ -21,8 +21,9 @@ export default defineConfig({
     },
     server: {
         host: "0.0.0.0", // Necessary for Docker to expose the server
+        cors: true,
         hmr: {
-            host: "localhost", // The host the browser uses to connect to HMR
+            host: "192.168.0.13", // The host the browser uses to connect to HMR
         },
         watch: {
             usePolling: true, // Forces Vite to check files manually (Fixes Windows HMR)
