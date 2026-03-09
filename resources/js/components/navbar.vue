@@ -1,10 +1,7 @@
 <script setup>
 import { router, usePage } from "@inertiajs/vue3"
 import { computed, onMounted, ref } from "vue"
-import Button from "@/Components/glowingButton.vue"
-import { useI18n } from 'vue-i18n'
-
-const { t } = useI18n()
+import { trans as t } from 'laravel-vue-i18n';
 
 const user = computed(() => usePage().props.auth?.user)
 const isDark = ref(true)
@@ -51,7 +48,7 @@ function navigate(path) {
 
       <nav class="hidden md:flex gap-8 text-lg font-medium text-main-text">
         <button @click="router.visit('/fdiary')" class="hover:text-primary transition-colors">
-          {{ t('navbar.foodDiary') }}
+          {{ $t('navbar.foodDiary') }}
         </button>
         <button @click="router.visit('/wdiary')" class="hover:text-primary transition-colors">
           {{ t('navbar.workoutDiary') }}

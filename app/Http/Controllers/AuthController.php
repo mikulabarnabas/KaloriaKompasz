@@ -10,7 +10,7 @@ use App\Http\Requests\RegisterUserRequest;
 use App\Http\Requests\LoginUserRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
-use Locale;
+use Illuminate\Support\Facades\Log;
 
 class AuthController extends Controller
 {
@@ -29,6 +29,7 @@ class AuthController extends Controller
 
     public function registerUser(RegisterUserRequest $request)
     {
+        Log::info('Regisztrációs kérés adatai:', $request->all());
         $data = $request->validated();
 
         $user = User::create($data);
@@ -39,6 +40,7 @@ class AuthController extends Controller
     public function loginUser(LoginUserRequest $request)
     {
         $data = $request->validated();
+        Log::info('Regisztrációs kérés adatai:', $request->all());
 
         if (
             Auth::attempt($data, $data)
@@ -46,6 +48,7 @@ class AuthController extends Controller
             $request->session()->regenerate();
             return redirect()->route('home');
         }
+
 
 
 

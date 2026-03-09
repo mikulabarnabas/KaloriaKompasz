@@ -2,6 +2,29 @@
 import AppLayout from "@/Layouts/AppLayout.vue"
 import Accordion from "@/Components/accordion.vue"
 import Button from "@/Components/glowingButton.vue"
+import { Capacitor } from '@capacitor/core';
+import { ref } from "vue"
+
+import { registerPlugin } from '@capacitor/core';
+
+// Változók definiálása
+const googleSteps = ref(0);
+const samsungSteps = ref(0);
+
+const SamsungHealthCustom = registerPlugin('SamsungHealthCustom');
+const HealthConnectBridge = registerPlugin('HealthConnectBridge');
+
+const fetchSteps = async () => {
+  try {
+    const shResult = await SamsungHealthCustom.getSamsungSteps();
+    samsungSteps.value = shResult.steps; // .value kell a ref miatt!
+
+    const hcResult = await HealthConnectBridge.getSteps();
+    googleSteps.value = hcResult.steps; // .value kell a ref miatt!
+  } catch (error) {
+    console.error("Részletes hiba:", error);
+  }
+};
 
 const faqItems = [
   {
@@ -40,6 +63,15 @@ const faqItems = [
           </defs>
         </svg>
       </div>
+
+      <div class="p-4">
+        <h1>Kalória Kompasz Adatok</h1>
+        <p>Google Lépések: {{ googleSteps }}</p>
+        <p>Samsung Lépések: {{ samsungSteps }}</p>
+
+        <button @click="fetchSteps">Adatok frissítése</button>
+      </div>
+
       <main class="relative z-10 flex min-h-screen flex-col overflow-x-hidden">
         <section class="relative overflow-hidden px-6 py-24 lg:py-40 animate-fly-in">
           <div class="mx-auto max-w-7xl">

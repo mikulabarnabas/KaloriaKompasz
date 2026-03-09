@@ -15,7 +15,20 @@ return Application::configure(basePath: dirname(__DIR__))
             \App\Http\Middleware\HandleInertiaRequests::class,
             \App\Http\Middleware\SetLocale::class,
         ]);
+        $middleware->statefulApi();
+
+        $middleware->validateCsrfTokens(except: [
+            'login',
+            'register',
+        ]);
     })
-    ->withExceptions(function (Exceptions $exceptions): void {
-        //
+    ->withExceptions(function (Exceptions $exceptions) {
+        $exceptions->respond(function ($response, $e, $request) {
+            if ($response->getStatusCode() === 419) {
+                return redirect()->route('login')->with([
+                    'message' => 'A munkamenet lejárt, kérjük jelentkezzen be újra.',
+                ]);
+            }
+            return $response;
+        });
     })->create();

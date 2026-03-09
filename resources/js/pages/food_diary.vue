@@ -1,7 +1,6 @@
 <script setup>
 import { computed, ref, watch } from "vue";
 import axios from "axios";
-import { useI18n } from 'vue-i18n';
 
 import AppLayout from "@/Layouts/AppLayout.vue";
 import MacroSummary from "@/Components/macroSummary.vue";
@@ -10,8 +9,8 @@ import Search from "@/Components/search.vue"
 import AddEntryOverlay from "@/Components/addEntryOverlay.vue";
 import AddFoodOverlay from "@/Components/addFoodOverlay.vue";
 import DateNavigator from "@/Components/dateNavigator.vue"
+import { trans as t } from 'laravel-vue-i18n';
 
-const { t } = useI18n();
 defineOptions({ layout: AppLayout });
 
 const mealTypeOptions = [

@@ -16,11 +16,15 @@
         "vite": "^7.0.7"
     },
     "dependencies": {
+        "@capacitor/android": "^8.2.0",
+        "@capacitor/cli": "^8.2.0",
+        "@capacitor/core": "^8.2.0",
         "@fortawesome/fontawesome-free": "^7.1.0",
         "@inertiajs/vue3": "^2.3.1",
         "@vitejs/plugin-vue": "^6.0.3",
         "chart.js": "^4.5.1",
         "laravel-precognition-vue": "^1.0.0",
+        "laravel-vue-i18n": "^2.8.0",
         "tailwindcss": "^4.1.18",
         "vue": "^3.5.25",
         "vue-i18n": "^11.2.8"

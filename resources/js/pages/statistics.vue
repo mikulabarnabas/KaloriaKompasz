@@ -12,6 +12,8 @@ const foodDiary = computed(() => page.props.foodDiary ?? [])
 const workoutDiary = computed(() => page.props.workoutDiary ?? [])
 const user = computed(() => page.props.auth?.user)
 
+console.log(user)
+
 
 const selectedDate = ref(new Date());
 const formattedDate = computed(() => selectedDate.value.toISOString().slice(0, 10));

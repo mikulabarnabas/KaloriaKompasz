@@ -3,6 +3,7 @@ import { defineConfig } from "vite";
 import laravel from "laravel-vite-plugin";
 import vue from "@vitejs/plugin-vue";
 import tailwindcss from "@tailwindcss/vite";
+import i18n from 'laravel-vue-i18n/vite';
 
 export default defineConfig({
     plugins: [
@@ -12,6 +13,7 @@ export default defineConfig({
             refresh: true,
         }),
         tailwindcss(),
+        i18n(),
     ],
     resolve: {
         alias: {
@@ -20,12 +22,13 @@ export default defineConfig({
         },
     },
     server: {
-        host: "0.0.0.0", // Necessary for Docker to expose the server
+        host: "0.0.0.0",
+        cors: true,
         hmr: {
-            host: "localhost", // The host the browser uses to connect to HMR
+            host: "192.168.0.13",
         },
         watch: {
-            usePolling: true, // Forces Vite to check files manually (Fixes Windows HMR)
+            usePolling: true,
             ignored: ["**/storage/framework/views/**"],
         },
     },

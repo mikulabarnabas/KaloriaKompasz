@@ -2,9 +2,7 @@
 import { computed, ref, watch } from "vue";
 import { useForm } from "laravel-precognition-vue";
 import GlowingButton from "@/Components/glowingButton.vue"
-import { useI18n } from 'vue-i18n';
-
-const { t } = useI18n();
+import { trans as t } from 'laravel-vue-i18n';
 
 const props = defineProps({
     show: Boolean,

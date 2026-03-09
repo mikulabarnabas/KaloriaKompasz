@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">KaloriaKompasz</string>
+    <string name="title_activity_main">KaloriaKompasz</string>
+    <string name="package_name">hu.kaloriakompasz</string>
+    <string name="custom_url_scheme">hu.kaloriakompasz</string>
+</resources>
