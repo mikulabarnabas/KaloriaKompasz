@@ -1,0 +1,252 @@
+{
+  "_@inertiajs-BLtI5yrN.js": {
+    "file": "assets/@inertiajs-BLtI5yrN.js",
+    "name": "@inertiajs",
+    "imports": [
+      "_qs--MBLzBQd.js",
+      "_axios-CACZDMKj.js",
+      "_lodash-es-DvpUvOAH.js",
+      "_@vue-IdFOaUcZ.js",
+      "_laravel-precognition-C8Svupo6.js"
+    ]
+  },
+  "_@vue-IdFOaUcZ.js": {
+    "file": "assets/@vue-IdFOaUcZ.js",
+    "name": "@vue"
+  },
+  "_axios-CACZDMKj.js": {
+    "file": "assets/axios-CACZDMKj.js",
+    "name": "axios"
+  },
+  "_call-bind-apply-helpers-lJYQCVTA.js": {
+    "file": "assets/call-bind-apply-helpers-lJYQCVTA.js",
+    "name": "call-bind-apply-helpers",
+    "imports": [
+      "_function-bind-CHqF18-c.js",
+      "_es-errors-vszLt91P.js"
+    ]
+  },
+  "_call-bound-Jwm9_NDK.js": {
+    "file": "assets/call-bound-Jwm9_NDK.js",
+    "name": "call-bound",
+    "imports": [
+      "_get-intrinsic-UEEkK8gh.js",
+      "_call-bind-apply-helpers-lJYQCVTA.js"
+    ]
+  },
+  "_dunder-proto-BicD7DOh.js": {
+    "file": "assets/dunder-proto-BicD7DOh.js",
+    "name": "dunder-proto",
+    "imports": [
+      "_call-bind-apply-helpers-lJYQCVTA.js",
+      "_gopd-C1lCZ5Qs.js"
+    ]
+  },
+  "_es-define-property-D_7cP-M3.js": {
+    "file": "assets/es-define-property-D_7cP-M3.js",
+    "name": "es-define-property"
+  },
+  "_es-errors-vszLt91P.js": {
+    "file": "assets/es-errors-vszLt91P.js",
+    "name": "es-errors"
+  },
+  "_es-object-atoms-BR76m4z7.js": {
+    "file": "assets/es-object-atoms-BR76m4z7.js",
+    "name": "es-object-atoms"
+  },
+  "_function-bind-CHqF18-c.js": {
+    "file": "assets/function-bind-CHqF18-c.js",
+    "name": "function-bind"
+  },
+  "_get-intrinsic-UEEkK8gh.js": {
+    "file": "assets/get-intrinsic-UEEkK8gh.js",
+    "name": "get-intrinsic",
+    "imports": [
+      "_es-object-atoms-BR76m4z7.js",
+      "_es-errors-vszLt91P.js",
+      "_math-intrinsics-DP1tGiab.js",
+      "_gopd-C1lCZ5Qs.js",
+      "_es-define-property-D_7cP-M3.js",
+      "_has-symbols-BaUvM3gb.js",
+      "_get-proto-FvBilYoZ.js",
+      "_call-bind-apply-helpers-lJYQCVTA.js",
+      "_function-bind-CHqF18-c.js",
+      "_hasown-DwiY0sux.js"
+    ]
+  },
+  "_get-proto-FvBilYoZ.js": {
+    "file": "assets/get-proto-FvBilYoZ.js",
+    "name": "get-proto",
+    "imports": [
+      "_es-object-atoms-BR76m4z7.js",
+      "_dunder-proto-BicD7DOh.js"
+    ]
+  },
+  "_gopd-C1lCZ5Qs.js": {
+    "file": "assets/gopd-C1lCZ5Qs.js",
+    "name": "gopd"
+  },
+  "_has-symbols-BaUvM3gb.js": {
+    "file": "assets/has-symbols-BaUvM3gb.js",
+    "name": "has-symbols"
+  },
+  "_hasown-DwiY0sux.js": {
+    "file": "assets/hasown-DwiY0sux.js",
+    "name": "hasown",
+    "imports": [
+      "_function-bind-CHqF18-c.js"
+    ]
+  },
+  "_laravel-precognition-C8Svupo6.js": {
+    "file": "assets/laravel-precognition-C8Svupo6.js",
+    "name": "laravel-precognition",
+    "imports": [
+      "_axios-CACZDMKj.js",
+      "_lodash-es-DvpUvOAH.js"
+    ]
+  },
+  "_laravel-precognition-vue-CQlHqA2W.js": {
+    "file": "assets/laravel-precognition-vue-CQlHqA2W.js",
+    "name": "laravel-precognition-vue",
+    "imports": [
+      "_laravel-precognition-C8Svupo6.js",
+      "_lodash-es-DvpUvOAH.js",
+      "_@vue-IdFOaUcZ.js"
+    ]
+  },
+  "_laravel-vue-i18n-C9FpQ-xD.js": {
+    "file": "assets/laravel-vue-i18n-C9FpQ-xD.js",
+    "name": "laravel-vue-i18n",
+    "imports": [
+      "_@vue-IdFOaUcZ.js"
+    ]
+  },
+  "_lodash-es-DvpUvOAH.js": {
+    "file": "assets/lodash-es-DvpUvOAH.js",
+    "name": "lodash-es"
+  },
+  "_math-intrinsics-DP1tGiab.js": {
+    "file": "assets/math-intrinsics-DP1tGiab.js",
+    "name": "math-intrinsics"
+  },
+  "_object-inspect-TcJDhIfC.js": {
+    "file": "assets/object-inspect-TcJDhIfC.js",
+    "name": "object-inspect",
+    "imports": [
+      "_es-errors-vszLt91P.js"
+    ]
+  },
+  "_qs--MBLzBQd.js": {
+    "file": "assets/qs--MBLzBQd.js",
+    "name": "qs",
+    "imports": [
+      "_side-channel-XHn7KKHu.js"
+    ]
+  },
+  "_side-channel-XHn7KKHu.js": {
+    "file": "assets/side-channel-XHn7KKHu.js",
+    "name": "side-channel",
+    "imports": [
+      "_es-errors-vszLt91P.js",
+      "_object-inspect-TcJDhIfC.js",
+      "_side-channel-list-CnP7I6vP.js",
+      "_side-channel-map-BjZgiTFz.js",
+      "_side-channel-weakmap-B1rbK19t.js"
+    ]
+  },
+  "_side-channel-list-CnP7I6vP.js": {
+    "file": "assets/side-channel-list-CnP7I6vP.js",
+    "name": "side-channel-list",
+    "imports": [
+      "_object-inspect-TcJDhIfC.js",
+      "_es-errors-vszLt91P.js"
+    ]
+  },
+  "_side-channel-map-BjZgiTFz.js": {
+    "file": "assets/side-channel-map-BjZgiTFz.js",
+    "name": "side-channel-map",
+    "imports": [
+      "_get-intrinsic-UEEkK8gh.js",
+      "_call-bound-Jwm9_NDK.js",
+      "_object-inspect-TcJDhIfC.js",
+      "_es-errors-vszLt91P.js"
+    ]
+  },
+  "_side-channel-weakmap-B1rbK19t.js": {
+    "file": "assets/side-channel-weakmap-B1rbK19t.js",
+    "name": "side-channel-weakmap",
+    "imports": [
+      "_get-intrinsic-UEEkK8gh.js",
+      "_call-bound-Jwm9_NDK.js",
+      "_object-inspect-TcJDhIfC.js",
+      "_side-channel-map-BjZgiTFz.js",
+      "_es-errors-vszLt91P.js"
+    ]
+  },
+  "_vue-l0sNRNKZ.js": {
+    "file": "assets/vue-l0sNRNKZ.js",
+    "name": "vue"
+  },
+  "lang/php_en.json": {
+    "file": "assets/php_en-kKt-KDQm.js",
+    "name": "php_en",
+    "src": "lang/php_en.json",
+    "isDynamicEntry": true
+  },
+  "lang/php_hu.json": {
+    "file": "assets/php_hu-B_Ye6j3Y.js",
+    "name": "php_hu",
+    "src": "lang/php_hu.json",
+    "isDynamicEntry": true
+  },
+  "resources/css/app.css": {
+    "file": "assets/app-Du7b9wbZ.css",
+    "src": "resources/css/app.css",
+    "isEntry": true,
+    "name": "app",
+    "names": [
+      "app.css"
+    ]
+  },
+  "resources/js/app.js": {
+    "file": "assets/app-AJ6nCbnY.js",
+    "name": "app",
+    "src": "resources/js/app.js",
+    "isEntry": true,
+    "imports": [
+      "_axios-CACZDMKj.js",
+      "_@vue-IdFOaUcZ.js",
+      "_@inertiajs-BLtI5yrN.js",
+      "_laravel-vue-i18n-C9FpQ-xD.js",
+      "_laravel-precognition-vue-CQlHqA2W.js",
+      "_qs--MBLzBQd.js",
+      "_side-channel-XHn7KKHu.js",
+      "_es-errors-vszLt91P.js",
+      "_object-inspect-TcJDhIfC.js",
+      "_side-channel-list-CnP7I6vP.js",
+      "_side-channel-map-BjZgiTFz.js",
+      "_get-intrinsic-UEEkK8gh.js",
+      "_es-object-atoms-BR76m4z7.js",
+      "_math-intrinsics-DP1tGiab.js",
+      "_gopd-C1lCZ5Qs.js",
+      "_es-define-property-D_7cP-M3.js",
+      "_has-symbols-BaUvM3gb.js",
+      "_get-proto-FvBilYoZ.js",
+      "_dunder-proto-BicD7DOh.js",
+      "_call-bind-apply-helpers-lJYQCVTA.js",
+      "_function-bind-CHqF18-c.js",
+      "_hasown-DwiY0sux.js",
+      "_call-bound-Jwm9_NDK.js",
+      "_side-channel-weakmap-B1rbK19t.js",
+      "_lodash-es-DvpUvOAH.js",
+      "_laravel-precognition-C8Svupo6.js"
+    ],
+    "dynamicImports": [
+      "lang/php_en.json",
+      "lang/php_hu.json"
+    ],
+    "css": [
+      "assets/app-Cu0-2-Mq.css"
+    ]
+  }
+}
