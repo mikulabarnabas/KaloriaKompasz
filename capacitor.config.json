@@ -8,7 +8,6 @@
         "cleartext": true
     },
     "plugins": {
-        "CapacitorCookies": { "enabled": true },
-        "CapacitorHttp": { "enabled": true }
+        "CapacitorCookies": { "enabled": true }
     }
 }
