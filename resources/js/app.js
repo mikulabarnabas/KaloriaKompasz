@@ -32,12 +32,6 @@ createInertiaApp({
             },
         });
 
-        const saved = localStorage.getItem("theme") || "light";
-        document.documentElement.classList.toggle(
-            "my-app-dark",
-            saved === "dark",
-        );
-
         vueApp.mount(el);
     },
 });

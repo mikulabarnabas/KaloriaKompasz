@@ -31,8 +31,7 @@ class FoodRequest extends FormRequest
             'carb' => ['required', 'integer', 'min:0'],
             'protein' => ['required', 'integer', 'min:0'],
             'notes' => ['nullable', 'string', 'max:5000'],
-            'images' => ['nullable', 'array', 'max:5'],
-            'images.*' => ['image'],
+            'image'   => []
         ];
     }
 }

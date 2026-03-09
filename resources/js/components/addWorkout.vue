@@ -1,6 +1,6 @@
 <script setup>
 import { useForm } from "laravel-precognition-vue";
-import GlowingButton from "@/Components/glowingButton.vue";
+//import GlowingButton from "@/Components/glowingButton.vue";
 import Input from "@/Components/input.vue";
 import { trans as t } from 'laravel-vue-i18n';
 

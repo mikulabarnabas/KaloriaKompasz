@@ -14,8 +14,8 @@ return [
     */
 
     'failed' => 'These credentials do not match our records.',
-    'password' => 'The provided password is incorrect.',
     'throttle' => 'Too many login attempts. Please try again in :seconds seconds.',
+    'password_mismatch' => '',
 
     'login_subtitle' => 'Use your email and password to continue.',
     'register_subtitle' => 'Fill in your details to get started.',
@@ -37,7 +37,7 @@ return [
     'register_dialog_title' => 'Registration successful',
     'register_dialog_message' => 'Your account has been created successfully. You can now sign in.',
     'close' => 'Close',
-    'register_dialog_message' => 'You can sign in now',
     'continue_with' => 'Or continue with',
-    'welcome_back' => 'Welcome back'
+    'welcome_back' => 'Welcome back',
+    'signing_in' => 'You will be in slowly...'
 ];

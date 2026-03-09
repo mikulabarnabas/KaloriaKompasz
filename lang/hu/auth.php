@@ -14,7 +14,6 @@ return [
     */
 
     'failed' => 'These credentials do not match our records.',
-    'password' => 'The provided password is incorrect.',
     'throttle' => 'Too many login attempts. Please try again in {seconds} seconds.',
 
     'login_subtitle' => 'Az e-mail-címed és jelszavad megadásával folytathatod.',
@@ -39,5 +38,6 @@ return [
     'close' => 'Bezárás',
     'register_dialog_message' => 'Mostmár bejelentkezhet',
     'continue_with' => 'Vagy folytas',
-    'welcome_back' => 'Üdv újra'
+    'welcome_back' => 'Üdv újra',
+    'signing_in' => 'Lassan bent leszel...'
 ];

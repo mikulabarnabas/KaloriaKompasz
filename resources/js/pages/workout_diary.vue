@@ -4,8 +4,8 @@ import axios from "axios";
 
 
 import WorkoutSearch from "@/Components/workoutSearch.vue";
-import AddWorkoutEntryOverlay from "@/Components/addWorkoutEntryOverlay.vue";
-import AddExerciseOverlay from "@/Components/addExerciseOverlay.vue";
+import AddWorkoutEntryOverlay from "@/Components/addWorkoutEntry.vue";
+import AddExerciseOverlay from "@/Components/addWorkout.vue";
 import DateNavigator from "@/Components/dateNavigator.vue"
 
 import { trans as t } from 'laravel-vue-i18n';

@@ -5,20 +5,20 @@ import axios from "axios";
 import AppLayout from "@/Layouts/AppLayout.vue";
 import MacroSummary from "@/Components/macroSummary.vue";
 import MealSection from "@/Components/mealSection.vue";
-import Search from "@/Components/search.vue"
-import AddEntryOverlay from "@/Components/addEntryOverlay.vue";
-import AddFoodOverlay from "@/Components/addFoodOverlay.vue";
+import Search from "@/Components/foodSearch.vue"
+import AddEntryOverlay from "@/Components/addFoodEntry.vue";
+import AddFoodOverlay from "@/Components/addFood.vue";
 import DateNavigator from "@/Components/dateNavigator.vue"
 import { trans as t } from 'laravel-vue-i18n';
 
 defineOptions({ layout: AppLayout });
 
-const mealTypeOptions = [
+const mealTypeOptions = computed(() => [
   { label: t('foodDiary.breakfast'), value: "breakfast", icon: 'light_mode', color: 'text-orange-400' },
   { label: t('foodDiary.lunch'), value: "lunch", icon: 'wb_sunny', color: 'text-primary' },
   { label: t('foodDiary.dinner'), value: "dinner", icon: 'dark_mode', color: 'text-indigo-400' },
   { label: t('foodDiary.snack'), value: "snack", icon: 'styler', color: 'text-pink-400' },
-];
+]);
 
 const selectedDate = ref(new Date());
 const formattedDate = computed(() => selectedDate.value.toISOString().slice(0, 10));

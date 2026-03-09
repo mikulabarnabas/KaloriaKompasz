@@ -23,7 +23,7 @@ return new class extends Migration
             $table->string('unit')->default('g');
             $table->integer('amount')->default(100);
             
-            $table->text('image_path')->nullable();
+            $table->text('image')->nullable();
             
             $table->timestamps();
             

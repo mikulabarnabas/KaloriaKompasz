@@ -1,5 +1,5 @@
 <script setup>
-import { computed, ref } from "vue";
+import { ref } from "vue";
 import { usePage } from "@inertiajs/vue3"
 import { trans as t } from 'laravel-vue-i18n';
 import { useForm } from "laravel-precognition-vue";

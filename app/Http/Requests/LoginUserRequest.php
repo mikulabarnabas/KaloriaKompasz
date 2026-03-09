@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rules\Password;
 
 class LoginUserRequest extends FormRequest
 {
@@ -23,7 +24,7 @@ class LoginUserRequest extends FormRequest
     {
         return [
             'email' => 'email:rfc,dns|exists:users,email',
-            'password' => 'required|min:8|max:255',
+            'password' => ['required', Password::min(8)->letters()->mixedCase()->numbers()->symbols()],
             'rememberme' => ['sometimes', 'boolean']
         ];
     }

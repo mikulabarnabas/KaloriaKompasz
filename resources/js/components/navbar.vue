@@ -2,6 +2,11 @@
 import { router, usePage } from "@inertiajs/vue3"
 import { computed, onMounted, ref } from "vue"
 import { trans as t } from 'laravel-vue-i18n';
+import { loadLanguageAsync, getActiveLanguage } from 'laravel-vue-i18n';
+
+async function changeLanguage(lang) {
+  await loadLanguageAsync(lang);
+}
 
 const user = computed(() => usePage().props.auth?.user)
 const isDark = ref(true)
@@ -88,10 +93,6 @@ function navigate(path) {
 
         <template v-else>
           <button @click="router.visit('/login')"
-            class="hidden md:block bg-primary text-black px-4 py-2 rounded-xl font-bold hover:scale-105 transition-transform whitespace-nowrap">
-            {{ t('navbar.signIn') }}
-          </button>
-          <button @click="router.visit('/login')"
             class="size-10 flex items-center justify-center text-primary shrink-0">
             <span class="material-symbols-outlined text-2xl leading-none!">login</span>
           </button>
@@ -103,6 +104,11 @@ function navigate(path) {
             {{ mobileMenuOpen ? 'close' : 'menu' }}
           </span>
         </button>
+      </div>
+
+      <div>
+        <button @click="changeLanguage('hu')">Magyar</button>
+        <button @click="changeLanguage('en')">English</button>
       </div>
     </div>
 
@@ -122,5 +128,7 @@ function navigate(path) {
             t('navbar.stats') }}</button>
       </div>
     </Transition>
+
+
   </header>
 </template>

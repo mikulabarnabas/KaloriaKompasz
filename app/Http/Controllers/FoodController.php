@@ -10,6 +10,7 @@ use Illuminate\Support\Carbon;
 use Inertia\Inertia;
 use App\Enums\FoodUnits;
 use OpenFoodFacts\Laravel\Facades\OpenFoodFacts;
+use Illuminate\Support\Facades\Log;
 
 class FoodController extends Controller
 {
@@ -96,26 +97,30 @@ class FoodController extends Controller
     public function storeFood(FoodRequest $request)
     {
         $data = $request->validated();
-
+        Log::info($data);
+        Log::info($request);
         $food = Foods::create($data);
 
-        if ($request->hasFile('images')) {
-            $paths = "{$food->id}:";
+        if ($request->hasFile('image')) {
+            Log::info('Van kép');
+            $file = $request->file('image');
+            $filename = "food_" . time() . "." . $file->extension();
 
-            foreach ($request->file('images') as $index => $file) {
-                $filename = "image_{$index}." . $file->extension();
-                $paths .= $filename . ":";
-                $file->storeAs(
-                    "foods/{$food->id}",
-                    $filename,
-                    'public'
-                );
-            }
+            $file->storeAs(
+                "foods/{$food->id}",
+                $filename,
+                'public'
+            );
+
             $food->update([
-                'image_paths' => $paths,
+                'image' => "foods/{$food->id}/{$filename}",
             ]);
         }
-        return response()->json(['success' => true]);
+
+        return response()->json([
+            'success' => true,
+            'food' => $food
+        ]);
     }
 
 

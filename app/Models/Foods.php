@@ -19,7 +19,7 @@ class Foods extends Model
         'amount',
         'barcode',
         'brand',
-        'image_path',
+        'image',
     ];
 
     protected $casts = [
