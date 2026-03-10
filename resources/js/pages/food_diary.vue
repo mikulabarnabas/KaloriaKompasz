@@ -6,10 +6,11 @@ import AppLayout from "@/Layouts/AppLayout.vue";
 import MacroSummary from "@/Components/macroSummary.vue";
 import MealSection from "@/Components/mealSection.vue";
 import Search from "@/Components/foodSearch.vue"
-import AddEntryOverlay from "@/Components/addFoodEntry.vue";
-import AddFoodOverlay from "@/Components/addFood.vue";
+import AddFoodEntry from "@/Components/addFoodEntry.vue";
+import AddFood from "@/Components/addFood.vue";
 import DateNavigator from "@/Components/dateNavigator.vue"
 import { trans as t } from 'laravel-vue-i18n';
+import Button from "@/COmponents/button.vue"
 
 defineOptions({ layout: AppLayout });
 
@@ -71,20 +72,19 @@ watch(formattedDate, fetchDiary, { immediate: true });
   <div class="bg-background-dark text-main-text relative min-h-screen">
 
     <main class="flex flex-col min-w-0">
-      <header class="sticky top-0 z-40 p-6 border-b border-neutral-border bg-background-dark/60 backdrop-blur-xl">
-        <div class="max-w-4xl mx-auto flex gap-4 items-center">
+      <header class="p-6 border-b border-neutral-border bg-background-dark/60 backdrop-blur-xl">
+        <div
+          class="max-w-4xl mx-auto flex flex-wrap lg:flex-nowrap items-center justify-center lg:justify-between gap-4">
 
-          <Search class="flex-1" :placeholder="$t('foodDiary.search_placeholder')" @select="onFoodSelect" />
+          <Search class="w-full lg:flex-1 order-1" :placeholder="$t('foodDiary.search_placeholder')"
+            @select="onFoodSelect" />
 
-          <DateNavigator v-model="selectedDate" />
+          <div class="flex flex-wrap sm:flex-nowrap items-center justify-center gap-4 order-2 w-full lg:w-auto">
+            <DateNavigator v-model="selectedDate" class="shrink-0" />
 
-          <button @click="openCreateFoodModal"
-            class="flex items-center gap-2 px-5 py-3 bg-primary/10 border border-primary/30 rounded-2xl text-primary hover:bg-primary group transition-all hover:text-background-dark active:scale-95 shadow-lg shadow-primary/5">
-            <span class="material-symbols-outlined text-xl group-hover:rotate-90 transition-transform">add_circle</span>
-            <span class="hidden sm:inline font-bold text-sm tracking-tight">
-              {{ $t('foodDiary.create_food_title') }}
-            </span>
-          </button>
+            <Button :label="$t('foodDiary.create_food_title')" icon="add_circle" @click="openCreateFoodModal"
+              class="w-full sm:w-48 h-14! shrink-0" />
+          </div>
 
         </div>
       </header>
@@ -109,10 +109,10 @@ watch(formattedDate, fetchDiary, { immediate: true });
       </div>
     </main>
 
-    <AddEntryOverlay :show="isEntryModalOpen" :food="selectedFoodForEntry" :date="formattedDate"
+    <AddFoodEntry :show="isEntryModalOpen" :food="selectedFoodForEntry" :date="formattedDate"
       :meal-types="mealTypeOptions" @close="isEntryModalOpen = false" @saved="onSaved" />
 
-    <AddFoodOverlay :show="isCreateModalOpen" :date="formattedDate" :meal-types="mealTypeOptions"
+    <AddFood :show="isCreateModalOpen" :date="formattedDate" :meal-types="mealTypeOptions"
       @close="isCreateModalOpen = false" @saved="onSaved" />
 
   </div>

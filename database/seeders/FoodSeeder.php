@@ -46,7 +46,7 @@ class FoodSeeder extends Seeder
                     'protein'    => (int)($item['protein'] ?? 0),
                     'fat'        => (int)($item['fat'] ?? 0),
                     'carb'       => (int)($item['carb'] ?? 0),
-                    'image_path' => $item['image_url'] ?? null,
+                    'image' => $item['image_url'] ?? null,
                     'unit'       => 'g',
                     'amount'     => 100,
                 ]

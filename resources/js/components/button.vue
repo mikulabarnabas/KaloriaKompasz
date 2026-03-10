@@ -3,6 +3,7 @@ defineProps({
   label: { type: String, required: true },
   icon: { type: String, default: 'cloud_upload' },
   type: { type: String, default: 'button' },
+  hideLabelOnMobile: { type: Boolean, default: false },
   disabled: Boolean,
   loading: Boolean
 });
@@ -19,7 +20,7 @@ defineProps({
     </div>
 
     <div class="relative flex items-center justify-center gap-3">
-      <span class="leading-none">{{ label }}</span>
+      <span :class="hideLabelOnMobile ? 'hidden md:flex' : ''">{{ label }}</span>
 
       <div class="relative w-5 h-5 flex items-center justify-center">
         <Transition mode="out-in" enter-active-class="transition duration-100 ease-out"
@@ -38,7 +39,3 @@ defineProps({
     </div>
   </button>
 </template>
-
-<style scoped>
-/* Sötét mód speciális izzása marad itt */
-</style>

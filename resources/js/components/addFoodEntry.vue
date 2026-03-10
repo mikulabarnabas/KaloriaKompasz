@@ -1,7 +1,7 @@
 <script setup>
-import { computed, ref, watch } from "vue";
+import { computed, watch } from "vue";
 import { useForm } from "laravel-precognition-vue";
-//import GlowingButton from "@/Components/glowingButton.vue"
+import Button from "@/Components/button.vue"
 import { trans as t } from 'laravel-vue-i18n';
 
 const props = defineProps({
@@ -26,7 +26,6 @@ const form = useForm("post", "/fdiary/entry", {
 const currentImage = computed(() => props.food?.image || null);
 
 const allowedUnits = computed(() => {
-    if (!props.food) return [];
     const weightUnits = ['g', 'dkg', 'kg'];
     const cubicUnits = ['ml', 'l', 'cl', 'dl'];
     if (weightUnits.includes(props.food.unit)) return weightUnits;
@@ -35,11 +34,10 @@ const allowedUnits = computed(() => {
 });
 
 const calculatedMacros = computed(() => {
-    if (!props.food) return { kcal: 0, carbs: 0, fat: 0, protein: 0 };
     let multiplier = form.amount / 100;
 
-    if (['kg', 'l'].includes(form.unit)) multiplier *= 10;
-    if (['dkg', 'dl'].includes(form.unit)) multiplier *= 0.1;
+    if (['kg', 'l'].includes(form.unit)) multiplier *= 1000;
+    if (['dkg', 'dl'].includes(form.unit)) multiplier *= 10;
 
     return {
         kcal: Math.round(props.food.calorie * multiplier),
@@ -79,10 +77,10 @@ watch(() => props.date, (newDate) => form.date = newDate);
     <Transition enter-active-class="transition duration-200 ease-out" enter-from-class="opacity-0"
         enter-to-class="opacity-100" leave-active-class="transition duration-150 ease-in" leave-from-class="opacity-100"
         leave-to-class="opacity-0">
-        <div v-if="show" class="fixed inset-0 z-[100] overflow-y-auto flex items-start justify-center px-4 py-6 sm:items-center sm:px-0">
+        <div v-if="show" class="fixed inset-0 z-100 overflow-y-auto flex items-start justify-center px-4 py-6 sm:items-center sm:px-0">
             <div class="fixed inset-0 bg-background-dark/80 backdrop-blur-sm transition-opacity" @click="closeModal"></div>
 
-            <div class="relative w-full max-w-4xl bg-background-dark rounded-[2rem] shadow-2xl flex flex-col md:flex-row border border-neutral-border transform transition-all overflow-hidden my-auto">
+            <div class="relative w-full max-w-4xl bg-background-dark rounded-4xl shadow-2xl flex flex-col md:flex-row border border-neutral-border transform transition-all overflow-hidden my-auto">
                 
                 <div class="w-full md:w-5/12 bg-neutral-dark/40 p-6 md:p-8 flex flex-col relative border-b md:border-b-0 md:border-r border-neutral-border">
                     <div class="mb-6">
@@ -171,7 +169,7 @@ watch(() => props.date, (newDate) => form.date = newDate);
                                 </div>
                             </div>
 
-                            <ActionButton 
+                            <Button 
                                 type="submit" 
                                 :label="t('foodDiary.add_button')"
                                 icon="add_task"

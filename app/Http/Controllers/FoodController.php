@@ -97,8 +97,6 @@ class FoodController extends Controller
     public function storeFood(FoodRequest $request)
     {
         $data = $request->validated();
-        Log::info($data);
-        Log::info($request);
         $food = Foods::create($data);
 
         if ($request->hasFile('image')) {
@@ -113,7 +111,7 @@ class FoodController extends Controller
             );
 
             $food->update([
-                'image' => "foods/{$food->id}/{$filename}",
+                'image' => "storage/foods/{$food->id}/{$filename}",
             ]);
         }
 
@@ -122,7 +120,6 @@ class FoodController extends Controller
             'food' => $food
         ]);
     }
-
 
 
     public function getFoods(string $searchTerm, string $page)

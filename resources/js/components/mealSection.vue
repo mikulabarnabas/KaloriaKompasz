@@ -1,5 +1,7 @@
 <script setup>
 import { computed } from 'vue';
+import Button from '@/Components/button.vue';
+import { ref } from 'vue';
 
 const props = defineProps({
   mealConfig: Object,
@@ -11,6 +13,16 @@ defineEmits(['delete', 'add-click']);
 const mealTotal = computed(() => {
   return props.foods?.reduce((acc, f) => acc + Number(f.pivot.calorie), 0) || 0;
 });
+
+const confirmingDelete = ref(null);
+
+const toggleConfirm = (id) => {
+  if (confirmingDelete.value === id) {
+    confirmingDelete.value = null;
+  } else {
+    confirmingDelete.value = id;
+  }
+};
 </script>
 
 <template>
@@ -29,42 +41,60 @@ const mealTotal = computed(() => {
 
     <div class="divide-y divide-neutral-border/50">
       <div v-for="food in foods" :key="food.pivot_id"
-        class="px-6 py-4 flex items-center justify-between group hover:bg-primary/5 transition-colors">
+        class="px-4 py-4 md:px-6 md:py-5 flex flex-col md:flex-row md:items-center justify-between group hover:bg-white/2 transition-all relative border-b last:border-0 border-neutral-border/30 gap-4">
 
-        <div class="flex items-center gap-4">
+        <div class="flex items-start md:items-center gap-4 flex-1">
           <div
-            class="size-12 rounded-xl bg-background-dark border border-neutral-border flex items-center justify-center text-xl shadow-inner">
-            🥗
+            class="size-14 md:size-16 shrink-0 rounded-2xl bg-background-dark border border-neutral-border flex items-center justify-center overflow-hidden shadow-xl transition-transform group-hover:scale-105">
+            <img v-if="food.image" :src="food.image" class="w-full h-full object-cover" />
+            <span v-else class="text-2xl md:text-3xl">🥗</span>
           </div>
 
-          <div>
-            <h4 class="font-bold text-main-text group-hover:text-primary transition-colors text-sm md:text-base">
-              {{ food.name }}
-            </h4>
-            <div class="flex gap-2 mt-1.5">
-              <span
-                class="text-[10px] font-mono px-2 py-0.5 rounded-md bg-blue-500/10 text-blue-400 border border-blue-500/20">P:
-                {{ food.pivot.protein }}g</span>
-              <span
-                class="text-[10px] font-mono px-2 py-0.5 rounded-md bg-amber-500/10 text-amber-400 border border-amber-500/20">C:
-                {{ food.pivot.carb }}g</span>
-              <span
-                class="text-[10px] font-mono px-2 py-0.5 rounded-md bg-rose-500/10 text-rose-400 border border-rose-500/20">F:
-                {{ food.pivot.fat }}g</span>
+          <div class="flex-1 min-w-0">
+            <div class="flex justify-between items-start md:block">
+              <h4 class="font-black text-main-text text-sm md:text-base tracking-tight leading-tight truncate pr-2">
+                {{ food.name }}
+              </h4>
+
+              <div class="text-right md:hidden">
+                <p class="text-base font-black text-primary leading-none">{{ food.pivot.calorie }}</p>
+                <span class="text-[8px] font-black text-secondary-text uppercase tracking-widest">kcal</span>
+              </div>
+            </div>
+
+            <div class="flex flex-wrap gap-2 mt-2">
+              <div
+                class="flex items-center gap-1.5 px-2 py-0.5 rounded-lg bg-neutral-dark/60 border border-neutral-border/50">
+                <span class="text-[9px] font-black text-blue-400">P</span>
+                <span class="text-[11px] font-bold text-main-text">{{ food.pivot.protein }}g</span>
+              </div>
+              <div
+                class="flex items-center gap-1.5 px-2 py-0.5 rounded-lg bg-neutral-dark/60 border border-neutral-border/50">
+                <span class="text-[9px] font-black text-amber-400">C</span>
+                <span class="text-[11px] font-bold text-main-text">{{ food.pivot.carb }}g</span>
+              </div>
+              <div
+                class="flex items-center gap-1.5 px-2 py-0.5 rounded-lg bg-neutral-dark/60 border border-neutral-border/50">
+                <span class="text-[9px] font-black text-rose-400">F</span>
+                <span class="text-[11px] font-bold text-main-text">{{ food.pivot.fat }}g</span>
+              </div>
             </div>
           </div>
         </div>
 
-        <div class="flex items-center gap-6">
-          <p class="text-sm font-black text-main-text">
-            {{ food.pivot.calorie }}
-            <span class="text-[10px] font-normal text-secondary-text">kcal</span>
-          </p>
+        <div
+          class="flex items-center justify-between md:justify-end gap-6 md:border-0 border-t border-neutral-border/20 pt-3 md:pt-0">
 
-          <button @click="$emit('delete', food.pivot.id)"
-            class="text-secondary-text hover:text-red-400 transition-colors group/btn">
-            <span class="material-symbols-outlined text-lg">delete</span>
-          </button>
+          <div class="hidden md:text-right md:block">
+            <p class="text-lg font-black text-primary leading-none">
+              {{ food.pivot.calorie }}
+            </p>
+            <span class="text-[10px] font-black text-secondary-text uppercase tracking-widest">kcal</span>
+          </div>
+
+          <Button label="Delete" icon="delete" hideLabelOnMobile
+            class="h-11! md:h-12! bg-rose-500/10! text-rose-500! border-rose-500/20 hover:bg-rose-500! hover:text-white!"
+            @click="$emit('delete', food.pivot.id)"></Button>
         </div>
       </div>
     </div>
