@@ -49,7 +49,7 @@ const closeModal = () => {
         leave-from-class="opacity-100"
         leave-to-class="opacity-0"
     >
-        <div v-if="show" class="fixed inset-0 z-[100] overflow-y-auto flex items-center justify-center px-4 py-6">
+        <div v-if="show" class="fixed inset-0 z-100 overflow-y-auto flex items-center justify-center px-4 py-6">
             <div class="fixed inset-0 bg-background-dark/80 backdrop-blur-sm transition-opacity" @click="closeModal"></div>
 
             <div class="relative w-full max-w-lg bg-background-dark rounded-[2.5rem] shadow-2xl border border-neutral-border p-6 md:p-10 transform transition-all">

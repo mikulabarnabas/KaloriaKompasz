@@ -89,7 +89,7 @@ watch(() => props.date, (newDate) => form.date = newDate);
         leave-to-class="opacity-0"
     >
         <div v-if="show"
-            class="fixed inset-0 z-[100] overflow-y-auto flex items-start justify-center px-4 py-6 sm:items-center sm:px-0">
+            class="fixed inset-0 z-100 overflow-y-auto flex items-start justify-center px-4 py-6 sm:items-center sm:px-0">
             <div class="fixed inset-0 bg-background-dark/80 backdrop-blur-sm transition-opacity" @click="closeModal"></div>
 
             <div class="relative w-full max-w-4xl bg-background-dark rounded-[2.5rem] shadow-2xl flex flex-col md:flex-row border border-neutral-border transform transition-all overflow-hidden my-auto">
@@ -162,7 +162,7 @@ watch(() => props.date, (newDate) => form.date = newDate);
                         </div>
 
                         <div class="mt-auto pt-6 space-y-6">
-                            <div class="bg-primary/5 rounded-[2rem] p-8 border border-primary/10 text-center relative overflow-hidden group/card">
+                            <div class="bg-primary/5 rounded-4xl p-8 border border-primary/10 text-center relative overflow-hidden group/card">
                                 <h2 class="text-[10px] font-black text-secondary-text uppercase tracking-[0.2em] mb-3">
                                     {{ $t('workoutDiary.burned_label') }}
                                 </h2>

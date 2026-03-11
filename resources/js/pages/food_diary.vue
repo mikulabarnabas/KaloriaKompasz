@@ -72,7 +72,7 @@ watch(formattedDate, fetchDiary, { immediate: true });
   <div class="bg-background-dark text-main-text relative min-h-screen">
 
     <main class="flex flex-col min-w-0">
-      <header class="p-6 border-b border-neutral-border bg-background-dark/60 backdrop-blur-xl">
+      <header class="p-6 border-b border-neutral-border bg-background-dark/60">
         <div
           class="max-w-4xl mx-auto flex flex-wrap lg:flex-nowrap items-center justify-center lg:justify-between gap-4">
 

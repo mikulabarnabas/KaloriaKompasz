@@ -74,11 +74,11 @@ const onSubmit = () =>
 
         <div class="grid grid-cols-2 gap-4">
             <a href="/auth/google/redirect"
-                class="flex items-center justify-center py-3 rounded-xl bg-background-light/5 border border-background-light/20 text-sm font-bold text-main-text hover:bg-black/[0.06] dark:hover:bg-white/10 transition-all">
+                class="flex items-center justify-center py-3 rounded-xl bg-background-light/5 border border-background-light/20 text-sm font-bold text-main-text hover:bg-black/6 dark:hover:bg-white/10 transition-all">
                 Google
             </a>
             <a href="/auth/google/redirect"
-                class="flex items-center justify-center py-3 rounded-xl bg-background-light/5 border border-background-light/20 text-sm font-bold text-main-text hover:bg-black/[0.06] dark:hover:bg-white/10 transition-all">
+                class="flex items-center justify-center py-3 rounded-xl bg-background-light/5 border border-background-light/20 text-sm font-bold text-main-text hover:bg-black/6 dark:hover:bg-white/10 transition-all">
                 Apple
             </a>
         </div>

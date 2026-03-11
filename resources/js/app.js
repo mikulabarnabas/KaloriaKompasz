@@ -1,11 +1,6 @@
 import { createApp, h } from "vue";
 import { createInertiaApp } from "@inertiajs/vue3";
 import { i18nVue } from "laravel-vue-i18n";
-import axios from 'axios';
-window.axios = axios;
-
-//window.axios.defaults.withCredentials = true;
-//window.axios.defaults.withXSRFToken = true;
 
 createInertiaApp({
     resolve: (name) => {
@@ -20,7 +15,6 @@ createInertiaApp({
 
         vueApp.use(plugin);
 
-        // app.js setup rész
         vueApp.use(i18nVue, {
             resolve: async (lang) => {
                 const langs = import.meta.glob("../../lang/*.json");
@@ -35,3 +29,9 @@ createInertiaApp({
         vueApp.mount(el);
     },
 });
+
+document.documentElement.classList.toggle(
+  "dark",
+  localStorage.theme === "dark" ||
+    (!("theme" in localStorage) && window.matchMedia("(prefers-color-scheme: dark)").matches),
+);

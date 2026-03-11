@@ -9,7 +9,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Inertia\Inertia;
 use App\Enums\FoodUnits;
-use OpenFoodFacts\Laravel\Facades\OpenFoodFacts;
 use Illuminate\Support\Facades\Log;
 
 class FoodController extends Controller
@@ -125,11 +124,10 @@ class FoodController extends Controller
     public function getFoods(string $searchTerm, string $page)
     {
         $page -= 1; #Beacuse It would skip the first page
-        $foodPerPage = 5;
+        $foodPerPage = 10;
         $result = Foods::search($searchTerm)->skip($foodPerPage * $page)->limit($foodPerPage)->get() ?? [];
         return response()->json([
             'result' => $result,
-            'a' => OpenFoodFacts::find("tej")
         ]);
     }
 
