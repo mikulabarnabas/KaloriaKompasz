@@ -1,7 +1,6 @@
 <script setup>
 import AppLayout from "@/Layouts/AppLayout.vue"
 import Accordion from "@/Components/accordion.vue"
-//import Button from "@/Components/glowingButton.vue"
 import { ref } from "vue"
 
 import { registerPlugin } from '@capacitor/core';
@@ -15,10 +14,10 @@ const HealthConnectBridge = registerPlugin('HealthConnectBridge');
 const fetchSteps = async () => {
   try {
     const shResult = await SamsungHealthCustom.getSamsungSteps();
-    samsungSteps.value = shResult.steps; // .value kell a ref miatt!
+    samsungSteps.value = shResult.steps;
 
     const hcResult = await HealthConnectBridge.getSteps();
-    googleSteps.value = hcResult.steps; // .value kell a ref miatt!
+    googleSteps.value = hcResult.steps;
   } catch (error) {
     console.error("Részletes hiba:", error);
   }
@@ -45,8 +44,9 @@ const faqItems = [
   <AppLayout>
     <div class="relative w-full bg-background-dark">
 
-      <div class="absolute inset-0 pointer-events-none z-0 opacity-40 dark:opacity-20"> <svg width="100%" height="100%"
-          viewBox="0 0 100 1000" preserveAspectRatio="none" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <div class="absolute inset-0 pointer-events-none z-0 opacity-40 dark:opacity-20">
+        <svg width="100%" height="100%" viewBox="0 0 100 1000" preserveAspectRatio="none" fill="none"
+          xmlns="http://www.w3.org/2000/svg">
           <path d="M 80 0 
            C 80 150, 20 250, 20 400 
            S 90 550, 80 750 

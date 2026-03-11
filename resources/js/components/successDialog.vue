@@ -23,7 +23,7 @@ const emit = defineEmits(['close']);
     >
         <div v-if="show" class="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4">
             <div 
-                class="bg-neutral-dark p-8 rounded-[2rem] max-w-sm w-full text-center border border-white/10 shadow-2xl transform transition-all animate-fly-in"
+                class="bg-neutral-dark p-8 rounded-4xl max-w-sm w-full text-center border border-white/10 shadow-2xl transform transition-all animate-fly-in"
             >
                 <div class="w-16 h-16 bg-primary/20 text-primary rounded-full flex items-center justify-center mx-auto mb-6">
                     <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
