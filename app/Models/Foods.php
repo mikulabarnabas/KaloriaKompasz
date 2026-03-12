@@ -10,14 +10,16 @@ class Foods extends Model
 
     protected $fillable = [
         'name',
+        'name_hu',
         'fat',
         'carb',
         'protein',
         'calorie',
         'unit',
         'amount',
-        'notes',
-        'image_paths',
+        'barcode',
+        'brand',
+        'image',
     ];
 
     protected $casts = [
@@ -29,7 +31,10 @@ class Foods extends Model
 
     public function scopeSearch($query, $keywords)
     {
-        return $query->where('name', 'LIKE', '%' . $keywords . '%');
+        return $query->where('name', 'LIKE', '%' . $keywords . '%')
+            ->orWhere('name_hu', 'LIKE', '%' . $keywords . '%')
+            ->orWhere('brand', 'LIKE', '%' . $keywords . '%')
+            ->orWhere('barcode', $keywords);
     }
 
     public function diaries()

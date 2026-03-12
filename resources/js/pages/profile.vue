@@ -1,12 +1,11 @@
 <script setup>
-import { computed, ref } from "vue";
+import { ref } from "vue";
 import { usePage } from "@inertiajs/vue3"
-import { useI18n } from 'vue-i18n';
+import { trans as t } from 'laravel-vue-i18n';
 import { useForm } from "laravel-precognition-vue";
 import AppLayout from "@/Layouts/AppLayout.vue"
 import Input from "@/Components/input.vue" 
 
-const { t } = useI18n();
 
 defineOptions({ layout: AppLayout })
 
@@ -75,12 +74,12 @@ function closeSuccessDialog() { showSuccessDialog.value = false; }
         
         <section class="space-y-8">
           <div class="flex items-center gap-4">
-            <div class="h-[2px] w-12 bg-[#00ff66]"></div>
+            <div class="h-0.5 w-12 bg-[#00ff66]"></div>
             <h2 class="text-[11px] font-black uppercase tracking-[0.5em] text-[#e0e7e4]">Biometrics</h2>
           </div>
 
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div class="relative group bg-[#0a120e] p-6 rounded-[2rem] border border-[#1a241f] hover:border-[#00ff66]/30 transition-all duration-500">
+            <div class="relative group bg-[#0a120e] p-6 rounded-4xl border border-[#1a241f] hover:border-[#00ff66]/30 transition-all duration-500">
               <label class="text-[10px] font-black text-[#00ff66] uppercase tracking-[0.2em] mb-4 block">Gender Identity</label>
               <div class="relative">
                 <select v-model="form.gender" class="w-full bg-transparent border border-[#2a3630] rounded-xl px-4 py-3 text-[#e0e7e4] font-bold uppercase tracking-widest text-xs focus:outline-none focus:border-[#00ff66] appearance-none cursor-pointer transition-colors">
@@ -90,16 +89,16 @@ function closeSuccessDialog() { showSuccessDialog.value = false; }
               </div>
             </div>
 
-            <div class="bg-[#0a120e] p-6 rounded-[2rem] border border-[#1a241f] hover:border-[#00ff66]/30 transition-all duration-500">
+            <div class="bg-[#0a120e] p-6 rounded-4xl border border-[#1a241f] hover:border-[#00ff66]/30 transition-all duration-500">
               <label class="text-[10px] font-black text-[#00ff66] uppercase tracking-[0.2em] mb-4 block">Date of Birth</label>
               <input type="date" v-model="selectedDate" class="w-full bg-transparent border border-[#2a3630] rounded-xl px-4 py-3 text-[#e0e7e4] font-black focus:outline-none focus:border-[#00ff66] transition-colors" />
             </div>
 
-            <div class="bg-[#0a120e] p-2 rounded-[2rem] border border-[#1a241f] hover:border-[#00ff66]/30 transition-all duration-500">
+            <div class="bg-[#0a120e] p-2 rounded-4xl border border-[#1a241f] hover:border-[#00ff66]/30 transition-all duration-500">
               <Input v-model="form.height_cm" type="number" label="Height (cm)" placeholder="180" :error="form.errors.height_cm" />
             </div>
 
-            <div class="bg-[#0a120e] p-2 rounded-[2rem] border border-[#1a241f] hover:border-[#00ff66]/30 transition-all duration-500">
+            <div class="bg-[#0a120e] p-2 rounded-4xl border border-[#1a241f] hover:border-[#00ff66]/30 transition-all duration-500">
               <Input v-model="form.weight_kg" type="number" label="Current Weight (kg)" placeholder="75.5" :error="form.errors.weight_kg" />
             </div>
           </div>
@@ -107,7 +106,7 @@ function closeSuccessDialog() { showSuccessDialog.value = false; }
 
         <section class="space-y-8">
           <div class="flex items-center gap-4">
-            <div class="h-[2px] w-12 bg-[#2a3630]"></div>
+            <div class="h-0.5 w-12 bg-[#2a3630]"></div>
             <h2 class="text-[11px] font-black uppercase tracking-[0.5em] text-[#e0e7e4]">Objective & Activity</h2>
           </div>
 
@@ -119,7 +118,7 @@ function closeSuccessDialog() { showSuccessDialog.value = false; }
                 type="button"
                 @click="form.weight_goal = option.value"
                 :class="[
-                  'relative flex flex-col items-center gap-4 p-8 rounded-[2rem] border transition-all duration-500 group overflow-hidden',
+                  'relative flex flex-col items-center gap-4 p-8 rounded-4xl border transition-all duration-500 group overflow-hidden',
                   form.weight_goal === option.value 
                     ? 'border-[#00ff66] bg-[#00ff66]/5 shadow-[0_0_30px_rgba(0,255,102,0.1)]' 
                     : 'border-[#1a241f] bg-transparent opacity-40 hover:opacity-100 hover:border-[#2a3630]'
@@ -134,7 +133,7 @@ function closeSuccessDialog() { showSuccessDialog.value = false; }
             </div>
 
             <div v-if="form.weight_goal !== 'maintain'" class="grid grid-cols-1 md:grid-cols-2 gap-10 pt-8 border-t border-[#1a241f]">
-              <div class="bg-[#050a08] p-2 rounded-[2rem] border border-[#1a241f]">
+              <div class="bg-[#050a08] p-2 rounded-4xl border border-[#1a241f]">
                 <Input v-model="form.target_weight_kg" type="number" label="Target Weight (kg)" placeholder="70.0" :error="form.errors.target_weight_kg" />
               </div>
               

@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rules\Password;
 
 class RegisterUserRequest extends FormRequest
 {
@@ -24,7 +25,7 @@ class RegisterUserRequest extends FormRequest
         return [
             'name' => 'required|min:8|max:255',
             'email' => 'email:rfc,dns|unique:users,email',
-            'password' => 'required|min:8|max:255|confirmed', #confirmed is checking if it's matching with password
+            'password' => ['required', Password::min(8)->letters()->mixedCase()->numbers()->symbols(), 'confirmed'],
             'acceptTerms' => 'required|accepted',
         ];
     }

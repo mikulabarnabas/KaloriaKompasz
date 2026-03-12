@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Inertia\Inertia;
 use App\Enums\FoodUnits;
+use Illuminate\Support\Facades\Log;
 
 class FoodController extends Controller
 {
@@ -95,34 +96,35 @@ class FoodController extends Controller
     public function storeFood(FoodRequest $request)
     {
         $data = $request->validated();
-
         $food = Foods::create($data);
 
-        if ($request->hasFile('images')) {
-            $paths = "{$food->id}:";
+        if ($request->hasFile('image')) {
+            Log::info('Van kép');
+            $file = $request->file('image');
+            $filename = "food_" . time() . "." . $file->extension();
 
-            foreach ($request->file('images') as $index => $file) {
-                $filename = "image_{$index}." . $file->extension();
-                $paths .= $filename . ":";
-                $file->storeAs(
-                    "foods/{$food->id}",
-                    $filename,
-                    'public'
-                );
-            }
+            $file->storeAs(
+                "foods/{$food->id}",
+                $filename,
+                'public'
+            );
+
             $food->update([
-                'image_paths' => $paths,
+                'image' => "storage/foods/{$food->id}/{$filename}",
             ]);
         }
-        return response()->json(['success' => true]);
-    }
 
+        return response()->json([
+            'success' => true,
+            'food' => $food
+        ]);
+    }
 
 
     public function getFoods(string $searchTerm, string $page)
     {
         $page -= 1; #Beacuse It would skip the first page
-        $foodPerPage = 5;
+        $foodPerPage = 10;
         $result = Foods::search($searchTerm)->skip($foodPerPage * $page)->limit($foodPerPage)->get() ?? [];
         return response()->json([
             'result' => $result,

@@ -1,41 +1,37 @@
-import { createApp, h } from 'vue';
-import { createInertiaApp } from '@inertiajs/vue3';
-import { createI18n } from 'vue-i18n'
-
-
+import { createApp, h } from "vue";
+import { createInertiaApp } from "@inertiajs/vue3";
+import { i18nVue } from "laravel-vue-i18n";
 
 createInertiaApp({
     resolve: (name) => {
-        const pages = import.meta.glob('./Pages/**/*.vue', { eager: true })
-        return pages[`./Pages/${name}.vue`]
+        const pages = import.meta.glob("./Pages/**/*.vue", { eager: true });
+        return pages[`./Pages/${name}.vue`];
     },
 
     title: (title) => `${title} - KalóriaKompasz`,
 
     setup({ el, App, props, plugin }) {
-        const vueApp = createApp({ render: () => h(App, props) })
+        const vueApp = createApp({ render: () => h(App, props) });
 
-        vueApp.use(plugin)
+        vueApp.use(plugin);
 
-        const { locale, translations } = props.initialPage.props
+        vueApp.use(i18nVue, {
+            resolve: async (lang) => {
+                const langs = import.meta.glob("../../lang/*.json");
+                const path = `../../lang/${lang}.json`;
 
-        const i18n = createI18n({
-            legacy: false,
-            locale,
-            fallbackLocale: 'en',
-            messages: {
-                [locale]: translations,
+                if (langs[path]) {
+                    return await langs[path]();
+                }
             },
-        })
+        });
 
-        vueApp.use(i18n)
-
-        const saved = localStorage.getItem('theme') || 'light'
-        document.documentElement.classList.toggle(
-            'my-app-dark',
-            saved === 'dark'
-        )
-
-        vueApp.mount(el)
+        vueApp.mount(el);
     },
-})
+});
+
+document.documentElement.classList.toggle(
+  "dark",
+  localStorage.theme === "dark" ||
+    (!("theme" in localStorage) && window.matchMedia("(prefers-color-scheme: dark)").matches),
+);

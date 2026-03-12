@@ -1,7 +1,27 @@
 <script setup>
 import AppLayout from "@/Layouts/AppLayout.vue"
 import Accordion from "@/Components/accordion.vue"
-import Button from "@/Components/glowingButton.vue"
+import { ref } from "vue"
+
+import { registerPlugin } from '@capacitor/core';
+
+const googleSteps = ref(0);
+const samsungSteps = ref(0);
+
+const SamsungHealthCustom = registerPlugin('SamsungHealthCustom');
+const HealthConnectBridge = registerPlugin('HealthConnectBridge');
+
+const fetchSteps = async () => {
+  try {
+    const shResult = await SamsungHealthCustom.getSamsungSteps();
+    samsungSteps.value = shResult.steps;
+
+    const hcResult = await HealthConnectBridge.getSteps();
+    googleSteps.value = hcResult.steps;
+  } catch (error) {
+    console.error("Részletes hiba:", error);
+  }
+};
 
 const faqItems = [
   {
@@ -24,8 +44,9 @@ const faqItems = [
   <AppLayout>
     <div class="relative w-full bg-background-dark">
 
-      <div class="absolute inset-0 pointer-events-none z-0 opacity-40 dark:opacity-20"> <svg width="100%" height="100%"
-          viewBox="0 0 100 1000" preserveAspectRatio="none" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <div class="absolute inset-0 pointer-events-none z-0 opacity-40 dark:opacity-20">
+        <svg width="100%" height="100%" viewBox="0 0 100 1000" preserveAspectRatio="none" fill="none"
+          xmlns="http://www.w3.org/2000/svg">
           <path d="M 80 0 
            C 80 150, 20 250, 20 400 
            S 90 550, 80 750 
@@ -40,6 +61,7 @@ const faqItems = [
           </defs>
         </svg>
       </div>
+
       <main class="relative z-10 flex min-h-screen flex-col overflow-x-hidden">
         <section class="relative overflow-hidden px-6 py-24 lg:py-40 animate-fly-in">
           <div class="mx-auto max-w-7xl">
@@ -52,11 +74,6 @@ const faqItems = [
                 Nem csak egy alkalmazást építünk, hanem a <span class="text-main-text">jövőd alapkövét</span>.
                 Pontos követés és átlátható adatok, sallangok nélkül.
               </p>
-              <div class="mt-10 flex flex-wrap gap-4">
-                <Button @click="" icon="arrow_forward">
-                  Vágj bele most
-                </Button>
-              </div>
             </div>
           </div>
         </section>

@@ -23,44 +23,37 @@ const changeDate = (days) => {
 };
 
 const handleInput = (e) => {
-    if (!e.target.value) return;
     emit('update:modelValue', new Date(e.target.value));
 };
 </script>
 
 <template>
-    <div class="flex items-center gap-1 bg-neutral-dark/40 backdrop-blur-md border border-neutral-border p-1.5 rounded-2xl shadow-inner">
-        
+    <div
+        class="flex items-center justify-between w-full sm:w-fit bg-neutral-dark/40 backdrop-blur-md border border-neutral-border p-1.5 rounded-2xl shadow-inner">
+
         <button @click="changeDate(-1)"
-            class="flex items-center justify-center w-10 h-10 hover:bg-primary/10 rounded-xl transition-all active:scale-90 group">
+            class="shrink-0 flex items-center justify-center h-10 hover:bg-primary/10 rounded-xl transition-all active:scale-90 group">
             <span class="material-symbols-outlined text-secondary-text group-hover:text-primary transition-colors">
                 chevron_left
             </span>
         </button>
 
-        <div class="flex flex-col items-center relative group px-4 py-1 min-w-[140px]">
+        <div class="flex-1 flex flex-col items-center relative group px-2 py-1">
             <div class="flex flex-col items-center justify-center cursor-pointer">
                 <div class="flex items-center gap-2">
                     <span class="material-symbols-outlined text-primary text-[14px]">calendar_today</span>
-                    <h2 class="font-black text-sm tracking-[0.15em] text-main-text uppercase">
+                    <h2 class="font-black text-sm tracking-[0.15em] text-main-text uppercase whitespace-nowrap">
                         {{ formattedDate }}
                     </h2>
-                    <span class="material-symbols-outlined text-secondary-text/30 text-xs group-hover:text-primary group-hover:rotate-180 transition-all duration-300">
-                        expand_more
-                    </span>
                 </div>
             </div>
 
-            <input 
-                type="date" 
-                :value="formattedDate" 
-                @input="handleInput"
-                class="absolute inset-0 opacity-0 cursor-pointer w-full h-full z-10" 
-            />
+            <input type="date" :value="formattedDate" @input="handleInput"
+                class="absolute inset-0 opacity-0 cursor-pointer w-full h-full z-10" />
         </div>
 
         <button @click="changeDate(1)"
-            class="flex items-center justify-center w-10 h-10 hover:bg-primary/10 rounded-xl transition-all active:scale-90 group">
+            class="shrink-0 flex items-center justify-center h-10 hover:bg-primary/10 rounded-xl transition-all active:scale-90 group">
             <span class="material-symbols-outlined text-secondary-text group-hover:text-primary transition-colors">
                 chevron_right
             </span>
@@ -69,7 +62,6 @@ const handleInput = (e) => {
 </template>
 
 <style scoped>
-/* Removes the default calendar icon in some browsers to keep the overlay clean */
 input[type="date"]::-webkit-calendar-picker-indicator {
     position: absolute;
     left: 0;

@@ -12,6 +12,8 @@ const foodDiary = computed(() => page.props.foodDiary ?? [])
 const workoutDiary = computed(() => page.props.workoutDiary ?? [])
 const user = computed(() => page.props.auth?.user)
 
+console.log(user)
+
 
 const selectedDate = ref(new Date());
 const formattedDate = computed(() => selectedDate.value.toISOString().slice(0, 10));
@@ -87,7 +89,7 @@ const getPercent = (current, target) => Math.min(Math.round((current / target) *
 
       <section class="space-y-6">
         <h2 class="text-xs font-black text-main-text uppercase tracking-[0.4em] flex items-center gap-3">
-          <span class="w-8 h-[1px] bg-primary"></span>
+          <span class="w-8 h-px bg-primary"></span>
           Daily Progress
         </h2>
 
@@ -159,7 +161,7 @@ const getPercent = (current, target) => Math.min(Math.round((current / target) *
       <div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
         <div class="lg:col-span-2 space-y-6">
           <h2 class="text-xs font-black text-main-text uppercase tracking-[0.4em] flex items-center gap-3">
-            <span class="w-8 h-[1px] bg-secondary-text opacity-30"></span>
+            <span class="w-8 h-px bg-secondary-text opacity-30"></span>
             Activity Feed
           </h2>
 

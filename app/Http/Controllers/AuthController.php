@@ -4,13 +4,12 @@ namespace App\Http\Controllers;
 
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use App\Http\Requests\RegisterUserRequest;
 use App\Http\Requests\LoginUserRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
-use Locale;
+use Illuminate\Validation\ValidationException;
 
 class AuthController extends Controller
 {
@@ -21,7 +20,7 @@ class AuthController extends Controller
 
     public function showLogin(Request $request)
     {
-        App::setLocale('hu');
+        App::setLocale('en');
         return Inertia::render('login', [
             'locale' => App::getLocale(),
         ]);
@@ -31,27 +30,24 @@ class AuthController extends Controller
     {
         $data = $request->validated();
 
-        $user = User::create($data);
+        User::create($data);
 
-        return redirect()->route('home');
+        return response()->json(['success' => true]);
     }
 
     public function loginUser(LoginUserRequest $request)
     {
-        $data = $request->validated();
+        $credentials = $request->only('email', 'password');
+        $remember = $request->boolean('remember');
 
-        if (
-            Auth::attempt($data, $data)
-        ) {
+        if (Auth::attempt($credentials, $remember)) {
             $request->session()->regenerate();
-            return redirect()->route('home');
+            return response()->json(['success' => true]);
         }
 
-
-
-        return back()->withErrors([
-            'email' => 'The provided credentials do not match our records.',
-        ])->onlyInput('email');
+        throw ValidationException::withMessages([
+            'password' => [trans('validation.current_password')],
+        ]);
     }
 
     public function logoutUser(Request $request)
