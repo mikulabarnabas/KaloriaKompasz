@@ -12,9 +12,6 @@ const foodDiary = computed(() => page.props.foodDiary ?? [])
 const workoutDiary = computed(() => page.props.workoutDiary ?? [])
 const user = computed(() => page.props.auth?.user)
 
-console.log(user)
-
-
 const selectedDate = ref(new Date());
 const formattedDate = computed(() => selectedDate.value.toISOString().slice(0, 10));
 
@@ -78,10 +75,10 @@ const getPercent = (current, target) => Math.min(Math.round((current / target) *
       <header class="flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
         <div>
           <h1 class="text-4xl md:text-5xl font-black tracking-tighter uppercase leading-none">
-            Welcome back, <span class="text-primary">{{ user.name }}</span>
+            {{ $t('statistics.welcome') }}, <span class="text-primary">{{ user.name }}</span>
           </h1>
           <p class="text-secondary-text mt-3 font-medium tracking-wide opacity-60 uppercase text-xs">
-            Ready to crush your goals for {{ formattedDate }}?
+            {{ $t('statistics.subtitle', { date: formattedDate }) }}
           </p>
         </div>
         <DateNavigator v-model="selectedDate" />
@@ -90,7 +87,7 @@ const getPercent = (current, target) => Math.min(Math.round((current / target) *
       <section class="space-y-6">
         <h2 class="text-xs font-black text-main-text uppercase tracking-[0.4em] flex items-center gap-3">
           <span class="w-8 h-px bg-primary"></span>
-          Daily Progress
+          {{$t('statistics.daily_progress')}}
         </h2>
 
         <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
@@ -111,32 +108,32 @@ const getPercent = (current, target) => Math.min(Math.round((current / target) *
               </svg>
               <div class="absolute inset-0 flex flex-col items-center justify-center">
                 <span class="text-4xl font-black tracking-tighter">{{ todayStats.calories.toLocaleString() }}</span>
-                <span class="text-[9px] font-black uppercase text-secondary-text tracking-[0.2em] mt-1">Consumed</span>
+                <span class="text-[9px] font-black uppercase text-secondary-text tracking-[0.2em] mt-1">{{$t('statistics.consumed')}}</span>
               </div>
             </div>
 
             <div class="mt-6 text-center z-10">
-              <p class="text-[10px] font-black text-secondary-text uppercase tracking-widest opacity-40">Goal: {{
+              <p class="text-[10px] font-black text-secondary-text uppercase tracking-widest opacity-40">{{$t('statistics.goal')}}: {{
                 targets.calories }} kcal</p>
               <div
                 class="mt-2 inline-flex items-center gap-2 px-3 py-1 bg-blue-500/10 border border-blue-500/20 rounded-full group-hover:border-blue-500/40 transition-colors">
                 <span class="material-symbols-outlined text-sm text-blue-400">bolt</span>
                 <span class="text-blue-400 text-[10px] font-black uppercase tracking-wider">-{{ todayWorkouts.burned }}
-                  kcal burned</span>
+                  {{$t('statistics.burned')}}</span>
               </div>
             </div>
           </div>
 
           <div v-for="macro in [
-            { label: 'Protein', current: todayStats.protein, target: targets.protein, color: 'text-blue-400', bg: 'bg-blue-500', glow: 'shadow-blue-500/20' },
-            { label: 'Carbs', current: todayStats.carbs, target: targets.carbs, color: 'text-amber-400', bg: 'bg-amber-500', glow: 'shadow-amber-500/20' },
-            { label: 'Fat', current: todayStats.fat, target: targets.fat, color: 'text-pink-400', bg: 'bg-pink-500', glow: 'shadow-pink-500/20' }
+            { label: $t('statistics.macros.protein'), current: todayStats.protein, target: targets.protein, color: 'text-blue-400', bg: 'bg-blue-500', glow: 'shadow-blue-500/20' },
+            { label: $t('statistics.macros.carbs'), current: todayStats.carbs, target: targets.carbs, color: 'text-amber-400', bg: 'bg-amber-500', glow: 'shadow-amber-500/20' },
+            { label: $t('statistics.macros.fat'), current: todayStats.fat, target: targets.fat, color: 'text-pink-400', bg: 'bg-pink-500', glow: 'shadow-pink-500/20' }
           ]" :key="macro.label"
             class="bg-neutral-dark/30 p-8 rounded-[2.5rem] border border-neutral-border hover:border-primary/50 flex flex-col justify-between shadow-2xl transition-all duration-500 group">
             <div class="flex justify-between items-start">
               <span
                 class="text-[10px] font-black text-secondary-text uppercase tracking-[0.2em] opacity-60 group-hover:text-primary/60 transition-colors">{{
-                macro.label }}</span>
+                  macro.label }}</span>
               <span :class="[macro.color, 'text-[10px] font-black uppercase tracking-widest']">{{
                 getPercent(macro.current, macro.target) }}%</span>
             </div>
@@ -144,7 +141,7 @@ const getPercent = (current, target) => Math.min(Math.round((current / target) *
             <div class="mt-4">
               <div class="text-4xl font-black tracking-tighter">{{ macro.current }}<span
                   class="text-sm font-bold text-secondary-text ml-1">g</span></div>
-              <div class="text-[9px] font-black text-secondary-text uppercase tracking-widest mt-1 opacity-40">Target:
+              <div class="text-[9px] font-black text-secondary-text uppercase tracking-widest mt-1 opacity-40">{{ $t('statistics.target')}}:
                 {{ macro.target }}g</div>
             </div>
 
@@ -156,21 +153,20 @@ const getPercent = (current, target) => Math.min(Math.round((current / target) *
         </div>
       </section>
 
-      <SevendDayIntake v-model="foodDiary" :workout-diary="workoutDiary" :targets="userTargets" />
+      <SevendDayIntake v-model="foodDiary" :workout-diary="workoutDiary" :targets="targets" />
 
       <div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
         <div class="lg:col-span-2 space-y-6">
           <h2 class="text-xs font-black text-main-text uppercase tracking-[0.4em] flex items-center gap-3">
             <span class="w-8 h-px bg-secondary-text opacity-30"></span>
-            Activity Feed
+            {{$t('statistics.activity_feed')}}
           </h2>
 
           <div
             class="bg-neutral-dark/10 rounded-[2.5rem] border border-neutral-border divide-y divide-neutral-border/50 overflow-hidden shadow-2xl">
             <div v-if="recentActivity.length === 0" class="p-20 text-center">
               <span class="material-symbols-outlined text-4xl text-neutral-dark mb-3">history</span>
-              <p class="text-secondary-text font-black uppercase tracking-widest text-xs opacity-40">No records found
-                for this date</p>
+              <p class="text-secondary-text font-black uppercase tracking-widest text-xs opacity-40">{{$t('statistics.no_records')}}</p>
             </div>
 
             <div v-for="item in recentActivity" :key="item.pivot.id"

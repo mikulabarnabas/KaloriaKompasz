@@ -97,7 +97,7 @@ watch(formattedDate, fetchDiary, { immediate: true });
 
           <div class="space-y-6 animate-fly-in" style="animation-delay: 200ms">
             <div class="flex items-center gap-4 mb-2">
-              <h3 class="text-xs font-black uppercase tracking-[0.2em] text-secondary-text">Meal Log</h3>
+              <h3 class="text-xs font-black uppercase tracking-[0.2em] text-secondary-text">{{ t('foodDiary.meal_log_title') }}</h3>
               <div class="h-px flex-1 bg-neutral-border/50"></div>
             </div>
 

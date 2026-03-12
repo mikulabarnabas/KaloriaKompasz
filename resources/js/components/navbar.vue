@@ -7,13 +7,14 @@ import DropDown from "@/Components/dropdownButton.vue";
 
 const user = computed(() => usePage().props.auth?.user)
 const mobileMenuOpen = ref(false)
-const lang = ref('') //This is so stupid
+const lang = ref(localStorage.lang || getActiveLanguage());
 const theme = ref(localStorage.theme)
 
 async function changeLanguage() {
   const nextLang = getActiveLanguage() == 'en' ? 'hu' : 'en'
   await loadLanguageAsync(nextLang);
-  lang.value = nextLang
+  localStorage.lang = nextLang;
+  lang.value = nextLang;
 }
 
 function toggleTheme() {
@@ -48,11 +49,11 @@ const noUserDropDown = computed(() => [
 
       <nav class="hidden lg:flex gap-8 text-lg font-medium text-main-text justify-center">
         <button @click="router.visit('/fdiary')" class="hover:text-primary transition-colors">{{ $t('navbar.foodDiary')
-        }}</button>
+          }}</button>
         <button @click="router.visit('/wdiary')" class="hover:text-primary transition-colors">{{
           t('navbar.workoutDiary') }}</button>
         <button @click="router.visit('/stats')" class="hover:text-primary transition-colors">{{ t('navbar.stats')
-        }}</button>
+          }}</button>
       </nav>
 
       <div class="flex items-center gap-1 sm:gap-2 flex-1 justify-end">

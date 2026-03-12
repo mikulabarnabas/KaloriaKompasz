@@ -31,7 +31,7 @@ return [
     "delete" => "Törlés",
 
     // létrehozás
-    "create_exercise_title" => "Új gyakorlat hozzáadása",
+    "create_exercise_title" => "Új gyakorlat",
     "exercise_name_label" => "Név",
 
     // napló
@@ -55,6 +55,8 @@ return [
     "minute" => "perc",
     "hour" => "óra",
     "km" => "kilométer",
-    "m" => "méter"
+    "m" => "méter",
+    "amount_label" => "Mennyiség",
+    "duration_label" => "Összes aktív idő"
 
 ];

@@ -35,7 +35,8 @@ const toggleConfirm = (id) => {
         {{ mealConfig.label }}
       </h2>
       <p class="text-sm font-black text-primary" v-if="foods?.length">
-        {{ mealTotal }} <span class="text-[10px] uppercase tracking-tighter opacity-70">{{ $t('foodDiary.kcal_unit') }}</span>
+        {{ mealTotal }} <span class="text-[10px] uppercase tracking-tighter opacity-70">{{ $t('foodDiary.kcal_unit')
+          }}</span>
       </p>
     </div>
 
@@ -58,7 +59,8 @@ const toggleConfirm = (id) => {
 
               <div class="text-right md:hidden">
                 <p class="text-base font-black text-primary leading-none">{{ food.pivot.calorie }}</p>
-                <span class="text-[8px] font-black text-secondary-text uppercase tracking-widest">{{ $t('foodDiary.kcal_unit') }}</span>
+                <span class="text-[8px] font-black text-secondary-text uppercase tracking-widest">{{
+                  $t('foodDiary.kcal_unit') }}</span>
               </div>
             </div>
 
@@ -89,12 +91,13 @@ const toggleConfirm = (id) => {
             <p class="text-lg font-black text-primary leading-none">
               {{ food.pivot.calorie }}
             </p>
-            <span class="text-[10px] font-black text-secondary-text uppercase tracking-widest">{{ $t('foodDiary.kcal_unit') }}</span>
+            <span class="text-[10px] font-black text-secondary-text uppercase tracking-widest">{{
+              $t('foodDiary.kcal_unit') }}</span>
           </div>
 
-          <Button :label="t('foodDiary.delete')" icon="delete" hideLabelOnMobile
-            class="h-11! md:h-12! bg-rose-500/10! text-rose-500! border-rose-500/20 hover:bg-rose-500! hover:text-white!"
-            @click="$emit('delete', food.pivot.id)"></Button>
+          <Button :label="t('foodDiary.delete')" icon="delete"
+            class="flex items-center justify-center gap-2 px-4 h-11! md:h-12! bg-rose-500/10! text-rose-500! border-rose-500/20 hover:bg-rose-500! hover:text-white! transition-colors"
+            @click="$emit('delete', food.pivot.id)" />
         </div>
       </div>
     </div>

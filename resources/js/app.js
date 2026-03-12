@@ -16,6 +16,7 @@ createInertiaApp({
         vueApp.use(plugin);
 
         vueApp.use(i18nVue, {
+            lang: localStorage.lang,
             resolve: async (lang) => {
                 const langs = import.meta.glob("../../lang/*.json");
                 const path = `../../lang/${lang}.json`;

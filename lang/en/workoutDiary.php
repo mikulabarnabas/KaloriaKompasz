@@ -31,7 +31,7 @@ return [
     "delete" => "Delete",
 
     // create
-    "create_exercise_title" => "Add New Exercise",
+    "create_exercise_title" => "New Exercise",
     "exercise_name_label" => "Name",
 
     // diary
@@ -55,6 +55,8 @@ return [
     "minute" => "minute",
     "hour" => "hour",
     "km" => "kilometer",
-    "m" => "meter"
+    "m" => "meter",
+    "amount_label" => "Amount",
+    "duration_label" => "Total Time Active"
 
 ];

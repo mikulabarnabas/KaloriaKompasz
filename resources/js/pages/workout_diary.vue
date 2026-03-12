@@ -67,16 +67,20 @@ watch(formattedDate, loadDiary, { immediate: true });
 <template>
   <div class="bg-background-dark text-white relative min-h-screen">
     <main class="flex flex-col min-w-0">
+      <header class="p-6 border-b border-neutral-border bg-background-dark/60">
+        <div
+          class="max-w-4xl mx-auto flex flex-wrap lg:flex-nowrap items-center justify-center lg:justify-between gap-4">
 
-      <header class="p-6 border-b border-neutral-border bg-background-dark/60 backdrop-blur-xl">
-        <div class="grid grid-cols-1 md:grid-cols-2 max-w-4xl mx-auto gap-4 items-center">
-          <WorkoutSearch class="flex-1" :placeholder="$t('workoutDiary.search_placeholder')"
+          <WorkoutSearch class="w-full lg:flex-1 order-1" :placeholder="$t('workoutDiary.search_placeholder')"
             @select="onExerciseSelect" />
-          <div class="flex items-center gap-4 justify-center">
-            <DateNavigator v-model="selectedDate" />
+
+          <div class="flex flex-wrap sm:flex-nowrap items-center justify-center gap-4 order-2 w-full lg:w-auto">
+            <DateNavigator v-model="selectedDate" class="shrink-0" />
+
             <Button :label="$t('workoutDiary.create_exercise_title')" icon="add_circle" @click="openCreateExerciseModal"
-              class="w-14 sm:w-48 h-14!"></Button>
+              class="w-full sm:w-48 h-14! shrink-0"></Button>
           </div>
+
         </div>
       </header>
 
@@ -85,7 +89,7 @@ watch(formattedDate, loadDiary, { immediate: true });
 
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
             <div
-              class="relative overflow-hidden bg-neutral-dark/30 p-8 rounded-[2rem] border border-neutral-border shadow-2xl group">
+              class="relative overflow-hidden bg-neutral-dark/30 p-8 rounded-4xl border border-neutral-border shadow-2xl group">
               <h3 class="text-secondary-text text-[10px] font-black uppercase tracking-[0.2em] mb-2">{{
                 $t('workoutDiary.burned_label') }}</h3>
               <div class="relative z-10 flex items-baseline gap-2">
@@ -98,7 +102,7 @@ watch(formattedDate, loadDiary, { immediate: true });
             </div>
 
             <div
-              class="relative overflow-hidden bg-neutral-dark/30 p-8 rounded-[2rem] border border-neutral-border shadow-2xl group">
+              class="relative overflow-hidden bg-neutral-dark/30 p-8 rounded-4xl border border-neutral-border shadow-2xl group">
               <h3 class="text-secondary-text text-[10px] font-black uppercase tracking-[0.2em] mb-2">{{
                 $t('workoutDiary.duration_label') }}</h3>
               <div class="relative z-10 flex items-baseline gap-2">
@@ -115,7 +119,7 @@ watch(formattedDate, loadDiary, { immediate: true });
             <div class="flex items-center justify-between px-2">
               <h3 class="text-sm font-black text-main-text uppercase tracking-[0.3em]">{{ $t('workoutDiary.diary_title')
                 }}</h3>
-              <div class="h-[1px] flex-1 bg-neutral-border mx-4 opacity-50"></div>
+              <div class="h-px flex-1 bg-neutral-border mx-4 opacity-50"></div>
             </div>
 
             <div v-if="entries.length === 0"
