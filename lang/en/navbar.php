@@ -10,6 +10,6 @@ return [
     'logout' => 'Logout',
     'signIn' => 'Sign in',
     'registration' => 'Registration',
-    'themeLight' => 'Switch to light mode',
-    'themeDark' => 'Switch to dark mode',
+    'themeLight' => 'Light mode',
+    'themeDark' => 'Dark mode',
 ];

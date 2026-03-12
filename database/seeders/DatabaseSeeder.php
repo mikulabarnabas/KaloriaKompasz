@@ -16,7 +16,9 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         $this->call([
-            FoodSeeder::class, //Why the fuck would I call this like this
+            OpenFoodFact::class,
+            CSVFood::class,
+            ExerciseSeeder::class
         ]);
     }
 }

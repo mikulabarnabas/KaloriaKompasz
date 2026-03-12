@@ -58,7 +58,7 @@ class FoodController extends Controller
             'food_id' => ['required', 'integer', 'exists:foods,id'],
             'meal_type' => ['in:breakfast,lunch,dinner,snack,other'],
             'amount' => ['integer', 'min:1'],
-            'unit' => ['required', 'string', 'in:' . implode(',', FoodUnits::values())] //This is not looking fine TODO
+            'unit' => ['required', 'string', 'in:' . implode(',', FoodUnits::values())]
         ]);
 
         $date = $request->validate([

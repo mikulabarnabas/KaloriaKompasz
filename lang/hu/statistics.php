@@ -18,4 +18,9 @@ return [
         'fat' => 'Zsír',
     ],
     'weekly_chart_title' => '7 Napos Kalóriabevitel',
+    'profile_alert' => [
+    'title' => 'Tedd személyessé az élményt',
+    'description' => 'Töltsd ki a profilodat a pontos napi célok eléréséhez.',
+    'button' => 'Profil beállítása',
+],
 ];

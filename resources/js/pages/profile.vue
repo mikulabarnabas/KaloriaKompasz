@@ -15,7 +15,7 @@ const showSuccessDialog = ref(false);
 const rawDate = page.props.profile?.date_of_birth ?? '';
 const selectedDate = ref(rawDate ? rawDate.substring(0, 10) : '');
 
-const form = useForm("post", "/profile-save", {
+const form = useForm("post", "/profile/save", {
   user_id: page.props.profile?.user_id ?? null,
   gender: page.props.profile?.gender ?? "",
   date_of_birth: page.props.profile?.date_of_birth ?? '',

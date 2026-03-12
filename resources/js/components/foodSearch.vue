@@ -1,6 +1,7 @@
 <script setup>
 import { ref, watch } from "vue";
 import axios from "axios";
+import { getActiveLanguage } from "laravel-vue-i18n";
 
 const props = defineProps({
   placeholder: { type: String, default: "Search food..." }
@@ -18,6 +19,10 @@ async function searchFood() {
   if (isLoading.value) return;
 
   try {
+    if (search.value == '') {
+      searchedFoods.value = [];
+      return;
+    }
     isLoading.value = true;
     currentPage++
     const { data } = await axios.get(`/fdiary/getFoods/${search.value}/${currentPage}`);
@@ -54,6 +59,14 @@ watch(search, (val) => {
   currentPage = 0;
   searchFood();
 });
+
+const getDisplayName = (item) => {
+  console.log(getActiveLanguage())
+  if (getActiveLanguage() === 'hu' && item.name_hu) {
+    return item.name_hu;
+  }
+  return item.name;
+};
 </script>
 
 <template>
@@ -84,7 +97,7 @@ watch(search, (val) => {
 
             <div class="flex-1 min-w-0">
               <h4 class="text-main-text font-bold truncate group-hover/item:text-primary transition-colors">
-                {{ food.name }}
+                {{ getDisplayName(food) }}
               </h4>
               <p class="text-sm text-secondary-text truncate">
                 <span class="text-primary/80">{{ food.calorie }} kcal</span> • {{ food.protein }}g p • {{ food.carb }}g

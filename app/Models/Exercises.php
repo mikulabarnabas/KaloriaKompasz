@@ -8,6 +8,7 @@ class Exercises extends Model
 {
     protected $fillable = [
         'name',
+        'name_hu',
         'unit',
         'calories_per_unit',
         'note',
@@ -15,7 +16,8 @@ class Exercises extends Model
 
     public function scopeSearch($query, $keywords)
     {
-        return $query->where('name', 'LIKE', '%' . $keywords . '%');
+        return $query->where('name', 'LIKE', '%' . $keywords . '%')
+            ->orWhere('name_hu', 'LIKE', '%' . $keywords . '%');
     }
 
     public function workoutDiaries()

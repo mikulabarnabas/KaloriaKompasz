@@ -18,4 +18,9 @@ return [
         'fat' => 'Fat'
     ],
     'weekly_chart_title' => '7 Day Calorie Intake',
+    'profile_alert' => [
+        'title' => 'Personalize your experience',
+        'description' => 'Complete your profile to get accurate daily targets.',
+        'button' => 'Setup Profile',
+    ],
 ];

@@ -10,6 +10,6 @@ return [
     'logout' => 'Kijelentkezés',
     'signIn' => 'Bejelentkezés',
     'registration' => 'Regisztráció',
-    'themeLight' => 'Váltás világos módra',
-    'themeDark' => 'Váltás sötét módra',
+    'themeLight' => 'Világos módra',
+    'themeDark' => 'Sötét módra',
 ];

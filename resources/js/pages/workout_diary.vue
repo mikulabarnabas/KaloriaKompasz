@@ -1,6 +1,7 @@
 <script setup>
 import { computed, ref, watch } from "vue";
 import axios from "axios";
+import { getActiveLanguage } from "laravel-vue-i18n";
 
 
 import WorkoutSearch from "@/Components/workoutSearch.vue";
@@ -62,6 +63,14 @@ const deleteEntry = async (entryId) => {
 };
 
 watch(formattedDate, loadDiary, { immediate: true });
+
+const getDisplayName = (item) => {
+  console.log(getActiveLanguage())
+  if (getActiveLanguage() === 'hu' && item.name_hu) {
+    return item.name_hu;
+  }
+  return item.name;
+};
 </script>
 
 <template>
@@ -143,7 +152,7 @@ watch(formattedDate, loadDiary, { immediate: true });
                       class="material-symbols-outlined text-2xl text-primary/60 group-hover:text-primary group-hover:scale-110 transition-all">fitness_center</span>
                   </div>
                   <div class="truncate">
-                    <h4 class="text-main-text font-black text-sm uppercase tracking-tight truncate">{{ exercise.name }}
+                    <h4 class="text-main-text font-black text-sm uppercase tracking-tight truncate">{{ getDisplayName(exercise) }}
                     </h4>
                     <p class="text-[10px] font-bold text-secondary-text uppercase tracking-[0.15em] mt-1">
                       <span class="text-primary/80">{{ exercise.pivot.amount }}</span> {{ exercise.pivot.unit }}

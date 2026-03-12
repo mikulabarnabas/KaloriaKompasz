@@ -13,6 +13,8 @@ return new class extends Migration {
 
             $table->string('name');
 
+            $table->string('name_hu')->nullable();
+
             $table->enum('unit', WorkoutUnits::values());
 
             $table->unsignedInteger('calories_per_unit')->default(0);
@@ -21,7 +23,7 @@ return new class extends Migration {
 
             $table->timestamps();
 
-            $table->index(['name']);
+            $table->index(['name', 'name_hu']);
         });
     }
 

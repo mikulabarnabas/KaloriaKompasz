@@ -3,8 +3,9 @@ import { computed } from 'vue';
 import { wTrans, getActiveLanguage } from 'laravel-vue-i18n';
 
 const props = defineProps({
-    modelValue: {
-        required: true
+    foodDiary: {
+        type: Array,
+        default: () => []
     },
     workoutDiary: {
         type: Array,
@@ -31,10 +32,10 @@ const weeklyData = computed(() => {
         d.setDate(now.getDate() - i);
         const dateStr = d.toISOString().slice(0, 10);
 
-        const foodEntry = props.modelValue.find(e => e.date?.slice(0, 10) === dateStr);
+        const foodEntry = (props.foodDiary || []).find(e => e.date?.slice(0, 10) === dateStr);
         const dayCals = (foodEntry?.foods || []).reduce((acc, f) => acc + num(f.pivot?.calorie), 0);
 
-        const workoutEntry = props.workoutDiary.find(e => e.date?.slice(0, 10) === dateStr);
+        const workoutEntry = (props.workoutDiary || []).find(e => e.date?.slice(0, 10) === dateStr);
         const dayBurned = (workoutEntry?.exercises || []).reduce((acc, e) => {
             return acc + (num(e.pivot?.amount) * num(e.calories_per_unit));
         }, 0);
@@ -58,14 +59,12 @@ const weeklyData = computed(() => {
             {{ $t('statistics.weekly_chart_title') }}
         </h2>
 
-        <div
-            class="bg-neutral-dark/20 p-8 rounded-[2.5rem] border border-neutral-border hover:border-primary/30 transition-all duration-500 shadow-2xl">
+        <div class="bg-neutral-dark/20 p-8 rounded-[2.5rem] border border-neutral-border hover:border-primary/30 transition-all duration-500 shadow-2xl">
             <div class="flex items-end justify-between h-48 gap-2">
                 <div v-for="day in weeklyData" :key="day.date"
                     class="flex-1 flex flex-col items-center gap-3 group relative">
 
-                    <div
-                        class="absolute -top-12 opacity-0 group-hover:opacity-100 transition-opacity bg-primary text-background-dark text-[10px] font-black px-2 py-1 rounded mb-2 z-20 pointer-events-none whitespace-nowrap">
+                    <div class="absolute -top-12 opacity-0 group-hover:opacity-100 transition-opacity bg-primary text-background-dark text-[10px] font-black px-2 py-1 rounded mb-2 z-20 pointer-events-none whitespace-nowrap">
                         {{ day.netCalories }} kcal
                     </div>
 
@@ -74,8 +73,7 @@ const weeklyData = computed(() => {
                             :style="{ height: `${day.percent}%` }"></div>
                     </div>
 
-                    <span
-                        class="text-[9px] font-black uppercase tracking-tighter opacity-40 group-hover:opacity-100 group-hover:text-primary transition-all">
+                    <span class="text-[9px] font-black uppercase tracking-tighter opacity-40 group-hover:opacity-100 group-hover:text-primary transition-all">
                         {{ day.label }}
                     </span>
                 </div>

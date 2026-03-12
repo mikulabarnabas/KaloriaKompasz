@@ -2,6 +2,7 @@
 import { computed, ref } from 'vue';
 import Button from '@/Components/button.vue';
 import { trans as t } from 'laravel-vue-i18n';
+import { getActiveLanguage } from 'laravel-vue-i18n';
 
 const props = defineProps({
   mealConfig: Object,
@@ -14,14 +15,13 @@ const mealTotal = computed(() => {
   return props.foods?.reduce((acc, f) => acc + Number(f.pivot.calorie), 0) || 0;
 });
 
-const confirmingDelete = ref(null);
 
-const toggleConfirm = (id) => {
-  if (confirmingDelete.value === id) {
-    confirmingDelete.value = null;
-  } else {
-    confirmingDelete.value = id;
+const getDisplayName = (item) => {
+  console.log(getActiveLanguage())
+  if (getActiveLanguage() === 'hu' && item.name_hu) {
+    return item.name_hu;
   }
+  return item.name;
 };
 </script>
 
@@ -54,7 +54,7 @@ const toggleConfirm = (id) => {
           <div class="flex-1 min-w-0">
             <div class="flex justify-between items-start md:block">
               <h4 class="font-black text-main-text text-sm md:text-base tracking-tight leading-tight truncate pr-2">
-                {{ food.name }}
+                {{ getDisplayName(food) }}
               </h4>
 
               <div class="text-right md:hidden">

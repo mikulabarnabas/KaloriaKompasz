@@ -26,14 +26,14 @@ function toggleTheme() {
 const userDropDown = computed(() => [
   { label: user.value.name, icon: 'person', function: () => router.get('/profile') },
   { label: lang.value == 'hu' ? 'English' : 'Magyar', icon: 'language', function: () => changeLanguage() },
-  { label: theme.value == 'light' ? 'Dark mode' : 'Light mode', icon: theme.value == 'light' ? 'dark_mode' : 'light_mode', function: () => toggleTheme() },
-  { label: 'Logout', icon: 'logout', function: () => router.post('/logout'), class: 'text-red-600 hover:text-red-600' }
+  { label: theme.value == 'light' ? t('navbar.themeDark') : t('navbar.themeLight'), icon: theme.value == 'light' ? 'dark_mode' : 'light_mode', function: () => toggleTheme() },
+  { label: t('navbar.logout'), icon: 'logout', function: () => router.post('/logout'), class: 'text-red-600 hover:text-red-600' }
 ])
 
 const noUserDropDown = computed(() => [
   { label: "Login", icon: 'login', function: () => router.get('/profile') },
   { label: lang.value == 'hu' ? 'English' : 'Magyar', icon: 'language', function: () => changeLanguage() },
-  { label: theme.value == 'light' ? 'Dark mode' : 'Light mode', icon: theme.value == 'light' ? 'dark_mode' : 'light_mode', function: () => toggleTheme() },
+  { label: theme.value == 'light' ? t('navbar.themeDark') : t('navbar.themeLight'), icon: theme.value == 'light' ? 'dark_mode' : 'light_mode', function: () => toggleTheme() },
 ])
 </script>
 

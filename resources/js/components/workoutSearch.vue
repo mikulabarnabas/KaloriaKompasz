@@ -1,6 +1,7 @@
 <script setup>
 import { ref, watch } from "vue";
 import axios from "axios";
+import { getActiveLanguage } from "laravel-vue-i18n";
 
 const props = defineProps({
   placeholder: { type: String, default: "Search exercise..." }
@@ -60,6 +61,14 @@ watch(search, (val) => {
     isDropdownOpen.value = false;
   }
 });
+
+const getDisplayName = (item) => {
+  console.log(getActiveLanguage())
+  if (getActiveLanguage() === 'hu' && item.name_hu) {
+    return item.name_hu;
+  }
+  return item.name;
+};
 </script>
 
 <template>
@@ -92,7 +101,7 @@ watch(search, (val) => {
 
             <div class="flex-1 min-w-0">
               <h4 class="text-main-text font-bold truncate group-hover/item:text-primary transition-colors">
-                {{ exercise.name }}
+                {{ getDisplayName(exercise) }}
               </h4>
               <p class="text-sm text-secondary-text truncate">
                 <span class="text-primary/80">
