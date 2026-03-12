@@ -1,7 +1,7 @@
 <script setup>
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 import Button from '@/Components/button.vue';
-import { ref } from 'vue';
+import { trans as t } from 'laravel-vue-i18n';
 
 const props = defineProps({
   mealConfig: Object,
@@ -35,7 +35,7 @@ const toggleConfirm = (id) => {
         {{ mealConfig.label }}
       </h2>
       <p class="text-sm font-black text-primary" v-if="foods?.length">
-        {{ mealTotal }} <span class="text-[10px] uppercase tracking-tighter opacity-70">kcal</span>
+        {{ mealTotal }} <span class="text-[10px] uppercase tracking-tighter opacity-70">{{ $t('foodDiary.kcal_unit') }}</span>
       </p>
     </div>
 
@@ -58,24 +58,24 @@ const toggleConfirm = (id) => {
 
               <div class="text-right md:hidden">
                 <p class="text-base font-black text-primary leading-none">{{ food.pivot.calorie }}</p>
-                <span class="text-[8px] font-black text-secondary-text uppercase tracking-widest">kcal</span>
+                <span class="text-[8px] font-black text-secondary-text uppercase tracking-widest">{{ $t('foodDiary.kcal_unit') }}</span>
               </div>
             </div>
 
             <div class="flex flex-wrap gap-2 mt-2">
               <div
                 class="flex items-center gap-1.5 px-2 py-0.5 rounded-lg bg-neutral-dark/60 border border-neutral-border/50">
-                <span class="text-[9px] font-black text-blue-400">P</span>
+                <span class="text-[9px] font-black text-blue-400">{{ $t('foodDiary.protein_short') }}</span>
                 <span class="text-[11px] font-bold text-main-text">{{ food.pivot.protein }}g</span>
               </div>
               <div
                 class="flex items-center gap-1.5 px-2 py-0.5 rounded-lg bg-neutral-dark/60 border border-neutral-border/50">
-                <span class="text-[9px] font-black text-amber-400">C</span>
+                <span class="text-[9px] font-black text-amber-400">{{ $t('foodDiary.carb_short') }}</span>
                 <span class="text-[11px] font-bold text-main-text">{{ food.pivot.carb }}g</span>
               </div>
               <div
                 class="flex items-center gap-1.5 px-2 py-0.5 rounded-lg bg-neutral-dark/60 border border-neutral-border/50">
-                <span class="text-[9px] font-black text-rose-400">F</span>
+                <span class="text-[9px] font-black text-rose-400">{{ $t('foodDiary.fat_short') }}</span>
                 <span class="text-[11px] font-bold text-main-text">{{ food.pivot.fat }}g</span>
               </div>
             </div>
@@ -89,10 +89,10 @@ const toggleConfirm = (id) => {
             <p class="text-lg font-black text-primary leading-none">
               {{ food.pivot.calorie }}
             </p>
-            <span class="text-[10px] font-black text-secondary-text uppercase tracking-widest">kcal</span>
+            <span class="text-[10px] font-black text-secondary-text uppercase tracking-widest">{{ $t('foodDiary.kcal_unit') }}</span>
           </div>
 
-          <Button label="Delete" icon="delete" hideLabelOnMobile
+          <Button :label="t('foodDiary.delete')" icon="delete" hideLabelOnMobile
             class="h-11! md:h-12! bg-rose-500/10! text-rose-500! border-rose-500/20 hover:bg-rose-500! hover:text-white!"
             @click="$emit('delete', food.pivot.id)"></Button>
         </div>
@@ -101,7 +101,7 @@ const toggleConfirm = (id) => {
 
     <div v-if="!foods?.length" class="p-10 text-center border-t border-neutral-border/30">
       <div class="material-symbols-outlined text-neutral-border text-4xl mb-2">set_meal</div>
-      <p class="text-secondary-text text-sm italic opacity-60">"{{ $t('foodDiary.no_selected_food') }}"</p>
+      <p class="text-secondary-text text-sm italic opacity-60">"{{ $t('foodDiary.no_entries') }}"</p>
     </div>
   </div>
 </template>

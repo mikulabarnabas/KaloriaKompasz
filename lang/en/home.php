@@ -1,19 +1,40 @@
 <?php
 
 return [
+    // Hero
+    "hero_title_1" => "More than just a",
+    "hero_title_2" => "Calorie",
+    "hero_title_3" => "Workout",
+    "hero_title_4" => "log",
+    "hero_description" => "We're not just building an app, but the <span class='text-main-text'>foundation of your future</span>. Precise tracking and transparent data, no fluff.",
+
+    // Pillars
+    "pillars_title" => "The Three Pillars",
+    "pillars_description" => "We've created an ecosystem that has everything you need for progress - from the kitchen to the gym.",
+
+    // Cards
     "card_first_title" => "Food Diary",
-    "cards_button" => "Let's get started!",
-    "card_first_content" => "Log your daily meals and calorie intake! The food diary helps you track macronutrients, control portion sizes, and make more conscious decisions to achieve your goals.",
-    "card_second_title" => "Workout Log",
-    "card_second_content" => "Track your workouts easily! You can record exercises, weights, repetitions, and workout duration, giving you a clear picture of your progress and making it easy to plan your next training sessions.",
+    "card_first_content" => "Quick and easy meal logging. Accurate macronutrient breakdown so you know exactly what you're fueling your body with.",
+    "card_second_title" => "Workout Plan",
+    "card_second_content" => "Create your own routines in moments. Track your progress set by set and break through your limits.",
     "card_third_title" => "Statistics",
-    "card_third_content" => "Track your progress with visualized data. Charts allow you to see weight changes, calorie intake, training volume, and other key metrics, making it easier to evaluate your results.",
-    "faq_title" => "Frequently Asked Questions",
-    "faq_first_question" => "How does the workout log work?",
-    "faq_first_answer" => "The workout log allows you to record each of your training sessions in detail. You can log individual exercises, the weights used, the number of repetitions, workout duration, and even rest times. All data is saved automatically, so you can review your past workouts at any time, analyze your progress, and plan future training sessions more easily. The log also helps you track long-term trends, such as improvements in strength and endurance.",
-    "faq_second_question" => "What data does the statistics page show?",
-    "faq_second_answer" => "The statistics page visually displays your progress. You can track changes in body weight, daily calorie intake, training volume, and other important metrics such as macronutrient ratios through charts. This helps you quickly identify which areas need adjustment to reach your goals.",
-    "faq_third_question" => "What can I record in the food diary?",
-    "faq_third_answer" => "The food diary allows you to track your daily meals in detail. You can record the foods you consume, their quantities, calorie content, and macronutrients (protein, carbohydrates, fat). This helps you eat more consciously and stay within your daily calorie target to achieve your goals.",
+    "card_third_content" => "Visual charts of your progress. Understand the links between your training, nutrition, and results.",
+    "cards_button" => "Let's get started!",
+
+    // Team
+    "team_section_title" => "Two Against the World",
+    "team_section_description" => "We are a young, ambitious team that doesn't settle for mediocrity. The two of us started FitTrack with the goal of creating the best platform on the market for you.",
+    "role_dev" => "Founder / Developer",
+    "role_design" => "Founder / Design",
     "team_title" => "Our Team",
+
+    // FAQ
+    "faq_title" => "Frequently Asked Questions",
+    "faq_subtitle" => "Everything you need to know about our platform.",
+    "faq_first_question" => "How is this different from other apps?",
+    "faq_first_answer" => "We are more personal. You aren't hiding behind a corporate algorithm; you're getting a tool we use daily for our own training.",
+    "faq_second_question" => "Can I sync my watch?",
+    "faq_second_answer" => "Yes, we are constantly working on Apple Health and Google Fit integrations so your data flows automatically.",
+    "faq_third_question" => "Will the app remain free?",
+    "faq_third_answer" => "Basic features (calorie and workout log) will remain free forever, because we believe health shouldn't be a matter of money.",
 ];

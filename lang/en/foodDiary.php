@@ -1,6 +1,7 @@
 <?php
 
 return [
+    "remaining_label" => "Remaining",
     "date" => "Food Diary Date",
     "search_title" => "Search",
     "search_placeholder" => "Search for food by name.",
@@ -37,7 +38,11 @@ return [
     "delete_confirmation" => "Are you sure you want to delete the selected food?",
     "breakfast" => "Breakfast",
     "lunch" => "Lunch",
-    "dinner" =>  "Dinner",
+    "dinner" => "Dinner",
     "snack" => "Snack",
     "other" => "Other",
+    "kcal_unit" => "kcal",
+    "protein_short" => "P",
+    "carb_short" => "C",
+    "fat_short" => "F",
 ];

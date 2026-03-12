@@ -1,19 +1,40 @@
 <?php
 
 return [
-    "card_first_title" => "Ételnapló",
+    // Hero
+    "hero_title_1" => "Több mint egy",
+    "hero_title_2" => "Kalória",
+    "hero_title_3" => "Edzés",
+    "hero_title_4" => "napló",
+    "hero_description" => "Nem csak egy alkalmazást építünk, hanem a <span class='text-main-text'>jövőd alapkövét</span>. Pontos követés és átlátható adatok, sallangok nélkül.",
+
+    // Pillars
+    "pillars_title" => "A három pillér",
+    "pillars_description" => "Olyan ökoszisztémát alkottunk, amiben minden megvan, amire a fejlődésedhez szükséged lehet - a konyhától a konditeremig.",
+    
+    // Cards
+    "card_first_title" => "Étrend napló",
+    "card_first_content" => "Gyors és egyszerű étkezésrögzítés. Pontos makrotápanyag lebontás, hogy pontosan tudd, mit viszel be a szervezetedbe.",
+    "card_second_title" => "Edzésterv",
+    "card_second_content" => "Saját rutinok összeállítása pillanatok alatt. Kövesd a fejlődésed sorozatról sorozatra, és törd át a korlátaidat.",
+    "card_third_title" => "Statisztikák",
+    "card_third_content" => "Látványos grafikonok a haladásodról. Lásd át az összefüggéseket az edzésed, az étkezésed és az eredményeid között.",
     "cards_button" => "Vágjunk bele!",
-    "card_first_content" => "Jegyezd fel napi étkezéseidet és kalóriabeviteledet! Az ételnapló segít átlátni a makrotápanyagokat, kontrollálni az adagokat, és tudatosabb döntéseket hozni a céljaid eléréséhez.",
-    "card_second_title" => "Edzésnapló",
-    "card_second_content" => "Kövesd nyomon az edzéseidet egyszerűen! Rögzítheted a gyakorlatokat, súlyokat, ismétléseket és az edzés időtartamát, így pontos képet kapsz a fejlődésedről és könnyen tervezheted a következő edzéseidet.",
-    "card_third_title" => "Statisztika",
-    "card_third_content" => "Vizualizált adatokkal követheted a haladásodat. Grafikonokon láthatod a súlyváltozást, kalóriabevitelt, edzésmennyiséget és egyéb fontos mutatókat, hogy könnyebb legyen értékelni az eredményeidet.",
-    "faq_title" => "Gyakori kérdések",
-    "faq_first_question" => "Hogyan működik az edzésnapló?",
-    "faq_first_answer" => " Az edzésnapló lehetővé teszi, hogy minden edzésedet részletesen rögzítsd. Felviheted az egyes gyakorlatokat, az alkalmazott súlyokat, az ismétlések számát, az edzés időtartamát és akár a pihenőidőt is. Minden adat automatikusan elmentésre kerül, így bármikor visszanézheted a korábbi edzéseidet, elemezheted a fejlődésedet, és könnyebben tervezheted a következő edzéseidet. A napló segítségé vel nyomon követheted a hosszú távú trendeket, például az erőnlét és állóképesség javulását. ",
-    "faq_second_question" => "Milyen adatokat mutat a statisztika oldal?",
-    "faq_second_answer" => "A statisztika oldal vizuálisan jeleníti meg a haladásodat. Grafikonokon követheted a testsúlyváltozásodat, a napi kalóriabeviteledet, az edzés mennyiségét és más fontos mutatókat, például a makrotápanyagok arányát. Ez lehetővé teszi, hogy gyorsan átlásd, mely területeken kell változtatnod a céljaid eléréséhez.",
-    "faq_third_question" => "Mit rögzíthetek az ételnaplóban?",
-    "faq_third_answer" => "Az ételnapló segítségével részletesen nyomon követheted a napi étkezéseidet. Rögzítheted az elfogyasztott ételeket, azok mennyiségét, kalóriatartalmát, valamint a makrotápanyagokat (fehérje, szénhidrát, zsír). Ez segít abban, hogy tudatosan étkezz, és könnyebben tartsd a napi kalóriakeretedet a céljaid eléréséhez.",
+
+    // Team
+    "team_section_title" => "Ketten a világ ellen",
+    "team_section_description" => "Egy fiatal, ambiciózus csapat vagyunk, akik nem érik be a középszerűvel. Ketten indítottuk el a FitTrack-et azzal a céllal, hogy a piac legjobb platformját hozzuk létre nektek.",
+    "role_dev" => "Alapító / Fejlesztő",
+    "role_design" => "Alapító / Design",
     "team_title" => "Csapatunk",
+
+    // FAQ
+    "faq_title" => "Gyakori kérdések",
+    "faq_subtitle" => "Minden, amit tudni érdemes a platformunkról.",
+    "faq_first_question" => "Miben más ez, mint a többi app?",
+    "faq_first_answer" => "Személyesebbek vagyunk. Itt nem egy multi algoritmusai mögé bújsz, hanem egy olyan eszközt kapsz, amit mi is nap mint nap használunk az edzéseinkhez.",
+    "faq_second_question" => "Szinkronizálhatom az órámat?",
+    "faq_second_answer" => "Igen, folyamatosan dolgozunk az Apple Health és Google Fit integrációkon, hogy az adatok maguktól áramoljanak.",
+    "faq_third_question" => "Ingyenes marad az alkalmazás?",
+    "faq_third_answer" => "Az alap funkciók (kalória és edzésnapló) örökre ingyenesek maradnak, mert hiszünk abban, hogy az egészség nem lehet pénzkérdés.",
 ];

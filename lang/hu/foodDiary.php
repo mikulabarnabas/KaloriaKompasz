@@ -1,6 +1,7 @@
 <?php
 
 return [
+    "remaining_label" => "Hátralévő",
     "date" => "Ételnapló dátuma",
     "search_title" => "Keresés",
     "search_placeholder" => "Keress név alapján ételt.",
@@ -14,8 +15,8 @@ return [
     "amount_label" => "Mennyiség",
     "unit_label" => "Mértékegység",
     "add_button" => "Hozzáadás",
-    "added_response" => "{Hozzáadtad} {food} ({meal x{amount} — {date}",
-    "create_food_title" => "Új étel hozzáadása",
+    "added_response" => "Hozzáadtad: {food} ({meal}) x{amount} — {date}",
+    "create_food_title" => "Új étel",
     "food_name_label" => "Név",
     "calorie_label" => "Kalória",
     "fat_label" => "Zsír",
@@ -37,7 +38,11 @@ return [
     "delete_confirmation" => "Biztosan törölni akarod ezt az ételt?",
     "breakfast" => "Reggeli",
     "lunch" => "Ebéd",
-    "dinner" =>  "Vacsora",
+    "dinner" => "Vacsora",
     "snack" => "Nasi",
     "other" => "Más",
+    "kcal_unit" => "kcal",
+    "protein_short" => "F", 
+    "carb_short" => "SZ",
+    "fat_short" => "ZS",
 ];

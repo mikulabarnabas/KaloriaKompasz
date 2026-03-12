@@ -1,5 +1,6 @@
 <script setup>
 import { computed } from 'vue';
+import { trans as t } from 'laravel-vue-i18n';
 
 const props = defineProps({
   totals: Object,
@@ -7,16 +8,18 @@ const props = defineProps({
 });
 
 const macroConfig = computed(() => [
-  { label: 'Protein', value: props.totals.protein },
-  { label: 'Carbs', value: props.totals.carbs },
-  { label: 'Fats', value: props.totals.fats },
+  { label: t('foodDiary.protein_label'), value: props.totals.protein },
+  { label: t('foodDiary.carb_label'), value: props.totals.carbs },
+  { label: t('foodDiary.fat_label'), value: props.totals.fats },
 ]);
 </script>
 
 <template>
   <section class="grid grid-cols-2 md:grid-cols-4 gap-4">
     <div class="bg-primary/10 border border-primary/20 rounded-2xl p-4 backdrop-blur-md relative overflow-hidden">
-      <p class="text-[10px] font-black text-primary uppercase tracking-widest">Remaining</p>
+      <p class="text-[10px] font-black text-primary uppercase tracking-widest">
+        {{ $t('foodDiary.remaining_label') }}
+      </p>
       <h3 class="text-2xl font-black mt-1 text-main-text">
         {{ goal - totals.kcal }}
         <span class="text-xs font-normal opacity-60">kcal</span>
