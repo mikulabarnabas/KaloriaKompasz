@@ -39,5 +39,13 @@ return [
     'close' => 'Close',
     'continue_with' => 'Or continue with',
     'welcome_back' => 'Welcome back',
-    'signing_in' => 'You will be in slowly...'
+    'signing_in' => 'You will be in slowly...',
+    'forgot_password_title' => 'Forgot <span class="text-primary">password?</span>',
+    'forgot_password_subtitle' => "No problem. Just let us know your email address and we will email you a password reset link.",
+    'send_reset_link' => 'Send Password Reset Link',
+    'reset_password_title' => 'Reset <span class="text-primary">password</span>',
+    'reset_password_button' => 'Update Password',
+    'new_password' => 'New Password',
+    'sending' => 'Sending...',
+    'updating' => 'Updating...',
 ];

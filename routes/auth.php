@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Http\Middleware\HandlePrecognitiveRequests;
+use Illuminate\Http\Request;
 use Inertia\Inertia;
 
 Route::middleware('guest')->group(function () {
@@ -17,7 +18,7 @@ Route::middleware('guest')->group(function () {
 
     Route::get('/forgot-password', fn() => Inertia::render('forgot-password'))->name('password.request');
     Route::post('/forgot-password', [AuthController::class, 'sendResetLink'])->name('password.email');
-    Route::get('/reset-password/{token}', fn($token) => Inertia::render('reset-password', ['token' => $token]))->name('password.reset');
+    Route::get('/reset-password/{token}', fn(Request $request, $token) => Inertia::render('reset-password', ['token' => $token, 'email' => $request->query('email')]))->name('password.reset');
     Route::post('/reset-password', [AuthController::class, 'resetPassword'])->name('password.update');
 });
 

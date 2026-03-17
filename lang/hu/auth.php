@@ -39,5 +39,14 @@ return [
     'register_dialog_message' => 'Mostmár bejelentkezhet',
     'continue_with' => 'Vagy folytas',
     'welcome_back' => 'Üdv újra',
-    'signing_in' => 'Lassan bent leszel...'
+    'signing_in' => 'Lassan bent leszel...',
+    'login_dialog_message' => 'Bent van!',
+    'forgot_password_title' => 'Elfelejtett <span class="text-primary">jelszó?</span>',
+    'forgot_password_subtitle' => "Semmi gond. Add meg az e-mail címed, és küldünk egy linket, amivel beállíthatsz egy újat.",
+    'send_reset_link' => 'Visszaállító link küldése',
+    'reset_password_title' => 'Új <span class="text-primary">jelszó</span> megadása',
+    'reset_password_button' => 'Jelszó frissítése',
+    'new_password' => 'Új jelszó',
+    'sending' => 'Küldés...',
+    'updating' => 'Frissítés...',
 ];
