@@ -10,11 +10,16 @@ defineProps({
 </script>
 
 <template>
-  <button :type="type" :disabled="disabled || loading" class="relative w-full h-14 rounded-xl flex items-center justify-center transition-all duration-100 
+  <button 
+    :type="type" 
+    :disabled="disabled || loading" 
+    class="relative w-full h-14 rounded-xl flex items-center justify-center transition-all duration-100 
            bg-primary text-black font-black uppercase tracking-widest text-[13px]
            hover:brightness-105 active:scale-[0.98] active:translate-y-px
            disabled:opacity-40 disabled:cursor-not-allowed disabled:transform-none
-           shadow-sm hover:shadow-md border-b-2 border-black/10 active:border-b-0">
+           shadow-sm hover:shadow-md border-b-2 border-black/10 active:border-b-0
+           cursor-pointer" 
+  >
     <div
       class="absolute inset-0 bg-white/10 opacity-0 hover:opacity-100 transition-opacity duration-100 pointer-events-none">
     </div>

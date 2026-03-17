@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Http\Middleware\HandlePrecognitiveRequests;
 
 Route::middleware(['auth'])->group(function () {
-    
+
     Route::prefix('profile')->group(function () {
         Route::get('/', [ProfileController::class, 'show'])->name('profile.show');
         Route::post('/save', [ProfileController::class, 'save'])
@@ -36,5 +36,8 @@ Route::middleware(['auth'])->group(function () {
         Route::delete('/entry/{date}/{id}', 'deleteEntry');
     });
 
-    Route::get('/stats', [StatisticsController::class, 'index'])->name('stats.index');
+    Route::controller(FoodController::class)->prefix('stats')->name('stat.')->group(function () {
+        Route::get('/', [StatisticsController::class, 'index'])->name('stats.index');
+        Route::get('/getData/{date}', [StatisticsController::class, 'getData']);
+    });
 });

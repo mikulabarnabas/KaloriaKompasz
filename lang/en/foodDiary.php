@@ -59,4 +59,7 @@ return [
     "add_to_diary_subtitle" => "Select meal type and portion size.",
     "calculated_totals" => "Calculated Totals",
     "meal_log_title" => "Meal Log",
+    "activity_food" => "Nutritional Intake",
+    "activity_workout" => "Physical Activity",
+    "update" => "Updating food diary"
 ];

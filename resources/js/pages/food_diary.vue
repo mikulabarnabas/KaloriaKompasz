@@ -10,7 +10,7 @@ import AddFoodEntry from "@/Components/addFoodEntry.vue";
 import AddFood from "@/Components/addFood.vue";
 import DateNavigator from "@/Components/dateNavigator.vue"
 import { trans as t } from 'laravel-vue-i18n';
-import Button from "@/COmponents/button.vue"
+import Button from "@/Components/button.vue"
 
 defineOptions({ layout: AppLayout });
 
@@ -40,9 +40,13 @@ const dailyTotals = computed(() => {
   return totals;
 });
 
+const isLoading = ref(false);
+
 const fetchDiary = async () => {
+  isLoading.value = true;
   const { data } = await axios.get(`/fdiary/diary/${formattedDate.value}`);
   entries.value = data.diary ?? [];
+  isLoading.value = false;
 };
 
 const onFoodSelect = (food) => {
@@ -89,15 +93,26 @@ watch(formattedDate, fetchDiary, { immediate: true });
         </div>
       </header>
 
-      <div class="p-6 space-y-8 pb-32">
-        <div class="max-w-4xl mx-auto space-y-10">
+      <div class="relative p-6 pb-32 min-h-100">
+
+        <div v-if="isLoading"
+          class="absolute inset-0 z-50 flex flex-col items-center pt-20 bg-background-dark/10 backdrop-blur-[2px] transition-all duration-300">
+          <div class="w-16 h-16 border-4 border-primary/10 border-t-primary rounded-full animate-spin"></div>
+          <p class="mt-4 text-[10px] font-black uppercase tracking-[0.5em] text-primary">{{ $t('foodDiary.update') }}</p>
+        </div>
+
+        <div class="max-w-4xl mx-auto space-y-10 transition-all duration-500"
+          :class="[isLoading ? 'opacity-30 blur-md pointer-events-none' : 'opacity-100 blur-0']">
+
           <div class="animate-fly-in" style="animation-delay: 100ms">
             <MacroSummary :totals="dailyTotals" :goal="2500" />
           </div>
 
           <div class="space-y-6 animate-fly-in" style="animation-delay: 200ms">
             <div class="flex items-center gap-4 mb-2">
-              <h3 class="text-xs font-black uppercase tracking-[0.2em] text-secondary-text">{{ t('foodDiary.meal_log_title') }}</h3>
+              <h3 class="text-xs font-black uppercase tracking-[0.2em] text-secondary-text">
+                {{ t('foodDiary.meal_log_title') }}
+              </h3>
               <div class="h-px flex-1 bg-neutral-border/50"></div>
             </div>
 

@@ -151,9 +151,6 @@ function closeSuccessDialog() { showSuccessDialog.value = false; }
                   :class="form.weight_goal === option.value ? 'text-primary' : 'text-secondary-text'">{{ option.icon
                   }}</span>
                 <span class="text-[10px] font-black uppercase tracking-[0.2em]">{{ option.label }}</span>
-                <div v-if="form.weight_goal === option.value" class="absolute top-0 right-0 p-2">
-                  <div class="w-2 h-2 rounded-full bg-primary shadow-[0_0_10px_var(--color-primary)]"></div>
-                </div>
               </button>
             </div>
 

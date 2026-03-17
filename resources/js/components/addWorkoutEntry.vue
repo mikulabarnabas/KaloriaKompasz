@@ -1,7 +1,6 @@
 <script setup>
 import { computed, watch } from "vue";
 import { useForm } from "laravel-precognition-vue";
-//import GlowingButton from "@/Components/glowingButton.vue";
 import Button from "@/Components/button.vue";
 import Input from "@/Components/input.vue";
 import { trans as t } from 'laravel-vue-i18n';
@@ -17,8 +16,8 @@ const emit = defineEmits(['close', 'saved']);
 const UNIT_TO_BASE = { minutes: 1, hours: 60, m: 1, km: 1000 };
 
 const unitOptions = computed(() => [
-    { label: t('workoutDiary.minute'), value: "minutes" },
-    { label: t('workoutDiary.hour'), value: "hours" },
+    { label: t('workoutDiary.minutes'), value: "minutes" },
+    { label: t('workoutDiary.hours'), value: "hours" },
     { label: t('workoutDiary.km'), value: "km" },
     { label: t('workoutDiary.m'), value: "m" }
 ]);

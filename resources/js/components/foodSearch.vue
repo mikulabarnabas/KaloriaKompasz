@@ -1,7 +1,7 @@
 <script setup>
 import { ref, watch } from "vue";
 import axios from "axios";
-import { getActiveLanguage } from "laravel-vue-i18n";
+import FoodCard from "@/Components/foodCard.vue";
 
 const props = defineProps({
   placeholder: { type: String, default: "Search food..." }
@@ -60,13 +60,6 @@ watch(search, (val) => {
   searchFood();
 });
 
-const getDisplayName = (item) => {
-  console.log(getActiveLanguage())
-  if (getActiveLanguage() === 'hu' && item.name_hu) {
-    return item.name_hu;
-  }
-  return item.name;
-};
 </script>
 
 <template>
@@ -85,26 +78,7 @@ const getDisplayName = (item) => {
         class="absolute top-full left-0 right-0 mt-2 bg-background-dark/95 backdrop-blur-xl border border-neutral-border rounded-2xl shadow-2xl overflow-hidden z-100">
 
         <div class="max-h-100 overflow-y-auto divide-y divide-neutral-border/50" @scroll="handleScroll">
-          <button v-for="food in searchedFoods" :key="food.id" @click="selectFood(food)"
-            class="w-full flex items-center gap-4 p-4 hover:bg-primary/10 transition-colors text-left group/item">
-            <div
-              class="w-12 h-12 rounded-xl bg-neutral-dark shrink-0 overflow-hidden border border-neutral-border group-hover/item:border-primary/50 transition-colors">
-              <img v-if="food.image" :src="food.image" class="w-full h-full object-cover" />
-              <div v-else class="w-full h-full flex items-center justify-center bg-primary/10 text-primary">
-                <span class="material-symbols-outlined text-xl">restaurant</span>
-              </div>
-            </div>
-
-            <div class="flex-1 min-w-0">
-              <h4 class="text-main-text font-bold truncate group-hover/item:text-primary transition-colors">
-                {{ getDisplayName(food) }}
-              </h4>
-              <p class="text-sm text-secondary-text truncate">
-                <span class="text-primary/80">{{ food.calorie }} kcal</span> • {{ food.protein }}g p • {{ food.carb }}g
-                c • {{ food.fat }}g f
-              </p>
-            </div>
-          </button>
+            <FoodCard v-for="food in searchedFoods" :key="food.id" :food="food" clickable @click="selectFood(food)" />
         </div>
       </div>
     </Transition>

@@ -18,10 +18,10 @@ const toggle = (index) => {
 <template>
     <div class="flex flex-col gap-4 text-left">
         <div v-for="(item, index) in items" :key="index"
-            class="rounded-2xl border border-neutral-border bg-neutral-dark/50 overflow-hidden transition-all duration-300"
-            :class="{ 'border-primary/40 bg-neutral-dark/80 ring-1 ring-primary/20': activeIndex === index }">
-            <button @click="toggle(index)"
-                class="flex w-full items-center justify-between p-6 text-left focus:outline-none">
+            class="rounded-2xl border border-neutral-border bg-neutral-dark/50 overflow-hidden transition-all duration-300 cursor-pointer hover:border-primary/30"
+            :class="{ 'border-primary/40 bg-neutral-dark/80 ring-1 ring-primary/20': activeIndex === index }"
+            @click="toggle(index)"> <button @click.stop="toggle(index)"
+                class="flex w-full items-center justify-between p-6 text-left focus:outline-none cursor-pointer">
                 <span class="text-lg font-bold transition-colors duration-300"
                     :class="activeIndex === index ? 'text-primary' : 'text-main-text'">
                     {{ item.question }}

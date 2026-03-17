@@ -28,8 +28,6 @@ class ProfileController extends Controller
             $data
         );
 
-        $profile->refresh();
-
         return back()->with('success', 'Profile updated.');
     }
 }

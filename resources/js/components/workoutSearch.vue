@@ -2,6 +2,7 @@
 import { ref, watch } from "vue";
 import axios from "axios";
 import { getActiveLanguage } from "laravel-vue-i18n";
+import WorkoutCard from "@/Components/workoutCard.vue"
 
 const props = defineProps({
   placeholder: { type: String, default: "Search exercise..." }
@@ -80,37 +81,15 @@ const getDisplayName = (item) => {
         class="w-full pl-12 pr-12 py-3 bg-neutral-dark/40 border border-neutral-border rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent text-main-text placeholder-secondary-text/50 transition-all outline-none" />
     </div>
 
-    <Transition 
-      enter-active-class="transition duration-200 ease-out" 
-      enter-from-class="translate-y-1 opacity-0"
-      enter-to-class="translate-y-0 opacity-100" 
-      leave-active-class="transition duration-150 ease-in"
-      leave-from-class="translate-y-0 opacity-100" 
-      leave-to-class="translate-y-1 opacity-0"
-    >
+    <Transition enter-active-class="transition duration-200 ease-out" enter-from-class="translate-y-1 opacity-0"
+      enter-to-class="translate-y-0 opacity-100" leave-active-class="transition duration-150 ease-in"
+      leave-from-class="translate-y-0 opacity-100" leave-to-class="translate-y-1 opacity-0">
       <div v-if="isDropdownOpen && searchedExercises.length > 0"
         class="absolute top-full left-0 right-0 mt-2 bg-background-dark/95 backdrop-blur-xl border border-neutral-border rounded-2xl shadow-2xl overflow-hidden z-100">
 
         <div class="max-h-100 overflow-y-auto divide-y divide-neutral-border/50" @scroll="handleScroll">
-          <button v-for="exercise in searchedExercises" :key="exercise.id" @click="selectExercise(exercise)"
-            class="w-full flex items-center gap-4 p-4 hover:bg-primary/10 transition-colors text-left group/item">
-            
-            <div class="w-12 h-12 rounded-xl bg-neutral-dark shrink-0 overflow-hidden border border-neutral-border group-hover/item:border-primary/50 transition-colors flex items-center justify-center">
-              <span class="material-symbols-outlined text-primary text-xl">fitness_center</span>
-            </div>
-
-            <div class="flex-1 min-w-0">
-              <h4 class="text-main-text font-bold truncate group-hover/item:text-primary transition-colors">
-                {{ getDisplayName(exercise) }}
-              </h4>
-              <p class="text-sm text-secondary-text truncate">
-                <span class="text-primary/80">
-                  {{ exercise.calories_per_unit }} {{ $t('workoutDiary.calorie_label') }}
-                </span> 
-                • {{ exercise.unit }}
-              </p>
-            </div>
-          </button>
+          <WorkoutCard v-for="exercise in searchedExercises" :key="exercise.id" :exercise="exercise" clickable
+            @click="selectExercise(exercise)" />
         </div>
       </div>
     </Transition>

@@ -64,7 +64,7 @@ const weeklyData = computed(() => {
                 <div v-for="day in weeklyData" :key="day.date"
                     class="flex-1 flex flex-col items-center gap-3 group relative">
 
-                    <div class="absolute -top-12 opacity-0 group-hover:opacity-100 transition-opacity bg-primary text-background-dark text-[10px] font-black px-2 py-1 rounded mb-2 z-20 pointer-events-none whitespace-nowrap">
+                    <div class="absolute -top-12 transition-opacity bg-primary text-background-dark text-[10px] font-black px-2 py-1 rounded mb-2 z-20 pointer-events-none whitespace-nowrap">
                         {{ day.netCalories }} kcal
                     </div>
 
@@ -73,7 +73,7 @@ const weeklyData = computed(() => {
                             :style="{ height: `${day.percent}%` }"></div>
                     </div>
 
-                    <span class="text-[9px] font-black uppercase tracking-tighter opacity-40 group-hover:opacity-100 group-hover:text-primary transition-all">
+                    <span class="text-[9px] font-black uppercase tracking-tighter group-hover:opacity-100 group-hover:text-primary transition-all">
                         {{ day.label }}
                     </span>
                 </div>

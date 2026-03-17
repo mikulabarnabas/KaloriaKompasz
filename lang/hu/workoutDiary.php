@@ -52,11 +52,11 @@ return [
 
     // megerősítés
     "delete_confirmation" => "Biztosan törölni szeretnéd a kiválasztott gyakorlatot?",
-    "minute" => "perc",
-    "hour" => "óra",
+    "minutes" => "perc",
+    "hours" => "óra",
     "km" => "kilométer",
     "m" => "méter",
     "amount_label" => "Mennyiség",
-    "duration_label" => "Összes aktív idő"
-
+    "duration_label" => "Összes aktív idő",
+    "update" => "Edzésnapló frissítése"
 ];

@@ -42,7 +42,7 @@ return [
     "snack" => "Nasi",
     "other" => "Más",
     "kcal_unit" => "kcal",
-    "protein_short" => "F", 
+    "protein_short" => "F",
     "carb_short" => "SZ",
     "fat_short" => "ZS",
     "visuals_title" => "Megjelenés",
@@ -59,4 +59,7 @@ return [
     "add_to_diary_subtitle" => "Válaszd ki az étkezést és az adagot.",
     "calculated_totals" => "Számított összesen",
     "meal_log_title" => "Étkezési napló",
+    "activity_food" => "Tápanyagbevitel",
+    "activity_workout" => "Fizikai aktivitás",
+    "update" => "Ételnapló frissítése"
 ];

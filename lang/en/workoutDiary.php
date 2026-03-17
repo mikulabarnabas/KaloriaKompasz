@@ -53,10 +53,10 @@ return [
     // confirm
     "delete_confirmation" => "Are you sure you want to delete the selected exercise?",
     "minute" => "minute",
-    "hour" => "hour",
+    "hours" => "hour",
     "km" => "kilometer",
     "m" => "meter",
     "amount_label" => "Amount",
-    "duration_label" => "Total Time Active"
-
+    "duration_label" => "Total Time Active",
+    "update" => "Updating workout diary"
 ];
