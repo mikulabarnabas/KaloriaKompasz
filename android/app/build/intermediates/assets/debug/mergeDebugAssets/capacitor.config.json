@@ -1,17 +1,18 @@
 {
-	"appId": "hu.kaloriakompasz",
-	"appName": "KaloriaKompasz",
-	"webDir": "public",
-	"allowNavigation": [
-		"https://kaloriakompasz.hu/"
-	],
-	"server": {
-		"url": "https://kaloriakompasz.hu/",
-		"cleartext": true
-	},
-	"plugins": {
-		"CapacitorCookies": {
-			"enabled": true
-		}
-	}
+    "appId": "hu.kaloriakompasz",
+    "appName": "KaloriaKompasz",
+    "webDir": "public",
+    "allowNavigation": [
+        "192.168.0.13"
+    ],
+    "server": {
+        "url": "http://192.168.0.13:8000",
+        "logLevel": "error",
+        "cleartext": true
+    },
+    "plugins": {
+        "CapacitorCookies": {
+            "enabled": true
+        }
+    }
 }

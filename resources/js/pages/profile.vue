@@ -3,7 +3,7 @@ import { ref, computed } from "vue";
 import { usePage } from "@inertiajs/vue3"
 import { trans as t } from 'laravel-vue-i18n';
 import { useForm } from "laravel-precognition-vue";
-import AppLayout from "@/Layouts/AppLayout.vue"
+import AppLayout from "@/Layouts/appLayout.vue"
 import Input from "@/Components/input.vue"
 import Button from "@/Components/button.vue"
 

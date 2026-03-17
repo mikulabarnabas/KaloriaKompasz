@@ -50,6 +50,10 @@ class MainActivity : BridgeActivity() {
 
         private val healthConnectClient by lazy { HealthConnectClient.getOrCreate(context) }
 
+        private val permissions = setOf(
+            androidx.health.connect.client.permission.HealthPermission.getReadPermission(StepsRecord::class)
+        )
+
         @PluginMethod
         fun getHealthStatus(call: PluginCall) {
             val availabilityStatus = HealthConnectClient.getSdkStatus(context)
@@ -61,6 +65,39 @@ class MainActivity : BridgeActivity() {
                 ret.put("updateUri", "market://details?id=$providerPackageName")
             }
             call.resolve(ret)
+        }
+
+        @PluginMethod
+        fun requestHealthPermissions(call: PluginCall) {
+            activity.lifecycleScope.launch {
+                try {
+                    val intent = Intent(HealthConnectClient.ACTION_HEALTH_CONNECT_SETTINGS)
+
+                    activity.startActivity(intent)
+
+                    call.resolve()
+                } catch (e: Exception) {
+                    Log.e("HealthConnect", "Hiba az ablak nyitásakor", e)
+                    call.reject("Nem sikerült megnyitni az engedélykezelőt: ${e.localizedMessage}")
+                }
+            }
+        }
+
+        @PluginMethod
+        fun checkHealthPermissions(call: PluginCall) {
+            activity.lifecycleScope.launch {
+                try {
+                    // Itt a 'permissions' az a set, amit már definiáltál feljebb
+                    val granted = healthConnectClient.permissionController.getGrantedPermissions()
+                    val hasAll = granted.containsAll(permissions)
+
+                    val ret = JSObject()
+                    ret.put("granted", hasAll)
+                    call.resolve(ret)
+                } catch (e: Exception) {
+                    call.reject("Hiba az engedélyek ellenőrzésekor: ${e.message}")
+                }
+            }
         }
 
         @PluginMethod
@@ -77,21 +114,25 @@ class MainActivity : BridgeActivity() {
 
         @PluginMethod
         fun getSteps(call: PluginCall) {
-            // Indítunk egy Coroutine-t a háttérben
+            val dateString = call.getString("date")
+
+            if (dateString == null) {
+                call.reject("A 'date' paraméter megadása kötelező (YYYY-MM-DD formátumban).")
+                return
+            }
+
             activity.lifecycleScope.launch {
                 try {
-                    val startOfDay = Instant.now()
-                        .atZone(ZoneId.systemDefault())
-                        .toLocalDate()
-                        .atStartOfDay(ZoneId.systemDefault())
-                        .toInstant()
+                    val localDate = LocalDate.parse(dateString)
+                    val zoneId = ZoneId.systemDefault()
 
-                    val endTime = Instant.now()
+                    val startOfDay = localDate.atStartOfDay(zoneId).toInstant()
+                    val endOfDay = localDate.plusDays(1).atStartOfDay(zoneId).toInstant()
 
                     val response = healthConnectClient.readRecords(
                         ReadRecordsRequest(
                             recordType = StepsRecord::class,
-                            timeRangeFilter = TimeRangeFilter.between(startOfDay, endTime)
+                            timeRangeFilter = TimeRangeFilter.between(startOfDay, endOfDay)
                         )
                     )
 
@@ -99,8 +140,11 @@ class MainActivity : BridgeActivity() {
 
                     val ret = JSObject()
                     ret.put("steps", totalSteps)
+                    ret.put("date", dateString)
                     call.resolve(ret)
+
                 } catch (e: Exception) {
+                    Log.e("HealthConnect", "Hiba a dátum feldolgozásakor", e)
                     call.reject("Hiba a lépések lekérdezésekor: ${e.message}")
                 }
             }
@@ -111,78 +155,76 @@ class MainActivity : BridgeActivity() {
     @CapacitorPlugin(name = "SamsungHealthCustom")
     open class SamsungHealthPlugin : com.getcapacitor.Plugin() {
 
+        // 1. FÜGGVÉNY: Csak ellenőrzi az engedélyeket (nem ugrik fel semmi)
         @PluginMethod
-        fun getSamsungSteps(call: PluginCall) {
-            val date = LocalDate.now()
-
-            // Használjuk a beépített lifecycleScope-ot a CoroutineScope helyett!
+        fun checkSamsungPermissions(call: PluginCall) {
             activity.lifecycleScope.launch {
                 try {
                     val store = HealthDataService.getStore(context)
                     val requiredPermissions = setOf(Permission.of(DataTypes.STEPS, AccessType.READ))
 
-                    // 1. Engedélyek ellenőrzése és kérése
-                    val granted = areAllPermissionsObtained(store, requiredPermissions)
+                    val grantedResult = store.getGrantedPermissions(requiredPermissions)
+                    val hasAll = grantedResult.containsAll(requiredPermissions)
 
-                    if (granted) {
-                        // 2. Adatlekérés (külön IO szálon, hogy ne blokkolja a UI-t)
-                        val totalSteps = withContext(Dispatchers.IO) {
-                            val stepsRequest = DataType.StepsType.TOTAL.requestBuilder
-                                .setLocalTimeFilterWithGroup(
-                                    LocalTimeFilter.of(date.atStartOfDay(), date.plusDays(1).atStartOfDay()),
-                                    LocalTimeGroup.of(LocalTimeGroupUnit.DAILY, 1)
-                                ).build()
-
-                            val response = store.aggregateData(stepsRequest)
-                            var sum = 0L
-                            response.dataList.forEach { sum += it.value ?: 0L }
-                            sum
-                        }
-
-                        val ret = JSObject()
-                        ret.put("steps", totalSteps)
-                        call.resolve(ret)
-                    } else {
-                        call.reject("A felhasználó megtagadta az engedélyeket.")
-                    }
+                    val ret = JSObject()
+                    ret.put("granted", hasAll)
+                    call.resolve(ret)
                 } catch (e: Exception) {
-                    Log.e("SamsungHealth", "Hiba", e)
-                    call.reject("Kritikus hiba: ${e.localizedMessage}")
+                    call.reject("Hiba az ellenőrzéskor: ${e.localizedMessage}")
                 }
             }
         }
 
-        private suspend fun areAllPermissionsObtained(
-            store: HealthDataStore,
-            permissions: Set<Permission>
-        ): Boolean {
-            return try {
-                val initialResult = store.getGrantedPermissions(permissions)
-                if (!initialResult.containsAll(permissions)) {
-                    // Itt történik a "mágia": az activity.lifecycleScope biztosítja,
-                    // hogy az app ne záródjon be, amíg az új ablak megnyílik.
-                    val obtainedResult = store.requestPermissions(permissions, activity)
-                    obtainedResult.containsAll(permissions)
-                } else {
-                    true
+        // 2. FÜGGVÉNY: Feldobja az engedélykérő ablakot
+        @PluginMethod
+        fun requestSamsungPermissions(call: PluginCall) {
+            activity.lifecycleScope.launch {
+                try {
+                    val store = HealthDataService.getStore(context)
+                    val requiredPermissions = setOf(Permission.of(DataTypes.STEPS, AccessType.READ))
+
+                    // Ez nyitja meg a Samsung Health engedélykérő Activity-t
+                    val result = store.requestPermissions(requiredPermissions, activity)
+                    val hasAll = result.containsAll(requiredPermissions)
+
+                    val ret = JSObject()
+                    ret.put("granted", hasAll)
+                    call.resolve(ret)
+                } catch (e: Exception) {
+                    call.reject("Hiba az engedélykéréskor: ${e.localizedMessage}")
                 }
-            } catch (error: HealthDataException) {
-                Log.e("SamsungHealth", "Engedély hiba", error)
-                false
             }
         }
 
-        private suspend fun getAggregateResult(
-            store: HealthDataStore,
-            date: LocalDate
-        ): DataResponse<AggregatedData<Long>> {
-            val stepsRequest = DataType.StepsType.TOTAL.requestBuilder
-                .setLocalTimeFilterWithGroup(
-                    LocalTimeFilter.of(date.atStartOfDay(), date.plusDays(1).atStartOfDay()),
-                    LocalTimeGroup.of(LocalTimeGroupUnit.DAILY, 1)
-                ).build()
+        @PluginMethod
+        fun getSteps(call: PluginCall) {
+            val dateString = call.getString("date") ?: return call.reject("Dátum hiányzik")
 
-            return store.aggregateData(stepsRequest)
+            activity.lifecycleScope.launch {
+                try {
+                    val store = HealthDataService.getStore(context)
+                    val targetDate = LocalDate.parse(dateString)
+
+                    val totalSteps = withContext(Dispatchers.IO) {
+                        val stepsRequest = DataType.StepsType.TOTAL.requestBuilder
+                            .setLocalTimeFilterWithGroup(
+                                LocalTimeFilter.of(targetDate.atStartOfDay(), targetDate.plusDays(1).atStartOfDay()),
+                                LocalTimeGroup.of(LocalTimeGroupUnit.DAILY, 1)
+                            ).build()
+
+                        val response = store.aggregateData(stepsRequest)
+                        var sum = 0L
+                        response.dataList.forEach { sum += it.value ?: 0L }
+                        sum
+                    }
+
+                    val ret = JSObject()
+                    ret.put("steps", totalSteps)
+                    call.resolve(ret)
+                } catch (e: Exception) {
+                    call.reject("Hiba: ${e.localizedMessage}")
+                }
+            }
         }
     }
 }

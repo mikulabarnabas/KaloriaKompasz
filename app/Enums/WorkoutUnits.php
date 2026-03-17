@@ -8,6 +8,7 @@ enum WorkoutUnits: string
     case HOURS = 'hours';
     case M = 'm';
     case KM = 'km';
+    case STEPS = 'steps';
 
     public function toBaseFactor(): float
     {
@@ -16,6 +17,7 @@ enum WorkoutUnits: string
             self::HOURS => 60,
             self::M => 1,
             self::KM => 1000,
+            self::STEPS => 1,
         };
     }
 

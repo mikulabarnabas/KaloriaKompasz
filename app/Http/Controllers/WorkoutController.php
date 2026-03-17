@@ -112,4 +112,27 @@ class WorkoutController extends Controller
             'pageCount' => Exercises::search($searchTerm)->count(),
         ]);
     }
+
+    public function syncSteps(Request $request)
+    {
+        $user = auth()->user();
+        $steps = $request->steps;
+        $date = $request->date;
+
+        $calories = round($steps * 0.04);
+
+        $exerciseId = 1;
+
+        $diary = WorkoutDiary::firstOrCreate(['user_id' => $user->id, 'date' => $date]);
+
+        $diary->exercises()->syncWithoutDetaching([
+            $exerciseId => [
+                'amount' => $steps,
+                'unit' => 'steps',
+                'burned_calories' => $calories
+            ]
+        ]);
+
+        return response()->json(['success' => true]);
+    }
 }

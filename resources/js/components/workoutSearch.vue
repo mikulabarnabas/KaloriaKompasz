@@ -1,7 +1,6 @@
 <script setup>
 import { ref, watch } from "vue";
 import axios from "axios";
-import { getActiveLanguage } from "laravel-vue-i18n";
 import WorkoutCard from "@/Components/workoutCard.vue"
 
 const props = defineProps({
@@ -23,7 +22,6 @@ async function searchExercise() {
     isLoading.value = true;
     currentPage++;
     const { data } = await axios.get(`/wdiary/getExercises/${search.value}/${currentPage}`);
-
     if (currentPage === 1) {
       searchedExercises.value = data.result;
     } else {
@@ -62,14 +60,6 @@ watch(search, (val) => {
     isDropdownOpen.value = false;
   }
 });
-
-const getDisplayName = (item) => {
-  console.log(getActiveLanguage())
-  if (getActiveLanguage() === 'hu' && item.name_hu) {
-    return item.name_hu;
-  }
-  return item.name;
-};
 </script>
 
 <template>

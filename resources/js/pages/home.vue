@@ -1,31 +1,11 @@
 <script setup>
-import AppLayout from "@/Layouts/AppLayout.vue"
+import AppLayout from "@/Layouts/appLayout.vue"
 import Accordion from "@/Components/accordion.vue"
-import { ref, computed } from "vue"
+import { computed } from "vue"
 import { trans as t } from 'laravel-vue-i18n';
-import { registerPlugin } from '@capacitor/core';
 import Card from "@/Components/card.vue"
 import { router } from "@inertiajs/vue3";
 
-const googleSteps = ref(0);
-const samsungSteps = ref(0);
-
-const SamsungHealthCustom = registerPlugin('SamsungHealthCustom');
-const HealthConnectBridge = registerPlugin('HealthConnectBridge');
-
-const fetchSteps = async () => {
-  try {
-    const shResult = await SamsungHealthCustom.getSamsungSteps();
-    samsungSteps.value = shResult.steps;
-
-    const hcResult = await HealthConnectBridge.getSteps();
-    googleSteps.value = hcResult.steps;
-  } catch (error) {
-    console.error("Részletes hiba:", error);
-  }
-};
-
-// Computed property to handle reactive translation updates for the Accordion
 const faqItems = computed(() => [
   {
     question: t('home.faq_first_question'),

@@ -27,7 +27,7 @@ const displayName = computed(() => {
     <div
       class="w-12 h-12 rounded-xl bg-neutral-dark shrink-0 flex items-center justify-center border border-neutral-border group-hover/ex-card:border-primary/50 transition-colors"
     >
-      <div class="w-full h-full flex items-center justify-center bg-primary/10 text-primary">
+      <div class="w-full h-full rounded-xl flex items-center justify-center bg-primary/10 text-primary">
         <span class="material-symbols-outlined text-xl transition-transform group-hover/ex-card:scale-110">
           fitness_center
         </span>

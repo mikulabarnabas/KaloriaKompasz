@@ -13,13 +13,14 @@ const props = defineProps({
 
 const emit = defineEmits(['close', 'saved']);
 
-const UNIT_TO_BASE = { minutes: 1, hours: 60, m: 1, km: 1000 };
+const UNIT_TO_BASE = { minutes: 1, hours: 60, m: 1, km: 1000, steps: 1 };
 
 const unitOptions = computed(() => [
     { label: t('workoutDiary.minutes'), value: "minutes" },
     { label: t('workoutDiary.hours'), value: "hours" },
     { label: t('workoutDiary.km'), value: "km" },
-    { label: t('workoutDiary.m'), value: "m" }
+    { label: t('workoutDiary.m'), value: "m" },
+    { label: t('workoutDiary.steps'), value: "steps" },
 ]);
 
 const form = useForm("post", "/wdiary/entry", {
@@ -33,6 +34,8 @@ const allowedUnits = computed(() => {
     if (!props.exercise) return [];
     const timeUnits = ['minutes', 'hours'];
     const distanceUnits = ['km', 'm'];
+    const stepUnits = ['steps'];
+    console.log(props.exercise)
 
     if (timeUnits.includes(props.exercise.unit)) {
         return unitOptions.value.filter(u => timeUnits.includes(u.value));
@@ -40,6 +43,10 @@ const allowedUnits = computed(() => {
     if (distanceUnits.includes(props.exercise.unit)) {
         return unitOptions.value.filter(u => distanceUnits.includes(u.value));
     }
+    if (stepUnits.includes(props.exercise.unit)) {
+        return unitOptions.value.filter(u => stepUnits.includes(u.value));
+    }
+    
     return unitOptions;
 });
 

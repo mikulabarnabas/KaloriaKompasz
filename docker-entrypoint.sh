@@ -1,4 +1,5 @@
 #!/bin/bash
+chown -R www-data:www-data /var/www/html
 
 if [ ! -f ".env" ]; then
     echo ".env file missing. Copying from .env.example..."

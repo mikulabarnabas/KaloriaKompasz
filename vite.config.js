@@ -17,18 +17,22 @@ export default defineConfig({
     ],
     resolve: {
         alias: {
-            // Only keep this if you need the runtime+compiler build
-            // vue: 'vue/dist/vue.esm-bundler.js',
+            '@/Components': '/resources/js/components',
+            '@/Pages': '/resources/js/pages',
+            '@/Layouts': '/resources/js/layouts',
         },
     },
     server: {
         host: "0.0.0.0",
         cors: true,
+        strictPort: true,
         hmr: {
-            host: "localhost",
+            host: "192.168.0.13",
+            clientPort: 5173,
         },
         watch: {
             usePolling: true,
+            interval: 100,
             ignored: ["**/storage/framework/views/**"],
         },
     },

@@ -17,7 +17,7 @@ return new class extends Migration {
 
             $table->enum('unit', WorkoutUnits::values());
 
-            $table->unsignedInteger('calories_per_unit')->default(0);
+            $table->float('calories_per_unit')->default(0);
 
             $table->text('note')->nullable();
 

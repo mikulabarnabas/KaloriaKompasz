@@ -1,17 +1,21 @@
 {
-  "_@inertiajs-BLtI5yrN.js": {
-    "file": "assets/@inertiajs-BLtI5yrN.js",
+  "_@capacitor-Ctv3sU0L.js": {
+    "file": "assets/@capacitor-Ctv3sU0L.js",
+    "name": "@capacitor"
+  },
+  "_@inertiajs-BhDcMxwq.js": {
+    "file": "assets/@inertiajs-BhDcMxwq.js",
     "name": "@inertiajs",
     "imports": [
       "_qs--MBLzBQd.js",
       "_axios-CACZDMKj.js",
       "_lodash-es-DvpUvOAH.js",
-      "_@vue-IdFOaUcZ.js",
+      "_@vue-QTk8pqQp.js",
       "_laravel-precognition-C8Svupo6.js"
     ]
   },
-  "_@vue-IdFOaUcZ.js": {
-    "file": "assets/@vue-IdFOaUcZ.js",
+  "_@vue-QTk8pqQp.js": {
+    "file": "assets/@vue-QTk8pqQp.js",
     "name": "@vue"
   },
   "_axios-CACZDMKj.js": {
@@ -105,20 +109,20 @@
       "_lodash-es-DvpUvOAH.js"
     ]
   },
-  "_laravel-precognition-vue-CQlHqA2W.js": {
-    "file": "assets/laravel-precognition-vue-CQlHqA2W.js",
+  "_laravel-precognition-vue-D2tqcFzr.js": {
+    "file": "assets/laravel-precognition-vue-D2tqcFzr.js",
     "name": "laravel-precognition-vue",
     "imports": [
       "_laravel-precognition-C8Svupo6.js",
       "_lodash-es-DvpUvOAH.js",
-      "_@vue-IdFOaUcZ.js"
+      "_@vue-QTk8pqQp.js"
     ]
   },
-  "_laravel-vue-i18n-C9FpQ-xD.js": {
-    "file": "assets/laravel-vue-i18n-C9FpQ-xD.js",
+  "_laravel-vue-i18n-BGcfwoDw.js": {
+    "file": "assets/laravel-vue-i18n-BGcfwoDw.js",
     "name": "laravel-vue-i18n",
     "imports": [
-      "_@vue-IdFOaUcZ.js"
+      "_@vue-QTk8pqQp.js"
     ]
   },
   "_lodash-es-DvpUvOAH.js": {
@@ -188,19 +192,19 @@
     "name": "vue"
   },
   "lang/php_en.json": {
-    "file": "assets/php_en-kKt-KDQm.js",
+    "file": "assets/php_en-Cz3nwHwq.js",
     "name": "php_en",
     "src": "lang/php_en.json",
     "isDynamicEntry": true
   },
   "lang/php_hu.json": {
-    "file": "assets/php_hu-B_Ye6j3Y.js",
+    "file": "assets/php_hu-BAVdavpf.js",
     "name": "php_hu",
     "src": "lang/php_hu.json",
     "isDynamicEntry": true
   },
   "resources/css/app.css": {
-    "file": "assets/app-Du7b9wbZ.css",
+    "file": "assets/app-CMwtfMFe.css",
     "src": "resources/css/app.css",
     "isEntry": true,
     "name": "app",
@@ -209,16 +213,17 @@
     ]
   },
   "resources/js/app.js": {
-    "file": "assets/app-AJ6nCbnY.js",
+    "file": "assets/app-B2c2ahc6.js",
     "name": "app",
     "src": "resources/js/app.js",
     "isEntry": true,
     "imports": [
       "_axios-CACZDMKj.js",
-      "_@vue-IdFOaUcZ.js",
-      "_@inertiajs-BLtI5yrN.js",
-      "_laravel-vue-i18n-C9FpQ-xD.js",
-      "_laravel-precognition-vue-CQlHqA2W.js",
+      "_@vue-QTk8pqQp.js",
+      "_@inertiajs-BhDcMxwq.js",
+      "_laravel-vue-i18n-BGcfwoDw.js",
+      "_laravel-precognition-vue-D2tqcFzr.js",
+      "_@capacitor-Ctv3sU0L.js",
       "_qs--MBLzBQd.js",
       "_side-channel-XHn7KKHu.js",
       "_es-errors-vszLt91P.js",
@@ -246,7 +251,7 @@
       "lang/php_hu.json"
     ],
     "css": [
-      "assets/app-Cu0-2-Mq.css"
+      "assets/app-CHmEi-Sx.css"
     ]
   }
 }

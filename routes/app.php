@@ -34,6 +34,7 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/entry', 'addEntry');
         Route::post('/create', 'storeExercise')->middleware(HandlePrecognitiveRequests::class);
         Route::delete('/entry/{date}/{id}', 'deleteEntry');
+        Route::post('/sync-steps', 'syncSteps');
     });
 
     Route::controller(FoodController::class)->prefix('stats')->name('stat.')->group(function () {

@@ -2,7 +2,7 @@
 import { computed, ref, watch } from "vue";
 import axios from "axios";
 
-import AppLayout from "@/Layouts/AppLayout.vue";
+import AppLayout from "@/Layouts/appLayout.vue";
 import MacroSummary from "@/Components/macroSummary.vue";
 import MealSection from "@/Components/mealSection.vue";
 import Search from "@/Components/foodSearch.vue"

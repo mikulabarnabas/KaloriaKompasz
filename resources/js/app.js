@@ -4,8 +4,9 @@ import { i18nVue } from "laravel-vue-i18n";
 
 createInertiaApp({
     resolve: (name) => {
-        const pages = import.meta.glob("./Pages/**/*.vue", { eager: true });
-        return pages[`./Pages/${name}.vue`];
+      
+        const pages = import.meta.glob("./pages/**/*.vue", { eager: true });
+        return pages[`./pages/${name}.vue`];
     },
 
     title: (title) => `${title} - KalóriaKompasz`,
@@ -14,10 +15,11 @@ createInertiaApp({
         const vueApp = createApp({ render: () => h(App, props) });
 
         vueApp.use(plugin);
-
+      
         vueApp.use(i18nVue, {
             lang: localStorage.lang,
             resolve: async (lang) => {
+            
                 const langs = import.meta.glob("../../lang/*.json");
                 const path = `../../lang/${lang}.json`;
 

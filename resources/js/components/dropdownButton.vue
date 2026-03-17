@@ -26,10 +26,15 @@ onUnmounted(() => document.removeEventListener('click', closeDropdown))
     <div ref="dropdownRef" class="font-display relative inline-block text-left" :class="$attrs.class">
 
         <div class="flex items-center gap-4 cursor-pointer select-none" @click="isOpen = !isOpen">
-            <div class="flex items-center gap-2 text-main-text font-semibold hover:text-primary transition-colors">
-                <span v-if="iconLabel" class="material-symbols-outlined text-2xl leading-none!">{{ label }}</span>
-                <span v-else>{{ label }}</span>
-                <span class="material-symbols-outlined transition-transform duration-200"
+            <div
+                class="flex items-center gap-2 text-main-text font-semibold hover:text-primary transition-colors min-w-0">
+                <span v-if="iconLabel" class="material-symbols-outlined text-2xl leading-none!">
+                    {{ label }}
+                </span>
+                <span v-else class="truncate max-w-37.5 sm:max-w-50" :title="label">
+                    {{ label }}
+                </span>
+                <span class="material-symbols-outlined transition-transform duration-200 shrink-0"
                     :class="{ 'rotate-180': isOpen }">
                     {{ icon }}
                 </span>
@@ -41,20 +46,22 @@ onUnmounted(() => document.removeEventListener('click', closeDropdown))
             leave-active-class="transition ease-in duration-75" leave-from-class="transform opacity-100 scale-100"
             leave-to-class="transform opacity-0 scale-95">
 
-            <div v-if="isOpen" :class="[
-                'absolute -right-3 mt-3 w-56 bg-neutral-dark border border-neutral-border rounded-(--radius-lg) shadow-xl z-50 p-2'
-            ]">
+            <div v-if="isOpen"
+                class="absolute -right-3 mt-3 w-64 bg-neutral-dark border border-neutral-border rounded-(--radius-lg) shadow-xl z-50 p-2">
                 <div
                     class="absolute -top-2 right-4 w-4 h-4 bg-neutral-dark border-t border-l border-neutral-border rotate-45 rounded-tl-sm">
                 </div>
 
                 <div class="relative z-10 flex flex-col gap-1">
                     <button v-for="item in items" @click="item.function" :class="[
-                        'flex items-center gap-3 w-full px-3 py-2.5 text-main-text rounded-default hover:bg-background-dark transition-colors text-sm font-bold text-left',
+                        'flex items-center gap-3 w-full px-3 py-2.5 text-main-text rounded-default hover:bg-background-dark transition-colors text-sm font-bold text-left min-w-0',
                         item.class
                     ]">
-                        <span class="material-symbols-outlined text-2xl leading-none!">{{ item.icon }}</span>
-                        {{ item.label }}
+                        <span class="material-symbols-outlined text-2xl leading-none! shrink-0">{{ item.icon }}</span>
+
+                        <span class="truncate" :title="item.label">
+                            {{ item.label }}
+                        </span>
                     </button>
                 </div>
             </div>

@@ -14,7 +14,7 @@ const emit = defineEmits(['close', 'saved']);
 
 const unitOptions = computed(() => [
     { label: t('workoutDiary.minute'), value: "minutes" },
-    { label: t('workoutDiary.hour'), value: "hours" },
+    { label: t('workoutDiary.hours'), value: "hours" },
     { label: t('workoutDiary.km'), value: "km" },
     { label: t('workoutDiary.m'), value: "m" }
 ]);

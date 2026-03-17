@@ -3,7 +3,7 @@ import { ref, computed, watch } from "vue"
 import { usePage, Link, router } from "@inertiajs/vue3"
 import DateNavigator from "@/Components/dateNavigator.vue"
 import SevendDayIntake from "@/Components/sevendDayIntake.vue"
-import AppLayout from "@/Layouts/AppLayout.vue"
+import AppLayout from "@/Layouts/appLayout.vue"
 import FoodCard from "@/Components/foodCard.vue"
 import WorkoutCard from "@/Components/workoutCard.vue"
 

@@ -1,18 +1,16 @@
 <script setup>
 import { computed, ref, watch } from "vue";
 import axios from "axios";
-import { getActiveLanguage } from "laravel-vue-i18n";
-
 
 import WorkoutSearch from "@/Components/workoutSearch.vue";
 import AddWorkoutEntryOverlay from "@/Components/addWorkoutEntry.vue";
 import AddExerciseOverlay from "@/Components/addWorkout.vue";
 import DateNavigator from "@/Components/dateNavigator.vue";
-import Button from "@/COmponents/button.vue";
+import Button from "@/Components/button.vue";
 import WorkoutCard from "@/Components/workoutCard.vue"
+import AndroidSteps from "@/Components/androidSteps.vue";
 
-import { trans as t } from 'laravel-vue-i18n';
-import AppLayout from "@/Layouts/AppLayout.vue";
+import AppLayout from "@/Layouts/appLayout.vue";
 defineOptions({ layout: AppLayout });
 
 const selectedDate = ref(new Date());
@@ -25,12 +23,13 @@ const selectedExerciseForEntry = ref(null);
 
 const totalBurned = computed(() => {
   return entries.value.reduce((total, exercise) => {
-    return total + Number(exercise.pivot.burned_calories || 0);
+    return Math.round(total + Number(exercise.pivot.burned_calories || 0));
   }, 0);
 });
 
 const totalDuration = computed(() => {
   return entries.value.reduce((total, exercise) => {
+    if (exercise.pivot.unit == "steps") return 0;
     if (exercise.pivot.unit == "hours") return total + Number(exercise.pivot.amount * 60)
     return total + Number(exercise.pivot.amount);
   }, 0);
@@ -61,21 +60,11 @@ const onSaved = () => {
 };
 
 const deleteEntry = async (entryId) => {
-  if (confirm(t('workoutDiary.delete_confirmation'))) {
-    await axios.delete(`/wdiary/entry/${formattedDate.value}/${entryId}`);
-    loadDiary();
-  }
+  await axios.delete(`/wdiary/entry/${formattedDate.value}/${entryId}`);
+  loadDiary();
 };
 
 watch(formattedDate, loadDiary, { immediate: true });
-
-const getDisplayName = (item) => {
-  console.log(getActiveLanguage())
-  if (getActiveLanguage() === 'hu' && item.name_hu) {
-    return item.name_hu;
-  }
-  return item.name;
-};
 </script>
 
 <template>
@@ -96,11 +85,13 @@ const getDisplayName = (item) => {
       </header>
 
       <div class="relative p-6 space-y-10 pb-32 min-h-100">
+        <AndroidSteps :date="formattedDate" @synced="loadDiary" />
 
         <div v-if="isLoading"
           class="absolute inset-0 z-50 flex flex-col items-center pt-20 bg-background-dark/10 backdrop-blur-[2px] transition-all duration-300">
           <div class="w-16 h-16 border-4 border-primary/10 border-t-primary rounded-full animate-spin"></div>
-          <p class="mt-4 text-[10px] font-black uppercase tracking-[0.5em] text-primary">{{ $t('workoutDiary.update') }}</p>
+          <p class="mt-4 text-[10px] font-black uppercase tracking-[0.5em] text-primary">{{ $t('workoutDiary.update') }}
+          </p>
         </div>
 
         <div
@@ -135,7 +126,7 @@ const getDisplayName = (item) => {
           <div class="space-y-6">
             <div class="flex items-center justify-between px-2">
               <h3 class="text-sm font-black text-main-text uppercase tracking-[0.3em]">{{ $t('workoutDiary.diary_title')
-                }}</h3>
+              }}</h3>
               <div class="h-px flex-1 bg-neutral-border mx-4 opacity-50"></div>
             </div>
 

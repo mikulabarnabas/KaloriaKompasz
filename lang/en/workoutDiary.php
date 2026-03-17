@@ -52,10 +52,11 @@ return [
 
     // confirm
     "delete_confirmation" => "Are you sure you want to delete the selected exercise?",
-    "minute" => "minute",
+    "minutes" => "minute",
     "hours" => "hour",
     "km" => "kilometer",
     "m" => "meter",
+    "steps" => "steps",
     "amount_label" => "Amount",
     "duration_label" => "Total Time Active",
     "update" => "Updating workout diary"

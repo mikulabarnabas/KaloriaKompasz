@@ -56,6 +56,7 @@ return [
     "hours" => "óra",
     "km" => "kilométer",
     "m" => "méter",
+    "steps" => "lépés",
     "amount_label" => "Mennyiség",
     "duration_label" => "Összes aktív idő",
     "update" => "Edzésnapló frissítése"

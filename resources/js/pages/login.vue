@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from "vue"
-import AppLayout from "@/Layouts/AppLayout.vue"
+import AppLayout from "@/Layouts/appLayout.vue"
 import LoginForm from "@/Components/loginForm.vue"
 import RegisterForm from "@/Components/registerForm.vue"
 import SuccessDialog from "@/Components/successDialog.vue";

@@ -1,4 +1,4 @@
-#Tue Mar 17 10:16:03 CET 2026
+#Tue Mar 17 18:30:48 CET 2026
 base.0=C\:\\Users\\barna\\Desktop\\KaloriaKompasz\\android\\app\\build\\intermediates\\dex\\debug\\mergeExtDexDebug\\classes.dex
 base.1=C\:\\Users\\barna\\Desktop\\KaloriaKompasz\\android\\app\\build\\intermediates\\dex\\debug\\mergeLibDexDebug\\2\\classes.dex
 base.2=C\:\\Users\\barna\\Desktop\\KaloriaKompasz\\android\\app\\build\\intermediates\\dex\\debug\\mergeLibDexDebug\\5\\classes.dex
