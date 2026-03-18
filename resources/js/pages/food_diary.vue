@@ -14,6 +14,11 @@ import Button from "@/Components/button.vue"
 
 defineOptions({ layout: AppLayout });
 
+const props = defineProps({
+  hasProfile: Boolean,
+  targets: Object,
+});
+
 const mealTypeOptions = computed(() => [
   { label: t('foodDiary.breakfast'), value: "breakfast", icon: 'light_mode', color: 'text-orange-400' },
   { label: t('foodDiary.lunch'), value: "lunch", icon: 'wb_sunny', color: 'text-primary' },
@@ -24,21 +29,11 @@ const mealTypeOptions = computed(() => [
 const selectedDate = ref(new Date());
 const formattedDate = computed(() => selectedDate.value.toISOString().slice(0, 10));
 const entries = ref([]);
+const dailyTotals = ref([]);
 
 const isEntryModalOpen = ref(false);
 const isCreateModalOpen = ref(false);
 const selectedFoodForEntry = ref(null);
-
-const dailyTotals = computed(() => {
-  let totals = { kcal: 0, protein: 0, carbs: 0, fats: 0 };
-  Object.values(entries.value).flat().forEach(food => {
-    totals.kcal += Number(food.pivot.calorie || 0);
-    totals.protein += Number(food.pivot.protein || 0);
-    totals.carbs += Number(food.pivot.carb || 0);
-    totals.fats += Number(food.pivot.fat || 0);
-  });
-  return totals;
-});
 
 const isLoading = ref(false);
 
@@ -46,6 +41,7 @@ const fetchDiary = async () => {
   isLoading.value = true;
   const { data } = await axios.get(`/fdiary/diary/${formattedDate.value}`);
   entries.value = data.diary ?? [];
+  dailyTotals.value = data.totals ?? [];
   isLoading.value = false;
 };
 
@@ -105,7 +101,7 @@ watch(formattedDate, fetchDiary, { immediate: true });
           :class="[isLoading ? 'opacity-30 blur-md pointer-events-none' : 'opacity-100 blur-0']">
 
           <div class="animate-fly-in" style="animation-delay: 100ms">
-            <MacroSummary :totals="dailyTotals" :goal="2500" />
+            <MacroSummary :targets="targets" :stats="dailyTotals"></MacroSummary>
           </div>
 
           <div class="space-y-6 animate-fly-in" style="animation-delay: 200ms">

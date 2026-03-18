@@ -15,7 +15,20 @@ class FoodController extends Controller
 {
     public function show(Request $request)
     {
-        return Inertia::render('food_diary');
+        $user = $request->user();
+
+        $profile = $user->profile;
+        $targets = [
+            'calories' => $profile?->calories_per_day ?? 2000,
+            'protein' => $profile?->protein_per_day ?? 150,
+            'carbs' => $profile?->carbs_per_day ?? 200,
+            'fat' => $profile?->fat_per_day ?? 70,
+        ];
+
+        return Inertia::render('food_diary', [
+            'hasProfile' => !is_null($profile),
+            'targets' => $targets,
+        ]);
     }
 
     public function getDiaryByDate(Request $request, string $date)
@@ -46,8 +59,16 @@ class FoodController extends Controller
             ])
             ->filter(fn($group) => $group->isNotEmpty());
 
+        $dailyTotals = [
+            'calories' => $diary->sum('pivot.calorie'),
+            'protein' => $diary->sum('pivot.protein'),
+            'carbs' => $diary->sum('pivot.carb'),
+            'fat' => $diary->sum('pivot.fat'),
+        ];
+
         return response()->json([
             'diary' => $sortedDiary,
+            'totals' => $dailyTotals,
         ]);
     }
 
@@ -64,8 +85,6 @@ class FoodController extends Controller
         $date = $request->validate([
             'date' => ['required', 'date'],
         ]);
-
-
 
         $date = Carbon::parse($date['date'])->toDateString();
         $userId = (int) $request->user()->id;

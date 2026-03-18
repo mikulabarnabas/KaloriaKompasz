@@ -61,5 +61,6 @@ return [
     "meal_log_title" => "Meal Log",
     "activity_food" => "Nutritional Intake",
     "activity_workout" => "Physical Activity",
-    "update" => "Updating food diary"
+    "update" => "Updating food diary",
+
 ];

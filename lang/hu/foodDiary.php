@@ -61,5 +61,5 @@ return [
     "meal_log_title" => "Étkezési napló",
     "activity_food" => "Tápanyagbevitel",
     "activity_workout" => "Fizikai aktivitás",
-    "update" => "Ételnapló frissítése"
+    "update" => "Ételnapló frissítése",
 ];

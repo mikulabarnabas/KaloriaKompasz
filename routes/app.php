@@ -40,5 +40,6 @@ Route::middleware(['auth'])->group(function () {
     Route::controller(FoodController::class)->prefix('stats')->name('stat.')->group(function () {
         Route::get('/', [StatisticsController::class, 'index'])->name('stats.index');
         Route::get('/getData/{date}', [StatisticsController::class, 'getData']);
+        Route::get('/weekly/{date}', [StatisticsController::class, 'getWeeklyStats']);
     });
 });

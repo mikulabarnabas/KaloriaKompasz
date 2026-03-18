@@ -4,14 +4,15 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Inertia\Inertia;
-use Carbon\Carbon;
+use App\Models\FoodDiary;
+use App\Models\WorkoutDiary;
+use Illuminate\Support\Carbon;
 
 class StatisticsController extends Controller
 {
     public function index(Request $request)
     {
         $user = $request->user();
-        $date = $request->input('date', now()->toDateString());
 
         $profile = $user->profile;
         $targets = [
@@ -20,6 +21,17 @@ class StatisticsController extends Controller
             'carbs' => $profile?->carbs_per_day ?? 200,
             'fat' => $profile?->fat_per_day ?? 70,
         ];
+
+        return Inertia::render('statistics', [
+            'hasProfile' => !is_null($profile),
+            'targets' => $targets,
+        ]);
+    }
+
+    public function getData(Request $request)
+    {
+        $user = $request->user();
+        $date = $request['date'];
 
         $foodEntry = $user->foodDiary()->where('date', $date)->with('foods')->first();
         $workoutEntry = $user->workoutDiary()->where('date', $date)->with('exercises')->first();
@@ -32,7 +44,6 @@ class StatisticsController extends Controller
             'burned' => $workoutEntry?->exercises->sum(fn($e) => $e->pivot->burned_calories) ?? 0,
         ];
 
-        // 4. Combine Activity
         $recentActivity = collect()
             ->concat($foodEntry?->foods ?? [])
             ->concat($workoutEntry?->exercises ?? [])
@@ -40,13 +51,51 @@ class StatisticsController extends Controller
             ->take(4)
             ->values();
 
-        return Inertia::render('statistics', [
-            'hasProfile' => !is_null($profile),
-            'targets' => $targets,
+        return response()->json([
             'todayStats' => $todayStats,
             'recentActivity' => $recentActivity,
             'workoutDiary' => $user->workoutDiary()->with('exercises')->get(),
             'foodDiary' => $user->foodDiary()->with('foods')->get()
         ]);
+    }
+
+    public function getWeeklyStats(string $date)
+    {
+        $userId = auth()->id();
+        $endDate = Carbon::parse($date)->endOfDay();
+        $startDate = $endDate->copy()->subDays(6)->startOfDay();
+
+        $foodDiaries = FoodDiary::where('user_id', $userId)
+            ->whereBetween('date', [$startDate->toDateString(), $endDate->toDateString()])
+            ->with('foods')
+            ->get()
+            ->keyBy(fn($d) => $d->date->toDateString());
+
+        // 2. Fetch Workout Diaries
+        $workoutDiaries = WorkoutDiary::where('user_id', $userId)
+            ->whereBetween('date', [$startDate->toDateString(), $endDate->toDateString()])
+            ->with('exercises')
+            ->get()
+            ->keyBy(fn($d) => $d->date->toDateString());
+
+        $results = [];
+        for ($i = 6; $i >= 0; $i--) {
+            $currentDate = $endDate->copy()->subDays($i);
+            $dateKey = $currentDate->toDateString();
+
+            $foodEntry = $foodDiaries->get($dateKey);
+            $workoutEntry = $workoutDiaries->get($dateKey);
+
+            $results[] = [
+                'date' => $dateKey,
+                'label' => $currentDate->translatedFormat('D'),
+                'calories' => (float) ($foodEntry?->foods->sum('pivot.calorie') ?? 0),
+                'burned' => (float) ($workoutEntry?->exercises->sum(function ($e) {
+                    return $e->pivot->amount * $e->calories_per_unit;
+                }) ?? 0),
+            ];
+        }
+
+        return response()->json($results);
     }
 }

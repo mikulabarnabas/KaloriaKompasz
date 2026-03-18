@@ -4,6 +4,8 @@ import { useForm } from "laravel-precognition-vue";
 import Button from "@/Components/button.vue";
 import Input from "@/Components/input.vue";
 import { trans as t } from 'laravel-vue-i18n';
+import { getActiveLanguage } from "laravel-vue-i18n";
+import { wTrans } from "laravel-vue-i18n";
 
 const props = defineProps({
     show: Boolean,
@@ -84,6 +86,13 @@ watch(() => props.exercise, (newEx) => {
 });
 
 watch(() => props.date, (newDate) => form.date = newDate);
+
+const displayName = computed(() => {
+  if (getActiveLanguage() === 'hu' && props.exercise.name_hu) {
+    return props.exercise.name_hu;
+  }
+  return props.exercise.name;
+});
 </script>
 
 <template>
@@ -102,7 +111,7 @@ watch(() => props.date, (newDate) => form.date = newDate);
                     class="w-full md:w-5/12 bg-neutral-dark/40 p-6 md:p-8 flex flex-col relative border-b md:border-b-0 md:border-r border-neutral-border">
                     <div class="mb-4 md:mb-6">
                         <h2 class="text-2xl md:text-3xl font-black text-main-text mb-2 tracking-tight">
-                            {{ exercise?.name }}
+                            {{ displayName }}
                         </h2>
                         <div
                             class="inline-flex items-center px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary text-[10px] font-black uppercase tracking-widest">
