@@ -2,7 +2,7 @@
 import { useForm } from "laravel-precognition-vue"
 import { trans as t } from 'laravel-vue-i18n';
 import InputField from "@/Components/input.vue"
-import AppLayout from '@/Layouts/AppLayout.vue';
+import AppLayout from '@/Layouts/appLayout.vue';
 import { Head } from '@inertiajs/vue3';
 
 const props = defineProps({

@@ -9,7 +9,7 @@ createInertiaApp({
         return pages[`./pages/${name}.vue`];
     },
 
-    title: (title) => `${title} - KalóriaKompasz`,
+    title: () => `KalóriaKompasz`,
 
     setup({ el, App, props, plugin }) {
         const vueApp = createApp({ render: () => h(App, props) });

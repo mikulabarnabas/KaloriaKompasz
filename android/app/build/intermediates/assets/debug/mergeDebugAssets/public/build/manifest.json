@@ -3,19 +3,19 @@
     "file": "assets/@capacitor-Dg5d_Oy3.js",
     "name": "@capacitor"
   },
-  "_@inertiajs-iGA80rLG.js": {
-    "file": "assets/@inertiajs-iGA80rLG.js",
+  "_@inertiajs-DjkvwD0e.js": {
+    "file": "assets/@inertiajs-DjkvwD0e.js",
     "name": "@inertiajs",
     "imports": [
       "_qs--MBLzBQd.js",
       "_axios-CACZDMKj.js",
-      "_lodash-es-DvpUvOAH.js",
-      "_@vue-DLR_afb0.js",
-      "_laravel-precognition-C8Svupo6.js"
+      "_lodash-es-D7ZyK18z.js",
+      "_@vue-DuRHkmQc.js",
+      "_laravel-precognition-CZRHTg7K.js"
     ]
   },
-  "_@vue-DLR_afb0.js": {
-    "file": "assets/@vue-DLR_afb0.js",
+  "_@vue-DuRHkmQc.js": {
+    "file": "assets/@vue-DuRHkmQc.js",
     "name": "@vue"
   },
   "_axios-CACZDMKj.js": {
@@ -101,32 +101,32 @@
       "_function-bind-CHqF18-c.js"
     ]
   },
-  "_laravel-precognition-C8Svupo6.js": {
-    "file": "assets/laravel-precognition-C8Svupo6.js",
+  "_laravel-precognition-CZRHTg7K.js": {
+    "file": "assets/laravel-precognition-CZRHTg7K.js",
     "name": "laravel-precognition",
     "imports": [
       "_axios-CACZDMKj.js",
-      "_lodash-es-DvpUvOAH.js"
+      "_lodash-es-D7ZyK18z.js"
     ]
   },
-  "_laravel-precognition-vue-BsXl-EQQ.js": {
-    "file": "assets/laravel-precognition-vue-BsXl-EQQ.js",
+  "_laravel-precognition-vue-08J-XMRU.js": {
+    "file": "assets/laravel-precognition-vue-08J-XMRU.js",
     "name": "laravel-precognition-vue",
     "imports": [
-      "_laravel-precognition-C8Svupo6.js",
-      "_lodash-es-DvpUvOAH.js",
-      "_@vue-DLR_afb0.js"
+      "_laravel-precognition-CZRHTg7K.js",
+      "_lodash-es-D7ZyK18z.js",
+      "_@vue-DuRHkmQc.js"
     ]
   },
-  "_laravel-vue-i18n-DuznSRug.js": {
-    "file": "assets/laravel-vue-i18n-DuznSRug.js",
+  "_laravel-vue-i18n-DzB6GWoN.js": {
+    "file": "assets/laravel-vue-i18n-DzB6GWoN.js",
     "name": "laravel-vue-i18n",
     "imports": [
-      "_@vue-DLR_afb0.js"
+      "_@vue-DuRHkmQc.js"
     ]
   },
-  "_lodash-es-DvpUvOAH.js": {
-    "file": "assets/lodash-es-DvpUvOAH.js",
+  "_lodash-es-D7ZyK18z.js": {
+    "file": "assets/lodash-es-D7ZyK18z.js",
     "name": "lodash-es"
   },
   "_math-intrinsics-DP1tGiab.js": {
@@ -192,19 +192,19 @@
     "name": "vue"
   },
   "lang/php_en.json": {
-    "file": "assets/php_en-BCKgVECh.js",
+    "file": "assets/php_en-DVivhFGw.js",
     "name": "php_en",
     "src": "lang/php_en.json",
     "isDynamicEntry": true
   },
   "lang/php_hu.json": {
-    "file": "assets/php_hu-BAVdavpf.js",
+    "file": "assets/php_hu-CtjIf0iW.js",
     "name": "php_hu",
     "src": "lang/php_hu.json",
     "isDynamicEntry": true
   },
   "resources/css/app.css": {
-    "file": "assets/app-DuG8rGLm.css",
+    "file": "assets/app-BgKwBHBc.css",
     "src": "resources/css/app.css",
     "isEntry": true,
     "name": "app",
@@ -213,16 +213,16 @@
     ]
   },
   "resources/js/app.js": {
-    "file": "assets/app-Dt97CRAu.js",
+    "file": "assets/app-Dkic5yb2.js",
     "name": "app",
     "src": "resources/js/app.js",
     "isEntry": true,
     "imports": [
       "_axios-CACZDMKj.js",
-      "_@vue-DLR_afb0.js",
-      "_@inertiajs-iGA80rLG.js",
-      "_laravel-vue-i18n-DuznSRug.js",
-      "_laravel-precognition-vue-BsXl-EQQ.js",
+      "_@vue-DuRHkmQc.js",
+      "_@inertiajs-DjkvwD0e.js",
+      "_laravel-vue-i18n-DzB6GWoN.js",
+      "_laravel-precognition-vue-08J-XMRU.js",
       "_@capacitor-Dg5d_Oy3.js",
       "_qs--MBLzBQd.js",
       "_side-channel-XHn7KKHu.js",
@@ -243,8 +243,8 @@
       "_hasown-DwiY0sux.js",
       "_call-bound-Jwm9_NDK.js",
       "_side-channel-weakmap-B1rbK19t.js",
-      "_lodash-es-DvpUvOAH.js",
-      "_laravel-precognition-C8Svupo6.js"
+      "_lodash-es-D7ZyK18z.js",
+      "_laravel-precognition-CZRHTg7K.js"
     ],
     "dynamicImports": [
       "lang/php_en.json",

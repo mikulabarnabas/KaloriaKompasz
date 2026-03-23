@@ -791,7 +791,6 @@ int drawable ic_call_answer_video_low 0x7f080087
 int drawable ic_call_decline 0x7f080088
 int drawable ic_call_decline_low 0x7f080089
 int drawable ic_launcher_background 0x7f08008a
-int drawable ic_launcher_foreground 0x7f08008b
 int drawable ic_other_sign_in 0x7f08008c
 int drawable ic_passkey 0x7f08008d
 int drawable ic_password 0x7f08008e
