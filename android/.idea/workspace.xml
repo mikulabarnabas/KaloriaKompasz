@@ -100,10 +100,12 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="file://$PROJECT_DIR$/app/build.gradle" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/app/src/main/assets/capacitor.config.json" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/app/src/main/assets/capacitor.plugins.json" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/build.gradle" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/app/build.gradle" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/app/src/main/assets/capacitor.config.json" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/app/src/main/assets/capacitor.plugins.json" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/build.gradle" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/capacitor.settings.gradle" root0="SKIP_INSPECTION" />
     <setting file="file://$PROJECT_DIR$/../node_modules/@capacitor-community/generic-oauth2/android/build.gradle" root0="SKIP_INSPECTION" />
     <setting file="file://$PROJECT_DIR$/../node_modules/@capacitor/android/capacitor/build.gradle" root0="FORCE_HIGHLIGHTING" />
   </component>
