@@ -11,7 +11,7 @@ return [
     // Pillars
     "pillars_title" => "A három pillér",
     "pillars_description" => "Olyan ökoszisztémát alkottunk, amiben minden megvan, amire a fejlődésedhez szükséged lehet - a konyhától a konditeremig.",
-    
+
     // Cards
     "card_first_title" => "Étrend napló",
     "card_first_content" => "Gyors és egyszerű étkezésrögzítés. Pontos makrotápanyag lebontás, hogy pontosan tudd, mit viszel be a szervezetedbe.",
@@ -37,4 +37,8 @@ return [
     "faq_second_answer" => "Igen, folyamatosan dolgozunk az Apple Health és Google Fit integrációkon, hogy az adatok maguktól áramoljanak.",
     "faq_third_question" => "Ingyenes marad az alkalmazás?",
     "faq_third_answer" => "Az alap funkciók (kalória és edzésnapló) örökre ingyenesek maradnak, mert hiszünk abban, hogy az egészség nem lehet pénzkérdés.",
+
+    'download_section_title' => 'KalóriaKompasz in your pocket',
+    'download_section_description' => 'Track your meals and workouts anywhere, anytime. Download our Android application directly from our server!',
+    'download_button_text' => 'Download for Android',
 ];
