@@ -2,7 +2,7 @@
 import { useForm } from "laravel-precognition-vue"
 import { trans as t } from 'laravel-vue-i18n';
 import InputField from "@/Components/input.vue"
-import AppLayout from '@/Layouts/AppLayout.vue';
+import AppLayout from '@/Layouts/appLayout.vue';
 import { Head } from '@inertiajs/vue3';
 
 defineProps({ status: String });
@@ -17,7 +17,7 @@ const onSubmit = () => form.submit();
 <template>
     <AppLayout>
         <Head :title="t('auth.forgot_password')" />
-        
+
         <div class="relative min-h-[75vh] bg-background-dark flex items-center justify-center px-6 py-24">
             <div class="absolute inset-0 pointer-events-none opacity-20 dark:opacity-10">
                 <svg width="100%" height="100%" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -41,14 +41,14 @@ const onSubmit = () => form.submit();
                     </div>
 
                     <form class="space-y-6" @submit.prevent="onSubmit" novalidate>
-                        <InputField 
-                            v-model="form.email" 
-                            type="email" 
-                            :label="t('auth.email')" 
+                        <InputField
+                            v-model="form.email"
+                            type="email"
+                            :label="t('auth.email')"
                             :error="form.errors.email"
-                            placeholder="name@example.com" 
-                            @change="form.validate('email')" 
-                            autocomplete="username" 
+                            placeholder="name@example.com"
+                            @change="form.validate('email')"
+                            autocomplete="username"
                         />
 
                         <button type="submit" :disabled="form.processing"

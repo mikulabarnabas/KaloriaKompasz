@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "hu.kaloriakompasz.app-mergeDebugResources-39:/values-be/values-be.xml",
+            "outputFile": "hu.kaloriakompasz.app-mergeDebugResources-35:/values-be/values-be.xml",
             "map": [
                 {
                     "source": "/home/barna/.gradle/caches/8.14.3/transforms/d6feb2ba30dbaddc6e3dd371abb84e0a/transformed/browser-1.9.0/res/values-be/values-be.xml",

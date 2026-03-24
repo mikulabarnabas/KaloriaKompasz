@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "hu.kaloriakompasz.app-mergeDebugResources-39:/values-eu/values-eu.xml",
+            "outputFile": "hu.kaloriakompasz.app-mergeDebugResources-35:/values-eu/values-eu.xml",
             "map": [
                 {
                     "source": "/home/barna/.gradle/caches/8.14.3/transforms/129e9c3b2276307ac4d7db589d70298f/transformed/biometric-1.1.0/res/values-eu/values-eu.xml",

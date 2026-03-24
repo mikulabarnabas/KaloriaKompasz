@@ -2,6 +2,8 @@
 import { useForm } from "laravel-precognition-vue"
 import { trans as t } from 'laravel-vue-i18n';
 import InputField from "@/Components/input.vue"
+import { SocialLogin } from '@capgo/capacitor-social-login';
+import { Device } from '@capacitor/device';
 
 const emit = defineEmits(['success']);
 
@@ -18,6 +20,39 @@ const onSubmit = () =>
         emit('success', false);
     })
 
+const loginWithGoogle = async () => {
+    const info = await Device.getInfo();
+
+    if (info.platform === 'web') {
+        window.location.href = '/auth/google/redirect';
+        return;
+    }
+
+    try {
+        // 1. LÉPÉS: INICIALIZÁLÁS (Ez hiányzott!)
+        await SocialLogin.initialize({
+            google: {
+                webClientId: '10740457262-47dacbavcs5blgon888e89us8tcp5504.apps.googleusercontent.com',
+                mode: 'online'
+            },
+        });
+
+        // 2. LÉPÉS: LOGIN
+        const result = await SocialLogin.login({
+            provider: 'google',
+            options: {
+                scopes: ['email', 'name'],
+            },
+        });
+
+        if (result.result?.idToken) {
+            console.log("Sikeres Google login, token:", result.result.idToken);
+            // Ide jön az Inertia post a Laravelnek
+        }
+    } catch (error) {
+        console.error("Google hiba részletesen:", error);
+    }
+}
 </script>
 
 <template>
@@ -71,12 +106,12 @@ const onSubmit = () =>
                 </span>
             </div>
         </div>
-
-        <div class="grid gap-4">
-            <a href="/auth/google/redirect"
-                class="flex items-center justify-center py-3 rounded-xl bg-background-light/5 border border-background-light/20 text-sm font-bold text-main-text hover:bg-black/6 dark:hover:bg-white/10 transition-all">
+            <button @click="loginWithGoogle" type="button"
+                class="flex items-center justify-center py-3 rounded-xl bg-background-light/5 border border-background-light/20 text-sm font-bold text-main-text hover:bg-black/6 dark:hover:bg-white/10 transition-all w-full">
                 Google
-            </a>
+            </button>
+        <div class="grid gap-4">
+
         </div>
     </div>
 </template>

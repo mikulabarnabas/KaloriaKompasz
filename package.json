@@ -19,9 +19,11 @@
         "vite": "^7.0.7"
     },
     "dependencies": {
+        "@capacitor-community/generic-oauth2": "^7.0.0",
         "@capacitor/android": "^8.2.0",
         "@capacitor/cli": "^8.2.0",
         "@capacitor/core": "^8.2.0",
+        "@capacitor/device": "^8.0.1",
         "@capgo/capacitor-social-login": "^8.3.9",
         "@fortawesome/fontawesome-free": "^7.1.0",
         "@inertiajs/vue3": "^2.3.1",

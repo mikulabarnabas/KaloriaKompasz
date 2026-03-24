@@ -37,7 +37,40 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-class MainActivity : BridgeActivity() {
+import ee.forgr.capacitor.social.login.GoogleProvider
+import ee.forgr.capacitor.social.login.ModifiedMainActivityForSocialLoginPlugin
+import ee.forgr.capacitor.social.login.SocialLoginPlugin
+
+class MainActivity : BridgeActivity(), ModifiedMainActivityForSocialLoginPlugin {
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        // Ellenőrizzük, hogy a kérés a Google-től jött-e
+        if (requestCode >= GoogleProvider.REQUEST_AUTHORIZE_GOOGLE_MIN &&
+            requestCode < GoogleProvider.REQUEST_AUTHORIZE_GOOGLE_MAX) {
+
+            val pluginHandle = bridge.getPlugin("SocialLogin")
+            if (pluginHandle == null) {
+                Log.i("Google Activity Result", "SocialLogin login handle is null")
+                return
+            }
+
+            val plugin = pluginHandle.instance
+            if (plugin !is SocialLoginPlugin) {
+                Log.i("Google Activity Result", "SocialLogin plugin instance is not SocialLoginPlugin")
+                return
+            }
+
+            // Itt adjuk át az adatot a pluginnek
+            plugin.handleGoogleLoginIntent(requestCode, data)
+        }
+    }
+
+    // Ezt a függvényt üresen kell hagyni, csak az interfész miatt kötelező
+    override fun IHaveModifiedTheMainActivityForTheUseWithSocialLoginPlugin() {
+        // Leave empty
+    }
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         registerPlugin(HealthConnectBridgePlugin::class.java)

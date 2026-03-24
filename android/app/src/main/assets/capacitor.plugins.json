@@ -1,5 +1,13 @@
 [
 	{
+		"pkg": "@capacitor-community/generic-oauth2",
+		"classpath": "com.getcapacitor.community.genericoauth2.GenericOAuth2Plugin"
+	},
+	{
+		"pkg": "@capacitor/device",
+		"classpath": "com.capacitorjs.plugins.device.DevicePlugin"
+	},
+	{
 		"pkg": "@capgo/capacitor-social-login",
 		"classpath": "ee.forgr.capacitor.social.login.SocialLoginPlugin"
 	}

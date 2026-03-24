@@ -25,7 +25,7 @@ const onSubmit = () => form.submit({
 <template>
     <AppLayout>
         <Head :title="t('auth.reset_password_button')" />
-        
+
         <div class="relative min-h-[75vh] bg-background-dark flex items-center justify-center px-6 py-24 overflow-hidden">
             <div class="absolute inset-0 pointer-events-none opacity-20 dark:opacity-10">
                 <svg width="100%" height="100%" fill="none" xmlns="http://www.w3.org/2000/vue">
@@ -42,33 +42,33 @@ const onSubmit = () => form.submit({
                     </header>
 
                     <form class="space-y-5" @submit.prevent="onSubmit" novalidate>
-                        <InputField 
-                            v-model="form.email" 
-                            type="email" 
-                            :label="t('auth.email')" 
+                        <InputField
+                            v-model="form.email"
+                            type="email"
+                            :label="t('auth.email')"
                             :error="form.errors.email"
                             readonly
                             class="opacity-60 pointer-events-none"
                         />
 
-                        <InputField 
-                            v-model="form.password" 
-                            type="password" 
+                        <InputField
+                            v-model="form.password"
+                            type="password"
                             :label="t('auth.new_password')"
-                            :error="form.errors.password" 
-                            autocomplete="new-password" 
+                            :error="form.errors.password"
+                            autocomplete="new-password"
                             placeholder="••••••••"
-                            @change="form.validate('password')" 
+                            @change="form.validate('password')"
                         />
 
-                        <InputField 
-                            v-model="form.password_confirmation" 
-                            type="password" 
+                        <InputField
+                            v-model="form.password_confirmation"
+                            type="password"
                             :label="t('auth.password_confirmation')"
-                            :error="form.errors.password_confirmation" 
-                            autocomplete="new-password" 
+                            :error="form.errors.password_confirmation"
+                            autocomplete="new-password"
                             placeholder="••••••••"
-                            @change="form.validate('password_confirmation')" 
+                            @change="form.validate('password_confirmation')"
                         />
 
                         <button type="submit" :disabled="form.processing"

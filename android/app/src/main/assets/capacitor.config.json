@@ -3,15 +3,22 @@
 	"appName": "KaloriaKompasz",
 	"webDir": "public",
 	"allowNavigation": [
-		"https://kaloriakompasz.hu/"
+		"localhost"
 	],
 	"server": {
-		"url": "https://kaloriakompasz.hu/",
+		"url": "http://localhost:8000",
 		"cleartext": true
 	},
 	"plugins": {
 		"CapacitorCookies": {
 			"enabled": true
+		},
+		"SocialLogin": {
+			"providers": {
+				"google": true,
+				"apple": true,
+				"facebook": false
+			}
 		}
 	}
 }

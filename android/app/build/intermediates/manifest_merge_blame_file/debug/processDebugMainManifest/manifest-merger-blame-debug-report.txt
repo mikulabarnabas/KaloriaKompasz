@@ -16,428 +16,396 @@
 13        <package android:name="com.sec.android.app.shealth" />
 13-->/home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml:5:9-63
 13-->/home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml:5:18-60
-14        <package android:name="com.facebook.katana" />
-14-->[com.facebook.android:facebook-common:18.1.3] /home/barna/.gradle/caches/8.14.3/transforms/e7ffcd99271aca4424263336f671fe5c/transformed/facebook-common-18.1.3/AndroidManifest.xml:16:9-55
-14-->[com.facebook.android:facebook-common:18.1.3] /home/barna/.gradle/caches/8.14.3/transforms/e7ffcd99271aca4424263336f671fe5c/transformed/facebook-common-18.1.3/AndroidManifest.xml:16:18-52
-15
-16        <intent>
-16-->[com.google.androidbrowserhelper:androidbrowserhelper:2.5.0] /home/barna/.gradle/caches/8.14.3/transforms/5de6db02c4f5b1e89f3ed266eed14873/transformed/androidbrowserhelper-2.5.0/AndroidManifest.xml:27:9-33:18
-17            <action android:name="android.intent.action.VIEW" />
-17-->[com.facebook.android:facebook-common:18.1.3] /home/barna/.gradle/caches/8.14.3/transforms/e7ffcd99271aca4424263336f671fe5c/transformed/facebook-common-18.1.3/AndroidManifest.xml:30:17-69
-17-->[com.facebook.android:facebook-common:18.1.3] /home/barna/.gradle/caches/8.14.3/transforms/e7ffcd99271aca4424263336f671fe5c/transformed/facebook-common-18.1.3/AndroidManifest.xml:30:25-66
-18
-19            <category android:name="android.intent.category.BROWSABLE" />
-19-->[com.facebook.android:facebook-common:18.1.3] /home/barna/.gradle/caches/8.14.3/transforms/e7ffcd99271aca4424263336f671fe5c/transformed/facebook-common-18.1.3/AndroidManifest.xml:33:17-78
-19-->[com.facebook.android:facebook-common:18.1.3] /home/barna/.gradle/caches/8.14.3/transforms/e7ffcd99271aca4424263336f671fe5c/transformed/facebook-common-18.1.3/AndroidManifest.xml:33:27-75
-20
-21            <data android:scheme="https" />
-21-->[com.facebook.android:facebook-common:18.1.3] /home/barna/.gradle/caches/8.14.3/transforms/e7ffcd99271aca4424263336f671fe5c/transformed/facebook-common-18.1.3/AndroidManifest.xml:35:17-37:50
-21-->[com.facebook.android:facebook-common:18.1.3] /home/barna/.gradle/caches/8.14.3/transforms/e7ffcd99271aca4424263336f671fe5c/transformed/facebook-common-18.1.3/AndroidManifest.xml:37:21-47
-22        </intent>
-23
-24        <package android:name="com.samsung.android.wear.shealth" />
-24-->[:samsung-health-data-api-1.0.0:] /home/barna/.gradle/caches/8.14.3/transforms/21b476204abd08830f27e73d0d9a1b31/transformed/samsung-health-data-api-1.0.0/AndroidManifest.xml:9:9-68
-24-->[:samsung-health-data-api-1.0.0:] /home/barna/.gradle/caches/8.14.3/transforms/21b476204abd08830f27e73d0d9a1b31/transformed/samsung-health-data-api-1.0.0/AndroidManifest.xml:9:18-65
-25    </queries>
-26
-27    <uses-permission android:name="android.permission.INTERNET" />
-27-->/home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml:8:5-67
-27-->/home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml:8:22-64
-28    <uses-permission android:name="android.permission.health.READ_STEPS" />
-28-->/home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml:9:5-76
-28-->/home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml:9:22-73
-29    <uses-permission android:name="android.permission.health.READ_ACTIVE_CALORIES_BURNED" />
-29-->/home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml:10:5-93
-29-->/home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml:10:22-90
-30    <uses-permission android:name="android.permission.USE_CREDENTIALS" />
-30-->[:capgo-capacitor-social-login] /home/barna/Projects/KaloriaKompasz/node_modules/@capgo/capacitor-social-login/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:8:5-74
-30-->[:capgo-capacitor-social-login] /home/barna/Projects/KaloriaKompasz/node_modules/@capgo/capacitor-social-login/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:8:22-71
-31    <uses-permission android:name="android.permission.USE_BIOMETRIC" /> <!-- suppress DeprecatedClassUsageInspection -->
-31-->[androidx.biometric:biometric:1.1.0] /home/barna/.gradle/caches/8.14.3/transforms/129e9c3b2276307ac4d7db589d70298f/transformed/biometric-1.1.0/AndroidManifest.xml:24:5-72
-31-->[androidx.biometric:biometric:1.1.0] /home/barna/.gradle/caches/8.14.3/transforms/129e9c3b2276307ac4d7db589d70298f/transformed/biometric-1.1.0/AndroidManifest.xml:24:22-69
-32    <uses-permission android:name="android.permission.USE_FINGERPRINT" />
-32-->[androidx.biometric:biometric:1.1.0] /home/barna/.gradle/caches/8.14.3/transforms/129e9c3b2276307ac4d7db589d70298f/transformed/biometric-1.1.0/AndroidManifest.xml:27:5-74
-32-->[androidx.biometric:biometric:1.1.0] /home/barna/.gradle/caches/8.14.3/transforms/129e9c3b2276307ac4d7db589d70298f/transformed/biometric-1.1.0/AndroidManifest.xml:27:22-71
-33    <uses-permission android:name="com.google.android.gms.permission.AD_ID" /> <!-- Support for Google Privacy Sandbox adservices API -->
-33-->[com.facebook.android:facebook-core:18.1.3] /home/barna/.gradle/caches/8.14.3/transforms/4f656e15766e14faa9b3670a65289086/transformed/facebook-core-18.1.3/AndroidManifest.xml:14:5-79
-33-->[com.facebook.android:facebook-core:18.1.3] /home/barna/.gradle/caches/8.14.3/transforms/4f656e15766e14faa9b3670a65289086/transformed/facebook-core-18.1.3/AndroidManifest.xml:14:22-76
-34    <uses-permission android:name="android.permission.ACCESS_ADSERVICES_ATTRIBUTION" />
-34-->[com.facebook.android:facebook-core:18.1.3] /home/barna/.gradle/caches/8.14.3/transforms/4f656e15766e14faa9b3670a65289086/transformed/facebook-core-18.1.3/AndroidManifest.xml:16:5-88
-34-->[com.facebook.android:facebook-core:18.1.3] /home/barna/.gradle/caches/8.14.3/transforms/4f656e15766e14faa9b3670a65289086/transformed/facebook-core-18.1.3/AndroidManifest.xml:16:22-85
-35    <uses-permission android:name="android.permission.ACCESS_ADSERVICES_AD_ID" />
-35-->[com.facebook.android:facebook-core:18.1.3] /home/barna/.gradle/caches/8.14.3/transforms/4f656e15766e14faa9b3670a65289086/transformed/facebook-core-18.1.3/AndroidManifest.xml:17:5-82
-35-->[com.facebook.android:facebook-core:18.1.3] /home/barna/.gradle/caches/8.14.3/transforms/4f656e15766e14faa9b3670a65289086/transformed/facebook-core-18.1.3/AndroidManifest.xml:17:22-79
-36    <uses-permission android:name="android.permission.ACCESS_ADSERVICES_CUSTOM_AUDIENCE" />
-36-->[com.facebook.android:facebook-core:18.1.3] /home/barna/.gradle/caches/8.14.3/transforms/4f656e15766e14faa9b3670a65289086/transformed/facebook-core-18.1.3/AndroidManifest.xml:18:5-92
-36-->[com.facebook.android:facebook-core:18.1.3] /home/barna/.gradle/caches/8.14.3/transforms/4f656e15766e14faa9b3670a65289086/transformed/facebook-core-18.1.3/AndroidManifest.xml:18:22-89
-37    <uses-permission android:name="android.permission.ACCESS_ADSERVICES_TOPICS" />
-37-->[com.facebook.android:facebook-core:18.1.3] /home/barna/.gradle/caches/8.14.3/transforms/4f656e15766e14faa9b3670a65289086/transformed/facebook-core-18.1.3/AndroidManifest.xml:19:5-83
-37-->[com.facebook.android:facebook-core:18.1.3] /home/barna/.gradle/caches/8.14.3/transforms/4f656e15766e14faa9b3670a65289086/transformed/facebook-core-18.1.3/AndroidManifest.xml:19:22-80
+14
+15        <intent>
+15-->[net.openid:appauth:0.9.1] /home/barna/.gradle/caches/8.14.3/transforms/3f39f8341f1fed010914e2f9517f4b54/transformed/appauth-0.9.1/AndroidManifest.xml:25:9-31:18
+16            <action android:name="android.intent.action.VIEW" />
+16-->/home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml:32:17-69
+16-->/home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml:32:25-66
+17
+18            <category android:name="android.intent.category.BROWSABLE" />
+18-->/home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml:34:17-78
+18-->/home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml:34:27-75
+19
+20            <data android:scheme="https" />
+20-->/home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml:35:17-85
+20-->/home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml:35:23-61
+21        </intent>
+22
+23        <package android:name="com.samsung.android.wear.shealth" />
+23-->[:samsung-health-data-api-1.0.0:] /home/barna/.gradle/caches/8.14.3/transforms/21b476204abd08830f27e73d0d9a1b31/transformed/samsung-health-data-api-1.0.0/AndroidManifest.xml:9:9-68
+23-->[:samsung-health-data-api-1.0.0:] /home/barna/.gradle/caches/8.14.3/transforms/21b476204abd08830f27e73d0d9a1b31/transformed/samsung-health-data-api-1.0.0/AndroidManifest.xml:9:18-65
+24    </queries>
+25
+26    <uses-permission android:name="android.permission.INTERNET" />
+26-->/home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml:8:5-67
+26-->/home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml:8:22-64
+27    <uses-permission android:name="android.permission.health.READ_STEPS" />
+27-->/home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml:9:5-76
+27-->/home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml:9:22-73
+28    <uses-permission android:name="android.permission.health.READ_ACTIVE_CALORIES_BURNED" />
+28-->/home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml:10:5-93
+28-->/home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml:10:22-90
+29    <uses-permission android:name="android.permission.USE_CREDENTIALS" />
+29-->[:capgo-capacitor-social-login] /home/barna/Projects/KaloriaKompasz/node_modules/@capgo/capacitor-social-login/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:8:5-74
+29-->[:capgo-capacitor-social-login] /home/barna/Projects/KaloriaKompasz/node_modules/@capgo/capacitor-social-login/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:8:22-71
+30    <uses-permission android:name="android.permission.USE_BIOMETRIC" /> <!-- suppress DeprecatedClassUsageInspection -->
+30-->[androidx.biometric:biometric:1.1.0] /home/barna/.gradle/caches/8.14.3/transforms/129e9c3b2276307ac4d7db589d70298f/transformed/biometric-1.1.0/AndroidManifest.xml:24:5-72
+30-->[androidx.biometric:biometric:1.1.0] /home/barna/.gradle/caches/8.14.3/transforms/129e9c3b2276307ac4d7db589d70298f/transformed/biometric-1.1.0/AndroidManifest.xml:24:22-69
+31    <uses-permission android:name="android.permission.USE_FINGERPRINT" />
+31-->[androidx.biometric:biometric:1.1.0] /home/barna/.gradle/caches/8.14.3/transforms/129e9c3b2276307ac4d7db589d70298f/transformed/biometric-1.1.0/AndroidManifest.xml:27:5-74
+31-->[androidx.biometric:biometric:1.1.0] /home/barna/.gradle/caches/8.14.3/transforms/129e9c3b2276307ac4d7db589d70298f/transformed/biometric-1.1.0/AndroidManifest.xml:27:22-71
+32
+33    <permission
+33-->[androidx.core:core:1.17.0] /home/barna/.gradle/caches/8.14.3/transforms/8b56f9e63d69f72ecdb9a516b13a3495/transformed/core-1.17.0/AndroidManifest.xml:22:5-24:47
+34        android:name="hu.kaloriakompasz.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
+34-->[androidx.core:core:1.17.0] /home/barna/.gradle/caches/8.14.3/transforms/8b56f9e63d69f72ecdb9a516b13a3495/transformed/core-1.17.0/AndroidManifest.xml:23:9-81
+35        android:protectionLevel="signature" />
+35-->[androidx.core:core:1.17.0] /home/barna/.gradle/caches/8.14.3/transforms/8b56f9e63d69f72ecdb9a516b13a3495/transformed/core-1.17.0/AndroidManifest.xml:24:9-44
+36
+37    <uses-permission android:name="hu.kaloriakompasz.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
+37-->[androidx.core:core:1.17.0] /home/barna/.gradle/caches/8.14.3/transforms/8b56f9e63d69f72ecdb9a516b13a3495/transformed/core-1.17.0/AndroidManifest.xml:26:5-97
+37-->[androidx.core:core:1.17.0] /home/barna/.gradle/caches/8.14.3/transforms/8b56f9e63d69f72ecdb9a516b13a3495/transformed/core-1.17.0/AndroidManifest.xml:26:22-94
 38
-39    <permission
-39-->[androidx.core:core:1.17.0] /home/barna/.gradle/caches/8.14.3/transforms/8b56f9e63d69f72ecdb9a516b13a3495/transformed/core-1.17.0/AndroidManifest.xml:22:5-24:47
-40        android:name="hu.kaloriakompasz.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
-40-->[androidx.core:core:1.17.0] /home/barna/.gradle/caches/8.14.3/transforms/8b56f9e63d69f72ecdb9a516b13a3495/transformed/core-1.17.0/AndroidManifest.xml:23:9-81
-41        android:protectionLevel="signature" />
-41-->[androidx.core:core:1.17.0] /home/barna/.gradle/caches/8.14.3/transforms/8b56f9e63d69f72ecdb9a516b13a3495/transformed/core-1.17.0/AndroidManifest.xml:24:9-44
-42
-43    <uses-permission android:name="hu.kaloriakompasz.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
-43-->[androidx.core:core:1.17.0] /home/barna/.gradle/caches/8.14.3/transforms/8b56f9e63d69f72ecdb9a516b13a3495/transformed/core-1.17.0/AndroidManifest.xml:26:5-97
-43-->[androidx.core:core:1.17.0] /home/barna/.gradle/caches/8.14.3/transforms/8b56f9e63d69f72ecdb9a516b13a3495/transformed/core-1.17.0/AndroidManifest.xml:26:22-94
-44    <uses-permission android:name="com.google.android.finsky.permission.BIND_GET_INSTALL_REFERRER_SERVICE" />
-44-->[com.android.installreferrer:installreferrer:1.0] /home/barna/.gradle/caches/8.14.3/transforms/9a51647bb155206e7695528e390b043a/transformed/installreferrer-1.0/AndroidManifest.xml:9:5-110
-44-->[com.android.installreferrer:installreferrer:1.0] /home/barna/.gradle/caches/8.14.3/transforms/9a51647bb155206e7695528e390b043a/transformed/installreferrer-1.0/AndroidManifest.xml:9:22-107
-45
-46    <application
-46-->/home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml:12:5-59:19
-47        android:allowBackup="true"
-47-->/home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml:13:9-35
-48        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
-48-->[androidx.core:core:1.17.0] /home/barna/.gradle/caches/8.14.3/transforms/8b56f9e63d69f72ecdb9a516b13a3495/transformed/core-1.17.0/AndroidManifest.xml:28:18-86
-49        android:debuggable="true"
-50        android:extractNativeLibs="false"
-51        android:icon="@mipmap/ic_launcher"
-51-->/home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml:14:9-43
-52        android:label="@string/app_name"
-52-->/home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml:15:9-41
-53        android:roundIcon="@mipmap/ic_launcher_round"
-53-->/home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml:16:9-54
-54        android:supportsRtl="true"
-54-->/home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml:17:9-35
-55        android:testOnly="true"
-56        android:theme="@style/AppTheme"
-56-->/home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml:18:9-40
-57        android:usesCleartextTraffic="true" >
-57-->[:capacitor-cordova-android-plugins] /home/barna/Projects/KaloriaKompasz/android/capacitor-cordova-android-plugins/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:8:18-53
-58        <activity
-58-->/home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml:19:9-34:20
-59            android:name="hu.kaloriakompasz.MainActivity"
-59-->/home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml:20:13-41
-60            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale|smallestScreenSize|screenLayout|uiMode|navigation|density"
-60-->/home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml:21:13-148
-61            android:exported="true"
-61-->/home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml:25:13-36
-62            android:label="@string/title_activity_main"
-62-->/home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml:22:13-56
-63            android:launchMode="singleTask"
-63-->/home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml:24:13-44
-64            android:theme="@style/AppTheme.NoActionBarLaunch" >
-64-->/home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml:23:13-62
-65            <intent-filter>
-65-->/home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml:26:13-29:29
-66                <action android:name="android.intent.action.MAIN" />
-66-->/home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml:27:17-69
-66-->/home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml:27:25-66
-67
-68                <category android:name="android.intent.category.LAUNCHER" />
-68-->/home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml:28:17-77
-68-->/home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml:28:27-74
-69            </intent-filter>
-70            <intent-filter>
-70-->/home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml:31:13-33:29
-71                <action android:name="androidx.health.connect.action.SHOW_PERMISSIONS_RATIONALE" />
-71-->/home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml:32:17-100
-71-->/home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml:32:25-97
+39    <application
+39-->/home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml:12:5-66:19
+40        android:allowBackup="true"
+40-->/home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml:13:9-35
+41        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+41-->[androidx.core:core:1.17.0] /home/barna/.gradle/caches/8.14.3/transforms/8b56f9e63d69f72ecdb9a516b13a3495/transformed/core-1.17.0/AndroidManifest.xml:28:18-86
+42        android:debuggable="true"
+43        android:extractNativeLibs="false"
+44        android:icon="@mipmap/ic_launcher"
+44-->/home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml:14:9-43
+45        android:label="@string/app_name"
+45-->/home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml:15:9-41
+46        android:roundIcon="@mipmap/ic_launcher_round"
+46-->/home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml:16:9-54
+47        android:supportsRtl="true"
+47-->/home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml:17:9-35
+48        android:testOnly="true"
+49        android:theme="@style/AppTheme"
+49-->/home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml:18:9-40
+50        android:usesCleartextTraffic="true" >
+50-->[:capacitor-cordova-android-plugins] /home/barna/Projects/KaloriaKompasz/android/capacitor-cordova-android-plugins/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:8:18-53
+51        <activity
+51-->/home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml:19:9-41:20
+52            android:name="hu.kaloriakompasz.MainActivity"
+52-->/home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml:20:13-41
+53            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale|smallestScreenSize|screenLayout|uiMode|navigation|density"
+53-->/home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml:21:13-148
+54            android:exported="true"
+54-->/home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml:25:13-36
+55            android:label="@string/title_activity_main"
+55-->/home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml:22:13-56
+56            android:launchMode="singleTask"
+56-->/home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml:24:13-44
+57            android:theme="@style/AppTheme.NoActionBarLaunch" >
+57-->/home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml:23:13-62
+58            <intent-filter>
+58-->/home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml:26:13-29:29
+59                <action android:name="android.intent.action.MAIN" />
+59-->/home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml:27:17-69
+59-->/home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml:27:25-66
+60
+61                <category android:name="android.intent.category.LAUNCHER" />
+61-->/home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml:28:17-77
+61-->/home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml:28:27-74
+62            </intent-filter>
+63            <intent-filter>
+63-->/home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml:31:13-36:29
+64                <action android:name="android.intent.action.VIEW" />
+64-->/home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml:32:17-69
+64-->/home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml:32:25-66
+65
+66                <category android:name="android.intent.category.DEFAULT" />
+66-->/home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml:33:17-76
+66-->/home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml:33:27-73
+67                <category android:name="android.intent.category.BROWSABLE" />
+67-->/home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml:34:17-78
+67-->/home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml:34:27-75
+68
+69                <data
+69-->/home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml:35:17-85
+70                    android:host="oauth"
+70-->/home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml:35:62-82
+71                    android:scheme="hu.kaloriakompasz.app" />
+71-->/home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml:35:23-61
 72            </intent-filter>
-73        </activity>
-74
-75        <activity-alias
-75-->/home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml:36:9-45:26
-76            android:name="hu.kaloriakompasz.ViewPermissionUsageActivity"
-76-->/home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml:37:13-55
-77            android:exported="true"
-77-->/home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml:38:13-36
-78            android:permission="android.permission.START_VIEW_PERMISSION_USAGE"
-78-->/home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml:40:13-80
-79            android:targetActivity="hu.kaloriakompasz.MainActivity" >
-79-->/home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml:39:13-51
-80            <intent-filter>
-80-->/home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml:41:13-44:29
-81                <action android:name="android.intent.action.VIEW_PERMISSION_USAGE" />
-81-->/home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml:42:17-86
-81-->/home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml:42:25-83
-82
-83                <category android:name="android.intent.category.HEALTH_PERMISSIONS" />
-83-->/home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml:43:17-87
-83-->/home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml:43:27-84
-84            </intent-filter>
-85        </activity-alias>
-86
-87        <meta-data
-87-->/home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml:47:9-50:11
-88            android:name="androidx.health.connect.health_permissions_rationale_activity_name"
-88-->/home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml:48:13-94
-89            android:value=".MainActivity" />
-89-->/home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml:49:13-42
-90
-91        <provider
-92            android:name="androidx.core.content.FileProvider"
-92-->/home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml:53:13-62
-93            android:authorities="hu.kaloriakompasz.fileprovider"
-93-->/home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml:54:13-64
-94            android:exported="false"
-94-->/home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml:55:13-37
-95            android:grantUriPermissions="true" >
-95-->/home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml:56:13-47
-96            <meta-data
-96-->/home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml:57:13-112
-97                android:name="android.support.FILE_PROVIDER_PATHS"
-97-->/home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml:57:24-74
-98                android:resource="@xml/file_paths" />
-98-->/home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml:57:75-109
-99        </provider>
-100
-101        <activity
-101-->[:capgo-capacitor-social-login] /home/barna/Projects/KaloriaKompasz/node_modules/@capgo/capacitor-social-login/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:18:9-21:84
-102            android:name="ee.forgr.capacitor.social.login.TwitterLoginActivity"
-102-->[:capgo-capacitor-social-login] /home/barna/Projects/KaloriaKompasz/node_modules/@capgo/capacitor-social-login/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:19:13-80
-103            android:exported="false"
-103-->[:capgo-capacitor-social-login] /home/barna/Projects/KaloriaKompasz/node_modules/@capgo/capacitor-social-login/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:20:13-37
-104            android:theme="@android:style/Theme.DeviceDefault.Light.NoActionBar" />
-104-->[:capgo-capacitor-social-login] /home/barna/Projects/KaloriaKompasz/node_modules/@capgo/capacitor-social-login/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:21:13-81
-105        <activity
-105-->[:capgo-capacitor-social-login] /home/barna/Projects/KaloriaKompasz/node_modules/@capgo/capacitor-social-login/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:22:9-25:84
-106            android:name="ee.forgr.capacitor.social.login.OAuth2LoginActivity"
-106-->[:capgo-capacitor-social-login] /home/barna/Projects/KaloriaKompasz/node_modules/@capgo/capacitor-social-login/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:23:13-79
-107            android:exported="false"
-107-->[:capgo-capacitor-social-login] /home/barna/Projects/KaloriaKompasz/node_modules/@capgo/capacitor-social-login/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:24:13-37
-108            android:theme="@android:style/Theme.DeviceDefault.Light.NoActionBar" />
-108-->[:capgo-capacitor-social-login] /home/barna/Projects/KaloriaKompasz/node_modules/@capgo/capacitor-social-login/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:25:13-81
-109
-110        <service
-110-->[androidx.credentials:credentials-play-services-auth:1.5.0] /home/barna/.gradle/caches/8.14.3/transforms/75432ef1f78f998f36105522094e01e0/transformed/credentials-play-services-auth-1.5.0/AndroidManifest.xml:24:9-32:19
-111            android:name="androidx.credentials.playservices.CredentialProviderMetadataHolder"
-111-->[androidx.credentials:credentials-play-services-auth:1.5.0] /home/barna/.gradle/caches/8.14.3/transforms/75432ef1f78f998f36105522094e01e0/transformed/credentials-play-services-auth-1.5.0/AndroidManifest.xml:25:13-94
-112            android:enabled="true"
-112-->[androidx.credentials:credentials-play-services-auth:1.5.0] /home/barna/.gradle/caches/8.14.3/transforms/75432ef1f78f998f36105522094e01e0/transformed/credentials-play-services-auth-1.5.0/AndroidManifest.xml:26:13-35
-113            android:exported="false" >
-113-->[androidx.credentials:credentials-play-services-auth:1.5.0] /home/barna/.gradle/caches/8.14.3/transforms/75432ef1f78f998f36105522094e01e0/transformed/credentials-play-services-auth-1.5.0/AndroidManifest.xml:27:13-37
-114            <meta-data
-114-->[androidx.credentials:credentials-play-services-auth:1.5.0] /home/barna/.gradle/caches/8.14.3/transforms/75432ef1f78f998f36105522094e01e0/transformed/credentials-play-services-auth-1.5.0/AndroidManifest.xml:29:13-31:104
-115                android:name="androidx.credentials.CREDENTIAL_PROVIDER_KEY"
-115-->[androidx.credentials:credentials-play-services-auth:1.5.0] /home/barna/.gradle/caches/8.14.3/transforms/75432ef1f78f998f36105522094e01e0/transformed/credentials-play-services-auth-1.5.0/AndroidManifest.xml:30:17-76
-116                android:value="androidx.credentials.playservices.CredentialProviderPlayServicesImpl" />
-116-->[androidx.credentials:credentials-play-services-auth:1.5.0] /home/barna/.gradle/caches/8.14.3/transforms/75432ef1f78f998f36105522094e01e0/transformed/credentials-play-services-auth-1.5.0/AndroidManifest.xml:31:17-101
-117        </service>
-118
-119        <activity
-119-->[androidx.credentials:credentials-play-services-auth:1.5.0] /home/barna/.gradle/caches/8.14.3/transforms/75432ef1f78f998f36105522094e01e0/transformed/credentials-play-services-auth-1.5.0/AndroidManifest.xml:34:9-41:20
-120            android:name="androidx.credentials.playservices.HiddenActivity"
-120-->[androidx.credentials:credentials-play-services-auth:1.5.0] /home/barna/.gradle/caches/8.14.3/transforms/75432ef1f78f998f36105522094e01e0/transformed/credentials-play-services-auth-1.5.0/AndroidManifest.xml:35:13-76
-121            android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"
-121-->[androidx.credentials:credentials-play-services-auth:1.5.0] /home/barna/.gradle/caches/8.14.3/transforms/75432ef1f78f998f36105522094e01e0/transformed/credentials-play-services-auth-1.5.0/AndroidManifest.xml:36:13-87
-122            android:enabled="true"
-122-->[androidx.credentials:credentials-play-services-auth:1.5.0] /home/barna/.gradle/caches/8.14.3/transforms/75432ef1f78f998f36105522094e01e0/transformed/credentials-play-services-auth-1.5.0/AndroidManifest.xml:37:13-35
-123            android:exported="false"
-123-->[androidx.credentials:credentials-play-services-auth:1.5.0] /home/barna/.gradle/caches/8.14.3/transforms/75432ef1f78f998f36105522094e01e0/transformed/credentials-play-services-auth-1.5.0/AndroidManifest.xml:38:13-37
-124            android:fitsSystemWindows="true"
-124-->[androidx.credentials:credentials-play-services-auth:1.5.0] /home/barna/.gradle/caches/8.14.3/transforms/75432ef1f78f998f36105522094e01e0/transformed/credentials-play-services-auth-1.5.0/AndroidManifest.xml:39:13-45
-125            android:theme="@style/Theme.Hidden" >
-125-->[androidx.credentials:credentials-play-services-auth:1.5.0] /home/barna/.gradle/caches/8.14.3/transforms/75432ef1f78f998f36105522094e01e0/transformed/credentials-play-services-auth-1.5.0/AndroidManifest.xml:40:13-48
-126        </activity>
-127        <activity
-127-->[androidx.credentials:credentials-play-services-auth:1.5.0] /home/barna/.gradle/caches/8.14.3/transforms/75432ef1f78f998f36105522094e01e0/transformed/credentials-play-services-auth-1.5.0/AndroidManifest.xml:42:9-49:20
-128            android:name="androidx.credentials.playservices.IdentityCredentialApiHiddenActivity"
-128-->[androidx.credentials:credentials-play-services-auth:1.5.0] /home/barna/.gradle/caches/8.14.3/transforms/75432ef1f78f998f36105522094e01e0/transformed/credentials-play-services-auth-1.5.0/AndroidManifest.xml:43:13-97
-129            android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"
-129-->[androidx.credentials:credentials-play-services-auth:1.5.0] /home/barna/.gradle/caches/8.14.3/transforms/75432ef1f78f998f36105522094e01e0/transformed/credentials-play-services-auth-1.5.0/AndroidManifest.xml:44:13-87
-130            android:enabled="true"
-130-->[androidx.credentials:credentials-play-services-auth:1.5.0] /home/barna/.gradle/caches/8.14.3/transforms/75432ef1f78f998f36105522094e01e0/transformed/credentials-play-services-auth-1.5.0/AndroidManifest.xml:45:13-35
-131            android:exported="false"
-131-->[androidx.credentials:credentials-play-services-auth:1.5.0] /home/barna/.gradle/caches/8.14.3/transforms/75432ef1f78f998f36105522094e01e0/transformed/credentials-play-services-auth-1.5.0/AndroidManifest.xml:46:13-37
-132            android:fitsSystemWindows="true"
-132-->[androidx.credentials:credentials-play-services-auth:1.5.0] /home/barna/.gradle/caches/8.14.3/transforms/75432ef1f78f998f36105522094e01e0/transformed/credentials-play-services-auth-1.5.0/AndroidManifest.xml:47:13-45
-133            android:theme="@style/Theme.Hidden" >
-133-->[androidx.credentials:credentials-play-services-auth:1.5.0] /home/barna/.gradle/caches/8.14.3/transforms/75432ef1f78f998f36105522094e01e0/transformed/credentials-play-services-auth-1.5.0/AndroidManifest.xml:48:13-48
-134        </activity>
-135        <activity
-135-->[com.facebook.android:facebook-common:18.1.3] /home/barna/.gradle/caches/8.14.3/transforms/e7ffcd99271aca4424263336f671fe5c/transformed/facebook-common-18.1.3/AndroidManifest.xml:20:9-23:66
-136            android:name="com.facebook.FacebookActivity"
-136-->[com.facebook.android:facebook-common:18.1.3] /home/barna/.gradle/caches/8.14.3/transforms/e7ffcd99271aca4424263336f671fe5c/transformed/facebook-common-18.1.3/AndroidManifest.xml:21:13-57
-137            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
-137-->[com.facebook.android:facebook-common:18.1.3] /home/barna/.gradle/caches/8.14.3/transforms/e7ffcd99271aca4424263336f671fe5c/transformed/facebook-common-18.1.3/AndroidManifest.xml:22:13-96
-138            android:theme="@style/com_facebook_activity_theme" />
-138-->[com.facebook.android:facebook-common:18.1.3] /home/barna/.gradle/caches/8.14.3/transforms/e7ffcd99271aca4424263336f671fe5c/transformed/facebook-common-18.1.3/AndroidManifest.xml:23:13-63
-139        <activity android:name="com.facebook.CustomTabMainActivity" />
-139-->[com.facebook.android:facebook-common:18.1.3] /home/barna/.gradle/caches/8.14.3/transforms/e7ffcd99271aca4424263336f671fe5c/transformed/facebook-common-18.1.3/AndroidManifest.xml:24:9-71
-139-->[com.facebook.android:facebook-common:18.1.3] /home/barna/.gradle/caches/8.14.3/transforms/e7ffcd99271aca4424263336f671fe5c/transformed/facebook-common-18.1.3/AndroidManifest.xml:24:19-68
-140        <activity
-140-->[com.facebook.android:facebook-common:18.1.3] /home/barna/.gradle/caches/8.14.3/transforms/e7ffcd99271aca4424263336f671fe5c/transformed/facebook-common-18.1.3/AndroidManifest.xml:25:9-39:20
-141            android:name="com.facebook.CustomTabActivity"
-141-->[com.facebook.android:facebook-common:18.1.3] /home/barna/.gradle/caches/8.14.3/transforms/e7ffcd99271aca4424263336f671fe5c/transformed/facebook-common-18.1.3/AndroidManifest.xml:26:13-58
-142            android:exported="true" >
-142-->[com.facebook.android:facebook-common:18.1.3] /home/barna/.gradle/caches/8.14.3/transforms/e7ffcd99271aca4424263336f671fe5c/transformed/facebook-common-18.1.3/AndroidManifest.xml:27:13-36
-143            <intent-filter>
-143-->[com.facebook.android:facebook-common:18.1.3] /home/barna/.gradle/caches/8.14.3/transforms/e7ffcd99271aca4424263336f671fe5c/transformed/facebook-common-18.1.3/AndroidManifest.xml:29:13-38:29
-144                <action android:name="android.intent.action.VIEW" />
-144-->[com.facebook.android:facebook-common:18.1.3] /home/barna/.gradle/caches/8.14.3/transforms/e7ffcd99271aca4424263336f671fe5c/transformed/facebook-common-18.1.3/AndroidManifest.xml:30:17-69
-144-->[com.facebook.android:facebook-common:18.1.3] /home/barna/.gradle/caches/8.14.3/transforms/e7ffcd99271aca4424263336f671fe5c/transformed/facebook-common-18.1.3/AndroidManifest.xml:30:25-66
-145
-146                <category android:name="android.intent.category.DEFAULT" />
-146-->[com.facebook.android:facebook-common:18.1.3] /home/barna/.gradle/caches/8.14.3/transforms/e7ffcd99271aca4424263336f671fe5c/transformed/facebook-common-18.1.3/AndroidManifest.xml:32:17-76
-146-->[com.facebook.android:facebook-common:18.1.3] /home/barna/.gradle/caches/8.14.3/transforms/e7ffcd99271aca4424263336f671fe5c/transformed/facebook-common-18.1.3/AndroidManifest.xml:32:27-73
-147                <category android:name="android.intent.category.BROWSABLE" />
-147-->[com.facebook.android:facebook-common:18.1.3] /home/barna/.gradle/caches/8.14.3/transforms/e7ffcd99271aca4424263336f671fe5c/transformed/facebook-common-18.1.3/AndroidManifest.xml:33:17-78
-147-->[com.facebook.android:facebook-common:18.1.3] /home/barna/.gradle/caches/8.14.3/transforms/e7ffcd99271aca4424263336f671fe5c/transformed/facebook-common-18.1.3/AndroidManifest.xml:33:27-75
-148
-149                <data
-149-->[com.facebook.android:facebook-common:18.1.3] /home/barna/.gradle/caches/8.14.3/transforms/e7ffcd99271aca4424263336f671fe5c/transformed/facebook-common-18.1.3/AndroidManifest.xml:35:17-37:50
-150                    android:host="cct.hu.kaloriakompasz"
-150-->[com.facebook.android:facebook-common:18.1.3] /home/barna/.gradle/caches/8.14.3/transforms/e7ffcd99271aca4424263336f671fe5c/transformed/facebook-common-18.1.3/AndroidManifest.xml:36:21-56
-151                    android:scheme="fbconnect" />
-151-->[com.facebook.android:facebook-common:18.1.3] /home/barna/.gradle/caches/8.14.3/transforms/e7ffcd99271aca4424263336f671fe5c/transformed/facebook-common-18.1.3/AndroidManifest.xml:37:21-47
-152            </intent-filter>
-153        </activity>
-154
-155        <service
-155-->[androidx.health.connect:connect-client:1.2.0-alpha02] /home/barna/.gradle/caches/8.14.3/transforms/8ca56452eedaef1454cdf7e62bfc7e48/transformed/connect-client-1.2.0-alpha02/AndroidManifest.xml:24:9-32:19
-156            android:name="androidx.health.platform.client.impl.sdkservice.HealthDataSdkService"
-156-->[androidx.health.connect:connect-client:1.2.0-alpha02] /home/barna/.gradle/caches/8.14.3/transforms/8ca56452eedaef1454cdf7e62bfc7e48/transformed/connect-client-1.2.0-alpha02/AndroidManifest.xml:25:13-96
-157            android:enabled="true"
-157-->[androidx.health.connect:connect-client:1.2.0-alpha02] /home/barna/.gradle/caches/8.14.3/transforms/8ca56452eedaef1454cdf7e62bfc7e48/transformed/connect-client-1.2.0-alpha02/AndroidManifest.xml:26:13-35
-158            android:exported="true" >
-158-->[androidx.health.connect:connect-client:1.2.0-alpha02] /home/barna/.gradle/caches/8.14.3/transforms/8ca56452eedaef1454cdf7e62bfc7e48/transformed/connect-client-1.2.0-alpha02/AndroidManifest.xml:27:13-36
-159            <intent-filter>
-159-->[androidx.health.connect:connect-client:1.2.0-alpha02] /home/barna/.gradle/caches/8.14.3/transforms/8ca56452eedaef1454cdf7e62bfc7e48/transformed/connect-client-1.2.0-alpha02/AndroidManifest.xml:29:13-31:29
-160                <action android:name="androidx.health.platform.client.ACTION_BIND_SDK_SERVICE" />
-160-->[androidx.health.connect:connect-client:1.2.0-alpha02] /home/barna/.gradle/caches/8.14.3/transforms/8ca56452eedaef1454cdf7e62bfc7e48/transformed/connect-client-1.2.0-alpha02/AndroidManifest.xml:30:17-98
-160-->[androidx.health.connect:connect-client:1.2.0-alpha02] /home/barna/.gradle/caches/8.14.3/transforms/8ca56452eedaef1454cdf7e62bfc7e48/transformed/connect-client-1.2.0-alpha02/AndroidManifest.xml:30:25-95
-161            </intent-filter>
-162        </service>
-163
-164        <activity
-164-->[com.google.android.gms:play-services-auth:21.4.0] /home/barna/.gradle/caches/8.14.3/transforms/0b2aef09c502cb5a80be78526e466a9d/transformed/play-services-auth-21.4.0/AndroidManifest.xml:23:9-27:75
-165            android:name="com.google.android.gms.auth.api.signin.internal.SignInHubActivity"
-165-->[com.google.android.gms:play-services-auth:21.4.0] /home/barna/.gradle/caches/8.14.3/transforms/0b2aef09c502cb5a80be78526e466a9d/transformed/play-services-auth-21.4.0/AndroidManifest.xml:24:13-93
-166            android:excludeFromRecents="true"
-166-->[com.google.android.gms:play-services-auth:21.4.0] /home/barna/.gradle/caches/8.14.3/transforms/0b2aef09c502cb5a80be78526e466a9d/transformed/play-services-auth-21.4.0/AndroidManifest.xml:25:13-46
-167            android:exported="false"
-167-->[com.google.android.gms:play-services-auth:21.4.0] /home/barna/.gradle/caches/8.14.3/transforms/0b2aef09c502cb5a80be78526e466a9d/transformed/play-services-auth-21.4.0/AndroidManifest.xml:26:13-37
-168            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-168-->[com.google.android.gms:play-services-auth:21.4.0] /home/barna/.gradle/caches/8.14.3/transforms/0b2aef09c502cb5a80be78526e466a9d/transformed/play-services-auth-21.4.0/AndroidManifest.xml:27:13-72
-169        <!--
-170            Service handling Google Sign-In user revocation. For apps that do not integrate with
-171            Google Sign-In, this service will never be started.
-172        -->
-173        <service
-173-->[com.google.android.gms:play-services-auth:21.4.0] /home/barna/.gradle/caches/8.14.3/transforms/0b2aef09c502cb5a80be78526e466a9d/transformed/play-services-auth-21.4.0/AndroidManifest.xml:33:9-37:51
-174            android:name="com.google.android.gms.auth.api.signin.RevocationBoundService"
-174-->[com.google.android.gms:play-services-auth:21.4.0] /home/barna/.gradle/caches/8.14.3/transforms/0b2aef09c502cb5a80be78526e466a9d/transformed/play-services-auth-21.4.0/AndroidManifest.xml:34:13-89
-175            android:exported="true"
-175-->[com.google.android.gms:play-services-auth:21.4.0] /home/barna/.gradle/caches/8.14.3/transforms/0b2aef09c502cb5a80be78526e466a9d/transformed/play-services-auth-21.4.0/AndroidManifest.xml:35:13-36
-176            android:permission="com.google.android.gms.auth.api.signin.permission.REVOCATION_NOTIFICATION"
-176-->[com.google.android.gms:play-services-auth:21.4.0] /home/barna/.gradle/caches/8.14.3/transforms/0b2aef09c502cb5a80be78526e466a9d/transformed/play-services-auth-21.4.0/AndroidManifest.xml:36:13-107
-177            android:visibleToInstantApps="true" />
-177-->[com.google.android.gms:play-services-auth:21.4.0] /home/barna/.gradle/caches/8.14.3/transforms/0b2aef09c502cb5a80be78526e466a9d/transformed/play-services-auth-21.4.0/AndroidManifest.xml:37:13-48
-178
-179        <activity
-179-->[com.google.android.gms:play-services-base:18.5.0] /home/barna/.gradle/caches/8.14.3/transforms/5e01f444f741efd71a8a5821c7b8a936/transformed/play-services-base-18.5.0/AndroidManifest.xml:5:9-173
-180            android:name="com.google.android.gms.common.api.GoogleApiActivity"
-180-->[com.google.android.gms:play-services-base:18.5.0] /home/barna/.gradle/caches/8.14.3/transforms/5e01f444f741efd71a8a5821c7b8a936/transformed/play-services-base-18.5.0/AndroidManifest.xml:5:19-85
-181            android:exported="false"
-181-->[com.google.android.gms:play-services-base:18.5.0] /home/barna/.gradle/caches/8.14.3/transforms/5e01f444f741efd71a8a5821c7b8a936/transformed/play-services-base-18.5.0/AndroidManifest.xml:5:146-170
-182            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-182-->[com.google.android.gms:play-services-base:18.5.0] /home/barna/.gradle/caches/8.14.3/transforms/5e01f444f741efd71a8a5821c7b8a936/transformed/play-services-base-18.5.0/AndroidManifest.xml:5:86-145
-183
-184        <provider
-184-->[androidx.emoji2:emoji2:1.3.0] /home/barna/.gradle/caches/8.14.3/transforms/4b438644c95e6182c29894e52ec05db5/transformed/emoji2-1.3.0/AndroidManifest.xml:24:9-32:20
-185            android:name="androidx.startup.InitializationProvider"
-185-->[androidx.emoji2:emoji2:1.3.0] /home/barna/.gradle/caches/8.14.3/transforms/4b438644c95e6182c29894e52ec05db5/transformed/emoji2-1.3.0/AndroidManifest.xml:25:13-67
-186            android:authorities="hu.kaloriakompasz.androidx-startup"
-186-->[androidx.emoji2:emoji2:1.3.0] /home/barna/.gradle/caches/8.14.3/transforms/4b438644c95e6182c29894e52ec05db5/transformed/emoji2-1.3.0/AndroidManifest.xml:26:13-68
-187            android:exported="false" >
-187-->[androidx.emoji2:emoji2:1.3.0] /home/barna/.gradle/caches/8.14.3/transforms/4b438644c95e6182c29894e52ec05db5/transformed/emoji2-1.3.0/AndroidManifest.xml:27:13-37
-188            <meta-data
-188-->[androidx.emoji2:emoji2:1.3.0] /home/barna/.gradle/caches/8.14.3/transforms/4b438644c95e6182c29894e52ec05db5/transformed/emoji2-1.3.0/AndroidManifest.xml:29:13-31:52
-189                android:name="androidx.emoji2.text.EmojiCompatInitializer"
-189-->[androidx.emoji2:emoji2:1.3.0] /home/barna/.gradle/caches/8.14.3/transforms/4b438644c95e6182c29894e52ec05db5/transformed/emoji2-1.3.0/AndroidManifest.xml:30:17-75
-190                android:value="androidx.startup" />
-190-->[androidx.emoji2:emoji2:1.3.0] /home/barna/.gradle/caches/8.14.3/transforms/4b438644c95e6182c29894e52ec05db5/transformed/emoji2-1.3.0/AndroidManifest.xml:31:17-49
-191            <meta-data
-191-->[androidx.lifecycle:lifecycle-process:2.6.2] /home/barna/.gradle/caches/8.14.3/transforms/88f09a1228715b6c407ce3f93eb6c8b9/transformed/lifecycle-process-2.6.2/AndroidManifest.xml:29:13-31:52
-192                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
-192-->[androidx.lifecycle:lifecycle-process:2.6.2] /home/barna/.gradle/caches/8.14.3/transforms/88f09a1228715b6c407ce3f93eb6c8b9/transformed/lifecycle-process-2.6.2/AndroidManifest.xml:30:17-78
-193                android:value="androidx.startup" />
-193-->[androidx.lifecycle:lifecycle-process:2.6.2] /home/barna/.gradle/caches/8.14.3/transforms/88f09a1228715b6c407ce3f93eb6c8b9/transformed/lifecycle-process-2.6.2/AndroidManifest.xml:31:17-49
-194            <meta-data
-194-->[androidx.profileinstaller:profileinstaller:1.4.0] /home/barna/.gradle/caches/8.14.3/transforms/d8cfaeabb4a103be310310cc0374d9ea/transformed/profileinstaller-1.4.0/AndroidManifest.xml:29:13-31:52
-195                android:name="androidx.profileinstaller.ProfileInstallerInitializer"
-195-->[androidx.profileinstaller:profileinstaller:1.4.0] /home/barna/.gradle/caches/8.14.3/transforms/d8cfaeabb4a103be310310cc0374d9ea/transformed/profileinstaller-1.4.0/AndroidManifest.xml:30:17-85
-196                android:value="androidx.startup" />
-196-->[androidx.profileinstaller:profileinstaller:1.4.0] /home/barna/.gradle/caches/8.14.3/transforms/d8cfaeabb4a103be310310cc0374d9ea/transformed/profileinstaller-1.4.0/AndroidManifest.xml:31:17-49
-197        </provider>
-198
-199        <receiver
-199-->[com.facebook.android:facebook-core:18.1.3] /home/barna/.gradle/caches/8.14.3/transforms/4f656e15766e14faa9b3670a65289086/transformed/facebook-core-18.1.3/AndroidManifest.xml:37:9-43:20
-200            android:name="com.facebook.CurrentAccessTokenExpirationBroadcastReceiver"
-200-->[com.facebook.android:facebook-core:18.1.3] /home/barna/.gradle/caches/8.14.3/transforms/4f656e15766e14faa9b3670a65289086/transformed/facebook-core-18.1.3/AndroidManifest.xml:38:13-86
-201            android:exported="false" >
-201-->[com.facebook.android:facebook-core:18.1.3] /home/barna/.gradle/caches/8.14.3/transforms/4f656e15766e14faa9b3670a65289086/transformed/facebook-core-18.1.3/AndroidManifest.xml:39:13-37
-202            <intent-filter>
-202-->[com.facebook.android:facebook-core:18.1.3] /home/barna/.gradle/caches/8.14.3/transforms/4f656e15766e14faa9b3670a65289086/transformed/facebook-core-18.1.3/AndroidManifest.xml:40:13-42:29
-203                <action android:name="com.facebook.sdk.ACTION_CURRENT_ACCESS_TOKEN_CHANGED" />
-203-->[com.facebook.android:facebook-core:18.1.3] /home/barna/.gradle/caches/8.14.3/transforms/4f656e15766e14faa9b3670a65289086/transformed/facebook-core-18.1.3/AndroidManifest.xml:41:17-95
-203-->[com.facebook.android:facebook-core:18.1.3] /home/barna/.gradle/caches/8.14.3/transforms/4f656e15766e14faa9b3670a65289086/transformed/facebook-core-18.1.3/AndroidManifest.xml:41:25-92
-204            </intent-filter>
-205        </receiver>
-206        <receiver
-206-->[com.facebook.android:facebook-core:18.1.3] /home/barna/.gradle/caches/8.14.3/transforms/4f656e15766e14faa9b3670a65289086/transformed/facebook-core-18.1.3/AndroidManifest.xml:44:9-50:20
-207            android:name="com.facebook.AuthenticationTokenManager$CurrentAuthenticationTokenChangedBroadcastReceiver"
-207-->[com.facebook.android:facebook-core:18.1.3] /home/barna/.gradle/caches/8.14.3/transforms/4f656e15766e14faa9b3670a65289086/transformed/facebook-core-18.1.3/AndroidManifest.xml:45:13-118
-208            android:exported="false" >
-208-->[com.facebook.android:facebook-core:18.1.3] /home/barna/.gradle/caches/8.14.3/transforms/4f656e15766e14faa9b3670a65289086/transformed/facebook-core-18.1.3/AndroidManifest.xml:46:13-37
-209            <intent-filter>
-209-->[com.facebook.android:facebook-core:18.1.3] /home/barna/.gradle/caches/8.14.3/transforms/4f656e15766e14faa9b3670a65289086/transformed/facebook-core-18.1.3/AndroidManifest.xml:47:13-49:29
-210                <action android:name="com.facebook.sdk.ACTION_CURRENT_AUTHENTICATION_TOKEN_CHANGED" />
-210-->[com.facebook.android:facebook-core:18.1.3] /home/barna/.gradle/caches/8.14.3/transforms/4f656e15766e14faa9b3670a65289086/transformed/facebook-core-18.1.3/AndroidManifest.xml:48:17-103
-210-->[com.facebook.android:facebook-core:18.1.3] /home/barna/.gradle/caches/8.14.3/transforms/4f656e15766e14faa9b3670a65289086/transformed/facebook-core-18.1.3/AndroidManifest.xml:48:25-100
-211            </intent-filter>
-212        </receiver>
-213
-214        <meta-data
-214-->[com.google.android.gms:play-services-basement:18.5.0] /home/barna/.gradle/caches/8.14.3/transforms/3b8c4a8060e6387932bec10fde1ee1ac/transformed/play-services-basement-18.5.0/AndroidManifest.xml:21:9-23:69
-215            android:name="com.google.android.gms.version"
-215-->[com.google.android.gms:play-services-basement:18.5.0] /home/barna/.gradle/caches/8.14.3/transforms/3b8c4a8060e6387932bec10fde1ee1ac/transformed/play-services-basement-18.5.0/AndroidManifest.xml:22:13-58
-216            android:value="@integer/google_play_services_version" />
-216-->[com.google.android.gms:play-services-basement:18.5.0] /home/barna/.gradle/caches/8.14.3/transforms/3b8c4a8060e6387932bec10fde1ee1ac/transformed/play-services-basement-18.5.0/AndroidManifest.xml:23:13-66
-217
-218        <receiver
-218-->[androidx.profileinstaller:profileinstaller:1.4.0] /home/barna/.gradle/caches/8.14.3/transforms/d8cfaeabb4a103be310310cc0374d9ea/transformed/profileinstaller-1.4.0/AndroidManifest.xml:34:9-52:20
-219            android:name="androidx.profileinstaller.ProfileInstallReceiver"
-219-->[androidx.profileinstaller:profileinstaller:1.4.0] /home/barna/.gradle/caches/8.14.3/transforms/d8cfaeabb4a103be310310cc0374d9ea/transformed/profileinstaller-1.4.0/AndroidManifest.xml:35:13-76
-220            android:directBootAware="false"
-220-->[androidx.profileinstaller:profileinstaller:1.4.0] /home/barna/.gradle/caches/8.14.3/transforms/d8cfaeabb4a103be310310cc0374d9ea/transformed/profileinstaller-1.4.0/AndroidManifest.xml:36:13-44
-221            android:enabled="true"
-221-->[androidx.profileinstaller:profileinstaller:1.4.0] /home/barna/.gradle/caches/8.14.3/transforms/d8cfaeabb4a103be310310cc0374d9ea/transformed/profileinstaller-1.4.0/AndroidManifest.xml:37:13-35
-222            android:exported="true"
-222-->[androidx.profileinstaller:profileinstaller:1.4.0] /home/barna/.gradle/caches/8.14.3/transforms/d8cfaeabb4a103be310310cc0374d9ea/transformed/profileinstaller-1.4.0/AndroidManifest.xml:38:13-36
-223            android:permission="android.permission.DUMP" >
-223-->[androidx.profileinstaller:profileinstaller:1.4.0] /home/barna/.gradle/caches/8.14.3/transforms/d8cfaeabb4a103be310310cc0374d9ea/transformed/profileinstaller-1.4.0/AndroidManifest.xml:39:13-57
-224            <intent-filter>
-224-->[androidx.profileinstaller:profileinstaller:1.4.0] /home/barna/.gradle/caches/8.14.3/transforms/d8cfaeabb4a103be310310cc0374d9ea/transformed/profileinstaller-1.4.0/AndroidManifest.xml:40:13-42:29
-225                <action android:name="androidx.profileinstaller.action.INSTALL_PROFILE" />
-225-->[androidx.profileinstaller:profileinstaller:1.4.0] /home/barna/.gradle/caches/8.14.3/transforms/d8cfaeabb4a103be310310cc0374d9ea/transformed/profileinstaller-1.4.0/AndroidManifest.xml:41:17-91
-225-->[androidx.profileinstaller:profileinstaller:1.4.0] /home/barna/.gradle/caches/8.14.3/transforms/d8cfaeabb4a103be310310cc0374d9ea/transformed/profileinstaller-1.4.0/AndroidManifest.xml:41:25-88
-226            </intent-filter>
-227            <intent-filter>
-227-->[androidx.profileinstaller:profileinstaller:1.4.0] /home/barna/.gradle/caches/8.14.3/transforms/d8cfaeabb4a103be310310cc0374d9ea/transformed/profileinstaller-1.4.0/AndroidManifest.xml:43:13-45:29
-228                <action android:name="androidx.profileinstaller.action.SKIP_FILE" />
-228-->[androidx.profileinstaller:profileinstaller:1.4.0] /home/barna/.gradle/caches/8.14.3/transforms/d8cfaeabb4a103be310310cc0374d9ea/transformed/profileinstaller-1.4.0/AndroidManifest.xml:44:17-85
-228-->[androidx.profileinstaller:profileinstaller:1.4.0] /home/barna/.gradle/caches/8.14.3/transforms/d8cfaeabb4a103be310310cc0374d9ea/transformed/profileinstaller-1.4.0/AndroidManifest.xml:44:25-82
-229            </intent-filter>
-230            <intent-filter>
-230-->[androidx.profileinstaller:profileinstaller:1.4.0] /home/barna/.gradle/caches/8.14.3/transforms/d8cfaeabb4a103be310310cc0374d9ea/transformed/profileinstaller-1.4.0/AndroidManifest.xml:46:13-48:29
-231                <action android:name="androidx.profileinstaller.action.SAVE_PROFILE" />
-231-->[androidx.profileinstaller:profileinstaller:1.4.0] /home/barna/.gradle/caches/8.14.3/transforms/d8cfaeabb4a103be310310cc0374d9ea/transformed/profileinstaller-1.4.0/AndroidManifest.xml:47:17-88
-231-->[androidx.profileinstaller:profileinstaller:1.4.0] /home/barna/.gradle/caches/8.14.3/transforms/d8cfaeabb4a103be310310cc0374d9ea/transformed/profileinstaller-1.4.0/AndroidManifest.xml:47:25-85
-232            </intent-filter>
-233            <intent-filter>
-233-->[androidx.profileinstaller:profileinstaller:1.4.0] /home/barna/.gradle/caches/8.14.3/transforms/d8cfaeabb4a103be310310cc0374d9ea/transformed/profileinstaller-1.4.0/AndroidManifest.xml:49:13-51:29
-234                <action android:name="androidx.profileinstaller.action.BENCHMARK_OPERATION" />
-234-->[androidx.profileinstaller:profileinstaller:1.4.0] /home/barna/.gradle/caches/8.14.3/transforms/d8cfaeabb4a103be310310cc0374d9ea/transformed/profileinstaller-1.4.0/AndroidManifest.xml:50:17-95
-234-->[androidx.profileinstaller:profileinstaller:1.4.0] /home/barna/.gradle/caches/8.14.3/transforms/d8cfaeabb4a103be310310cc0374d9ea/transformed/profileinstaller-1.4.0/AndroidManifest.xml:50:25-92
-235            </intent-filter>
-236        </receiver>
-237    </application>
-238
-239</manifest>
+73            <intent-filter>
+73-->/home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml:38:13-40:29
+74                <action android:name="androidx.health.connect.action.SHOW_PERMISSIONS_RATIONALE" />
+74-->/home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml:39:17-100
+74-->/home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml:39:25-97
+75            </intent-filter>
+76        </activity>
+77
+78        <activity-alias
+78-->/home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml:43:9-52:26
+79            android:name="hu.kaloriakompasz.ViewPermissionUsageActivity"
+79-->/home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml:44:13-55
+80            android:exported="true"
+80-->/home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml:45:13-36
+81            android:permission="android.permission.START_VIEW_PERMISSION_USAGE"
+81-->/home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml:47:13-80
+82            android:targetActivity="hu.kaloriakompasz.MainActivity" >
+82-->/home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml:46:13-51
+83            <intent-filter>
+83-->/home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml:48:13-51:29
+84                <action android:name="android.intent.action.VIEW_PERMISSION_USAGE" />
+84-->/home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml:49:17-86
+84-->/home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml:49:25-83
+85
+86                <category android:name="android.intent.category.HEALTH_PERMISSIONS" />
+86-->/home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml:50:17-87
+86-->/home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml:50:27-84
+87            </intent-filter>
+88        </activity-alias>
+89
+90        <meta-data
+90-->/home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml:54:9-57:11
+91            android:name="androidx.health.connect.health_permissions_rationale_activity_name"
+91-->/home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml:55:13-94
+92            android:value=".MainActivity" />
+92-->/home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml:56:13-42
+93
+94        <provider
+95            android:name="androidx.core.content.FileProvider"
+95-->/home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml:60:13-62
+96            android:authorities="hu.kaloriakompasz.fileprovider"
+96-->/home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml:61:13-64
+97            android:exported="false"
+97-->/home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml:62:13-37
+98            android:grantUriPermissions="true" >
+98-->/home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml:63:13-47
+99            <meta-data
+99-->/home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml:64:13-112
+100                android:name="android.support.FILE_PROVIDER_PATHS"
+100-->/home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml:64:24-74
+101                android:resource="@xml/file_paths" />
+101-->/home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml:64:75-109
+102        </provider>
+103
+104        <activity
+104-->[:capgo-capacitor-social-login] /home/barna/Projects/KaloriaKompasz/node_modules/@capgo/capacitor-social-login/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:18:9-21:84
+105            android:name="ee.forgr.capacitor.social.login.TwitterLoginActivity"
+105-->[:capgo-capacitor-social-login] /home/barna/Projects/KaloriaKompasz/node_modules/@capgo/capacitor-social-login/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:19:13-80
+106            android:exported="false"
+106-->[:capgo-capacitor-social-login] /home/barna/Projects/KaloriaKompasz/node_modules/@capgo/capacitor-social-login/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:20:13-37
+107            android:theme="@android:style/Theme.DeviceDefault.Light.NoActionBar" />
+107-->[:capgo-capacitor-social-login] /home/barna/Projects/KaloriaKompasz/node_modules/@capgo/capacitor-social-login/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:21:13-81
+108        <activity
+108-->[:capgo-capacitor-social-login] /home/barna/Projects/KaloriaKompasz/node_modules/@capgo/capacitor-social-login/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:22:9-25:84
+109            android:name="ee.forgr.capacitor.social.login.OAuth2LoginActivity"
+109-->[:capgo-capacitor-social-login] /home/barna/Projects/KaloriaKompasz/node_modules/@capgo/capacitor-social-login/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:23:13-79
+110            android:exported="false"
+110-->[:capgo-capacitor-social-login] /home/barna/Projects/KaloriaKompasz/node_modules/@capgo/capacitor-social-login/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:24:13-37
+111            android:theme="@android:style/Theme.DeviceDefault.Light.NoActionBar" />
+111-->[:capgo-capacitor-social-login] /home/barna/Projects/KaloriaKompasz/node_modules/@capgo/capacitor-social-login/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:25:13-81
+112        <activity
+112-->[net.openid:appauth:0.9.1] /home/barna/.gradle/caches/8.14.3/transforms/3f39f8341f1fed010914e2f9517f4b54/transformed/appauth-0.9.1/AndroidManifest.xml:35:9-39:77
+113            android:name="net.openid.appauth.AuthorizationManagementActivity"
+113-->[net.openid:appauth:0.9.1] /home/barna/.gradle/caches/8.14.3/transforms/3f39f8341f1fed010914e2f9517f4b54/transformed/appauth-0.9.1/AndroidManifest.xml:36:13-78
+114            android:exported="false"
+114-->[net.openid:appauth:0.9.1] /home/barna/.gradle/caches/8.14.3/transforms/3f39f8341f1fed010914e2f9517f4b54/transformed/appauth-0.9.1/AndroidManifest.xml:37:13-37
+115            android:launchMode="singleTask"
+115-->[net.openid:appauth:0.9.1] /home/barna/.gradle/caches/8.14.3/transforms/3f39f8341f1fed010914e2f9517f4b54/transformed/appauth-0.9.1/AndroidManifest.xml:38:13-44
+116            android:theme="@style/Theme.AppCompat.Translucent.NoTitleBar" />
+116-->[net.openid:appauth:0.9.1] /home/barna/.gradle/caches/8.14.3/transforms/3f39f8341f1fed010914e2f9517f4b54/transformed/appauth-0.9.1/AndroidManifest.xml:39:13-74
+117        <activity
+117-->[net.openid:appauth:0.9.1] /home/barna/.gradle/caches/8.14.3/transforms/3f39f8341f1fed010914e2f9517f4b54/transformed/appauth-0.9.1/AndroidManifest.xml:40:9-51:20
+118            android:name="net.openid.appauth.RedirectUriReceiverActivity"
+118-->[net.openid:appauth:0.9.1] /home/barna/.gradle/caches/8.14.3/transforms/3f39f8341f1fed010914e2f9517f4b54/transformed/appauth-0.9.1/AndroidManifest.xml:41:13-74
+119            android:exported="true" >
+119-->[net.openid:appauth:0.9.1] /home/barna/.gradle/caches/8.14.3/transforms/3f39f8341f1fed010914e2f9517f4b54/transformed/appauth-0.9.1/AndroidManifest.xml:42:13-36
+120            <intent-filter>
+120-->[net.openid:appauth:0.9.1] /home/barna/.gradle/caches/8.14.3/transforms/3f39f8341f1fed010914e2f9517f4b54/transformed/appauth-0.9.1/AndroidManifest.xml:43:13-50:29
+121                <action android:name="android.intent.action.VIEW" />
+121-->/home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml:32:17-69
+121-->/home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml:32:25-66
+122
+123                <category android:name="android.intent.category.DEFAULT" />
+123-->/home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml:33:17-76
+123-->/home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml:33:27-73
+124                <category android:name="android.intent.category.BROWSABLE" />
+124-->/home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml:34:17-78
+124-->/home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml:34:27-75
+125
+126                <data android:scheme="hu.kaloriakompasz.app" />
+126-->/home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml:35:17-85
+126-->/home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml:35:23-61
+127            </intent-filter>
+128        </activity>
+129
+130        <service
+130-->[androidx.credentials:credentials-play-services-auth:1.5.0] /home/barna/.gradle/caches/8.14.3/transforms/75432ef1f78f998f36105522094e01e0/transformed/credentials-play-services-auth-1.5.0/AndroidManifest.xml:24:9-32:19
+131            android:name="androidx.credentials.playservices.CredentialProviderMetadataHolder"
+131-->[androidx.credentials:credentials-play-services-auth:1.5.0] /home/barna/.gradle/caches/8.14.3/transforms/75432ef1f78f998f36105522094e01e0/transformed/credentials-play-services-auth-1.5.0/AndroidManifest.xml:25:13-94
+132            android:enabled="true"
+132-->[androidx.credentials:credentials-play-services-auth:1.5.0] /home/barna/.gradle/caches/8.14.3/transforms/75432ef1f78f998f36105522094e01e0/transformed/credentials-play-services-auth-1.5.0/AndroidManifest.xml:26:13-35
+133            android:exported="false" >
+133-->[androidx.credentials:credentials-play-services-auth:1.5.0] /home/barna/.gradle/caches/8.14.3/transforms/75432ef1f78f998f36105522094e01e0/transformed/credentials-play-services-auth-1.5.0/AndroidManifest.xml:27:13-37
+134            <meta-data
+134-->[androidx.credentials:credentials-play-services-auth:1.5.0] /home/barna/.gradle/caches/8.14.3/transforms/75432ef1f78f998f36105522094e01e0/transformed/credentials-play-services-auth-1.5.0/AndroidManifest.xml:29:13-31:104
+135                android:name="androidx.credentials.CREDENTIAL_PROVIDER_KEY"
+135-->[androidx.credentials:credentials-play-services-auth:1.5.0] /home/barna/.gradle/caches/8.14.3/transforms/75432ef1f78f998f36105522094e01e0/transformed/credentials-play-services-auth-1.5.0/AndroidManifest.xml:30:17-76
+136                android:value="androidx.credentials.playservices.CredentialProviderPlayServicesImpl" />
+136-->[androidx.credentials:credentials-play-services-auth:1.5.0] /home/barna/.gradle/caches/8.14.3/transforms/75432ef1f78f998f36105522094e01e0/transformed/credentials-play-services-auth-1.5.0/AndroidManifest.xml:31:17-101
+137        </service>
+138
+139        <activity
+139-->[androidx.credentials:credentials-play-services-auth:1.5.0] /home/barna/.gradle/caches/8.14.3/transforms/75432ef1f78f998f36105522094e01e0/transformed/credentials-play-services-auth-1.5.0/AndroidManifest.xml:34:9-41:20
+140            android:name="androidx.credentials.playservices.HiddenActivity"
+140-->[androidx.credentials:credentials-play-services-auth:1.5.0] /home/barna/.gradle/caches/8.14.3/transforms/75432ef1f78f998f36105522094e01e0/transformed/credentials-play-services-auth-1.5.0/AndroidManifest.xml:35:13-76
+141            android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"
+141-->[androidx.credentials:credentials-play-services-auth:1.5.0] /home/barna/.gradle/caches/8.14.3/transforms/75432ef1f78f998f36105522094e01e0/transformed/credentials-play-services-auth-1.5.0/AndroidManifest.xml:36:13-87
+142            android:enabled="true"
+142-->[androidx.credentials:credentials-play-services-auth:1.5.0] /home/barna/.gradle/caches/8.14.3/transforms/75432ef1f78f998f36105522094e01e0/transformed/credentials-play-services-auth-1.5.0/AndroidManifest.xml:37:13-35
+143            android:exported="false"
+143-->[androidx.credentials:credentials-play-services-auth:1.5.0] /home/barna/.gradle/caches/8.14.3/transforms/75432ef1f78f998f36105522094e01e0/transformed/credentials-play-services-auth-1.5.0/AndroidManifest.xml:38:13-37
+144            android:fitsSystemWindows="true"
+144-->[androidx.credentials:credentials-play-services-auth:1.5.0] /home/barna/.gradle/caches/8.14.3/transforms/75432ef1f78f998f36105522094e01e0/transformed/credentials-play-services-auth-1.5.0/AndroidManifest.xml:39:13-45
+145            android:theme="@style/Theme.Hidden" >
+145-->[androidx.credentials:credentials-play-services-auth:1.5.0] /home/barna/.gradle/caches/8.14.3/transforms/75432ef1f78f998f36105522094e01e0/transformed/credentials-play-services-auth-1.5.0/AndroidManifest.xml:40:13-48
+146        </activity>
+147        <activity
+147-->[androidx.credentials:credentials-play-services-auth:1.5.0] /home/barna/.gradle/caches/8.14.3/transforms/75432ef1f78f998f36105522094e01e0/transformed/credentials-play-services-auth-1.5.0/AndroidManifest.xml:42:9-49:20
+148            android:name="androidx.credentials.playservices.IdentityCredentialApiHiddenActivity"
+148-->[androidx.credentials:credentials-play-services-auth:1.5.0] /home/barna/.gradle/caches/8.14.3/transforms/75432ef1f78f998f36105522094e01e0/transformed/credentials-play-services-auth-1.5.0/AndroidManifest.xml:43:13-97
+149            android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"
+149-->[androidx.credentials:credentials-play-services-auth:1.5.0] /home/barna/.gradle/caches/8.14.3/transforms/75432ef1f78f998f36105522094e01e0/transformed/credentials-play-services-auth-1.5.0/AndroidManifest.xml:44:13-87
+150            android:enabled="true"
+150-->[androidx.credentials:credentials-play-services-auth:1.5.0] /home/barna/.gradle/caches/8.14.3/transforms/75432ef1f78f998f36105522094e01e0/transformed/credentials-play-services-auth-1.5.0/AndroidManifest.xml:45:13-35
+151            android:exported="false"
+151-->[androidx.credentials:credentials-play-services-auth:1.5.0] /home/barna/.gradle/caches/8.14.3/transforms/75432ef1f78f998f36105522094e01e0/transformed/credentials-play-services-auth-1.5.0/AndroidManifest.xml:46:13-37
+152            android:fitsSystemWindows="true"
+152-->[androidx.credentials:credentials-play-services-auth:1.5.0] /home/barna/.gradle/caches/8.14.3/transforms/75432ef1f78f998f36105522094e01e0/transformed/credentials-play-services-auth-1.5.0/AndroidManifest.xml:47:13-45
+153            android:theme="@style/Theme.Hidden" >
+153-->[androidx.credentials:credentials-play-services-auth:1.5.0] /home/barna/.gradle/caches/8.14.3/transforms/75432ef1f78f998f36105522094e01e0/transformed/credentials-play-services-auth-1.5.0/AndroidManifest.xml:48:13-48
+154        </activity>
+155
+156        <service
+156-->[androidx.health.connect:connect-client:1.2.0-alpha02] /home/barna/.gradle/caches/8.14.3/transforms/8ca56452eedaef1454cdf7e62bfc7e48/transformed/connect-client-1.2.0-alpha02/AndroidManifest.xml:24:9-32:19
+157            android:name="androidx.health.platform.client.impl.sdkservice.HealthDataSdkService"
+157-->[androidx.health.connect:connect-client:1.2.0-alpha02] /home/barna/.gradle/caches/8.14.3/transforms/8ca56452eedaef1454cdf7e62bfc7e48/transformed/connect-client-1.2.0-alpha02/AndroidManifest.xml:25:13-96
+158            android:enabled="true"
+158-->[androidx.health.connect:connect-client:1.2.0-alpha02] /home/barna/.gradle/caches/8.14.3/transforms/8ca56452eedaef1454cdf7e62bfc7e48/transformed/connect-client-1.2.0-alpha02/AndroidManifest.xml:26:13-35
+159            android:exported="true" >
+159-->[androidx.health.connect:connect-client:1.2.0-alpha02] /home/barna/.gradle/caches/8.14.3/transforms/8ca56452eedaef1454cdf7e62bfc7e48/transformed/connect-client-1.2.0-alpha02/AndroidManifest.xml:27:13-36
+160            <intent-filter>
+160-->[androidx.health.connect:connect-client:1.2.0-alpha02] /home/barna/.gradle/caches/8.14.3/transforms/8ca56452eedaef1454cdf7e62bfc7e48/transformed/connect-client-1.2.0-alpha02/AndroidManifest.xml:29:13-31:29
+161                <action android:name="androidx.health.platform.client.ACTION_BIND_SDK_SERVICE" />
+161-->[androidx.health.connect:connect-client:1.2.0-alpha02] /home/barna/.gradle/caches/8.14.3/transforms/8ca56452eedaef1454cdf7e62bfc7e48/transformed/connect-client-1.2.0-alpha02/AndroidManifest.xml:30:17-98
+161-->[androidx.health.connect:connect-client:1.2.0-alpha02] /home/barna/.gradle/caches/8.14.3/transforms/8ca56452eedaef1454cdf7e62bfc7e48/transformed/connect-client-1.2.0-alpha02/AndroidManifest.xml:30:25-95
+162            </intent-filter>
+163        </service>
+164
+165        <activity
+165-->[com.google.android.gms:play-services-auth:21.4.0] /home/barna/.gradle/caches/8.14.3/transforms/0b2aef09c502cb5a80be78526e466a9d/transformed/play-services-auth-21.4.0/AndroidManifest.xml:23:9-27:75
+166            android:name="com.google.android.gms.auth.api.signin.internal.SignInHubActivity"
+166-->[com.google.android.gms:play-services-auth:21.4.0] /home/barna/.gradle/caches/8.14.3/transforms/0b2aef09c502cb5a80be78526e466a9d/transformed/play-services-auth-21.4.0/AndroidManifest.xml:24:13-93
+167            android:excludeFromRecents="true"
+167-->[com.google.android.gms:play-services-auth:21.4.0] /home/barna/.gradle/caches/8.14.3/transforms/0b2aef09c502cb5a80be78526e466a9d/transformed/play-services-auth-21.4.0/AndroidManifest.xml:25:13-46
+168            android:exported="false"
+168-->[com.google.android.gms:play-services-auth:21.4.0] /home/barna/.gradle/caches/8.14.3/transforms/0b2aef09c502cb5a80be78526e466a9d/transformed/play-services-auth-21.4.0/AndroidManifest.xml:26:13-37
+169            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+169-->[com.google.android.gms:play-services-auth:21.4.0] /home/barna/.gradle/caches/8.14.3/transforms/0b2aef09c502cb5a80be78526e466a9d/transformed/play-services-auth-21.4.0/AndroidManifest.xml:27:13-72
+170        <!--
+171            Service handling Google Sign-In user revocation. For apps that do not integrate with
+172            Google Sign-In, this service will never be started.
+173        -->
+174        <service
+174-->[com.google.android.gms:play-services-auth:21.4.0] /home/barna/.gradle/caches/8.14.3/transforms/0b2aef09c502cb5a80be78526e466a9d/transformed/play-services-auth-21.4.0/AndroidManifest.xml:33:9-37:51
+175            android:name="com.google.android.gms.auth.api.signin.RevocationBoundService"
+175-->[com.google.android.gms:play-services-auth:21.4.0] /home/barna/.gradle/caches/8.14.3/transforms/0b2aef09c502cb5a80be78526e466a9d/transformed/play-services-auth-21.4.0/AndroidManifest.xml:34:13-89
+176            android:exported="true"
+176-->[com.google.android.gms:play-services-auth:21.4.0] /home/barna/.gradle/caches/8.14.3/transforms/0b2aef09c502cb5a80be78526e466a9d/transformed/play-services-auth-21.4.0/AndroidManifest.xml:35:13-36
+177            android:permission="com.google.android.gms.auth.api.signin.permission.REVOCATION_NOTIFICATION"
+177-->[com.google.android.gms:play-services-auth:21.4.0] /home/barna/.gradle/caches/8.14.3/transforms/0b2aef09c502cb5a80be78526e466a9d/transformed/play-services-auth-21.4.0/AndroidManifest.xml:36:13-107
+178            android:visibleToInstantApps="true" />
+178-->[com.google.android.gms:play-services-auth:21.4.0] /home/barna/.gradle/caches/8.14.3/transforms/0b2aef09c502cb5a80be78526e466a9d/transformed/play-services-auth-21.4.0/AndroidManifest.xml:37:13-48
+179
+180        <activity
+180-->[com.google.android.gms:play-services-base:18.5.0] /home/barna/.gradle/caches/8.14.3/transforms/5e01f444f741efd71a8a5821c7b8a936/transformed/play-services-base-18.5.0/AndroidManifest.xml:5:9-173
+181            android:name="com.google.android.gms.common.api.GoogleApiActivity"
+181-->[com.google.android.gms:play-services-base:18.5.0] /home/barna/.gradle/caches/8.14.3/transforms/5e01f444f741efd71a8a5821c7b8a936/transformed/play-services-base-18.5.0/AndroidManifest.xml:5:19-85
+182            android:exported="false"
+182-->[com.google.android.gms:play-services-base:18.5.0] /home/barna/.gradle/caches/8.14.3/transforms/5e01f444f741efd71a8a5821c7b8a936/transformed/play-services-base-18.5.0/AndroidManifest.xml:5:146-170
+183            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+183-->[com.google.android.gms:play-services-base:18.5.0] /home/barna/.gradle/caches/8.14.3/transforms/5e01f444f741efd71a8a5821c7b8a936/transformed/play-services-base-18.5.0/AndroidManifest.xml:5:86-145
+184
+185        <provider
+185-->[androidx.emoji2:emoji2:1.3.0] /home/barna/.gradle/caches/8.14.3/transforms/4b438644c95e6182c29894e52ec05db5/transformed/emoji2-1.3.0/AndroidManifest.xml:24:9-32:20
+186            android:name="androidx.startup.InitializationProvider"
+186-->[androidx.emoji2:emoji2:1.3.0] /home/barna/.gradle/caches/8.14.3/transforms/4b438644c95e6182c29894e52ec05db5/transformed/emoji2-1.3.0/AndroidManifest.xml:25:13-67
+187            android:authorities="hu.kaloriakompasz.androidx-startup"
+187-->[androidx.emoji2:emoji2:1.3.0] /home/barna/.gradle/caches/8.14.3/transforms/4b438644c95e6182c29894e52ec05db5/transformed/emoji2-1.3.0/AndroidManifest.xml:26:13-68
+188            android:exported="false" >
+188-->[androidx.emoji2:emoji2:1.3.0] /home/barna/.gradle/caches/8.14.3/transforms/4b438644c95e6182c29894e52ec05db5/transformed/emoji2-1.3.0/AndroidManifest.xml:27:13-37
+189            <meta-data
+189-->[androidx.emoji2:emoji2:1.3.0] /home/barna/.gradle/caches/8.14.3/transforms/4b438644c95e6182c29894e52ec05db5/transformed/emoji2-1.3.0/AndroidManifest.xml:29:13-31:52
+190                android:name="androidx.emoji2.text.EmojiCompatInitializer"
+190-->[androidx.emoji2:emoji2:1.3.0] /home/barna/.gradle/caches/8.14.3/transforms/4b438644c95e6182c29894e52ec05db5/transformed/emoji2-1.3.0/AndroidManifest.xml:30:17-75
+191                android:value="androidx.startup" />
+191-->[androidx.emoji2:emoji2:1.3.0] /home/barna/.gradle/caches/8.14.3/transforms/4b438644c95e6182c29894e52ec05db5/transformed/emoji2-1.3.0/AndroidManifest.xml:31:17-49
+192            <meta-data
+192-->[androidx.lifecycle:lifecycle-process:2.6.2] /home/barna/.gradle/caches/8.14.3/transforms/88f09a1228715b6c407ce3f93eb6c8b9/transformed/lifecycle-process-2.6.2/AndroidManifest.xml:29:13-31:52
+193                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
+193-->[androidx.lifecycle:lifecycle-process:2.6.2] /home/barna/.gradle/caches/8.14.3/transforms/88f09a1228715b6c407ce3f93eb6c8b9/transformed/lifecycle-process-2.6.2/AndroidManifest.xml:30:17-78
+194                android:value="androidx.startup" />
+194-->[androidx.lifecycle:lifecycle-process:2.6.2] /home/barna/.gradle/caches/8.14.3/transforms/88f09a1228715b6c407ce3f93eb6c8b9/transformed/lifecycle-process-2.6.2/AndroidManifest.xml:31:17-49
+195            <meta-data
+195-->[androidx.profileinstaller:profileinstaller:1.4.0] /home/barna/.gradle/caches/8.14.3/transforms/d8cfaeabb4a103be310310cc0374d9ea/transformed/profileinstaller-1.4.0/AndroidManifest.xml:29:13-31:52
+196                android:name="androidx.profileinstaller.ProfileInstallerInitializer"
+196-->[androidx.profileinstaller:profileinstaller:1.4.0] /home/barna/.gradle/caches/8.14.3/transforms/d8cfaeabb4a103be310310cc0374d9ea/transformed/profileinstaller-1.4.0/AndroidManifest.xml:30:17-85
+197                android:value="androidx.startup" />
+197-->[androidx.profileinstaller:profileinstaller:1.4.0] /home/barna/.gradle/caches/8.14.3/transforms/d8cfaeabb4a103be310310cc0374d9ea/transformed/profileinstaller-1.4.0/AndroidManifest.xml:31:17-49
+198        </provider>
+199
+200        <meta-data
+200-->[com.google.android.gms:play-services-basement:18.5.0] /home/barna/.gradle/caches/8.14.3/transforms/3b8c4a8060e6387932bec10fde1ee1ac/transformed/play-services-basement-18.5.0/AndroidManifest.xml:21:9-23:69
+201            android:name="com.google.android.gms.version"
+201-->[com.google.android.gms:play-services-basement:18.5.0] /home/barna/.gradle/caches/8.14.3/transforms/3b8c4a8060e6387932bec10fde1ee1ac/transformed/play-services-basement-18.5.0/AndroidManifest.xml:22:13-58
+202            android:value="@integer/google_play_services_version" />
+202-->[com.google.android.gms:play-services-basement:18.5.0] /home/barna/.gradle/caches/8.14.3/transforms/3b8c4a8060e6387932bec10fde1ee1ac/transformed/play-services-basement-18.5.0/AndroidManifest.xml:23:13-66
+203
+204        <receiver
+204-->[androidx.profileinstaller:profileinstaller:1.4.0] /home/barna/.gradle/caches/8.14.3/transforms/d8cfaeabb4a103be310310cc0374d9ea/transformed/profileinstaller-1.4.0/AndroidManifest.xml:34:9-52:20
+205            android:name="androidx.profileinstaller.ProfileInstallReceiver"
+205-->[androidx.profileinstaller:profileinstaller:1.4.0] /home/barna/.gradle/caches/8.14.3/transforms/d8cfaeabb4a103be310310cc0374d9ea/transformed/profileinstaller-1.4.0/AndroidManifest.xml:35:13-76
+206            android:directBootAware="false"
+206-->[androidx.profileinstaller:profileinstaller:1.4.0] /home/barna/.gradle/caches/8.14.3/transforms/d8cfaeabb4a103be310310cc0374d9ea/transformed/profileinstaller-1.4.0/AndroidManifest.xml:36:13-44
+207            android:enabled="true"
+207-->[androidx.profileinstaller:profileinstaller:1.4.0] /home/barna/.gradle/caches/8.14.3/transforms/d8cfaeabb4a103be310310cc0374d9ea/transformed/profileinstaller-1.4.0/AndroidManifest.xml:37:13-35
+208            android:exported="true"
+208-->[androidx.profileinstaller:profileinstaller:1.4.0] /home/barna/.gradle/caches/8.14.3/transforms/d8cfaeabb4a103be310310cc0374d9ea/transformed/profileinstaller-1.4.0/AndroidManifest.xml:38:13-36
+209            android:permission="android.permission.DUMP" >
+209-->[androidx.profileinstaller:profileinstaller:1.4.0] /home/barna/.gradle/caches/8.14.3/transforms/d8cfaeabb4a103be310310cc0374d9ea/transformed/profileinstaller-1.4.0/AndroidManifest.xml:39:13-57
+210            <intent-filter>
+210-->[androidx.profileinstaller:profileinstaller:1.4.0] /home/barna/.gradle/caches/8.14.3/transforms/d8cfaeabb4a103be310310cc0374d9ea/transformed/profileinstaller-1.4.0/AndroidManifest.xml:40:13-42:29
+211                <action android:name="androidx.profileinstaller.action.INSTALL_PROFILE" />
+211-->[androidx.profileinstaller:profileinstaller:1.4.0] /home/barna/.gradle/caches/8.14.3/transforms/d8cfaeabb4a103be310310cc0374d9ea/transformed/profileinstaller-1.4.0/AndroidManifest.xml:41:17-91
+211-->[androidx.profileinstaller:profileinstaller:1.4.0] /home/barna/.gradle/caches/8.14.3/transforms/d8cfaeabb4a103be310310cc0374d9ea/transformed/profileinstaller-1.4.0/AndroidManifest.xml:41:25-88
+212            </intent-filter>
+213            <intent-filter>
+213-->[androidx.profileinstaller:profileinstaller:1.4.0] /home/barna/.gradle/caches/8.14.3/transforms/d8cfaeabb4a103be310310cc0374d9ea/transformed/profileinstaller-1.4.0/AndroidManifest.xml:43:13-45:29
+214                <action android:name="androidx.profileinstaller.action.SKIP_FILE" />
+214-->[androidx.profileinstaller:profileinstaller:1.4.0] /home/barna/.gradle/caches/8.14.3/transforms/d8cfaeabb4a103be310310cc0374d9ea/transformed/profileinstaller-1.4.0/AndroidManifest.xml:44:17-85
+214-->[androidx.profileinstaller:profileinstaller:1.4.0] /home/barna/.gradle/caches/8.14.3/transforms/d8cfaeabb4a103be310310cc0374d9ea/transformed/profileinstaller-1.4.0/AndroidManifest.xml:44:25-82
+215            </intent-filter>
+216            <intent-filter>
+216-->[androidx.profileinstaller:profileinstaller:1.4.0] /home/barna/.gradle/caches/8.14.3/transforms/d8cfaeabb4a103be310310cc0374d9ea/transformed/profileinstaller-1.4.0/AndroidManifest.xml:46:13-48:29
+217                <action android:name="androidx.profileinstaller.action.SAVE_PROFILE" />
+217-->[androidx.profileinstaller:profileinstaller:1.4.0] /home/barna/.gradle/caches/8.14.3/transforms/d8cfaeabb4a103be310310cc0374d9ea/transformed/profileinstaller-1.4.0/AndroidManifest.xml:47:17-88
+217-->[androidx.profileinstaller:profileinstaller:1.4.0] /home/barna/.gradle/caches/8.14.3/transforms/d8cfaeabb4a103be310310cc0374d9ea/transformed/profileinstaller-1.4.0/AndroidManifest.xml:47:25-85
+218            </intent-filter>
+219            <intent-filter>
+219-->[androidx.profileinstaller:profileinstaller:1.4.0] /home/barna/.gradle/caches/8.14.3/transforms/d8cfaeabb4a103be310310cc0374d9ea/transformed/profileinstaller-1.4.0/AndroidManifest.xml:49:13-51:29
+220                <action android:name="androidx.profileinstaller.action.BENCHMARK_OPERATION" />
+220-->[androidx.profileinstaller:profileinstaller:1.4.0] /home/barna/.gradle/caches/8.14.3/transforms/d8cfaeabb4a103be310310cc0374d9ea/transformed/profileinstaller-1.4.0/AndroidManifest.xml:50:17-95
+220-->[androidx.profileinstaller:profileinstaller:1.4.0] /home/barna/.gradle/caches/8.14.3/transforms/d8cfaeabb4a103be310310cc0374d9ea/transformed/profileinstaller-1.4.0/AndroidManifest.xml:50:25-92
+221            </intent-filter>
+222        </receiver>
+223    </application>
+224
+225</manifest>

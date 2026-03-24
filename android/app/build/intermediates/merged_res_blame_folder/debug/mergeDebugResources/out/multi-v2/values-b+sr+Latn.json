@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "hu.kaloriakompasz.app-mergeDebugResources-39:/values-b+sr+Latn/values-b+sr+Latn.xml",
+            "outputFile": "hu.kaloriakompasz.app-mergeDebugResources-35:/values-b+sr+Latn/values-b+sr+Latn.xml",
             "map": [
                 {
                     "source": "/home/barna/.gradle/caches/8.14.3/transforms/3b8c4a8060e6387932bec10fde1ee1ac/transformed/play-services-basement-18.5.0/res/values-b+sr+Latn/values.xml",
