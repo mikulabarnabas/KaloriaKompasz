@@ -1,6 +1,6 @@
 <script setup>
 import { ref, computed } from "vue";
-import { usePage } from "@inertiajs/vue3"
+import { usePage, router } from "@inertiajs/vue3"
 import { trans as t } from 'laravel-vue-i18n';
 import { useForm } from "laravel-precognition-vue";
 import AppLayout from "@/Layouts/appLayout.vue"
@@ -42,7 +42,7 @@ const activityOptions = computed(() => [
 ]);
 
 const genderOptions = computed(() => [
-  { label: t('profile.male'), value: "male" }, 
+  { label: t('profile.male'), value: "male" },
   { label: t('profile.female'), value: "female" },
   { label: t('profile.other'), value: "other" },
   { label: t('profile.na'), value: "prefer_not_to_say" },
@@ -55,7 +55,11 @@ const onSubmit = () => {
   });
 };
 
-function closeSuccessDialog() { showSuccessDialog.value = false; }
+function closeSuccessDialog()
+{
+    showSuccessDialog.value = false;
+    router.get('/stats');
+}
 </script>
 
 <template>

@@ -118,7 +118,6 @@ class FoodController extends Controller
         $food = Foods::create($data);
 
         if ($request->hasFile('image')) {
-            Log::info('Van kép');
             $file = $request->file('image');
             $filename = "food_" . time() . "." . $file->extension();
 

@@ -4,7 +4,6 @@ import { trans as t } from 'laravel-vue-i18n';
 import InputField from "@/Components/input.vue"
 import { SocialLogin } from '@capgo/capacitor-social-login';
 import { Device } from '@capacitor/device';
-
 const emit = defineEmits(['success']);
 
 const form = useForm('post', '/login', {
@@ -16,6 +15,7 @@ const form = useForm('post', '/login', {
 const onSubmit = () =>
     form.submit().then(() => {
         emit('success', true);
+        form.reset();
     }).catch(() => {
         emit('success', false);
     })
@@ -29,31 +29,40 @@ const loginWithGoogle = async () => {
     }
 
     try {
-        // 1. INICIALIZÁLÁS
         await SocialLogin.initialize({
             google: {
-                // Biztosan a WEB Client ID-t használd itt is!
                 webClientId: '10740457262-47dacbavcs5blgon888e89us8tcp5504.apps.googleusercontent.com',
                 mode: 'online'
             },
         });
 
-        // 2. LOGIN - Fontos a scopes pontos megadása
         const result = await SocialLogin.login({
             provider: 'google',
             options: {
-                scopes: ['email', 'profile'], // 'name' helyett 'profile'
+                scopes: ['email', 'profile'],
             },
         });
 
         if (result.result?.idToken) {
-            console.log("Sikeres Google login, token:", result.result.idToken);
-            // Küldés a Laravelnek (Példa):
-            // router.post('/auth/google/callback', { token: result.result.idToken });
+            console.log("Mobil login ok, küldés a szerverre...");
+
+            // --- EZ A RÉSZ HIÁNYZOTT: ---
+            // Itt küldjük el a Laravelnek a tokent POST kéréssel
+            const response = await axios.post('/auth/google/callback', {
+                token: result.result.idToken
+            });
+
+            if (response.data.success) {
+                console.log("Laravel beléptetés sikeres!");
+                // Sikeres belépés után irány a főoldal vagy dashboard
+                window.location.href = '/';
+                // Vagy Inertia esetén: router.visit('/');
+                emit('success', true);
+            }
         }
     } catch (error) {
-        // Ha itt 16-os vagy 28405-ös hibát kapsz, az SHA-1/Csomagnév hiba
-        console.error("Google hiba részletesen:", error);
+        console.error("Google hiba:", error);
+        emit('success', false);
     }
 }
 </script>

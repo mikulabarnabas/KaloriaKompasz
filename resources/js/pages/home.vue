@@ -108,9 +108,9 @@ const cards = computed(() => [
                   class="relative mb-6 h-48 w-48 overflow-hidden rounded-full border-4 border-transparent group-hover:border-primary transition">
                   <img alt="Founder 1"
                     class="h-full w-full rounded-full object-cover grayscale group-hover:grayscale-0 transition"
-                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuAAh2wlXleEXK9sxmGaVzhsMJXeaJecyfwhGr_F7aE9qGJ_UehP914nVYc2a1aiCKdAtcBnUhpTT4dltsxwC2jnHCiVvhwywv7PK9V8gK2JtyJwQb-yGr4O8mpVl8Wg7asqN8dTTjlj2i6i_obuvTJxT8hOWwvNPkwIP3NY9QvgnPne6x8LBtO82B5Z5a0MjGT30GUp9A-LxJ1p3Rb78cIKudSLcv2Ym4TH1J1Ib9WCkjRlz3SFV5G7ubOJBTtOpnymvHMX-E8CJeJN" />
+                    :src="'/img/barna.jpg'" />
                 </div>
-                <h4 class="text-xl font-bold text-main-text">Név 1</h4>
+                <h4 class="text-xl font-bold text-main-text">Mikula Barnabás</h4>
                 <p class="text-sm font-medium text-primary uppercase tracking-widest">{{ $t('home.role_dev') }}</p>
               </div>
               <div class="group flex flex-col items-center text-center">
@@ -118,9 +118,9 @@ const cards = computed(() => [
                   class="relative mb-6 h-48 w-48 overflow-hidden rounded-full border-4 border-transparent group-hover:border-primary transition p-1">
                   <img alt="Founder 2"
                     class="h-full w-full rounded-full object-cover grayscale group-hover:grayscale-0 transition"
-                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuCTxUiUKhhbC_9IvJmhJ9UoRGDnrCtJ2xYHsYKU9706bTHtX6nkHzpPB7EfHDuzWcKfX86OWEhB6hclOjH54mIJncqG-a2lkMiJCTzdYe13XtVayhQCmD4MPdL5TnUits_88rwFbGf8V1V1VkEz9TgMbd98Akx4F71pmKiOHc3DHbGgxkwLfjb_SmukVKsYplyV-PSGvOYplCInAd_RERo2_5MnSRa_00Qeemg10kCvxYcKn2U-IC5fK0JGTIzz-B6VI3_hb5sf_4aa" />
+                    :src="'/img/geri.jpg'" />
                 </div>
-                <h4 class="text-xl font-bold text-main-text">Név 2</h4>
+                <h4 class="text-xl font-bold text-main-text">Bóta Gergely</h4>
                 <p class="text-sm font-medium text-primary uppercase tracking-widest">{{ $t('home.role_design') }}</p>
               </div>
             </div>

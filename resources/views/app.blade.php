@@ -17,7 +17,7 @@
   @vite(['resources/css/app.css', 'resources/js/app.js'])
   @inertiaHead
 
-  <link rel="icon" type="image/svg+xml" href="{{ asset('favicon.svg') }}">
+  <link rel="icon" type="image/svg+xml" href="{{ asset('favicon.png') }}">
 </head>
 
 <body>

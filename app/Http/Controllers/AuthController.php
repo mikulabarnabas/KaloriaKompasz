@@ -11,8 +11,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Validation\ValidationException;
 use Laravel\Socialite\Facades\Socialite;
-
-    use Illuminate\Support\Facades\Log; // Add hozzá a fájl tetejéhez!
+use Illuminate\Auth\Events\Registered;
+use Illuminate\Support\Facades\Log;
 use Google_Client;
 
 
@@ -40,7 +40,7 @@ class AuthController extends Controller
     {
         $data = $request->validated();
 
-        User::create($data);
+        $user = User::create($data);
 
         return response()->json(['success' => true]);
     }

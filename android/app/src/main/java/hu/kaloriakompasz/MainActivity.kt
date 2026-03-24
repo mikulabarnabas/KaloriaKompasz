@@ -39,7 +39,6 @@ class MainActivity : BridgeActivity(), ModifiedMainActivityForSocialLoginPlugin 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        // Ellenőrizzük, hogy a kérés a Google-től jött-e
         if (requestCode >= GoogleProvider.REQUEST_AUTHORIZE_GOOGLE_MIN &&
             requestCode < GoogleProvider.REQUEST_AUTHORIZE_GOOGLE_MAX) {
 
@@ -55,12 +54,10 @@ class MainActivity : BridgeActivity(), ModifiedMainActivityForSocialLoginPlugin 
                 return
             }
 
-            // Itt adjuk át az adatot a pluginnek
             plugin.handleGoogleLoginIntent(requestCode, data)
         }
     }
 
-    // Ezt a függvényt üresen kell hagyni, csak az interfész miatt kötelező
     override fun IHaveModifiedTheMainActivityForTheUseWithSocialLoginPlugin() {
         // Leave empty
     }
@@ -180,7 +177,6 @@ class MainActivity : BridgeActivity(), ModifiedMainActivityForSocialLoginPlugin 
     @CapacitorPlugin(name = "SamsungHealthCustom")
     open class SamsungHealthPlugin : com.getcapacitor.Plugin() {
 
-        // 1. FÜGGVÉNY: Csak ellenőrzi az engedélyeket (nem ugrik fel semmi)
         @PluginMethod
         fun checkSamsungPermissions(call: PluginCall) {
             activity.lifecycleScope.launch {

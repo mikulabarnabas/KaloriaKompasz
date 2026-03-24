@@ -27,7 +27,7 @@ export default defineConfig({
         cors: true,
         strictPort: true,
         hmr: {
-            host: "192.168.0.13",
+            host: "localhost",
             clientPort: 5173,
         },
         watch: {
