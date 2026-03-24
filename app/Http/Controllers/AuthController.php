@@ -12,6 +12,10 @@ use Illuminate\Support\Facades\App;
 use Illuminate\Validation\ValidationException;
 use Laravel\Socialite\Facades\Socialite;
 
+    use Illuminate\Support\Facades\Log; // Add hozzá a fájl tetejéhez!
+use Google_Client;
+
+
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
@@ -61,12 +65,9 @@ class AuthController extends Controller
         return Socialite::driver('google')->redirect();
     }
 
-    use Illuminate\Support\Facades\Log; // Add hozzá a fájl tetejéhez!
-use Google_Client;
-
-public function googleCallback(Request $request)
-{
-    Log::info('Google Callback hívás indult', ['request_all' => $request->all()]);
+    public function googleCallback(Request $request)
+    {
+        Log::info('Google Callback hívás indult', ['request_all' => $request->all()]);
 
     try {
         // 1. MOBILOS ÚT (ID Token)
