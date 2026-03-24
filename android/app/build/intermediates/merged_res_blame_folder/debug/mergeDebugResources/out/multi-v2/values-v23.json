@@ -4,7 +4,7 @@
             "outputFile": "hu.kaloriakompasz.app-mergeDebugResources-39:/values-v23/values-v23.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\barnaaa\\.gradle\\caches\\8.14.3\\transforms\\aaeff55390bd9a5c6a84a6e8c13d6d70\\transformed\\cardview-1.0.0\\res\\values-v23\\values-v23.xml",
+                    "source": "/home/barna/.gradle/caches/8.14.3/transforms/aaeff55390bd9a5c6a84a6e8c13d6d70/transformed/cardview-1.0.0/res/values-v23/values-v23.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",
@@ -23,7 +23,7 @@
                     }
                 },
                 {
-                    "source": "C:\\Users\\barnaaa\\.gradle\\caches\\8.14.3\\transforms\\e9646a3c43de0eff3be9ed70ef668a45\\transformed\\appcompat-1.7.1\\res\\values-v23\\values-v23.xml",
+                    "source": "/home/barna/.gradle/caches/8.14.3/transforms/e9646a3c43de0eff3be9ed70ef668a45/transformed/appcompat-1.7.1/res/values-v23/values-v23.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,20,34,35,36,39,43,44,45,46",
                         "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4",

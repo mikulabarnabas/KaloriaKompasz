@@ -791,6 +791,7 @@ int drawable ic_call_answer_video_low 0x7f080087
 int drawable ic_call_decline 0x7f080088
 int drawable ic_call_decline_low 0x7f080089
 int drawable ic_launcher_background 0x7f08008a
+int drawable ic_launcher_foreground 0x7f08008b
 int drawable ic_other_sign_in 0x7f08008c
 int drawable ic_passkey 0x7f08008d
 int drawable ic_password 0x7f08008e
@@ -1137,8 +1138,9 @@ int layout select_dialog_singlechoice_material 0x7f0c003d
 int layout splash_screen_view 0x7f0c003e
 int layout support_simple_spinner_dropdown_item 0x7f0c003f
 int mipmap ic_launcher 0x7f0d0000
-int mipmap ic_launcher_foreground 0x7f0d0001
-int mipmap ic_launcher_round 0x7f0d0002
+int mipmap ic_launcher_background 0x7f0d0001
+int mipmap ic_launcher_foreground 0x7f0d0002
+int mipmap ic_launcher_round 0x7f0d0003
 int string abc_action_bar_home_description 0x7f0e0000
 int string abc_action_bar_up_description 0x7f0e0001
 int string abc_action_menu_overflow_description 0x7f0e0002

@@ -23,7 +23,6 @@ test('a napló lekérése dátum alapján visszaadja az összesítést', functio
     $etel = Foods::factory()->create();
     $datumStr = '2026-03-20';
 
-    // FoodDiary létrehozása - Kifejezetten csak dátummal, idő nélkül
     $naplo = FoodDiary::create([
         'user_id' => $felhasznalo->id,
         'date' => $datumStr

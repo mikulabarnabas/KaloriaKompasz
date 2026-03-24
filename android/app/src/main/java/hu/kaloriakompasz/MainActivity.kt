@@ -87,7 +87,6 @@ class MainActivity : BridgeActivity() {
         fun checkHealthPermissions(call: PluginCall) {
             activity.lifecycleScope.launch {
                 try {
-                    // Itt a 'permissions' az a set, amit már definiáltál feljebb
                     val granted = healthConnectClient.permissionController.getGrantedPermissions()
                     val hasAll = granted.containsAll(permissions)
 
@@ -175,7 +174,6 @@ class MainActivity : BridgeActivity() {
             }
         }
 
-        // 2. FÜGGVÉNY: Feldobja az engedélykérő ablakot
         @PluginMethod
         fun requestSamsungPermissions(call: PluginCall) {
             activity.lifecycleScope.launch {

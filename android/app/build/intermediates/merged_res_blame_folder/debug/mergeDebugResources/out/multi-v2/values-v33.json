@@ -4,7 +4,7 @@
             "outputFile": "hu.kaloriakompasz.app-mergeDebugResources-39:/values-v33/values-v33.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\barnaaa\\.gradle\\caches\\8.14.3\\transforms\\42404cff91637f8f90614c0db2bf0a58\\transformed\\core-splashscreen-1.2.0\\res\\values-v33\\values-v33.xml",
+                    "source": "/home/barna/.gradle/caches/8.14.3/transforms/42404cff91637f8f90614c0db2bf0a58/transformed/core-splashscreen-1.2.0/res/values-v33/values-v33.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",
