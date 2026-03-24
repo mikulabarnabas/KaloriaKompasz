@@ -14,6 +14,7 @@
             <option value="$PROJECT_DIR$/capacitor-cordova-android-plugins" />
             <option value="$PROJECT_DIR$/../node_modules/@capacitor-community/generic-oauth2/android" />
             <option value="$PROJECT_DIR$/../node_modules/@capacitor/android/capacitor" />
+            <option value="$PROJECT_DIR$/../node_modules/@capacitor/device/android" />
             <option value="$PROJECT_DIR$/../node_modules/@capgo/capacitor-social-login/android" />
           </set>
         </option>

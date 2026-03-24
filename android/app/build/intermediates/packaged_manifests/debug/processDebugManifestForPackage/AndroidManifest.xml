@@ -68,7 +68,7 @@
 
                 <data
                     android:host="oauth"
-                    android:scheme="hu.kaloriakompasz.app" />
+                    android:scheme="hu.kaloriakompasz" />
             </intent-filter>
             <intent-filter>
                 <action android:name="androidx.health.connect.action.SHOW_PERMISSIONS_RATIONALE" />
@@ -90,6 +90,9 @@
         <meta-data
             android:name="androidx.health.connect.health_permissions_rationale_activity_name"
             android:value=".MainActivity" />
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
 
         <provider
             android:name="androidx.core.content.FileProvider"
@@ -123,7 +126,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
-                <data android:scheme="hu.kaloriakompasz.app" />
+                <data android:scheme="hu.kaloriakompasz" />
             </intent-filter>
         </activity>
 
@@ -196,10 +199,6 @@
                 android:name="androidx.profileinstaller.ProfileInstallerInitializer"
                 android:value="androidx.startup" />
         </provider>
-
-        <meta-data
-            android:name="com.google.android.gms.version"
-            android:value="@integer/google_play_services_version" />
 
         <receiver
             android:name="androidx.profileinstaller.ProfileInstallReceiver"

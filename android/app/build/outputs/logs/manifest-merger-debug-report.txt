@@ -1,20 +1,20 @@
 -- Merging decision tree log ---
 provider#androidx.core.content.FileProvider
-INJECTED from /home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml:59:9-65:20
+INJECTED from /home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml:63:9-69:20
 	android:grantUriPermissions
-		ADDED from /home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml:63:13-47
+		ADDED from /home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml:67:13-47
 	android:authorities
 		INJECTED from /home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml
-		ADDED from /home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml:61:13-64
+		ADDED from /home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml:65:13-64
 	android:exported
-		ADDED from /home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml:62:13-37
+		ADDED from /home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml:66:13-37
 	android:name
-		ADDED from /home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml:60:13-62
+		ADDED from /home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml:64:13-62
 manifest
-ADDED from /home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml:2:1-67:12
-INJECTED from /home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml:2:1-67:12
-INJECTED from /home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml:2:1-67:12
-INJECTED from /home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml:2:1-67:12
+ADDED from /home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml:2:1-71:12
+INJECTED from /home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml:2:1-71:12
+INJECTED from /home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml:2:1-71:12
+INJECTED from /home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml:2:1-71:12
 MERGED from [:capacitor-community-generic-oauth2] /home/barna/Projects/KaloriaKompasz/node_modules/@capacitor-community/generic-oauth2/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:2:1-7:12
 MERGED from [:capacitor-device] /home/barna/Projects/KaloriaKompasz/node_modules/@capacitor/device/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:2:1-7:12
 MERGED from [:capgo-capacitor-social-login] /home/barna/Projects/KaloriaKompasz/node_modules/@capgo/capacitor-social-login/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:2:1-28:12
@@ -118,8 +118,8 @@ ADDED from /home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManif
 	android:name
 		ADDED from /home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml:10:22-90
 application
-ADDED from /home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml:12:5-66:19
-INJECTED from /home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml:12:5-66:19
+ADDED from /home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml:12:5-70:19
+INJECTED from /home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml:12:5-70:19
 MERGED from [:capgo-capacitor-social-login] /home/barna/Projects/KaloriaKompasz/node_modules/@capgo/capacitor-social-login/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:11:5-26:19
 MERGED from [:capgo-capacitor-social-login] /home/barna/Projects/KaloriaKompasz/node_modules/@capgo/capacitor-social-login/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:11:5-26:19
 MERGED from [:capacitor-cordova-android-plugins] /home/barna/Projects/KaloriaKompasz/android/capacitor-cordova-android-plugins/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:8:5-9:19
@@ -196,7 +196,7 @@ category#android.intent.category.LAUNCHER
 ADDED from /home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml:28:17-77
 	android:name
 		ADDED from /home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml:28:27-74
-intent-filter#action:name:android.intent.action.VIEW+category:name:android.intent.category.BROWSABLE+category:name:android.intent.category.DEFAULT+data:host:oauth+data:scheme:hu.kaloriakompasz.app
+intent-filter#action:name:android.intent.action.VIEW+category:name:android.intent.category.BROWSABLE+category:name:android.intent.category.DEFAULT+data:host:oauth+data:scheme:hu.kaloriakompasz
 ADDED from /home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml:31:13-36:29
 action#android.intent.action.VIEW
 ADDED from /home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml:32:17-69
@@ -211,11 +211,11 @@ ADDED from /home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManif
 	android:name
 		ADDED from /home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml:34:27-75
 data
-ADDED from /home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml:35:17-85
+ADDED from /home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml:35:17-81
 	android:host
-		ADDED from /home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml:35:62-82
+		ADDED from /home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml:35:58-78
 	android:scheme
-		ADDED from /home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml:35:23-61
+		ADDED from /home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml:35:23-57
 intent-filter#action:name:androidx.health.connect.action.SHOW_PERMISSIONS_RATIONALE
 ADDED from /home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml:38:13-40:29
 action#androidx.health.connect.action.SHOW_PERMISSIONS_RATIONALE
@@ -248,12 +248,20 @@ ADDED from /home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManif
 		ADDED from /home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml:56:13-42
 	android:name
 		ADDED from /home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml:55:13-94
-meta-data#android.support.FILE_PROVIDER_PATHS
-ADDED from /home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml:64:13-112
-	android:resource
-		ADDED from /home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml:64:75-109
+meta-data#com.google.android.gms.version
+ADDED from /home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml:59:9-61:69
+MERGED from [com.google.android.gms:play-services-basement:18.5.0] /home/barna/.gradle/caches/8.14.3/transforms/3b8c4a8060e6387932bec10fde1ee1ac/transformed/play-services-basement-18.5.0/AndroidManifest.xml:21:9-23:69
+MERGED from [com.google.android.gms:play-services-basement:18.5.0] /home/barna/.gradle/caches/8.14.3/transforms/3b8c4a8060e6387932bec10fde1ee1ac/transformed/play-services-basement-18.5.0/AndroidManifest.xml:21:9-23:69
+	android:value
+		ADDED from /home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml:61:13-66
 	android:name
-		ADDED from /home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml:64:24-74
+		ADDED from /home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml:60:13-58
+meta-data#android.support.FILE_PROVIDER_PATHS
+ADDED from /home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml:68:13-112
+	android:resource
+		ADDED from /home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml:68:75-109
+	android:name
+		ADDED from /home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml:68:24-74
 uses-sdk
 INJECTED from /home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml reason: use-sdk injection requested
 INJECTED from /home/barna/Projects/KaloriaKompasz/android/app/src/main/AndroidManifest.xml
@@ -426,7 +434,7 @@ ADDED from [net.openid:appauth:0.9.1] /home/barna/.gradle/caches/8.14.3/transfor
 		ADDED from [net.openid:appauth:0.9.1] /home/barna/.gradle/caches/8.14.3/transforms/3f39f8341f1fed010914e2f9517f4b54/transformed/appauth-0.9.1/AndroidManifest.xml:41:13-74
 intent-filter#action:name:android.intent.action.VIEW+category:name:android.intent.category.BROWSABLE+category:name:android.intent.category.DEFAULT+data:scheme:${appAuthRedirectScheme}
 ADDED from [net.openid:appauth:0.9.1] /home/barna/.gradle/caches/8.14.3/transforms/3f39f8341f1fed010914e2f9517f4b54/transformed/appauth-0.9.1/AndroidManifest.xml:43:13-50:29
-intent-filter#action:name:android.intent.action.VIEW+category:name:android.intent.category.BROWSABLE+category:name:android.intent.category.DEFAULT+data:scheme:hu.kaloriakompasz.app
+intent-filter#action:name:android.intent.action.VIEW+category:name:android.intent.category.BROWSABLE+category:name:android.intent.category.DEFAULT+data:scheme:hu.kaloriakompasz
 ADDED from [net.openid:appauth:0.9.1] /home/barna/.gradle/caches/8.14.3/transforms/3f39f8341f1fed010914e2f9517f4b54/transformed/appauth-0.9.1/AndroidManifest.xml:43:13-50:29
 service#androidx.credentials.playservices.CredentialProviderMetadataHolder
 ADDED from [androidx.credentials:credentials-play-services-auth:1.5.0] /home/barna/.gradle/caches/8.14.3/transforms/75432ef1f78f998f36105522094e01e0/transformed/credentials-play-services-auth-1.5.0/AndroidManifest.xml:24:9-32:19
@@ -572,12 +580,6 @@ uses-permission#hu.kaloriakompasz.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION
 ADDED from [androidx.core:core:1.17.0] /home/barna/.gradle/caches/8.14.3/transforms/8b56f9e63d69f72ecdb9a516b13a3495/transformed/core-1.17.0/AndroidManifest.xml:26:5-97
 	android:name
 		ADDED from [androidx.core:core:1.17.0] /home/barna/.gradle/caches/8.14.3/transforms/8b56f9e63d69f72ecdb9a516b13a3495/transformed/core-1.17.0/AndroidManifest.xml:26:22-94
-meta-data#com.google.android.gms.version
-ADDED from [com.google.android.gms:play-services-basement:18.5.0] /home/barna/.gradle/caches/8.14.3/transforms/3b8c4a8060e6387932bec10fde1ee1ac/transformed/play-services-basement-18.5.0/AndroidManifest.xml:21:9-23:69
-	android:value
-		ADDED from [com.google.android.gms:play-services-basement:18.5.0] /home/barna/.gradle/caches/8.14.3/transforms/3b8c4a8060e6387932bec10fde1ee1ac/transformed/play-services-basement-18.5.0/AndroidManifest.xml:23:13-66
-	android:name
-		ADDED from [com.google.android.gms:play-services-basement:18.5.0] /home/barna/.gradle/caches/8.14.3/transforms/3b8c4a8060e6387932bec10fde1ee1ac/transformed/play-services-basement-18.5.0/AndroidManifest.xml:22:13-58
 meta-data#androidx.profileinstaller.ProfileInstallerInitializer
 ADDED from [androidx.profileinstaller:profileinstaller:1.4.0] /home/barna/.gradle/caches/8.14.3/transforms/d8cfaeabb4a103be310310cc0374d9ea/transformed/profileinstaller-1.4.0/AndroidManifest.xml:29:13-31:52
 	android:value

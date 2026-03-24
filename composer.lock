@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "80eb89b3f8b93b19505c31501ad69b5d",
+    "content-hash": "f96455786ab8bad78c8fdf4eac4e391f",
     "packages": [
         {
             "name": "brick/math",
@@ -641,6 +641,181 @@
                 }
             ],
             "time": "2025-12-03T09:33:47+00:00"
+        },
+        {
+            "name": "google/apiclient",
+            "version": "v2.19.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/googleapis/google-api-php-client.git",
+                "reference": "b18fa8aed7b2b2dd4bcce74e2c7d267e16007ea9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/googleapis/google-api-php-client/zipball/b18fa8aed7b2b2dd4bcce74e2c7d267e16007ea9",
+                "reference": "b18fa8aed7b2b2dd4bcce74e2c7d267e16007ea9",
+                "shasum": ""
+            },
+            "require": {
+                "firebase/php-jwt": "^6.0||^7.0",
+                "google/apiclient-services": "~0.350",
+                "google/auth": "^1.37",
+                "guzzlehttp/guzzle": "^7.4.5",
+                "guzzlehttp/psr7": "^2.6",
+                "monolog/monolog": "^2.9||^3.0",
+                "php": "^8.1",
+                "phpseclib/phpseclib": "^3.0.36"
+            },
+            "require-dev": {
+                "cache/filesystem-adapter": "^1.1",
+                "composer/composer": "^1.10.23",
+                "phpcompatibility/php-compatibility": "^9.2",
+                "phpspec/prophecy-phpunit": "^2.1",
+                "phpunit/phpunit": "^9.6",
+                "squizlabs/php_codesniffer": "^3.8",
+                "symfony/css-selector": "~2.1",
+                "symfony/dom-crawler": "~2.1"
+            },
+            "suggest": {
+                "cache/filesystem-adapter": "For caching certs and tokens (using Google\\Client::setCache)"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-main": "2.x-dev"
+                }
+            },
+            "autoload": {
+                "files": [
+                    "src/aliases.php"
+                ],
+                "psr-4": {
+                    "Google\\": "src/"
+                },
+                "classmap": [
+                    "src/aliases.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "description": "Client library for Google APIs",
+            "homepage": "http://developers.google.com/api-client-library/php",
+            "keywords": [
+                "google"
+            ],
+            "support": {
+                "issues": "https://github.com/googleapis/google-api-php-client/issues",
+                "source": "https://github.com/googleapis/google-api-php-client/tree/v2.19.0"
+            },
+            "time": "2026-01-09T19:59:47+00:00"
+        },
+        {
+            "name": "google/apiclient-services",
+            "version": "v0.435.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/googleapis/google-api-php-client-services.git",
+                "reference": "1edf0f5f2876945c372366107b4d7a387b17a6b9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/googleapis/google-api-php-client-services/zipball/1edf0f5f2876945c372366107b4d7a387b17a6b9",
+                "reference": "1edf0f5f2876945c372366107b4d7a387b17a6b9",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^8.1"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^9.6"
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "autoload.php"
+                ],
+                "psr-4": {
+                    "Google\\Service\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "description": "Client library for Google APIs",
+            "homepage": "http://developers.google.com/api-client-library/php",
+            "keywords": [
+                "google"
+            ],
+            "support": {
+                "issues": "https://github.com/googleapis/google-api-php-client-services/issues",
+                "source": "https://github.com/googleapis/google-api-php-client-services/tree/v0.435.0"
+            },
+            "time": "2026-03-01T01:14:26+00:00"
+        },
+        {
+            "name": "google/auth",
+            "version": "v1.50.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/googleapis/google-auth-library-php.git",
+                "reference": "870c17ee3a1d73338d39a9ffa77a700ba77f5a83"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/googleapis/google-auth-library-php/zipball/870c17ee3a1d73338d39a9ffa77a700ba77f5a83",
+                "reference": "870c17ee3a1d73338d39a9ffa77a700ba77f5a83",
+                "shasum": ""
+            },
+            "require": {
+                "firebase/php-jwt": "^6.0||^7.0",
+                "guzzlehttp/guzzle": "^7.4.5",
+                "guzzlehttp/psr7": "^2.4.5",
+                "php": "^8.1",
+                "psr/cache": "^2.0||^3.0",
+                "psr/http-message": "^1.1||^2.0",
+                "psr/log": "^2.0||^3.0"
+            },
+            "require-dev": {
+                "guzzlehttp/promises": "^2.0",
+                "kelvinmo/simplejwt": "^1.1.0",
+                "phpseclib/phpseclib": "^3.0.35",
+                "phpspec/prophecy-phpunit": "^2.1",
+                "phpunit/phpunit": "^9.6",
+                "sebastian/comparator": ">=1.2.3",
+                "squizlabs/php_codesniffer": "^4.0",
+                "symfony/filesystem": "^6.3||^7.3",
+                "symfony/process": "^6.0||^7.0",
+                "webmozart/assert": "^1.11||^2.0"
+            },
+            "suggest": {
+                "phpseclib/phpseclib": "May be used in place of OpenSSL for signing strings or for token management. Please require version ^2."
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Google\\Auth\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "description": "Google Auth Library for PHP",
+            "homepage": "https://github.com/google/google-auth-library-php",
+            "keywords": [
+                "Authentication",
+                "google",
+                "oauth2"
+            ],
+            "support": {
+                "docs": "https://cloud.google.com/php/docs/reference/auth/latest",
+                "issues": "https://github.com/googleapis/google-auth-library-php/issues",
+                "source": "https://github.com/googleapis/google-auth-library-php/tree/v1.50.1"
+            },
+            "time": "2026-03-18T20:03:29+00:00"
         },
         {
             "name": "graham-campbell/result-type",
@@ -2808,157 +2983,6 @@
             "time": "2025-11-20T02:34:59+00:00"
         },
         {
-            "name": "openfoodfacts/openfoodfacts-laravel",
-            "version": "v0.7.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/openfoodfacts/openfoodfacts-laravel.git",
-                "reference": "e5642fc2d7b9f9084bfcb7049604b18452b6d8aa"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/openfoodfacts/openfoodfacts-laravel/zipball/e5642fc2d7b9f9084bfcb7049604b18452b6d8aa",
-                "reference": "e5642fc2d7b9f9084bfcb7049604b18452b6d8aa",
-                "shasum": ""
-            },
-            "require": {
-                "guzzlehttp/guzzle": "^7.4",
-                "illuminate/support": "^11.0|^12.0",
-                "openfoodfacts/openfoodfacts-php": "^0.3.0",
-                "php": "^8.2"
-            },
-            "require-dev": {
-                "friendsofphp/php-cs-fixer": "^3.9.5",
-                "larastan/larastan": "^2.9|^3.1",
-                "orchestra/testbench": "^7.0|^8.0|^9.0|^10.0",
-                "phpstan/phpstan": "^1.10|^2.1",
-                "phpstan/phpstan-phpunit": "^1.3|^2.0",
-                "phpunit/phpunit": "^9.5.21|^10.5|^11.5.3"
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "aliases": {
-                        "OpenFoodFacts": "OpenFoodFacts\\Laravel\\Facades\\OpenFoodFacts"
-                    },
-                    "providers": [
-                        "OpenFoodFacts\\Laravel\\OpenFoodFactsServiceProvider"
-                    ]
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "OpenFoodFacts\\Laravel\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Eddie Palmans",
-                    "email": "eddie@palmans.nl"
-                }
-            ],
-            "description": "Open Food Facts API wrapper for Laravel",
-            "homepage": "https://github.com/openfoodfacts/openfoodfacts-laravel",
-            "keywords": [
-                "laravel",
-                "openfoodfacts",
-                "php"
-            ],
-            "support": {
-                "issues": "https://github.com/openfoodfacts/openfoodfacts-laravel/issues",
-                "source": "https://github.com/openfoodfacts/openfoodfacts-laravel/tree/v0.7.0"
-            },
-            "funding": [
-                {
-                    "url": "https://github.com/openfoodfacts",
-                    "type": "github"
-                }
-            ],
-            "time": "2025-08-04T18:30:55+00:00"
-        },
-        {
-            "name": "openfoodfacts/openfoodfacts-php",
-            "version": "v0.3.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/openfoodfacts/openfoodfacts-php.git",
-                "reference": "885b2e977922a61396ebbb967a7910f4b1cae0fb"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/openfoodfacts/openfoodfacts-php/zipball/885b2e977922a61396ebbb967a7910f4b1cae0fb",
-                "reference": "885b2e977922a61396ebbb967a7910f4b1cae0fb",
-                "shasum": ""
-            },
-            "require": {
-                "ext-curl": "*",
-                "ext-gd": "*",
-                "ext-json": "*",
-                "guzzlehttp/guzzle": "^7.4",
-                "php": "^8.1",
-                "psr/log": "^3.0",
-                "psr/simple-cache": "^3.0"
-            },
-            "require-dev": {
-                "friendsofphp/php-cs-fixer": "^3.9.5",
-                "phpstan/phpstan": "^1.8.2",
-                "phpstan/phpstan-phpunit": "^1.1.1",
-                "phpunit/phpunit": "^9.5.21",
-                "symfony/cache": "^6.1.3"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "OpenFoodFacts\\": "src/",
-                    "OpenFoodFactsTests\\": "tests/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Roberto Moreno",
-                    "email": "rmorenp@rampmaster.org",
-                    "homepage": "https://rampmaster.org/",
-                    "role": "Wrapper Developer"
-                },
-                {
-                    "name": "Colin Benoit",
-                    "homepage": "https://github.com/Benoit382",
-                    "role": "PHP Developer"
-                }
-            ],
-            "description": "Open Food Facts API Wrapper, the open database about food.",
-            "homepage": "https://world.openfoodfacts.org/",
-            "support": {
-                "chat": "https://slack.openfoodfacts.org/",
-                "email": "rmorenp@rampamster.org",
-                "issues": "https://github.com/openfoodfacts/openfoodfacts-php/issues",
-                "source": "https://github.com/openfoodfacts/openfoodfacts-php"
-            },
-            "funding": [
-                {
-                    "url": "https://donate.openfoodfacts.org/?utm_source=github&utf_medium=web&utm_campaign=funding_links",
-                    "type": "custom"
-                },
-                {
-                    "url": "https://github.com/openfoodfacts",
-                    "type": "github"
-                },
-                {
-                    "url": "https://opencollective.com/openfoodfacts-server",
-                    "type": "open_collective"
-                }
-            ],
-            "time": "2024-05-01T08:07:55+00:00"
-        },
-        {
             "name": "paragonie/constant_time_encoding",
             "version": "v3.1.3",
             "source": {
@@ -3261,6 +3285,55 @@
                 }
             ],
             "time": "2026-01-27T09:17:28+00:00"
+        },
+        {
+            "name": "psr/cache",
+            "version": "3.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/php-fig/cache.git",
+                "reference": "aa5030cfa5405eccfdcb1083ce040c2cb8d253bf"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/php-fig/cache/zipball/aa5030cfa5405eccfdcb1083ce040c2cb8d253bf",
+                "reference": "aa5030cfa5405eccfdcb1083ce040c2cb8d253bf",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.0.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Psr\\Cache\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "PHP-FIG",
+                    "homepage": "https://www.php-fig.org/"
+                }
+            ],
+            "description": "Common interface for caching libraries",
+            "keywords": [
+                "cache",
+                "psr",
+                "psr-6"
+            ],
+            "support": {
+                "source": "https://github.com/php-fig/cache/tree/3.0.0"
+            },
+            "time": "2021-02-03T23:26:27+00:00"
         },
         {
             "name": "psr/clock",

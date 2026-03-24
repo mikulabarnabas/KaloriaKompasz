@@ -61,24 +61,78 @@ class AuthController extends Controller
         return Socialite::driver('google')->redirect();
     }
 
-    public function googleCallback()
-    {
-        $googleUser = Socialite::driver('google')->stateless()->user();
+    use Illuminate\Support\Facades\Log; // Add hozzá a fájl tetejéhez!
+use Google_Client;
 
-        $user = User::updateOrCreate(
-            ['email' => $googleUser->email],
-            [
+public function googleCallback(Request $request)
+{
+    Log::info('Google Callback hívás indult', ['request_all' => $request->all()]);
+
+    try {
+        // 1. MOBILOS ÚT (ID Token)
+        if ($request->has('token')) {
+            Log::info('Mobil token azonosítva');
+
+            $client = new Google_Client(['client_id' => '10740457262-47dacbavcs5blgon888e89us8tcp5504.apps.googleusercontent.com']);
+            $payload = $client->verifyIdToken($request->token);
+
+            if (!$payload) {
+                Log::error('Google Token validáció sikertelen: érvénytelen payload');
+                return response()->json(['error' => 'Invalid token'], 401);
+            }
+
+            Log::info('Google Token sikeresen validálva', ['email' => $payload['email']]);
+
+            $userData = [
+                'email' => $payload['email'],
+                'name' => $payload['name'] ?? ($payload['given_name'] . ' ' . $payload['family_name']),
+                'google_id' => $payload['sub'],
+            ];
+        }
+        // 2. WEBÉS ÚT (Socialite)
+        else {
+            Log::info('Webes Socialite folyamat indult');
+            $googleUser = Socialite::driver('google')->stateless()->user();
+
+            $userData = [
+                'email' => $googleUser->email,
                 'name' => $googleUser->name,
                 'google_id' => $googleUser->id,
                 'google_token' => $googleUser->token,
-                'google_refresh_token' => $googleUser->refreshToken,
+            ];
+        }
+
+        // Felhasználó mentése/keresése
+        $user = User::updateOrCreate(
+            ['email' => $userData['email']],
+            [
+                'name' => $userData['name'],
+                'google_id' => $userData['google_id'],
+                'google_token' => $userData['google_token'] ?? null,
             ]
         );
 
-        Auth::login($user);
+        Auth::login($user, true); // True a 'remember me' miatt
+
+        Log::info('Felhasználó beléptetve', ['user_id' => $user->id]);
+
+        if ($request->expectsJson() || $request->has('token')) {
+            return response()->json([
+                'success' => true,
+                'user' => $user
+            ]);
+        }
 
         return redirect('/');
+
+    } catch (\Exception $e) {
+        Log::error('Hiba a Google bejelentkezés során', [
+            'message' => $e->getMessage(),
+            'trace' => $e->getTraceAsString()
+        ]);
+        return response()->json(['error' => $e->getMessage()], 500);
     }
+}
 
     public function sendResetLink(Request $request)
     {

@@ -3,10 +3,10 @@
 	"appName": "KaloriaKompasz",
 	"webDir": "public",
 	"allowNavigation": [
-		"localhost"
+		"https://kaloriakompasz.hu"
 	],
 	"server": {
-		"url": "http://localhost:8000",
+		"url": "https://kaloriakompasz.hu",
 		"cleartext": true
 	},
 	"plugins": {

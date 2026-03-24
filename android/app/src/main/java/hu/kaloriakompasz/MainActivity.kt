@@ -15,25 +15,18 @@ import com.getcapacitor.PluginCall
 import com.getcapacitor.PluginMethod
 import com.getcapacitor.annotation.CapacitorPlugin
 import kotlinx.coroutines.launch
-import java.time.Instant
 import java.time.ZoneId
 
 import com.samsung.android.sdk.health.data.HealthDataService
-import com.samsung.android.sdk.health.data.HealthDataStore
 import com.samsung.android.sdk.health.data.permission.Permission
 import com.samsung.android.sdk.health.data.permission.AccessType
-import com.samsung.android.sdk.health.data.request.AggregateRequest
 import com.samsung.android.sdk.health.data.request.LocalTimeFilter
 import com.samsung.android.sdk.health.data.request.LocalTimeGroup
 import com.samsung.android.sdk.health.data.request.LocalTimeGroupUnit
-import com.samsung.android.sdk.health.data.response.DataResponse
-import com.samsung.android.sdk.health.data.data.AggregatedData
 import com.samsung.android.sdk.health.data.request.DataType
 import com.samsung.android.sdk.health.data.request.DataTypes
-import com.samsung.android.sdk.health.data.error.HealthDataException
 
 import java.time.LocalDate
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
