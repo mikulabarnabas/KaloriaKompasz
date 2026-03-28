@@ -23,7 +23,7 @@ class ProfileController extends Controller
         $data = $request->validated();
         $userId = $request->user()->id;
 
-        $profile = UserProfile::updateOrCreate(
+        UserProfile::updateOrCreate(
             ['user_id' => $userId],
             $data
         );

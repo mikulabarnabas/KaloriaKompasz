@@ -12,7 +12,7 @@ use Inertia\Inertia;
 
 class WorkoutController extends Controller
 {
-    public function show(Request $request)
+    public function show()
     {
         return Inertia::render('workout_diary');
     }
@@ -86,7 +86,7 @@ class WorkoutController extends Controller
             ->where('id', $entryId)
             ->delete();
 
-        return response(204);
+        return response()->noContent();
     }
 
 

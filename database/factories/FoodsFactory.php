@@ -22,10 +22,10 @@ class FoodsFactory extends Factory
         return [
             'name' => $this->faker->word(),
             'name_hu' => $this->faker->word(),
-            'fat' => $this->faker->numberBetween(0, 100),
-            'carb' => $this->faker->numberBetween(0, 100),
-            'protein' => $this->faker->numberBetween(0, 100),
-            'calorie' => $this->faker->numberBetween(0, 900),
+            'fat' => $this->faker->numberBetween(1, 100),
+            'carb' => $this->faker->numberBetween(1, 100),
+            'protein' => $this->faker->numberBetween(1, 100),
+            'calorie' => $this->faker->numberBetween(1, 900),
             'unit' => 'g',
             'amount' => 100,
         ];

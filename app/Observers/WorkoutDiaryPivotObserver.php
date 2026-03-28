@@ -20,6 +20,11 @@ class WorkoutDiaryPivotObserver
 
     private function fillBurnedCalories(WorkoutDiaryPivot $entry): void
     {
+        //A lépésszámnál ez az observer is lefutna
+        if ($entry->burned_calories > 0) {
+            return;
+        }
+
         $exercise = Exercises::find($entry->exercise_id);
 
         $exerciseUnit = WorkoutUnits::from($exercise->unit)->toBaseFactor();

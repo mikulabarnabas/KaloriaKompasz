@@ -18,7 +18,6 @@ class UserProfileObserver
 
     private function calculateMacros(UserProfile $profile): void
     {
-        // Ensure required data exists
         if (!$profile->weight_kg || !$profile->height_cm || !$profile->date_of_birth) {
             return;
         }
@@ -28,12 +27,10 @@ class UserProfileObserver
         $age = now()->diffInYears($profile->date_of_birth);
         $gender = $profile->gender;
 
-        // BMR - Mifflin-St Jeor Equation
         $bmr = ($gender === 'male')
             ? 10 * $weight + 6.25 * $height - 5 * $age + 5
             : 10 * $weight + 6.25 * $height - 5 * $age - 161;
 
-        // Activity multiplier
         $activityMultiplier = match($profile->activity_level) {
             'sedentary' => 1.2,
             'light' => 1.375,
@@ -59,7 +56,6 @@ class UserProfileObserver
             }
         }
 
-        // Macros split: 30% protein, 25% fat, 45% carbs
         $profile->calories_per_day = round($calories, 1);
         $profile->protein_per_day = round($calories * 0.3 / 4, 1);
         $profile->fat_per_day = round($calories * 0.25 / 9, 1);

@@ -26,11 +26,16 @@ test('a bejelentkező oldal elérhető és angol nyelvű', function () {
 
 test('új felhasználó sikeresen regisztrálhat', function () {
     $jelszo = 'Secret123?';
-    $kamuUser = User::factory()->make();
+    $email = 'regisztracio@teszt.hu';
+
+    $user = User::factory()->make([
+        'email' => $email,
+        'password' => Hash::make($jelszo),
+    ]);
 
     $userData = [
-        'name' => $kamuUser->name,
-        'email' => $kamuUser->email,
+        'name' => $user->name,
+        'email' => $user->email,
         'password' => $jelszo,
         'password_confirmation' => $jelszo,
         'acceptTerms' => true
@@ -41,18 +46,21 @@ test('új felhasználó sikeresen regisztrálhat', function () {
         ->assertJson(['success' => true]);
 
     $this->assertDatabaseHas('users', [
-        'email' => $kamuUser->email,
+        'email' => $user->email,
     ]);
 });
 
 test('felhasználó be tud jelentkezni', function () {
     $jelszo = 'Secret123?';
+    $email = 'bejelentkezes@teszt.hu';
+
     $user = User::factory()->create([
+        'email' => $email,
         'password' => Hash::make($jelszo),
     ]);
 
     $this->postJson(action([App\Http\Controllers\AuthController::class, 'loginUser']), [
-        'email' => $user->email,
+        'email' => $email,
         'password' => $jelszo,
     ])
         ->assertOk()

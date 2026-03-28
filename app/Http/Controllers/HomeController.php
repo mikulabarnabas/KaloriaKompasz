@@ -7,7 +7,7 @@ use Inertia\Inertia;
 
 class HomeController extends Controller
 {
-    public function show(Request $request)
+    public function show()
     {
         return Inertia::render('home');
     }

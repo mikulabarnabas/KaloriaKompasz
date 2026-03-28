@@ -7,10 +7,11 @@ use Inertia\Inertia;
 use App\Models\FoodDiary;
 use App\Models\WorkoutDiary;
 use Illuminate\Support\Carbon;
+use Log;
 
 class StatisticsController extends Controller
 {
-    public function index(Request $request)
+    public function show(Request $request)
     {
         $user = $request->user();
 
@@ -33,8 +34,15 @@ class StatisticsController extends Controller
         $user = $request->user();
         $date = $request['date'];
 
-        $foodEntry = $user->foodDiary()->where('date', $date)->with('foods')->first();
-        $workoutEntry = $user->workoutDiary()->where('date', $date)->with('exercises')->first();
+        $foodEntry = FoodDiary::where('user_id', $user->id)
+            ->whereDate('date', $date)
+            ->with('foods')
+            ->first();
+
+        $workoutEntry = WorkoutDiary::where('user_id', $user->id)
+            ->whereDate('date', $date)
+            ->with('exercises')
+            ->first();
 
         $todayStats = [
             'calories' => $foodEntry?->foods->sum('pivot.calorie') ?? 0,
@@ -65,18 +73,20 @@ class StatisticsController extends Controller
         $endDate = Carbon::parse($date)->endOfDay();
         $startDate = $endDate->copy()->subDays(6)->startOfDay();
 
-        $foodDiaries = FoodDiary::where('user_id', $userId)
-            ->whereBetween('date', [$startDate->toDateString(), $endDate->toDateString()])
-            ->with('foods')
-            ->get()
-            ->keyBy(fn($d) => $d->date->toDateString());
+        Log::info(FoodDiary::where('user_id', $userId)->with('foods')
+            ->get());
 
-        // 2. Fetch Workout Diaries
-        $workoutDiaries = WorkoutDiary::where('user_id', $userId)
-            ->whereBetween('date', [$startDate->toDateString(), $endDate->toDateString()])
-            ->with('exercises')
+        $foodDiaries = FoodDiary::where('user_id', $userId)
+            ->whereBetween('date', [$startDate->toDateTimeString(), $endDate->toDateTimeString()])
             ->get()
-            ->keyBy(fn($d) => $d->date->toDateString());
+            ->keyBy(fn($d) => Carbon::parse($d->date)->toDateString());
+
+        $workoutDiaries = WorkoutDiary::where('user_id', $userId)
+            ->whereBetween('date', [$startDate->toDateTimeString(), $endDate->toDateTimeString()])
+            ->get()
+            ->keyBy(fn($d) => Carbon::parse($d->date)->toDateString());
+
+
 
         $results = [];
         for ($i = 6; $i >= 0; $i--) {

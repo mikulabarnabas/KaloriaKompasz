@@ -37,10 +37,8 @@ class FoodController extends Controller
         $date = Carbon::parse($date)->toDateString();
 
         $diary = FoodDiary::query()
-            ->where([
-                'user_id' => $userId,
-                'date' => $date,
-            ])
+            ->where('user_id', $userId)
+            ->whereDate('date', $date)
             ->first()?->foods ?? collect();
 
         $groupedByMealTypes = $diary->groupBy(fn($food) => $food->pivot->meal_type);
@@ -104,12 +102,12 @@ class FoodController extends Controller
     public function deleteEntry(Request $request, string $date, string $entryId)
     {
         $userId = (int) $request->user()->id;
-        $diary = FoodDiary::query()->where([
-            'user_id' => $userId,
-            'date' => $date,
-        ])->firstOrFail();
+        $diary = FoodDiary::query()
+            ->where('user_id', $userId)
+            ->whereDate('date', $date)
+            ->firstOrFail();
         $diary->foods()->newPivotQuery()->where('id', $entryId)->delete();
-        return response(204);
+        return response()->noContent();
     }
 
     public function storeFood(FoodRequest $request)

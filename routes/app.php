@@ -17,7 +17,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     });
 
     Route::controller(FoodController::class)->prefix('fdiary')->name('food.')->group(function () {
-        Route::get('/', 'show')->name('index');
+        Route::get('/', 'show')->name('show');
         Route::get('/diary/{date}', 'getDiaryByDate')->where('date', '\d{4}-\d{2}-\d{2}');
         Route::get('/getFoods/{searchTerm}/{page}', 'getFoods');
         Route::get('/getPageCount/{searchTerm}', 'getPageCount');
@@ -27,7 +27,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     });
 
     Route::controller(WorkoutController::class)->prefix('wdiary')->name('workout.')->group(function () {
-        Route::get('/', 'show')->name('index');
+        Route::get('/', 'show')->name('show');
         Route::get('/diary/{date}', 'getDiaryByDate');
         Route::get('/getExercises/{search}/{page}', 'getExercises');
         Route::get('/getPageCount/{search}', 'getPageCount');
@@ -38,7 +38,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     });
 
     Route::controller(FoodController::class)->prefix('stats')->name('stat.')->group(function () {
-        Route::get('/', [StatisticsController::class, 'index'])->name('stats.index');
+        Route::get('/', [StatisticsController::class, 'show'])->name('show');
         Route::get('/getData/{date}', [StatisticsController::class, 'getData']);
         Route::get('/weekly/{date}', [StatisticsController::class, 'getWeeklyStats']);
     });

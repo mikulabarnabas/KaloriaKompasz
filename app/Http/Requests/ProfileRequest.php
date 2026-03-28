@@ -14,7 +14,7 @@ class ProfileRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'gender' => 'required|string|max:50',
+            'gender' => 'required|string|in:male,female,other,prefer_not_to_say',
             'date_of_birth' => 'required|date_format:Y-m-d|before:today',
             'height_cm' => 'required|integer|min:50|max:300',
             'weight_kg' => 'required|numeric|min:20|max:500',
