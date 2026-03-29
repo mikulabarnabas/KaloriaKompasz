@@ -1,13 +1,13 @@
 <script setup>
 import { useForm } from "laravel-precognition-vue"
 import Input from "@/Components/input.vue"
-import { wTrans } from 'laravel-vue-i18n';
 import { computed } from "vue";
+import { wTrans, trans as t } from 'laravel-vue-i18n';
 
 const translatedTerms = computed(() => {
     return wTrans('auth.accept_terms', {
-        aszf: `<a href="/documents/ASZF.pdf" target="_blank" class="underline text-primary">ÁSZF</a>`,
-        privacy: `<a href="/documents/adatkez.pdf" target="_blank" class="underline text-primary">Adatvédelmi tájékoztató</a>`
+        aszf: `<a href="/documents/ASZF.pdf" target="_blank" class="underline text-primary">${t('auth.terms_link')}</a>`,
+        privacy: `<a href="/documents/adatkez.pdf" target="_blank" class="underline text-primary">${t('auth.privacy_link')}</a>`
     });
 });
 
