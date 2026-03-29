@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "hu.kaloriakompasz.app-mergeDebugResources-35:/values-v22/values-v22.xml",
+            "outputFile": "hu.kaloriakompasz.app-mergeDebugResources-40:/values-v22/values-v22.xml",
             "map": [
                 {
-                    "source": "/home/barna/.gradle/caches/8.14.3/transforms/e9646a3c43de0eff3be9ed70ef668a45/transformed/appcompat-1.7.1/res/values-v22/values-v22.xml",
+                    "source": "C:\\Users\\barnaaa\\.gradle\\caches\\8.14.3\\transforms\\e9646a3c43de0eff3be9ed70ef668a45\\transformed\\appcompat-1.7.1\\res\\values-v22\\values-v22.xml",
                     "from": {
                         "startLines": "2,3,4,9",
                         "startColumns": "4,4,4,4",

@@ -2,7 +2,7 @@
 
 return [
     'welcome' => 'Welcome back',
-    'subtitle' => 'Ready to crush your goals for :date?',
+    'subtitle' => 'Ready to crush your goals?',
     'daily_progress' => 'Daily Progress',
     'consumed' => 'Consumed',
     'goal' => 'Goal',

@@ -23,7 +23,6 @@ function toggleTheme() {
   theme.value = localStorage.theme;
 }
 
-// Navigációs segédfüggvény a mobil menü bezárásához
 const navigate = (path) => {
   mobileMenuOpen.value = false;
   router.visit(path);

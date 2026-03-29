@@ -1,10 +1,11 @@
 <script setup>
 import AppLayout from "@/Layouts/appLayout.vue"
 import Accordion from "@/Components/accordion.vue"
-import { computed } from "vue"
+import { computed, ref, onMounted } from "vue"
 import { trans as t } from 'laravel-vue-i18n';
 import Card from "@/Components/card.vue"
 import { router } from "@inertiajs/vue3";
+import { Device } from '@capacitor/device';
 
 const faqItems = computed(() => [
   {
@@ -45,6 +46,18 @@ const cards = computed(() => [
   }
 ]);
 
+const isWeb = ref(false);
+
+const checkPlatform = async () => {
+    const info = await Device.getInfo();
+    if (info.platform === 'web') {
+        isWeb.value = true;
+    } else {
+        isWeb.value = false;
+    }
+};
+
+checkPlatform();
 </script>
 
 <template>
@@ -94,7 +107,7 @@ const cards = computed(() => [
           </div>
         </section>
 
-        <section class="relative py-24 px-6 overflow-hidden bg-neutral-dark/50 border-y border-white/5">
+        <section v-if="isWeb" class="relative py-24 px-6 overflow-hidden bg-neutral-dark/50 border-y border-white/5">
             <div class="mx-auto max-w-7xl">
                 <div class="flex flex-col md:flex-row items-center justify-between gap-16">
 
@@ -135,7 +148,7 @@ const cards = computed(() => [
                 <div
                   class="relative mb-6 h-48 w-48 overflow-hidden rounded-full border-4 border-transparent group-hover:border-primary transition">
                   <img alt="Founder 1"
-                    class="h-full w-full rounded-full object-cover grayscale group-hover:grayscale-0 transition"
+                    class="h-full w-full rounded-full object-cover grayscale group-hover:grayscale-0 transition object-[25%_75%]"
                     :src="'/img/barna.jpg'" />
                 </div>
                 <h4 class="text-xl font-bold text-main-text">Mikula Barnabás</h4>
@@ -145,7 +158,7 @@ const cards = computed(() => [
                 <div
                   class="relative mb-6 h-48 w-48 overflow-hidden rounded-full border-4 border-transparent group-hover:border-primary transition p-1">
                   <img alt="Founder 2"
-                    class="h-full w-full rounded-full object-cover grayscale group-hover:grayscale-0 transition"
+                    class="h-full w-full rounded-full object-cover grayscale group-hover:grayscale-0 transition object-top"
                     :src="'/img/geri.jpg'" />
                 </div>
                 <h4 class="text-xl font-bold text-main-text">Bóta Gergely</h4>

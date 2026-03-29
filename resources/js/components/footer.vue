@@ -45,7 +45,6 @@
           <h3 class="text-[10px] font-black text-primary uppercase tracking-[0.3em]">Üzemeltető</h3>
           <div class="text-secondary-text text-[11px] font-bold uppercase tracking-widest space-y-2">
             <p class="text-main-text/80">{{ 'Mikula Barnabás & Bóta Gergely' }}</p>
-            <p>Székhely: {{ '2030 Érd, Burgundi u. 34.' }}</p>
             <p>Tárhely: {{ 'Rackhost Zrt.' }}</p>
           </div>
         </div>

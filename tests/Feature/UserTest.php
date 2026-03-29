@@ -85,6 +85,10 @@ test('hibás jelszóval nem lehet bejelentkezni', function () {
 test('bejelentkezett felhasználó ki tud jelentkezni', function () {
     $user = User::factory()->create();
 
+    auth()->login($user);
+
+    $this->assertAuthenticated();
+
     $this->actingAs($user)
         ->post(route('logout'))
         ->assertRedirect(route('home'));

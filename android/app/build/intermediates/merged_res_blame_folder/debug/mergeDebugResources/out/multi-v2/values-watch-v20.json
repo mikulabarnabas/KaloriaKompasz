@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "hu.kaloriakompasz.app-mergeDebugResources-35:/values-watch-v20/values-watch-v20.xml",
+            "outputFile": "hu.kaloriakompasz.app-mergeDebugResources-40:/values-watch-v20/values-watch-v20.xml",
             "map": [
                 {
-                    "source": "/home/barna/.gradle/caches/8.14.3/transforms/e9646a3c43de0eff3be9ed70ef668a45/transformed/appcompat-1.7.1/res/values-watch-v20/values-watch-v20.xml",
+                    "source": "C:\\Users\\barnaaa\\.gradle\\caches\\8.14.3\\transforms\\e9646a3c43de0eff3be9ed70ef668a45\\transformed\\appcompat-1.7.1\\res\\values-watch-v20\\values-watch-v20.xml",
                     "from": {
                         "startLines": "2,5,8",
                         "startColumns": "4,4,4",
@@ -23,7 +23,7 @@
                     }
                 },
                 {
-                    "source": "/home/barna/.gradle/caches/8.14.3/transforms/0b2aef09c502cb5a80be78526e466a9d/transformed/play-services-auth-21.4.0/res/values-watch-v20/values.xml",
+                    "source": "C:\\Users\\barnaaa\\.gradle\\caches\\8.14.3\\transforms\\0b2aef09c502cb5a80be78526e466a9d\\transformed\\play-services-auth-21.4.0\\res\\values-watch-v20\\values.xml",
                     "from": {
                         "startLines": "4,5,6,7,8,9,10,11",
                         "startColumns": "0,0,0,0,0,0,0,0",
@@ -40,7 +40,7 @@
                     }
                 },
                 {
-                    "source": "/home/barna/.gradle/caches/8.14.3/transforms/42404cff91637f8f90614c0db2bf0a58/transformed/core-splashscreen-1.2.0/res/values-watch-v20/values-watch-v20.xml",
+                    "source": "C:\\Users\\barnaaa\\.gradle\\caches\\8.14.3\\transforms\\42404cff91637f8f90614c0db2bf0a58\\transformed\\core-splashscreen-1.2.0\\res\\values-watch-v20\\values-watch-v20.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,9",
                         "startColumns": "4,4,4,4,4,4,4,4",

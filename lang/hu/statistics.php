@@ -2,7 +2,7 @@
 
 return [
     'welcome' => 'Üdv újra',
-    'subtitle' => 'Készen állsz elérni a céljaidat :date napon?',
+    'subtitle' => 'Készen állsz elérni a céljaidat?',
     'daily_progress' => 'Napi Haladás',
     'consumed' => 'Bevitt',
     'goal' => 'Cél',

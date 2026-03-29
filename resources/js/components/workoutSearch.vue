@@ -13,33 +13,55 @@ const search = ref("");
 const searchedExercises = ref([]);
 const isDropdownOpen = ref(false);
 const isLoading = ref(false);
+const hasMore = ref(true);
 let currentPage = 0;
+let timeout = null;
+let abortController = null;
 
-async function searchExercise() {
-  if (isLoading.value || !search.value) return;
+async function searchExercises() {
+  if (isLoading.value || (currentPage > 0 && !hasMore.value)) return;
+
+  // Előző kérés megszakítása
+  if (abortController) abortController.abort();
+  abortController = new AbortController();
 
   try {
+    const trimmedSearch = search.value.trim();
+    if (trimmedSearch === '') {
+      searchedExercises.value = [];
+      hasMore.value = true;
+      isDropdownOpen.value = false;
+      return;
+    }
+
     isLoading.value = true;
     currentPage++;
-    const { data } = await axios.get(`/wdiary/getExercises/${search.value}/${currentPage}`);
+
+    const { data } = await axios.get(`/wdiary/getExercises/${trimmedSearch}/${currentPage}`, {
+      signal: abortController.signal
+    });
+
     if (currentPage === 1) {
       searchedExercises.value = data.result;
     } else {
       searchedExercises.value.push(...data.result);
     }
 
+    hasMore.value = data.result.length >= 10;
     isDropdownOpen.value = searchedExercises.value.length > 0;
-    isLoading.value = false;
+
   } catch (error) {
+    if (axios.isCancel(error)) return;
     console.error("Search failed", error);
+  } finally {
     isLoading.value = false;
   }
 }
 
 const handleScroll = async (e) => {
   const { scrollTop, offsetHeight, scrollHeight } = e.target;
-  if (scrollHeight - scrollTop <= offsetHeight + 200 && !isLoading.value) {
-    searchExercise();
+  if (scrollHeight - scrollTop <= offsetHeight + 200 && !isLoading.value && hasMore.value) {
+    searchExercises();
   }
 };
 
@@ -51,14 +73,13 @@ const closeDropdown = () => {
   setTimeout(() => { isDropdownOpen.value = false; }, 200);
 };
 
-watch(search, (val) => {
-  currentPage = 0;
-  if (val) {
-    searchExercise();
-  } else {
-    searchedExercises.value = [];
-    isDropdownOpen.value = false;
-  }
+watch(search, () => {
+  clearTimeout(timeout);
+  timeout = setTimeout(() => {
+    currentPage = 0;
+    hasMore.value = true;
+    searchExercises();
+  }, 200);
 });
 </script>
 
@@ -68,7 +89,7 @@ watch(search, (val) => {
       <span class="material-symbols-outlined absolute left-4 text-primary">search</span>
       <input v-model="search" type="text" :placeholder="placeholder" @blur="closeDropdown"
         @focus="isDropdownOpen = searchedExercises.length > 0"
-        class="w-full pl-12 pr-12 py-3 bg-neutral-dark/40 border border-neutral-border rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent text-main-text placeholder-secondary-text/50 transition-all outline-none" />
+        class="w-full pl-12 pr-12 py-3 bg-neutral-dark/40 border rounded-xl ring-2 ring-primary border-transparent text-main-text placeholder-secondary-text/50 transition-all outline-none" />
     </div>
 
     <Transition enter-active-class="transition duration-200 ease-out" enter-from-class="translate-y-1 opacity-0"

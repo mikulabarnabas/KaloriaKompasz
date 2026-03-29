@@ -1,6 +1,15 @@
 <script setup>
 import { useForm } from "laravel-precognition-vue"
 import Input from "@/Components/input.vue"
+import { wTrans } from 'laravel-vue-i18n';
+import { computed } from "vue";
+
+const translatedTerms = computed(() => {
+    return wTrans('auth.accept_terms', {
+        aszf: `<a href="/documents/ASZF.pdf" target="_blank" class="underline text-primary">ÁSZF</a>`,
+        privacy: `<a href="/documents/adatkez.pdf" target="_blank" class="underline text-primary">Adatvédelmi tájékoztató</a>`
+    });
+});
 
 const emit = defineEmits(['success']);
 
@@ -26,25 +35,25 @@ const onSubmit = () =>
         <form class="space-y-5" @submit.prevent="onSubmit">
 
             <Input v-model="form.name" :label="$t('auth.name')" :error="form.errors.name" placeholder="Zsákos Frodó"
-                @change="form.validate('name')" autocomplete="username"/>
+                @change="form.validate('name')" autocomplete="username" />
 
             <Input v-model="form.email" type="email" :label="$t('auth.email')" :error="form.errors.email"
-                placeholder="name@example.com" @change="form.validate('email')" autocomplete="username"/>
+                placeholder="name@example.com" @change="form.validate('email')" autocomplete="username" />
 
             <Input v-model="form.password" type="password" :label="$t('auth.password')" placeholder="••••••••"
-                :error="form.errors.password" @change="form.validate('password')" autocomplete="new-password"/>
+                :error="form.errors.password" @change="form.validate('password')" autocomplete="new-password" />
 
             <Input v-model="form.password_confirmation" type="password" :label="$t('auth.password_confirmation')"
                 placeholder="••••••••" :error="form.errors.password_confirmation"
-                @change="form.validate('password_confirmation')" autocomplete=""/>
+                @change="form.validate('password_confirmation')" autocomplete="" />
 
             <label class="flex gap-2 text-sm items-center"
                 :class="form.errors.acceptTerms ? 'text-red-500' : 'text-main-text/70'">
 
                 <input type="checkbox" v-model="form.acceptTerms" @change="form.validate('acceptTerms')"
-                    class="accent-primary"/>
+                    class="accent-primary" />
 
-                {{ $t('auth.accept_terms') }}
+                <span v-html="translatedTerms.value"></span>
             </label>
             <transition enter-active-class="transition duration-200 ease-out"
                 enter-from-class="transform -translate-y-1 opacity-0"

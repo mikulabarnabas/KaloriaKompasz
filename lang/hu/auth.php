@@ -31,7 +31,7 @@ return [
     'register.footer_note' => 'A folytatással elfogadod az Általános Szerződési Feltételeket és az Adatvédelmi irányelveket.',
     'name' => 'Teljes név',
     'password_confirmation' => 'Jelszó megerősítése',
-    'accept_terms' => 'Elfogadom az Általános Szerződési Feltételeket és az Adatvédelmi irányelveket',
+    'accept_terms' => 'Elfogadom az :aszf és az :privacy dokumentumot.',
     'create_account' => 'Fiók létrehozása',
     'register_dialog_title' => 'Sikeres regisztráció',
     'register.dialog_message' => 'A fiókod sikeresen létrejött. Most már bejelentkezhetsz.',

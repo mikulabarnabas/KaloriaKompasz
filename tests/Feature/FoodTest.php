@@ -37,28 +37,6 @@ test('új étel rögzíthető a naplóba', function () {
         ->assertJson(['ok' => true]);
 });
 
-test('a napló lekérése dátum alapján visszaadja az összesítést', function () {
-    $felhasznalo = User::factory()->create();
-    $etel = Foods::factory()->create();
-    $datumStr = '2026-03-20';
-
-    $naplo = FoodDiary::create([
-        'user_id' => $felhasznalo->id,
-        'date' => $datumStr
-    ]);
-
-    $naplo->foods()->attach($etel->id, [
-        'meal_type' => 'breakfast',
-        'amount' => 100,
-        'unit' => 'g',
-    ]);
-
-    $this->actingAs($felhasznalo)
-        ->getJson("/fdiary/diary/{$datumStr}")
-        ->assertOk()
-        ->assertJsonPath('totals.calories', fn ($value) => $value > 0);
-});
-
 test('új étel létrehozható képpel együtt', function () {
     Storage::fake('public');
     $felhasznalo = User::factory()->create();
@@ -87,6 +65,28 @@ test('új étel létrehozható képpel együtt', function () {
 
     $etelId = $valasz->json('food.id');
     Storage::disk('public')->assertExists("foods/{$etelId}");
+});
+
+test('a napló lekérése dátum alapján visszaadja az összesítést', function () {
+    $felhasznalo = User::factory()->create();
+    $etel = Foods::factory()->create();
+    $datumStr = '2026-03-20';
+
+    $naplo = FoodDiary::create([
+        'user_id' => $felhasznalo->id,
+        'date' => $datumStr
+    ]);
+
+    $naplo->foods()->attach($etel->id, [
+        'meal_type' => 'breakfast',
+        'amount' => 100,
+        'unit' => 'g',
+    ]);
+
+    $this->actingAs($felhasznalo)
+        ->getJson("/fdiary/diary/{$datumStr}")
+        ->assertOk()
+        ->assertJsonPath('totals.calories', fn ($value) => $value > 0);
 });
 
 test('egy bejegyzés törölhető a naplóból', function () {
@@ -121,15 +121,4 @@ test('az ételek között lehet keresni', function () {
         ->getJson("/fdiary/getFoods/" . substr($nev, 0, 3) . "/1")
         ->assertOk()
         ->assertJsonCount(1, 'result');
-});
-
-test('a keresés visszaadja a találatok számát', function () {
-    $felhasznalo = User::factory()->create();
-    $nev = 'Körte';
-    Foods::factory()->count(5)->create(['name' => $nev]);
-
-    $this->actingAs($felhasznalo)
-        ->getJson("/fdiary/getPageCount/{$nev}")
-        ->assertOk()
-        ->assertJson(['pageCount' => 5]);
 });

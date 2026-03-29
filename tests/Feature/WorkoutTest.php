@@ -16,7 +16,9 @@ test('a napló oldal elérhető', function () {
         ->assertInertia(fn ($page) => $page->component('workout_diary'));
 });
 
-test('új gyakorlat rögzítése a naplóba automatikus kalóriaszámítással', function () {
+
+
+test('gyakorlat rögzítése a naplóba', function () {
     $user = User::factory()->create();
     $exercise = Exercises::factory()->create([
         'calories_per_unit' => 600,
@@ -39,7 +41,7 @@ test('új gyakorlat rögzítése a naplóba automatikus kalóriaszámítással',
     expect((float)$entry->pivot->burned_calories)->toBe(300.0);
 });
 
-test('gyakorlat törlése a naplóból', function () {
+test('bejegyzés törlése a naplóból', function () {
     $user = User::factory()->create();
     $exercise = Exercises::factory()->create();
     $date = now()->toDateString();

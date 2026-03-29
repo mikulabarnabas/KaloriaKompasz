@@ -73,7 +73,7 @@ watch(selectedDate, getData, {immediate: true});
             <span class="text-primary truncate min-w-0 max-w-full block">{{ user.name }}</span>
           </h1>
           <p class="text-secondary-text mt-3 font-medium tracking-wide uppercase text-xs">
-            {{ $t('statistics.subtitle', { date: formattedDate }) }}
+            {{ $t('statistics.subtitle')}}
           </p>
         </div>
         <DateNavigator v-model="selectedDate" class="shrink-0" />

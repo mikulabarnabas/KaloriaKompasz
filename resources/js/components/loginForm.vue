@@ -4,6 +4,7 @@ import { trans as t } from 'laravel-vue-i18n';
 import InputField from "@/Components/input.vue"
 import { SocialLogin } from '@capgo/capacitor-social-login';
 import { Device } from '@capacitor/device';
+import axios from "axios";
 const emit = defineEmits(['success']);
 
 const form = useForm('post', '/login', {
@@ -44,19 +45,13 @@ const loginWithGoogle = async () => {
         });
 
         if (result.result?.idToken) {
-            console.log("Mobil login ok, küldés a szerverre...");
-
-            // --- EZ A RÉSZ HIÁNYZOTT: ---
-            // Itt küldjük el a Laravelnek a tokent POST kéréssel
             const response = await axios.post('/auth/google/callback', {
                 token: result.result.idToken
             });
 
             if (response.data.success) {
                 console.log("Laravel beléptetés sikeres!");
-                // Sikeres belépés után irány a főoldal vagy dashboard
                 window.location.href = '/';
-                // Vagy Inertia esetén: router.visit('/');
                 emit('success', true);
             }
         }
