@@ -15,7 +15,7 @@ Route::middleware('guest')->group(function () {
     Route::post('/login', [AuthController::class, 'loginUser'])->middleware(HandlePrecognitiveRequests::class);
 
     Route::get('/auth/google/redirect', [AuthController::class, 'googleRedirect'])->name('auth.google.redirect');
-    Route::get('/auth/google/callback', [AuthController::class, 'googleCallback'])->name('auth.google.callback');
+    Route::match(['get', 'post'], '/auth/google/callback', [AuthController::class, 'googleCallback'])->name('auth.google.callback');
 
     Route::get('/forgot-password', fn() => Inertia::render('forgot-password'))->name('password.request');
     Route::post('/forgot-password', [AuthController::class, 'sendResetLink'])->name('password.email');
