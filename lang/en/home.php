@@ -37,7 +37,8 @@ return [
     "faq_second_answer" => "Yes, we are constantly working on Apple Health and Google Fit integrations so your data flows automatically.",
     "faq_third_question" => "Will the app remain free?",
     "faq_third_answer" => "Basic features (calorie and workout log) will remain free forever, because we believe health shouldn't be a matter of money.",
-    'download_section_title' => 'KalóriaKompasz a zsebedben',
-    'download_section_description' => 'Mérd az étkezéseid és az edzéseid bárhol, bármikor. Töltsd le az Android alkalmazást közvetlenül a szerverünkről!',
-    'download_button_text' => 'Letöltés Androidra',
+
+    'download_section_title' => 'KalóriaKompasz in your pocket',
+    'download_section_description' => 'Track your meals and workouts anywhere, anytime. Download our Android application directly from our server!',
+    'download_button_text' => 'Download for Android',
 ];

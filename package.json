@@ -1,11 +1,21 @@
 {
-    "$schema": "https://www.schemastore.org/package.json",
+    "name": "kaloriakompasz",
+    "version": "1.0.0",
+    "description": "KalóriaKompasz - Étrend és Edzésnapló",
     "main": "main.js",
     "private": true,
     "type": "module",
     "scripts": {
+        "dev": "vite",
         "build": "vite build",
-        "dev": "vite"
+        "preview": "vite preview",
+        "electron:dev": "concurrently \"vite\" \"electron .\"",
+        "electron:build": "npm run build && electron-builder",
+        "electron:build:win": "npm run build && electron-builder --win",
+        "electron:build:linux": "npm run build && electron-builder --linux",
+        "electron:build:mac": "npm run build && electron-builder --mac",
+        "cap:sync": "npm run build && npx cap sync",
+        "cap:open:android": "npx cap open android"
     },
     "devDependencies": {
         "@capacitor/assets": "^3.0.5",
@@ -34,5 +44,53 @@
         "tailwindcss": "^4.1.18",
         "vue": "^3.5.25",
         "vue-i18n": "^11.2.8"
+    },
+    "build": {
+        "appId": "hu.kaloriakompasz.app",
+        "productName": "KalóriaKompasz",
+        "copyright": "Copyright © 2024 KalóriaKompasz",
+        "directories": {
+            "output": "dist_electron",
+            "buildResources": "build"
+        },
+        "files": [
+            "public/build/**/*",
+            "main.js",
+            "package.json"
+        ],
+        "win": {
+            "target": [
+                {
+                    "target": "nsis",
+                    "arch": [
+                        "x64"
+                    ]
+                }
+            ],
+            "icon": "public/favicon.png"
+        },
+        "nsis": {
+            "oneClick": false,
+            "allowToChangeInstallationDirectory": true,
+            "createDesktopShortcut": true,
+            "installerIcon": "public/favicon.png",
+            "uninstallerIcon": "public/favicon.png"
+        },
+        "linux": {
+            "target": [
+                "AppImage",
+                "deb"
+            ],
+            "category": "Office",
+            "icon": "public/icon.png"
+        },
+        "mac": {
+            "target": [
+                "dmg",
+                "zip"
+            ],
+            "category": "public.app-category.healthcare-fitness",
+            "icon": "public/icon.icns"
+        }
     }
 }

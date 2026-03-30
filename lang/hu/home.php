@@ -38,7 +38,7 @@ return [
     "faq_third_question" => "Ingyenes marad az alkalmazás?",
     "faq_third_answer" => "Az alap funkciók (kalória és edzésnapló) örökre ingyenesek maradnak, mert hiszünk abban, hogy az egészség nem lehet pénzkérdés.",
 
-    'download_section_title' => 'KalóriaKompasz in your pocket',
-    'download_section_description' => 'Track your meals and workouts anywhere, anytime. Download our Android application directly from our server!',
-    'download_button_text' => 'Download for Android',
+    'download_section_title' => 'KalóriaKompasz a zsebedben',
+    'download_section_description' => 'Mérd az étkezéseid és az edzéseid bárhol, bármikor. Töltsd le az Android alkalmazást közvetlenül a szerverünkről!',
+    'download_button_text' => 'Letöltés Androidra',
 ];

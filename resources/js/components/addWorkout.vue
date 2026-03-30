@@ -56,9 +56,9 @@ const closeModal = () => {
                 <div class="flex justify-between items-start mb-8">
                     <div>
                         <h3 class="text-2xl font-black text-main-text uppercase tracking-tight">
-                            {{ t('workoutDiary.create_exercise_title') }}
+                            {{ t('workoutDiary.create_new_exercise_title') }}
                         </h3>
-                        <p class="text-secondary-text text-sm mt-1">Define a new custom activity.</p>
+                        <p class="text-secondary-text text-sm mt-1">{{ t('workoutDiary.create_exercise_subtitle') }}</p>
                     </div>
                     <button @click="closeModal"
                         class="w-10 h-10 flex items-center justify-center rounded-full bg-neutral-dark hover:bg-neutral-light/10 text-secondary-text hover:text-main-text transition-all">
@@ -69,7 +69,7 @@ const closeModal = () => {
                 <form @submit.prevent="submitForm" class="space-y-6">
 
                     <Input v-model="form.name" type="text" :label="t('workoutDiary.exercise_name_label')"
-                        placeholder="e.g. Mountain Biking" :error="form.errors.name" />
+                        :placeholder="t('workoutDiary.exercise_name_placeholder')" :error="form.errors.name" />
 
                     <div class="grid grid-cols-2 gap-4">
                         <Input v-model.number="form.calories_per_unit" type="number" step="0.1"
@@ -98,7 +98,7 @@ const closeModal = () => {
                     </div>
 
                     <Input v-model="form.note" type="text" :label="t('foodDiary.note_label')"
-                        placeholder="Short description..." :error="form.errors.note" />
+                        :placeholder="t('workoutDiary.note_placeholder')" :error="form.errors.note" />
 
                     <div class="pt-4">
                         <Button type="submit" :label="t('workoutDiary.save_exercise')" icon="cloud_upload"

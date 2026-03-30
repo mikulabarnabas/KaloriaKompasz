@@ -84,6 +84,7 @@ watch(formattedDate, fetchDiary, { immediate: true });
 
             <Button :label="$t('foodDiary.create_food_title')" icon="add_circle" @click="openCreateFoodModal"
               class="w-full sm:w-48 h-14! shrink-0" />
+
           </div>
 
         </div>

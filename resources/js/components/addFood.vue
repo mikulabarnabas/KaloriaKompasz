@@ -95,7 +95,7 @@ const currentImage = computed(() => imagePreview.value);
                 <div class="w-full md:w-7/12 p-6 md:p-8 flex flex-col bg-background-dark">
                     <div class="flex justify-between items-start mb-6">
                         <h3 class="text-xl font-black text-main-text uppercase tracking-tight">
-                            {{ t('foodDiary.create_food_title') }}
+                            {{ t('foodDiary.add_new_food') }}
                         </h3>
                         <button @click="closeModal" class="text-secondary-text hover:text-main-text transition-colors">
                             <span class="material-symbols-outlined">close</span>

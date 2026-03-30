@@ -4,20 +4,44 @@
     <shared>
       <config />
     </shared>
+    <layouts>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/drawable/ic_launcher_background.xml">
+        <config>
+          <theme>@style/AppTheme</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml">
+        <config>
+          <theme>@style/AppTheme.NoActionBarLaunch</theme>
+        </config>
+      </layout>
+    </layouts>
   </component>
   <component name="AutoImportSettings">
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f23521ef-dc23-4f5c-a4ac-0ffe1817fa9f" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.gradle/config.properties" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/config.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/file-system.probe" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/file-system.probe" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/local.properties" beforeDir="false" afterPath="$PROJECT_DIR$/local.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../tests/Feature/FoodTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/../tests/Feature/FoodTest.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../tests/Feature/UserTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/../tests/Feature/UserTest.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../tests/Feature/WorkoutTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/../tests/Feature/WorkoutTest.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lang/en/auth.php" beforeDir="false" afterPath="$PROJECT_DIR$/../lang/en/auth.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lang/en/foodDiary.php" beforeDir="false" afterPath="$PROJECT_DIR$/../lang/en/foodDiary.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lang/en/home.php" beforeDir="false" afterPath="$PROJECT_DIR$/../lang/en/home.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lang/en/workoutDiary.php" beforeDir="false" afterPath="$PROJECT_DIR$/../lang/en/workoutDiary.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lang/hu/auth.php" beforeDir="false" afterPath="$PROJECT_DIR$/../lang/hu/auth.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lang/hu/foodDiary.php" beforeDir="false" afterPath="$PROJECT_DIR$/../lang/hu/foodDiary.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lang/hu/home.php" beforeDir="false" afterPath="$PROJECT_DIR$/../lang/hu/home.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lang/hu/navbar.php" beforeDir="false" afterPath="$PROJECT_DIR$/../lang/hu/navbar.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lang/hu/workoutDiary.php" beforeDir="false" afterPath="$PROJECT_DIR$/../lang/hu/workoutDiary.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/../package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../resources/css/app.css" beforeDir="false" afterPath="$PROJECT_DIR$/../resources/css/app.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../resources/js/components/addFood.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../resources/js/components/addFood.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../resources/js/components/addWorkout.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../resources/js/components/addWorkout.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../resources/js/components/button.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../resources/js/components/button.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../resources/js/components/foodCard.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../resources/js/components/foodCard.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../resources/js/components/workoutCard.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../resources/js/components/workoutCard.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../resources/js/pages/food_diary.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../resources/js/pages/food_diary.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../vite.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/../vite.config.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -27,7 +51,7 @@
   <component name="ClangdSettings">
     <option name="formatViaClangd" value="false" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[PhysicalDevice::serial=R5CW626JMLM]" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[]" />
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
@@ -243,7 +267,7 @@
       <map>
         <entry key="hu.kaloriakompasz">
           <value>
-            <CheckInfo lastCheckTimestamp="1774349368369" />
+            <CheckInfo lastCheckTimestamp="1774889603790" />
           </value>
         </entry>
         <entry />
@@ -259,7 +283,7 @@
         </entry>
         <entry key="hu.kaloriakompasz.test">
           <value>
-            <CheckInfo lastCheckTimestamp="1774349368368" />
+            <CheckInfo lastCheckTimestamp="1774889603791" />
           </value>
         </entry>
       </map>

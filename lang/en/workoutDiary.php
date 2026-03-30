@@ -1,7 +1,6 @@
 <?php
 
 return [
-
     // date / header
     "date" => "Workout Diary Date",
 
@@ -21,9 +20,12 @@ return [
     "burned_label" => "Burned calories",
     "note_label" => "Note",
     "unit_label" => "Unit",
-    "calorie_label" => "Calorie",
+    "calorie_label" => "Calories per unit",
     "time_label" => "Time",
     "distance_label" => "Distance",
+    "exercise_name_label" => "Exercise Name",
+    "exercise_name_placeholder" => "e.g. Mountain Biking",
+    "note_placeholder" => "Short description...",
 
     // buttons
     "add_button" => "Add to",
@@ -31,8 +33,9 @@ return [
     "delete" => "Delete",
 
     // create
-    "create_exercise_title" => "New Exercise",
-    "exercise_name_label" => "Name",
+    "create_exercise_title" => "Missing something?",
+    "create_new_exercise_title" => "Add new exercise to the database",
+    "create_exercise_subtitle" => "Define a new custom activity.",
 
     // diary
     "diary_title" => "Workout Diary",
@@ -50,12 +53,12 @@ return [
     "dialog_close" => "Close",
     "response_dialog_title" => "Workout Diary",
 
-    // confirm
+    // confirm / units
     "delete_confirmation" => "Are you sure you want to delete the selected exercise?",
-    "minutes" => "minute",
-    "hours" => "hour",
-    "km" => "kilometer",
-    "m" => "meter",
+    "minutes" => "minutes",
+    "hours" => "hours",
+    "km" => "km",
+    "m" => "m",
     "steps" => "steps",
     "amount_label" => "Amount",
     "duration_label" => "Total Time Active",

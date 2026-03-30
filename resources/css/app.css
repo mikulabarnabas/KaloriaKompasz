@@ -5,8 +5,6 @@
 @source '../**/*.blade.php';
 @source '../**/*.js';
 
-
-
 @theme {
   /* Custom Colors */
   --color-primary: #0df259;
@@ -43,8 +41,6 @@
   }
 }
 
-/* --- DARK MODE FELÜLDEFINIÁLÁS --- */
-/* Amikor a html vagy body elemen rajta van a .dark osztály */
 @variant dark (&:where(.dark, .dark *));
 
 @layer base {
@@ -60,9 +56,37 @@
   }
 }
 
-/* Globális alapbeállítások a színek alkalmazásához */
 @layer base {
   body {
     background: var(--color-background-dark);
+  }
+
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+
+  ::-webkit-scrollbar-track {
+    /* A háttér színét használjuk a sínhez */
+    background: var(--color-background-dark);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    /* A neon zöld elsődleges színed */
+    background: var(--color-primary);
+    border-radius: var(--radius-full);
+    /* Keret a csúszka körül, hogy elváljon a síntől */
+    border: 2px solid var(--color-background-dark);
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    /* Hover állapotban egy kicsit sötétítünk rajta vagy marad a primary */
+    filter: brightness(0.9);
+  }
+
+  /* Kijelölés színe (opcionális, de jól néz ki a zölddel) */
+  ::selection {
+    background: var(--color-primary);
+    color: var(--color-background-dark);
   }
 }

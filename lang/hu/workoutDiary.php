@@ -1,63 +1,66 @@
 <?php
 
 return [
-
-    // dátum / fejléc
+    // date / header
     "date" => "Edzésnapló dátuma",
 
-    // keresés
+    // search
     "search_title" => "Keresés",
     "search_placeholder" => "Gyakorlat keresése név alapján.",
-    "paginator_visible_range" => "Megjelenítve {first}–{last} / {total}",
-    "paginator_page_of" => "{page}. oldal / {pageCount}",
+    "paginator_visible_range" => "Megjelenítve: {first} - {last} / {total}",
+    "paginator_page_of" => "{page} / {pageCount} oldal",
 
-    // kiválasztott gyakorlat
+    // selected exercise
     "selected_exercise_title" => "Kiválasztott gyakorlat",
     "selected_exercise_subtitle" => "Hozzáadás a kiválasztott dátumhoz.",
     "no_selected_exercise" => "Nincs kiválasztott gyakorlat.",
 
-    // mezők
+    // fields
     "quantity_label" => "Mennyiség",
     "burned_label" => "Elégetett kalória",
     "note_label" => "Megjegyzés",
-    "unit_label" => "Egység",
-    "calorie_label" => "Kalória",
+    "unit_label" => "Mértékegység",
+    "calorie_label" => "Kalória / egység",
     "time_label" => "Idő",
-    "distance_label" => "Táv",
+    "distance_label" => "Távolság",
+    "exercise_name_label" => "Gyakorlat neve",
+    "exercise_name_placeholder" => "pl. Hegyi kerékpározás",
+    "note_placeholder" => "Rövid leírás...",
 
-    // gombok
+    // buttons
     "add_button" => "Hozzáadás",
     "save_exercise" => "Gyakorlat mentése",
     "delete" => "Törlés",
 
-    // létrehozás
-    "create_exercise_title" => "Új gyakorlat",
-    "exercise_name_label" => "Név",
+    // create
+    "create_exercise_title" => "Hiányolsz valamit?",
+    "create_new_exercise_title" => "Adj új edzést az adatbázishoz",
+    "create_exercise_subtitle" => "Saját tevékenység létrehozása.",
 
-    // napló
+    // diary
     "diary_title" => "Edzésnapló",
     "totals_title" => "Összesítés",
     "total_burned" => "Összes elégetett",
     "total_quantity" => "Összes mennyiség",
 
-    // állapotok
-    "no_entries" => "Ehhez a dátumhoz nincs edzés bejegyzés.",
+    // states
+    "no_entries" => "Ezen a napon nincsenek bejegyzések.",
     "loading" => "Napló betöltése...",
 
-    // dialógus
+    // dialogs
     "success_title" => "Siker",
-    "exercise_saved_success" => "A gyakorlat sikeresen mentve.",
+    "exercise_saved_success" => "Gyakorlat sikeresen elmentve.",
     "dialog_close" => "Bezárás",
     "response_dialog_title" => "Edzésnapló",
 
-    // megerősítés
+    // confirm / units
     "delete_confirmation" => "Biztosan törölni szeretnéd a kiválasztott gyakorlatot?",
     "minutes" => "perc",
     "hours" => "óra",
-    "km" => "kilométer",
-    "m" => "méter",
+    "km" => "km",
+    "m" => "m",
     "steps" => "lépés",
     "amount_label" => "Mennyiség",
-    "duration_label" => "Összes aktív idő",
+    "duration_label" => "Aktív idő összesen",
     "update" => "Edzésnapló frissítése"
 ];
