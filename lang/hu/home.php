@@ -38,7 +38,8 @@ return [
     "faq_third_question" => "Ingyenes marad az alkalmazás?",
     "faq_third_answer" => "Az alap funkciók (kalória és edzésnapló) örökre ingyenesek maradnak, mert hiszünk abban, hogy az egészség nem lehet pénzkérdés.",
 
-    'download_section_title' => 'KalóriaKompasz a zsebedben',
-    'download_section_description' => 'Mérd az étkezéseid és az edzéseid bárhol, bármikor. Töltsd le az Android alkalmazást közvetlenül a szerverünkről!',
-    'download_button_text' => 'Letöltés Androidra',
+    'download_section_title' => 'Vidd magaddal a fejlődést',
+    'download_section_description' => 'Érd el naplóidat minden eszközödön. Használd a mobilalkalmazást útközben, vagy az asztali verziót a részletesebb elemzésekhez.',
+    'download_android_button' => 'Letöltés Androidra',
+    'download_desktop_button' => 'Asztali verzió (Windows)',
 ];

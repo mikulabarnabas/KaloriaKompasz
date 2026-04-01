@@ -49,12 +49,12 @@ const cards = computed(() => [
 const isWeb = ref(false);
 
 const checkPlatform = async () => {
-    const info = await Device.getInfo();
-    if (info.platform === 'web') {
-        isWeb.value = true;
-    } else {
-        isWeb.value = false;
-    }
+  const info = await Device.getInfo();
+  if (info.platform === 'web') {
+    isWeb.value = true;
+  } else {
+    isWeb.value = false;
+  }
 };
 
 checkPlatform();
@@ -101,38 +101,39 @@ checkPlatform();
               <p class="mt-6 max-w-2xl text-lg text-secondary-text">{{ $t('home.pillars_description') }}</p>
             </div>
             <div class="grid grid-cols-1 gap-8 md:grid-cols-3">
-              <Card v-for="item in cards" :key="item.id" :title="item.title" :content="item.content"
-                :icon="item.icon" @click="router.get(item.route)" />
+              <Card v-for="item in cards" :key="item.id" :title="item.title" :content="item.content" :icon="item.icon"
+                @click="router.get(item.route)" />
             </div>
           </div>
         </section>
 
         <section v-if="isWeb" class="relative py-24 px-6 overflow-hidden bg-neutral-dark/50 border-y border-white/5">
-            <div class="mx-auto max-w-7xl">
-                <div class="flex flex-col md:flex-row items-center justify-between gap-16">
+          <div class="mx-auto max-w-7xl">
+            <div class="flex flex-col items-center text-center gap-12">
+              <div class="max-w-3xl">
+                <h2 class="text-4xl font-black text-main-text md:text-6xl mb-6 tracking-tight">
+                  {{ $t('home.download_section_title') }}
+                </h2>
+                <p class="text-xl text-secondary-text mb-10 leading-relaxed">
+                  {{ $t('home.download_section_description') }}
+                </p>
 
-                <div class="flex-1 text-left">
-                    <h2 class="text-4xl font-black text-main-text md:text-6xl mb-6 tracking-tight">
-                    {{ $t('home.download_section_title') }}
-                    </h2>
-                    <p class="text-xl text-secondary-text mb-10 max-w-lg leading-relaxed">
-                    {{ $t('home.download_section_description') }}
-                    </p>
+                <div class="flex flex-col sm:flex-row justify-center gap-6">
+                  <a href="/downloads/kaloriakompasz.apk" download="KaloriaKompasz.apk"
+                    class="group inline-flex items-center justify-center gap-4 bg-primary hover:bg-primary/80 text-white font-extrabold py-5 px-10 rounded-2xl transition-all shadow-2xl shadow-primary/20">
+                    <span class="material-symbols-outlined text-2xl">android</span>
+                    {{ $t('home.download_android_button') }}
+                  </a>
 
-                    <div class="flex flex-col sm:flex-row gap-6">
-                    <a
-                        href="/downloads/kaloriakompasz.apk"
-                        download="KaloriaKompasz.apk"
-                        class="group inline-flex items-center justify-center gap-4 bg-primary hover:bg-primary/80 text-white font-extrabold py-5 px-10 rounded-2xl transition-all shadow-2xl shadow-primary/20"
-                    >
-                        <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24"><path d="M17.523 15.3414c-.5511 0-.9978-.4467-.9978-.9978v-4.0456c0-.5511.4467-.9978.9978-.9978.5511 0 .9978.4467.9978.9978v4.0456c0 .5511-.4467.9978-.9978.9978zm-11.046 0c-.5511 0-.9978-.4467-.9978-.9978v-4.0456c0-.5511.4467-.9978.9978-.9978.5511 0 .9978.4467.9978.9978v4.0456c0 .5511-.4467.9978-.9978.9978zm1.1441-8.5677l-1.2559-2.1748c-.1142-.1974-.0463-.4486.1512-.5626.1974-.1142.4486-.0463.5626.1512l1.2725 2.2036c1.1578-.5282 2.4542-.8256 3.8213-.8256s2.6635.2974 3.8213.8256l1.2725-2.2036c.1142-.1974.3653-.2653.5626-.1512.1974.1142.2653.3653.1512.5626l-1.2559 2.1748c2.9372 1.558 4.9392 4.5422 5.1278 8.0531h-18.9892c.1885-3.5109 2.1906-6.4951 5.1278-8.0531z"/></svg>
-                        {{ $t('home.download_button_text') }}
-                    </a>
-                    </div>
+                  <a href="/downloads/KaloriaKompasz_Setup.exe" download="KaloriaKompasz_Setup.exe"
+                    class="group inline-flex items-center justify-center gap-4 bg-white/10 hover:bg-white/20 text-main-text font-extrabold py-5 px-10 rounded-2xl transition-all border border-white/10">
+                    <span class="material-symbols-outlined text-2xl">desktop_windows</span>
+                    {{ $t('home.download_desktop_button') }}
+                  </a>
                 </div>
-
-                </div>
+              </div>
             </div>
+          </div>
         </section>
 
         <section class="py-24 px-6">

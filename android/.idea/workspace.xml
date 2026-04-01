@@ -10,6 +10,11 @@
           <theme>@style/AppTheme</theme>
         </config>
       </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/drawable/ic_launcher_foreground.xml">
+        <config>
+          <theme>@style/AppTheme</theme>
+        </config>
+      </layout>
       <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml">
         <config>
           <theme>@style/AppTheme.NoActionBarLaunch</theme>
@@ -21,28 +26,7 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f23521ef-dc23-4f5c-a4ac-0ffe1817fa9f" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../lang/en/auth.php" beforeDir="false" afterPath="$PROJECT_DIR$/../lang/en/auth.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../lang/en/foodDiary.php" beforeDir="false" afterPath="$PROJECT_DIR$/../lang/en/foodDiary.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../lang/en/home.php" beforeDir="false" afterPath="$PROJECT_DIR$/../lang/en/home.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../lang/en/workoutDiary.php" beforeDir="false" afterPath="$PROJECT_DIR$/../lang/en/workoutDiary.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../lang/hu/auth.php" beforeDir="false" afterPath="$PROJECT_DIR$/../lang/hu/auth.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../lang/hu/foodDiary.php" beforeDir="false" afterPath="$PROJECT_DIR$/../lang/hu/foodDiary.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../lang/hu/home.php" beforeDir="false" afterPath="$PROJECT_DIR$/../lang/hu/home.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../lang/hu/navbar.php" beforeDir="false" afterPath="$PROJECT_DIR$/../lang/hu/navbar.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../lang/hu/workoutDiary.php" beforeDir="false" afterPath="$PROJECT_DIR$/../lang/hu/workoutDiary.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/../package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../resources/css/app.css" beforeDir="false" afterPath="$PROJECT_DIR$/../resources/css/app.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../resources/js/components/addFood.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../resources/js/components/addFood.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../resources/js/components/addWorkout.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../resources/js/components/addWorkout.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../resources/js/components/button.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../resources/js/components/button.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../resources/js/components/foodCard.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../resources/js/components/foodCard.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../resources/js/components/workoutCard.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../resources/js/components/workoutCard.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../resources/js/pages/food_diary.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../resources/js/pages/food_diary.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../vite.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/../vite.config.js" afterDir="false" />
-    </list>
+    <list default="true" id="f23521ef-dc23-4f5c-a4ac-0ffe1817fa9f" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />

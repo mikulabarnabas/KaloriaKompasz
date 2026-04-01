@@ -75,22 +75,6 @@
             "createDesktopShortcut": true,
             "installerIcon": "public/favicon.png",
             "uninstallerIcon": "public/favicon.png"
-        },
-        "linux": {
-            "target": [
-                "AppImage",
-                "deb"
-            ],
-            "category": "Office",
-            "icon": "public/icon.png"
-        },
-        "mac": {
-            "target": [
-                "dmg",
-                "zip"
-            ],
-            "category": "public.app-category.healthcare-fitness",
-            "icon": "public/icon.icns"
         }
     }
 }

@@ -38,7 +38,8 @@ return [
     "faq_third_question" => "Will the app remain free?",
     "faq_third_answer" => "Basic features (calorie and workout log) will remain free forever, because we believe health shouldn't be a matter of money.",
 
-    'download_section_title' => 'KalóriaKompasz in your pocket',
-    'download_section_description' => 'Track your meals and workouts anywhere, anytime. Download our Android application directly from our server!',
-    'download_button_text' => 'Download for Android',
+    'download_section_title' => 'Take your progress with you',
+    'download_section_description' => 'Access your logs on all your devices. Use the mobile app on the go, or the desktop version for more detailed analysis.',
+    'download_android_button' => 'Download for Android',
+    'download_desktop_button' => 'Desktop Version (Windows)',
 ];
