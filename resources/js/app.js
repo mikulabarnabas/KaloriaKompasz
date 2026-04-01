@@ -5,8 +5,8 @@ import { i18nVue } from "laravel-vue-i18n";
 createInertiaApp({
     resolve: (name) => {
       
-        const pages = import.meta.glob("./pages/**/*.vue", { eager: true });
-        return pages[`./pages/${name}.vue`];
+        const pages = import.meta.glob("./Pages/**/*.vue", { eager: true });
+        return pages[`./Pages/${name}.vue`];
     },
 
     title: () => `KalóriaKompasz`,
