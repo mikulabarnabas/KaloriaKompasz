@@ -28,6 +28,6 @@ class ProfileController extends Controller
             $data
         );
 
-        return back()->with('success', 'Profile updated.');
+        return redirect()->route('stat.show');
     }
 }

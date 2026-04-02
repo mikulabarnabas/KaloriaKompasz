@@ -9,7 +9,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 uses(RefreshDatabase::class);
 
-test('az ételnapló főoldala elérhető', function () {
+test('the food diary main page is accessible', function () {
     $felhasznalo = User::factory()->create();
 
     $this->actingAs($felhasznalo)
@@ -18,7 +18,7 @@ test('az ételnapló főoldala elérhető', function () {
         ->assertInertia(fn($oldal) => $oldal->component('food_diary'));
 });
 
-test('új étel rögzíthető a naplóba', function () {
+test('a new food entry can be recorded in the diary', function () {
     $felhasznalo = User::factory()->create();
     $etel = Foods::factory()->create();
     $datum = '2026-03-20';
@@ -37,7 +37,7 @@ test('új étel rögzíthető a naplóba', function () {
         ->assertJson(['ok' => true]);
 });
 
-test('új étel létrehozható képpel együtt', function () {
+test('a new food can be created with an image', function () {
     Storage::fake('public');
     $felhasznalo = User::factory()->create();
     $kep = UploadedFile::fake()->image('etel.jpg');
@@ -67,7 +67,7 @@ test('új étel létrehozható képpel együtt', function () {
     Storage::disk('public')->assertExists("foods/{$etelId}");
 });
 
-test('a napló lekérése dátum alapján visszaadja az összesítést', function () {
+test('fetching the diary by date returns the summary', function () {
     $felhasznalo = User::factory()->create();
     $etel = Foods::factory()->create();
     $datumStr = '2026-03-20';
@@ -89,7 +89,7 @@ test('a napló lekérése dátum alapján visszaadja az összesítést', functio
         ->assertJsonPath('totals.calories', fn ($value) => $value > 0);
 });
 
-test('egy bejegyzés törölhető a naplóból', function () {
+test('an entry can be deleted from the diary', function () {
     $felhasznalo = User::factory()->create();
     $datum = '2026-03-20';
     $etel = Foods::factory()->create();
@@ -112,7 +112,7 @@ test('egy bejegyzés törölhető a naplóból', function () {
     ]);
 });
 
-test('az ételek között lehet keresni', function () {
+test('foods can be searched by name', function () {
     $felhasznalo = User::factory()->create();
     $nev = 'Zabkása';
     Foods::factory()->create(['name' => $nev]);

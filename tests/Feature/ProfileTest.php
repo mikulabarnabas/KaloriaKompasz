@@ -6,7 +6,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 uses(RefreshDatabase::class);
 
-test('a profil oldal elérhető a bejelentkezett felhasználónak', function () {
+test('the profile page is accessible to an authenticated user', function () {
     $user = User::factory()->create();
 
     $this->actingAs($user)
@@ -15,7 +15,7 @@ test('a profil oldal elérhető a bejelentkezett felhasználónak', function () 
         ->assertInertia(fn ($page) => $page->component('profile'));
 });
 
-test('a profil adatok sikeresen menthetőek és frissülnek', function () {
+test('profile data can be successfully saved and updated', function () {
     $user = User::factory()->create();
     
     $profileData = [
@@ -39,7 +39,7 @@ test('a profil adatok sikeresen menthetőek és frissülnek', function () {
     ]);
 });
 
-test('az observer automatikusan kiszámolja a kalóriákat mentéskor', function () {
+test('the observer automatically calculates calories upon saving', function () {
     $user = User::factory()->create();
     
     $this->actingAs($user)->post(route('profile.save'), [
@@ -58,7 +58,7 @@ test('az observer automatikusan kiszámolja a kalóriákat mentéskor', function
     expect($profile->protein_per_day)->toBeGreaterThan(0);
 });
 
-test('fogyás cél esetén a kalória keret alacsonyabb', function () {
+test('the calorie limit is lower when the goal is weight loss', function () {
     $user = User::factory()->create();
     
     $commonData = [
@@ -85,7 +85,7 @@ test('fogyás cél esetén a kalória keret alacsonyabb', function () {
     expect($loseCalories)->toBeLessThan($maintainCalories);
 });
 
-test('érvénytelen adatok esetén a validáció elbukik', function () {
+test('validation fails with invalid data', function () {
     $user = User::factory()->create();
 
     $this->actingAs($user)

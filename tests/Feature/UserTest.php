@@ -7,13 +7,13 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 uses(RefreshDatabase::class);
 
-test('a regisztrációs oldal elérhető', function () {
+test('the registration page is accessible', function () {
     $this->get(route('login'))
         ->assertStatus(200)
         ->assertInertia(fn($page) => $page->component('login'));
 });
 
-test('a bejelentkező oldal elérhető és angol nyelvű', function () {
+test('the login page is accessible and the language is English', function () {
     $this->get(route('login'))
         ->assertStatus(200)
         ->assertInertia(
@@ -24,7 +24,7 @@ test('a bejelentkező oldal elérhető és angol nyelvű', function () {
         );
 });
 
-test('új felhasználó sikeresen regisztrálhat', function () {
+test('a new user can register successfully', function () {
     $jelszo = 'Secret123?';
     $email = 'regisztracio@teszt.hu';
 
@@ -50,7 +50,7 @@ test('új felhasználó sikeresen regisztrálhat', function () {
     ]);
 });
 
-test('felhasználó be tud jelentkezni', function () {
+test('a user can log in successfully', function () {
     $jelszo = 'Secret123?';
     $email = 'bejelentkezes@teszt.hu';
 
@@ -69,7 +69,7 @@ test('felhasználó be tud jelentkezni', function () {
     $this->assertAuthenticatedAs($user);
 });
 
-test('hibás jelszóval nem lehet bejelentkezni', function () {
+test('cannot log in with an incorrect password', function () {
     $user = User::factory()->create();
 
     $this->postJson(action([App\Http\Controllers\AuthController::class, 'loginUser']), [
@@ -82,7 +82,7 @@ test('hibás jelszóval nem lehet bejelentkezni', function () {
     $this->assertGuest();
 });
 
-test('bejelentkezett felhasználó ki tud jelentkezni', function () {
+test('an authenticated user can log out', function () {
     $user = User::factory()->create();
 
     auth()->login($user);
@@ -96,7 +96,7 @@ test('bejelentkezett felhasználó ki tud jelentkezni', function () {
     $this->assertGuest();
 });
 
-test('google callback létrehozza a felhasználót és belépteti', function () {
+test('google callback creates the user and logs them in', function () {
     $googleUser = Mockery::mock('Laravel\Socialite\Two\User');
     $kamuAdatok = User::factory()->make();
 

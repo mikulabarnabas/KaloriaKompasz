@@ -11,7 +11,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 uses(RefreshDatabase::class);
 
-test('a statisztika oldal alapértelmezett célokkal tölt be, ha nincs profil', function () {
+test('the statistics page loads with default targets if no profile exists', function () {
     $user = User::factory()->create();
 
     $this->actingAs($user)
@@ -25,7 +25,7 @@ test('a statisztika oldal alapértelmezett célokkal tölt be, ha nincs profil',
         );
 });
 
-test('a statisztika oldal a profilban megadott célokat használja', function () {
+test('the statistics page uses the specific targets defined in the profile', function () {
     $user = User::factory()->create();
     UserProfile::factory()->for($user)->create([
         'calories_per_day' => 2500,
@@ -43,7 +43,7 @@ test('a statisztika oldal a profilban megadott célokat használja', function ()
         );
 });
 
-test('a getData api pontos összesített adatokat ad vissza', function () {
+test('the getData API returns accurate aggregated data', function () {
     $user = User::factory()->create();
     $date = '2026-03-28';
 
@@ -75,7 +75,7 @@ test('a getData api pontos összesített adatokat ad vissza', function () {
     $response->assertJsonPath('todayStats.burned', 500);
 });
 
-test('a heti statisztika helyesen számolja az utolsó 7 napot', function () {
+test('the weekly statistics correctly calculate the last 7 days', function () {
     $user = User::factory()->create();
     $today = '2026-03-28';
 

@@ -7,7 +7,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 uses(RefreshDatabase::class);
 
-test('a napló oldal elérhető', function () {
+test('accessing diary page', function () {
     $user = User::factory()->create();
 
     $this->actingAs($user)
@@ -18,7 +18,7 @@ test('a napló oldal elérhető', function () {
 
 
 
-test('gyakorlat rögzítése a naplóba', function () {
+test('add exercise to diary', function () {
     $user = User::factory()->create();
     $exercise = Exercises::factory()->create([
         'calories_per_unit' => 600,
@@ -41,7 +41,7 @@ test('gyakorlat rögzítése a naplóba', function () {
     expect((float)$entry->pivot->burned_calories)->toBe(300.0);
 });
 
-test('bejegyzés törlése a naplóból', function () {
+test('deleting entry from diary', function () {
     $user = User::factory()->create();
     $exercise = Exercises::factory()->create();
     $date = now()->toDateString();
@@ -58,7 +58,7 @@ test('bejegyzés törlése a naplóból', function () {
     expect($diary->exercises()->count())->toBe(0);
 });
 
-test('gyakorlatok keresése', function () {
+test('searching exercises', function () {
     $user = User::factory()->create();
     Exercises::factory()->create(['name' => 'Futás']);
     Exercises::factory()->create(['name' => 'Úszás']);
@@ -70,7 +70,7 @@ test('gyakorlatok keresése', function () {
         ->assertJsonPath('result.0.name', 'Futás');
 });
 
-test('lépések szinkronizálása (Android)', function () {
+test('sync steps Android', function () {
     $user = User::factory()->create();
     Exercises::factory()->create(['id' => 1, 'name' => 'Steps']); 
     
