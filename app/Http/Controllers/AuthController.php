@@ -126,7 +126,7 @@ class AuthController extends Controller
 
     public function sendResetLink(Request $request)
     {
-        $request->validate(['email' => 'required|email']);
+        $request->validate(['email' => 'required|email|exists:users,email']);
 
         $status = Password::sendResetLink(
             $request->only('email')
@@ -142,7 +142,7 @@ class AuthController extends Controller
         $request->validate([
             'token' => 'required',
             'email' => 'required|email',
-            'password' => 'required|string|min:8|letters|mixedCase|numbers|symbols|confirmed',
+            'password' => ['required', Illuminate\Validation\Rules\Password::min(8)->letters()->mixedCase()->numbers()->symbols(), 'confirmed'],
         ]);
 
         $status = Password::reset(
