@@ -7,11 +7,24 @@ import { Head } from '@inertiajs/vue3';
 
 defineProps({ status: String });
 
+const showSuccessDialog = ref(false);
+
 const form = useForm('post', '/forgot-password', {
     email: "",
 })
 
-const onSubmit = () => form.submit();
+const onSubmit = () => {
+    form.submit({
+        onSuccess: () => {
+            showSuccessDialog.value = true;
+        }
+    });
+};
+
+function goToLogin() {
+    showSuccessDialog.value = false;
+    router.get('/login');
+}
 </script>
 
 <template>
@@ -58,13 +71,34 @@ const onSubmit = () => form.submit();
                         </button>
                     </form>
                 </div>
-
-                <div class="text-center">
-                    <a href="/login" class="text-[10px] font-black uppercase tracking-widest text-secondary-text hover:text-primary transition-colors">
-                        ← {{ t('auth.sign_in') }}
-                    </a>
-                </div>
             </div>
         </div>
+
+        <transition
+            enter-active-class="transition duration-300 ease-out"
+            enter-from-class="opacity-0 scale-95"
+            enter-to-class="opacity-100 scale-100"
+            leave-active-class="transition duration-200 ease-in"
+            leave-from-class="opacity-100 scale-100"
+            leave-to-class="opacity-0 scale-95"
+        >
+            <div v-if="showSuccessDialog" class="fixed inset-0 z-50 flex items-center justify-center p-6 bg-background-dark/90 backdrop-blur-md">
+                <div class="w-full max-w-sm bg-neutral-dark border border-primary/20 rounded-[3rem] p-10 text-center space-y-8 shadow-2xl">
+                    <div class="size-24 bg-primary/10 rounded-full flex items-center justify-center border border-primary/20 mx-auto">
+                        <span class="material-symbols-outlined text-5xl text-primary">lock_reset</span>
+                    </div>
+                    <div class="space-y-2">
+                        <h3 class="text-2xl font-black uppercase tracking-tighter text-main-text">
+                            {{ t('auth.password_reset_sent_title') }}
+                        </h3>
+                        <p class="text-secondary-text text-[11px] font-bold uppercase tracking-widest leading-relaxed">
+                            {{ t('auth.password_reset_sent_message')}}
+                        </p>
+                    </div>
+
+                    <Button :label="t('auth.sign_in')" icon="login" @click="goToLogin" class="h-14" />
+                </div>
+            </div>
+        </transition>
     </AppLayout>
 </template>

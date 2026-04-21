@@ -50,4 +50,8 @@ return [
     'new_password' => 'Új jelszó',
     'sending' => 'Küldés...',
     'updating' => 'Frissítés...',
+    'password_reset_success_message' => 'A jelszavad sikeresen megváltozott. Most már bejelentkezhetsz az új jelszavaddal.',
+    'password_reset_success_title' => 'Sikeres jelszóváltoztatás',
+    'password_reset_sent_title' => 'Jelszó visszaállító email elküldve',
+    'password_reset_sent_message' => 'Küldtünk egy jelszó visszaállító linket az email címedre. Kérjük, ellenőrizd a postaládádat.',
 ];

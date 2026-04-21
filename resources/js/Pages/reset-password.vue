@@ -4,7 +4,7 @@ import { useForm } from "laravel-precognition-vue"
 import { trans as t } from 'laravel-vue-i18n';
 import InputField from "@/Components/input.vue"
 import AppLayout from '@/Layouts/appLayout.vue';
-import Button from "@/Components/button.vue"; // Button komponens importálása a popup-hoz
+import Button from "@/Components/button.vue";
 import { Head, router } from '@inertiajs/vue3';
 
 const props = defineProps({
@@ -12,7 +12,7 @@ const props = defineProps({
     email: String,
 });
 
-const showSuccessDialog = ref(false); // Popup láthatósága
+const showSuccessDialog = ref(false);
 
 const form = useForm('post', '/reset-password', {
     token: props.token,
@@ -79,14 +79,14 @@ function goToLogin() {
                     </div>
                     <div class="space-y-2">
                         <h3 class="text-2xl font-black uppercase tracking-tighter text-main-text">
-                            {{ t('auth.password_reset_success_title') ?? 'Sikeres frissítés!' }}
+                            {{ t('auth.password_reset_success_title') }}
                         </h3>
                         <p class="text-secondary-text text-[11px] font-bold uppercase tracking-widest leading-relaxed">
-                            {{ t('auth.password_reset_success_message') ?? 'A jelszavad sikeresen megváltozott. Most már bejelentkezhetsz az új jelszavaddal.' }}
+                            {{ t('auth.password_reset_success_message')}}
                         </p>
                     </div>
 
-                    <Button :label="t('auth.go_to_login') ?? 'Bejelentkezés'" icon="login" @click="goToLogin" class="h-14" />
+                    <Button :label="t('auth.sign_in')" icon="login" @click="goToLogin" class="h-14" />
                 </div>
             </div>
         </transition>

@@ -49,4 +49,8 @@ return [
     'new_password' => 'New Password',
     'sending' => 'Sending...',
     'updating' => 'Updating...',
+    'password_reset_success_message' => 'Your password has been reset successfully. You can now sign in with your new password.',
+    'password_reset_success_title' => 'Password reset successful',
+    'password_reset_sent_title' => 'Password reset email sent',
+    'password_reset_sent_message' => 'We have emailed you a password reset link. Please check your inbox.',
 ];
