@@ -16,6 +16,7 @@ use Google_Client;
 
 
 use Illuminate\Support\Facades\Password;
+use Illuminate\Validation\Rules\Password as PasswordRule;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Illuminate\Auth\Events\PasswordReset;
@@ -142,7 +143,11 @@ class AuthController extends Controller
         $request->validate([
             'token' => 'required',
             'email' => 'required|email',
-            'password' => ['required', Illuminate\Validation\Rules\Password::min(8)->letters()->mixedCase()->numbers()->symbols(), 'confirmed'],
+            'password' => [
+                'required',
+                PasswordRule::min(8)->letters()->mixedCase()->numbers()->symbols(),
+                'confirmed'
+            ],
         ]);
 
         $status = Password::reset(
