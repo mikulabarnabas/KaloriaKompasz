@@ -13,9 +13,8 @@ return [
     |
     */
 
-    'failed' => 'These credentials do not match our records.',
-    'throttle' => 'Too many login attempts. Please try again in {seconds} seconds.',
-
+    'failed'   => 'A megadott adatok nem egyeznek a rendszerünkben szereplőkkel.',
+    'throttle' => 'Túl sok bejelentkezési kísérlet. Kérjük, próbálkozzon újra {seconds} másodperc múlva.',
     'login_subtitle' => 'Az e-mail-címed és jelszavad megadásával folytathatod.',
     'register_subtitle' => 'Add meg az adataidat a regisztráció megkezdéséhez.',
     'login.footer_note' => 'A folytatással elfogadod az Általános Szerződési Feltételeket és az Adatvédelmi irányelveket.',

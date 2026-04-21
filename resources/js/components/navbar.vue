@@ -11,10 +11,13 @@ const lang = ref(localStorage.lang || getActiveLanguage());
 const theme = ref(localStorage.theme)
 
 async function changeLanguage() {
-  const nextLang = getActiveLanguage() == 'en' ? 'hu' : 'en'
+  const nextLang = getActiveLanguage() == 'en' ? 'hu' : 'en';
   await loadLanguageAsync(nextLang);
+  
   localStorage.lang = nextLang;
   lang.value = nextLang;
+
+  document.cookie = `locale=${nextLang};max-age=31536000;path=/;SameSite=Lax`;
 }
 
 function toggleTheme() {
