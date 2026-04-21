@@ -3,7 +3,9 @@ import { useForm } from "laravel-precognition-vue"
 import { trans as t } from 'laravel-vue-i18n';
 import InputField from "@/Components/input.vue"
 import AppLayout from '@/Layouts/appLayout.vue';
-import { Head } from '@inertiajs/vue3';
+import Button from "@/Components/button.vue";
+import { ref } from "vue";
+import { router } from '@inertiajs/vue3';
 
 defineProps({ status: String });
 
@@ -29,8 +31,6 @@ function goToLogin() {
 
 <template>
     <AppLayout>
-        <Head :title="t('auth.forgot_password')" />
-
         <div class="relative min-h-[75vh] bg-background-dark flex items-center justify-center px-6 py-24">
             <div class="absolute inset-0 pointer-events-none opacity-20 dark:opacity-10">
                 <svg width="100%" height="100%" fill="none" xmlns="http://www.w3.org/2000/svg">

@@ -142,7 +142,7 @@ class AuthController extends Controller
         $request->validate([
             'token' => 'required',
             'email' => 'required|email',
-            'password' => 'required|min:8|confirmed',
+            'password' => 'required|string|min:8|letters|mixedCase|numbers|symbols|confirmed',
         ]);
 
         $status = Password::reset(
