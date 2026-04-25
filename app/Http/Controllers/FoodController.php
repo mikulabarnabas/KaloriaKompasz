@@ -76,7 +76,7 @@ class FoodController extends Controller
         $data = $request->validate([
             'food_id' => ['required', 'integer', 'exists:foods,id'],
             'meal_type' => ['in:breakfast,lunch,dinner,snack,other'],
-            'amount' => ['integer', 'min:1'],
+            'amount' => ['required', 'numeric', 'min:0.1'],
             'unit' => ['required', 'string', 'in:' . implode(',', FoodUnits::values())]
         ]);
 

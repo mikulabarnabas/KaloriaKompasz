@@ -59,7 +59,6 @@ const submitForm = () => {
 
 const closeModal = () => {
     emit('close');
-    form.reset();
 };
 
 watch(() => props.food, (newFood) => {

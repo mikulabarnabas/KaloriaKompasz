@@ -37,7 +37,6 @@ const allowedUnits = computed(() => {
     const timeUnits = ['minutes', 'hours'];
     const distanceUnits = ['km', 'm'];
     const stepUnits = ['steps'];
-    console.log(props.exercise)
 
     if (timeUnits.includes(props.exercise.unit)) {
         return unitOptions.value.filter(u => timeUnits.includes(u.value));
@@ -48,7 +47,7 @@ const allowedUnits = computed(() => {
     if (stepUnits.includes(props.exercise.unit)) {
         return unitOptions.value.filter(u => stepUnits.includes(u.value));
     }
-    
+
     return unitOptions;
 });
 
@@ -74,7 +73,6 @@ const submitForm = () => {
 
 const closeModal = () => {
     emit('close');
-    form.reset();
 };
 
 watch(() => props.exercise, (newEx) => {

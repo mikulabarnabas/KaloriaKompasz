@@ -7,6 +7,10 @@ defineProps({
         type: String,
         default: 'text'
     },
+    step: {
+        type: String,
+        default: 'any'
+    },
     placeholder: String,
     error: String,
     autocomplete: String
@@ -19,7 +23,7 @@ defineProps({
             {{ label }}
         </label>
 
-        <input v-model="model" :type="type" :placeholder="placeholder" :autocomplete="autocomplete"
+        <input v-model="model" :type="type" :placeholder="placeholder" :autocomplete="autocomplete" :step="step"
             class="w-full rounded-xl bg-neutral-dark/40 border px-4 py-3 text-main-text placeholder-secondary-text/30 transition-all focus:outline-none focus:ring-2"
             :class="[
                 error

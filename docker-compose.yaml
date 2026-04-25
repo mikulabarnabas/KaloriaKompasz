@@ -8,7 +8,7 @@ services:
       - "8000:80"
       - "5173:5173"
     volumes:
-      - app-data:/var/www/html
+      - .:/var/www/html
     environment:
       - DB_HOST=mysql
       - DB_DATABASE=kaloriakompasz
@@ -44,5 +44,4 @@ networks:
     driver: bridge
 
 volumes:
-  app-data:
   db-data:

@@ -32,25 +32,25 @@ const onSubmit = () =>
 
 <template>
     <div class="animate-fly-in">
-        <form class="space-y-5" @submit.prevent="onSubmit">
+        <form class="space-y-5" @submit.prevent="onSubmit" novalidate>
 
             <Input v-model="form.name" :label="$t('auth.name')" :error="form.errors.name" placeholder="Zsákos Frodó"
-                @change="form.validate('name')" autocomplete="username" />
+                 autocomplete="username" />
 
             <Input v-model="form.email" type="email" :label="$t('auth.email')" :error="form.errors.email"
-                placeholder="name@example.com" @change="form.validate('email')" autocomplete="username" />
+                placeholder="name@example.com" autocomplete="email" />
 
             <Input v-model="form.password" type="password" :label="$t('auth.password')" placeholder="••••••••"
-                :error="form.errors.password" @change="form.validate('password')" autocomplete="new-password" />
+                :error="form.errors.password" autocomplete="new-password" />
 
             <Input v-model="form.password_confirmation" type="password" :label="$t('auth.password_confirmation')"
                 placeholder="••••••••" :error="form.errors.password_confirmation"
-                @change="form.validate('password_confirmation')" autocomplete="" />
+                autocomplete="" />
 
             <label class="flex gap-2 text-sm items-center"
                 :class="form.errors.acceptTerms ? 'text-red-500' : 'text-main-text/70'">
 
-                <input type="checkbox" v-model="form.acceptTerms" @change="form.validate('acceptTerms')"
+                <input type="checkbox" v-model="form.acceptTerms"
                     class="accent-primary" />
 
                 <span v-html="translatedTerms.value"></span>

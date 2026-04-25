@@ -46,6 +46,7 @@ const fetchDiary = async () => {
 };
 
 const onFoodSelect = (food) => {
+    console.log(food)
   selectedFoodForEntry.value = food;
   isEntryModalOpen.value = true;
 };

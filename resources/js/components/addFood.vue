@@ -34,6 +34,7 @@ const onFileChange = (e) => {
 };
 
 const submitForm = () => {
+    console.log(form.image)
     form.submit({
         preserveScroll: true,
         onSuccess: () => {
@@ -49,7 +50,6 @@ const closeModal = () => {
         imagePreview.value = null;
     }
     emit('close');
-    form.reset();
 };
 
 const currentImage = computed(() => imagePreview.value);

@@ -50,7 +50,7 @@ class WorkoutController extends Controller
     {
         $data = $request->validate([
             'exercise_id' => ['required', 'integer', 'exists:exercises,id'],
-            'amount' => ['integer', 'min:1'],
+            'amount' => ['numeric', 'min:0.1'],
             'unit' => ['required', 'in:' . implode(',', WorkoutUnits::values())],
         ]);
 

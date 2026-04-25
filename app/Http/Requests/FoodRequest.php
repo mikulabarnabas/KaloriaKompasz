@@ -23,15 +23,15 @@ class FoodRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string', 'min:1', 'max:255'],
-            'unit' => ['required'],
-            'amount' => ['required', 'integer', 'min:1'],
-            'calorie' => ['required', 'integer', 'min:0'],
-            'fat' => ['required', 'integer', 'min:0'],
-            'carb' => ['required', 'integer', 'min:0'],
-            'protein' => ['required', 'integer', 'min:0'],
-            'notes' => ['nullable', 'string', 'max:5000'],
-            'image'   => ['image', 'max:4096', 'mimes:jpeg,png,jpg,gif,avif']
+            'name'    => ['required', 'string', 'min:1', 'max:255'],
+            'unit'    => ['required'],
+            'amount'  => ['required', 'numeric', 'min:0.01'],
+            'calorie' => ['required', 'numeric', 'min:0'],
+            'fat'     => ['required', 'numeric', 'min:0'],
+            'carb'    => ['required', 'numeric', 'min:0'],
+            'protein' => ['required', 'numeric', 'min:0'],
+            'notes'   => ['nullable', 'string', 'max:5000'],
+            'image'   => ['nullable', 'image', 'max:4096', 'mimes:jpeg,png,jpg,gif,avif']
         ];
     }
 }

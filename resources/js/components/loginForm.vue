@@ -75,12 +75,11 @@ const loginWithGoogle = async () => {
 
         <form class="space-y-5" @submit.prevent="onSubmit" novalidate>
             <InputField v-model="form.email" type="email" :label="t('auth.email')" :error="form.errors.email"
-                placeholder="name@example.com" @change="form.validate('email')" autocomplete="username" />
+                placeholder="name@example.com" autocomplete="username" />
 
             <div class="relative">
                 <InputField v-model="form.password" type="password" :label="t('auth.password')"
-                    :error="form.errors.password" autocomplete="current-password" placeholder="••••••••"
-                    @change="form.validate('password')" />
+                    :error="form.errors.password" autocomplete="current-password" placeholder="••••••••"/>
                 <a href="/forgot-password"
                     class="absolute top-0 right-1 text-[10px] uppercase tracking-wider font-bold text-primary hover:brightness-110 transition-all">
                     {{ t('auth.forgot_password') }}

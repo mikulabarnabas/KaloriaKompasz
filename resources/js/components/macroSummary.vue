@@ -57,7 +57,7 @@ const getPercent = (current, target) => Math.min(Math.round((current / (target |
           getPercent(macro.current, macro.target) }}%</span>
       </div>
       <div class="mt-4">
-        <div class="text-4xl font-black tracking-tighter">{{ macro.current }}<span
+        <div class="text-4xl font-black tracking-tighter">{{ Math.round(macro.current * 100) / 100 }}<span
             class="text-sm font-bold text-secondary-text ml-1">g</span></div>
         <div class="text-[12px] font-black text-secondary-text uppercase tracking-widest mt-1">{{ $t('statistics.target')}}: {{
           macro.target }}g</div>
