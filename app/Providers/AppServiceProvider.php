@@ -11,6 +11,7 @@ use App\Observers\FoodsObserver;
 use App\Observers\WorkoutDiaryPivotObserver;
 use App\Models\UserProfile;
 use App\Observers\UserProfileObserver;
+use Illuminate\Support\Facades\URL;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -31,5 +32,8 @@ class AppServiceProvider extends ServiceProvider
         WorkoutDiaryPivot::observe(WorkoutDiaryPivotObserver::class);
         Foods::observe(FoodsObserver::class);
         UserProfile::observe(UserProfileObserver::class);
+        if (config('app.env') !== 'local') {
+            URL::forceScheme('https');
+        }
     }
 }
