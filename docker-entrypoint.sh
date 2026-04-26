@@ -7,6 +7,7 @@ sed -i "s/:80/:${PORT}/g" /etc/apache2/sites-available/000-default.conf
 
 echo "Running migrations..."
 php artisan migrate --force
+php artisan db:seed --force
 
 if [ ! -z "$APP_KEY" ]; then
     php artisan config:cache
