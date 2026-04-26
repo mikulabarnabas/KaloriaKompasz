@@ -6,6 +6,10 @@
 *.md diff=markdown
 *.php diff=php
 
+Dockerfile merge=ours
+docker-compose.yaml merge=ours
+docker-entrypoint.sh merge=ours
+
 /.github export-ignore
 CHANGELOG.md export-ignore
 .styleci.yml export-ignore

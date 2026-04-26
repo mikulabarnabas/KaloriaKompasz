@@ -111,13 +111,13 @@ class FoodController extends Controller
         return response()->noContent();
     }
 
-    public function storeFood(FoodRequest $request)
+    public function storeFood(FoodRequest $request, UploadApi $uploadApi) 
     {
         $data = $request->validated();
         $food = Foods::create($data);
 
         if ($request->hasFile('image')) {
-            $upload = (new UploadApi())->upload($request->file('image')->getRealPath(), [
+            $upload = $uploadApi->upload($request->file('image')->getRealPath(), [
                 'folder' => 'foods/user_uploads',
                 'public_id' => "food_" . $food->id . "_" . time(),
                 'overwrite' => true,

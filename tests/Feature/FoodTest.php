@@ -4,8 +4,10 @@ use App\Models\User;
 use App\Models\Foods;
 use App\Models\FoodDiary;
 use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Cloudinary\Api\Upload\UploadApi;
+use Mockery\MockInterface;
+use Cloudinary\Api\ApiResponse;
 
 uses(RefreshDatabase::class);
 
@@ -37,11 +39,24 @@ test('a new food entry can be recorded in the diary', function () {
         ->assertJson(['ok' => true]);
 });
 
+
+
+
 test('a new food can be created with an image', function () {
-    Storage::fake('public');
+    $fakeUrl = 'https://res.cloudinary.com/demo/image/upload/sample.jpg';
+    $fakeResponse = new ApiResponse([
+        'secure_url' => $fakeUrl,
+        'public_id' => 'fake_id'
+    ], []);
+
+    $this->mock(UploadApi::class, function (MockInterface $mock) use ($fakeResponse) {
+        $mock->shouldReceive('upload')
+             ->once()
+             ->andReturn($fakeResponse); 
+    });
+
     $felhasznalo = User::factory()->create();
     $kep = UploadedFile::fake()->image('etel.jpg');
-
     $kamuEtel = Foods::factory()->make();
 
     $adatok = [
@@ -55,16 +70,14 @@ test('a new food can be created with an image', function () {
         'image' => $kep
     ];
 
-    $valasz = $this->actingAs($felhasznalo)
-        ->postJson('/fdiary/create', $adatok);
+    $valasz = $this->actingAs($felhasznalo)->postJson('/fdiary/create', $adatok);
 
-    $valasz->assertOk()
-        ->assertJson(['success' => true]);
+    $valasz->assertOk()->assertJson(['success' => true]);
 
-    $this->assertDatabaseHas('foods', ['name' => $kamuEtel->name]);
-
-    $etelId = $valasz->json('food.id');
-    Storage::disk('public')->assertExists("foods/{$etelId}");
+    $this->assertDatabaseHas('foods', [
+        'name' => $kamuEtel->name,
+        'image' => $fakeUrl,
+    ]);
 });
 
 test('fetching the diary by date returns the summary', function () {
@@ -86,7 +99,7 @@ test('fetching the diary by date returns the summary', function () {
     $this->actingAs($felhasznalo)
         ->getJson("/fdiary/diary/{$datumStr}")
         ->assertOk()
-        ->assertJsonPath('totals.calories', fn ($value) => $value > 0);
+        ->assertJsonPath('totals.calories', fn($value) => $value > 0);
 });
 
 test('an entry can be deleted from the diary', function () {

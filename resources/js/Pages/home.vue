@@ -119,13 +119,13 @@ checkPlatform();
                 </p>
 
                 <div class="flex flex-col sm:flex-row justify-center gap-6">
-                  <a href="/downloads/kaloriakompasz.apk" download="KaloriaKompasz.apk"
+                  <a href="https://storage.googleapis.com/kaloriakompasz/KaloriaKompasz.apk" download="KaloriaKompasz.apk"
                     class="group inline-flex items-center justify-center gap-4 bg-primary hover:bg-primary/80 text-white font-extrabold py-5 px-10 rounded-2xl transition-all shadow-2xl shadow-primary/20">
                     <span class="material-symbols-outlined text-2xl">android</span>
                     {{ $t('home.download_android_button') }}
                   </a>
 
-                  <a href="/downloads/KaloriaKompasz_Setup.exe" download="KaloriaKompasz_Setup.exe"
+                  <a href="https://storage.googleapis.com/kaloriakompasz/Kal%C3%B3riaKompasz%20Setup%201.0.0.exe" download="KaloriaKompasz_Setup.exe"
                     class="group inline-flex items-center justify-center gap-4 bg-white/10 hover:bg-white/20 text-main-text font-extrabold py-5 px-10 rounded-2xl transition-all border border-white/10">
                     <span class="material-symbols-outlined text-2xl">desktop_windows</span>
                     {{ $t('home.download_desktop_button') }}
