@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Inertia\Inertia;
 use App\Enums\FoodUnits;
+use Cloudinary\Api\Upload\UploadApi;
 use Illuminate\Support\Facades\Log;
 
 class FoodController extends Controller
@@ -116,17 +117,15 @@ class FoodController extends Controller
         $food = Foods::create($data);
 
         if ($request->hasFile('image')) {
-            $file = $request->file('image');
-            $filename = "food_" . time() . "." . $file->extension();
-
-            $file->storeAs(
-                "foods/{$food->id}",
-                $filename,
-                'public'
-            );
+            $upload = (new UploadApi())->upload($request->file('image')->getRealPath(), [
+                'folder' => 'foods/user_uploads',
+                'public_id' => "food_" . $food->id . "_" . time(),
+                'overwrite' => true,
+                'resource_type' => 'image'
+            ]);
 
             $food->update([
-                'image' => "storage/foods/{$food->id}/{$filename}",
+                'image' => $upload['secure_url'],
             ]);
         }
 

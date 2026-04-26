@@ -12,6 +12,7 @@ use App\Observers\WorkoutDiaryPivotObserver;
 use App\Models\UserProfile;
 use App\Observers\UserProfileObserver;
 use Illuminate\Support\Facades\URL;
+use Cloudinary\Configuration\Configuration;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -32,8 +33,20 @@ class AppServiceProvider extends ServiceProvider
         WorkoutDiaryPivot::observe(WorkoutDiaryPivotObserver::class);
         Foods::observe(FoodsObserver::class);
         UserProfile::observe(UserProfileObserver::class);
+        
         if (config('app.env') !== 'local') {
             URL::forceScheme('https');
         }
+
+        Configuration::instance([
+            'cloud' => [
+                'cloud_name' => config('cloudinary.cloud_name'),
+                'api_key'    => config('cloudinary.api_key'),
+                'api_secret' => config('cloudinary.api_secret'),
+            ],
+            'url' => [
+                'secure' => true
+            ]
+        ]);
     }
 }
