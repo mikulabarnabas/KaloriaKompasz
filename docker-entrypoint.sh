@@ -9,12 +9,6 @@ if [ ! -f ".env" ]; then
     fi
 fi
 
-echo "Waiting for database..."
-until timeout 1s bash -c ":> /dev/tcp/mysql/3306" 2>/dev/null; do
-  echo "Database not ready, sleeping..."
-  sleep 2
-done
-
 if [ ! -d "vendor" ]; then
     echo "Vendor folder missing. Installing PHP dependencies..."
     composer install --no-interaction --prefer-dist --optimize-autoloader --ignore-platform-reqs
