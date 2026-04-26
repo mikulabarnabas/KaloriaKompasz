@@ -1,29 +1,15 @@
 #!/bin/bash
-chown -R www-data:www-data /var/www/html
+set -e
 
-if [ ! -f ".env" ]; then
-    echo ".env file missing. Copying from .env.example..."
-    if [ -f ".env.example" ]; then
-        cp .env.example .env
-        echo ".env created."
-    fi
+export PORT=${PORT:-8080}
+sed -i "s/Listen 80/Listen ${PORT}/g" /etc/apache2/ports.conf
+sed -i "s/:80/:${PORT}/g" /etc/apache2/sites-available/000-default.conf
+
+if [ ! -z "$APP_KEY" ]; then
+    php artisan config:cache
+    php artisan route:cache
+    php artisan view:cache
 fi
 
-if [ ! -d "vendor" ]; then
-    echo "Vendor folder missing. Installing PHP dependencies..."
-    composer install --no-interaction --prefer-dist --optimize-autoloader --ignore-platform-reqs
-fi
-
-if [ ! -d "node_modules" ]; then
-    echo "node_modules folder missing. Installing JS dependencies..."
-    npm install
-fi
-
-php artisan key:generate
-php artisan migrate --force
-php artisan db:seed --force 
-
-npm run dev &
-
-echo "Starting Apache..."
+echo "Starting Apache on port $PORT..."
 exec apache2-foreground
