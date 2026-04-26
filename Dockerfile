@@ -1,6 +1,8 @@
 FROM php:8.4-apache
 
 RUN apt-get update && apt-get install -y \
+    ca-certificates \
+    && update-ca-certificates
     git curl libpng-dev libonig-dev libxml2-dev zip unzip libzip-dev \
     && curl -sL https://deb.nodesource.com/setup_20.x | bash - \
     && apt-get install -y nodejs
