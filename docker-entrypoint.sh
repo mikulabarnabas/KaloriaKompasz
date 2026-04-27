@@ -3,10 +3,8 @@ chown -R www-data:www-data /var/www/html
 
 if [ ! -f ".env" ]; then
     echo ".env file missing. Copying from .env.example..."
-    if [ -f ".env.example" ]; then
-        cp .env.example .env
-        echo ".env created."
-    fi
+    cp .env.example .env
+    echo ".env created."
 fi
 
 echo "Waiting for database..."
@@ -30,6 +28,9 @@ php artisan migrate --force
 php artisan db:seed --force 
 
 npm run dev &
+
+echo "Linking storage..."
+php artisan storage:link --force
 
 echo "Starting Apache..."
 exec apache2-foreground

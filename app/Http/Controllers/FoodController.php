@@ -117,15 +117,17 @@ class FoodController extends Controller
         $food = Foods::create($data);
 
         if ($request->hasFile('image')) {
-            $upload = (new UploadApi())->upload($request->file('image')->getRealPath(), [
-                'folder' => 'foods/user_uploads',
-                'public_id' => "food_" . $food->id . "_" . time(),
-                'overwrite' => true,
-                'resource_type' => 'image'
-            ]);
+            $file = $request->file('image');
+            $filename = "food_" . time() . "." . $file->extension();
+
+            $file->storeAs(
+                "foods/{$food->id}",
+                $filename,
+                'public'
+            );
 
             $food->update([
-                'image' => $upload['secure_url'],
+                'image' => "storage/foods/{$food->id}/{$filename}",
             ]);
         }
 
@@ -138,7 +140,7 @@ class FoodController extends Controller
 
     public function getFoods(string $searchTerm, string $page)
     {
-        $page -= 1; #Beacuse It would skip the first page
+        $page -= 1; 
         $foodPerPage = 10;
         $result = Foods::search($searchTerm)->skip($foodPerPage * $page)->limit($foodPerPage)->get() ?? [];
         return response()->json([

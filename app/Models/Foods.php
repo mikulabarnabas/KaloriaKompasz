@@ -33,10 +33,13 @@ class Foods extends Model
 
     public function scopeSearch($query, $keywords)
     {
-        return $query->where('name', 'LIKE', '%' . $keywords . '%')
-            ->orWhere('name_hu', 'LIKE', '%' . $keywords . '%')
-            ->orWhere('brand', 'LIKE', '%' . $keywords . '%')
-            ->orWhere('barcode', $keywords);
+        return $query->where(function ($q) use ($keywords) {
+            $q->where('name', 'LIKE', '%' . $keywords . '%')
+                ->orWhere('name_hu', 'LIKE', '%' . $keywords . '%')
+                ->orWhere('brand', 'LIKE', '%' . $keywords . '%')
+                ->orWhere('barcode', $keywords);
+        })
+            ->latest();
     }
 
     public function diaries()
