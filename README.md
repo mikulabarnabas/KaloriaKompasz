@@ -16,10 +16,7 @@ Kövesd az alábbi lépéseket a fejlesztői környezet elindításához a proje
 A Docker indításához és a Laravel konfigurációjához szükség van az `.env` fájlra. Másold le az `.env.example` fájlt az alábbi paranccsal:
 
 **Windows (PowerShell vagy CMD):**
-```powershell
-copy .env.example .env
-```
-Ezután először el kell indíani a dockert
+Először el kell indíani a dockert
 ```powershell
 docker compose up --build
 ```
@@ -31,8 +28,3 @@ docker compose up
 parancsot futtatni
 
 Ezután a weboldal elérhető a http://localhost:8000 oldalon.
-
-### Figyelem
-Mivel a docker nem natívan fut Windows operációs rendszeren emiatt ezen kifejezetten lassú. Sok ideig úgy nézhet ki a http://localhost:8000 oldalon, hogy nem töltődik be, de csak sok ideig tart. Ha nagyon úgy néz ki, hogy nem tölt be érdemes bezárni a lapot és egy új lapon próbálkozni.
-
-A nyelvvel ugyanez van, idő mire a nyelvi .json fájlokat megszerzi a kliens ezért először nem töltődik be az oldalon a szöveg. A nyelváltásnál ugyanez van, időre van szüksége.
