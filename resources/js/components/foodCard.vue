@@ -31,14 +31,14 @@ const displayName = computed(() => {
 
     <div class="flex-1 min-w-0">
       <h4 class="text-main-text font-bold truncate mb-0.5">
-        {{ displayName }}
+        {{ displayName }} <span v-if="food?.pivot?.amount">- {{ food?.pivot?.amount }}{{ food?.pivot?.unit }}</span>
       </h4>
       <div class="flex flex-wrap items-center gap-y-0.5 gap-x-2 text-[11px] font-bold text-secondary-text uppercase">
         <span class="text-primary whitespace-nowrap">{{ food.calorie }} kcal</span>
         <div class="flex gap-2 opacity-80">
-          <span class="whitespace-nowrap">{{ food.protein }}g P</span>
-          <span class="whitespace-nowrap">{{ food.carb }}g CH</span>
-          <span class="whitespace-nowrap">{{ food.fat }}g ZS</span>
+          <span class="whitespace-nowrap">{{ food.protein }}g {{$t('foodDiary.protein_short')}}</span>
+          <span class="whitespace-nowrap">{{ food.carb }}g {{$t('foodDiary.carb_short')}}</span>
+          <span class="whitespace-nowrap">{{ food.fat }}g {{$t('foodDiary.fat_short')}}</span>
         </div>
       </div>
     </div>
