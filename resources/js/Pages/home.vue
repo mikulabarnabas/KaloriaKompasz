@@ -50,7 +50,12 @@ const isWeb = ref(false);
 
 const checkPlatform = async () => {
   const info = await Device.getInfo();
-  if (info.platform === 'web') {
+
+  const isStandardWeb = info.platform === 'web';
+  
+  const isElectron = /electron/i.test(navigator.userAgent);
+
+  if (isStandardWeb && !isElectron) {
     isWeb.value = true;
   } else {
     isWeb.value = false;

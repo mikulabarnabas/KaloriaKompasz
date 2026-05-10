@@ -8,7 +8,6 @@ use App\Models\User;
 use App\Http\Requests\RegisterUserRequest;
 use App\Http\Requests\LoginUserRequest;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\App;
 use Illuminate\Validation\ValidationException;
 use Laravel\Socialite\Facades\Socialite;
 use Illuminate\Support\Facades\Log;
@@ -30,10 +29,7 @@ class AuthController extends Controller
 
     public function showLogin(Request $request)
     {
-        App::setLocale('en');
-        return Inertia::render('login', [
-            'locale' => App::getLocale(),
-        ]);
+        return Inertia::render('login');
     }
 
     public function registerUser(RegisterUserRequest $request)

@@ -73,9 +73,6 @@ class StatisticsController extends Controller
         $endDate = Carbon::parse($date)->endOfDay();
         $startDate = $endDate->copy()->subDays(6)->startOfDay();
 
-        Log::info(FoodDiary::where('user_id', $userId)->with('foods')
-            ->get());
-
         $foodDiaries = FoodDiary::where('user_id', $userId)
             ->whereBetween('date', [$startDate->toDateTimeString(), $endDate->toDateTimeString()])
             ->get()
