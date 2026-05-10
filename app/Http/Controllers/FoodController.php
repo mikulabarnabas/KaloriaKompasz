@@ -111,7 +111,7 @@ class FoodController extends Controller
         return response()->noContent();
     }
 
-    public function storeFood(FoodRequest $request, UploadApi $uploadApi) 
+    public function storeFood(FoodRequest $request, UploadApi $uploadApi)
     {
         $data = $request->validated();
         $food = Foods::create($data);
@@ -122,6 +122,10 @@ class FoodController extends Controller
                 'public_id' => "food_" . $food->id . "_" . time(),
                 'overwrite' => true,
                 'resource_type' => 'image'
+            ]);
+
+            $food->update([
+                'image' => $upload['secure_url'],
             ]);
         }
 
@@ -134,7 +138,7 @@ class FoodController extends Controller
 
     public function getFoods(string $searchTerm, string $page)
     {
-        $page -= 1; 
+        $page -= 1;
         $foodPerPage = 10;
         $result = Foods::search($searchTerm)->skip($foodPerPage * $page)->limit($foodPerPage)->get() ?? [];
         return response()->json([
