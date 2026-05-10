@@ -34,7 +34,6 @@ const onFileChange = (e) => {
 };
 
 const submitForm = () => {
-    console.log(form.image)
     form.submit({
         preserveScroll: true,
         onSuccess: () => {

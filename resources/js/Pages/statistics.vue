@@ -39,7 +39,7 @@ async function getData() {
 }
 
 
-watch(selectedDate, getData, {immediate: true});
+watch(selectedDate, getData, { immediate: true });
 </script>
 
 <template>
@@ -73,7 +73,7 @@ watch(selectedDate, getData, {immediate: true});
             <span class="text-primary truncate min-w-0 max-w-full block">{{ user.name }}</span>
           </h1>
           <p class="text-secondary-text mt-3 font-medium tracking-wide uppercase text-xs">
-            {{ $t('statistics.subtitle')}}
+            {{ $t('statistics.subtitle') }}
           </p>
         </div>
         <DateNavigator v-model="selectedDate" class="shrink-0" />
@@ -115,8 +115,14 @@ watch(selectedDate, getData, {immediate: true});
                 </div>
 
                 <div v-for="item in recentActivity" :key="item.id">
-                  <WorkoutCard v-if="item.calories_per_unit" :exercise="item" :clickable="true" />
-                  <FoodCard v-else :food="item" :clickable="true" />
+                  <WorkoutCard v-if="item.calories_per_unit" :exercise="item" />
+                  <FoodCard v-else :food="{
+                    ...item,
+                    calorie: item.pivot.calorie,
+                    protein: item.pivot.protein,
+                    carb: item.pivot.carb,
+                    fat: item.pivot.fat
+                  }"/>
                 </div>
               </div>
             </div>

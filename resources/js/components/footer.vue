@@ -55,7 +55,6 @@ const isSourceModalOpen = ref(false);
           <h3 class="text-[10px] font-black text-primary uppercase tracking-[0.3em]">{{ $t('footer.operator_title') }}</h3>
           <div class="text-secondary-text text-[11px] font-bold uppercase tracking-widest space-y-2">
             <p class="text-main-text/80">{{ 'Mikula Barnabás & Bóta Gergely' }}</p>
-            <p>{{ $t('footer.storage_provider') }}: {{ 'Rackhost Zrt.' }}</p>
           </div>
         </div>
 

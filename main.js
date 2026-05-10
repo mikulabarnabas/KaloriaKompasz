@@ -18,7 +18,7 @@ function createWindow() {
 
     });
 
-    win.loadURL("https://kaloriakompasz.hu/");
+    win.loadURL("http://localhost:8000/");
 }
 
 app.whenReady().then(() => {

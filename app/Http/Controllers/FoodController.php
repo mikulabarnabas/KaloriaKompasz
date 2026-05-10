@@ -123,10 +123,6 @@ class FoodController extends Controller
                 'overwrite' => true,
                 'resource_type' => 'image'
             ]);
-
-            $food->update([
-                'image' => $upload['secure_url'],
-            ]);
         }
 
         return response()->json([
@@ -138,7 +134,7 @@ class FoodController extends Controller
 
     public function getFoods(string $searchTerm, string $page)
     {
-        $page -= 1; #Beacuse It would skip the first page
+        $page -= 1; 
         $foodPerPage = 10;
         $result = Foods::search($searchTerm)->skip($foodPerPage * $page)->limit($foodPerPage)->get() ?? [];
         return response()->json([

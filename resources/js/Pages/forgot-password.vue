@@ -42,7 +42,7 @@ function goToLogin() {
                 <div class="bg-neutral-dark p-8 md:p-10 rounded-3xl shadow-2xl border border-neutral-border/10 dark:border-neutral-border/30">
                     <header class="mb-8 text-center">
                         <h2 class="text-4xl font-black text-main-text italic tracking-tighter uppercase">
-                            {{ t('auth.forgot_password').split(' ')[0] }} <span class="text-primary">{{ t('auth.forgot_password').split(' ')[1] || '' }}</span>
+                            {{ t('auth.forgot_password_start') }} <span class="text-primary">{{ t('auth.forgot_password_end') }}</span>
                         </h2>
                         <p class="text-secondary-text text-xs mt-3 font-medium leading-relaxed max-w-70 mx-auto uppercase tracking-wider">
                             {{ t('auth.forgot_password_subtitle') }}

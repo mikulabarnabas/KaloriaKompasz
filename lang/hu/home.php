@@ -23,7 +23,7 @@ return [
 
     // Team
     "team_section_title" => "Ketten a világ ellen",
-    "team_section_description" => "Egy fiatal, ambiciózus csapat vagyunk, akik nem érik be a középszerűvel. Ketten indítottuk el a FitTrack-et azzal a céllal, hogy a piac legjobb platformját hozzuk létre nektek.",
+    "team_section_description" => "Egy fiatal, ambiciózus csapat vagyunk, akik nem érik be a középszerűvel. Ketten indítottuk el a Kaloria Kompaszt azzal a céllal, hogy a piac legjobb platformját hozzuk létre nektek.",
     "role_dev" => "Alapító / Fejlesztő",
     "role_design" => "Alapító / Design",
     "team_title" => "Csapatunk",
@@ -33,8 +33,8 @@ return [
     "faq_subtitle" => "Minden, amit tudni érdemes a platformunkról.",
     "faq_first_question" => "Miben más ez, mint a többi app?",
     "faq_first_answer" => "Személyesebbek vagyunk. Itt nem egy multi algoritmusai mögé bújsz, hanem egy olyan eszközt kapsz, amit mi is nap mint nap használunk az edzéseinkhez.",
-    "faq_second_question" => "Szinkronizálhatom az órámat?",
-    "faq_second_answer" => "Igen, folyamatosan dolgozunk az Apple Health és Google Fit integrációkon, hogy az adatok maguktól áramoljanak.",
+    "faq_second_question" => "Szinkronizálhatom a lépéseimet?",
+    "faq_second_answer" => "Igen, folyamatosan dolgozunk a Samsung Health és Google Health Connect integrációkon, hogy az adatok maguktól áramoljanak.",
     "faq_third_question" => "Ingyenes marad az alkalmazás?",
     "faq_third_answer" => "Az alap funkciók (kalória és edzésnapló) örökre ingyenesek maradnak, mert hiszünk abban, hogy az egészség nem lehet pénzkérdés.",
 
