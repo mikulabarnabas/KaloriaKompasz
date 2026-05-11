@@ -9,8 +9,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Inertia\Inertia;
 use App\Enums\FoodUnits;
+use Illuminate\Support\Facades\App;
 use Cloudinary\Api\Upload\UploadApi;
-use Illuminate\Support\Facades\Log;
 
 class FoodController extends Controller
 {
@@ -111,24 +111,40 @@ class FoodController extends Controller
         return response()->noContent();
     }
 
-    public function storeFood(FoodRequest $request)
+    public function storeFood(FoodRequest $request, UploadApi $uploadApi)
     {
         $data = $request->validated();
         $food = Foods::create($data);
 
+
+
         if ($request->hasFile('image')) {
-            $file = $request->file('image');
-            $filename = "food_" . time() . "." . $file->extension();
+            if (App::environment('local')) {
+                $file = $request->file('image');
+                $filename = "food_" . time() . "." . $file->extension();
 
-            $file->storeAs(
-                "foods/{$food->id}",
-                $filename,
-                'public'
-            );
+                $file->storeAs(
+                    "foods/{$food->id}",
+                    $filename,
+                    'public'
+                );
 
-            $food->update([
-                'image' => "storage/foods/{$food->id}/{$filename}",
-            ]);
+                $food->update([
+                    'image' => "storage/foods/{$food->id}/{$filename}",
+                ]);
+            } else {
+                $upload = $uploadApi->upload($request->file('image')->getRealPath(), [
+                    'folder' => 'foods/user_uploads',
+                    'public_id' => "food_" . $food->id . "_" . time(),
+                    'overwrite' => true,
+                    'resource_type' => 'image'
+                ]);
+
+                $food->update([
+                    'image' => $upload['secure_url'],
+                ]);
+            }
+
         }
 
         return response()->json([
@@ -140,7 +156,7 @@ class FoodController extends Controller
 
     public function getFoods(string $searchTerm, string $page)
     {
-        $page -= 1; 
+        $page -= 1;
         $foodPerPage = 10;
         $result = Foods::search($searchTerm)->skip($foodPerPage * $page)->limit($foodPerPage)->get() ?? [];
         return response()->json([
